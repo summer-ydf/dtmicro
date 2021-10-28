@@ -74,24 +74,10 @@
         <scope>import</scope>
       </dependency>
 
-      <!-- Alibaba Nacos 配置 -->
-      <dependency>
-        <groupId>com.alibaba.nacos</groupId>
-        <artifactId>nacos-client</artifactId>
-        <version>${alibaba.nacos.version}</version>
-      </dependency>
-
       <!--  SpringBoot 健康检查客户端 -->
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-actuator</artifactId>
-      </dependency>
-
-      <!-- 验证码 -->
-      <dependency>
-        <groupId>com.github.penggle</groupId>
-        <artifactId>kaptcha</artifactId>
-        <version>${kaptcha.version}</version>
       </dependency>
 
       <!-- io常用工具类 -->
@@ -113,13 +99,6 @@
         <groupId>com.alibaba</groupId>
         <artifactId>fastjson</artifactId>
         <version>${fastjson.version}</version>
-      </dependency>
-
-      <!-- JWT -->
-      <dependency>
-        <groupId>io.jsonwebtoken</groupId>
-        <artifactId>jjwt</artifactId>
-        <version>${jjwt.version}</version>
       </dependency>
 
       <!-- 线程传递值 -->
