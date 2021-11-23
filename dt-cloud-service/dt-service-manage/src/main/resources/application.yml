@@ -1,5 +1,5 @@
 server:
-  port: 9901
+  port: 8081
 spring:
   application:
     name: cms-service-manage
