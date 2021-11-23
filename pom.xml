@@ -77,11 +77,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-            <!--  SpringBoot 健康检查客户端 -->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-actuator</artifactId>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 

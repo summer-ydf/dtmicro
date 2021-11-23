@@ -1,0 +1,14 @@
+server:
+  port: 9901
+spring:
+  application:
+    name: dt-service-manage
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
