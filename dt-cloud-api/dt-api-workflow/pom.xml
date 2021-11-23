@@ -3,14 +3,14 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>cloud</artifactId>
+        <artifactId>dt-cloud-api</artifactId>
         <groupId>com.dt</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>dt-cloud-document</artifactId>
-    <description>文件服务系统</description>
+    <artifactId>dt-api-workflow</artifactId>
+    <description>工作流API接口</description>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

@@ -10,14 +10,16 @@
 
     <name>dtcmscloud</name>
     <url>http://www.dt.vip</url>
-    <description>DT CMS微服务系统</description>
+    <description>CMS微服务系统</description>
 
     <!--子系统模块-->
     <modules>
         <module>dt-cloud-auth</module>
-        <module>dt-cloud-common</module>
         <module>dt-cloud-gateway</module>
-        <module>dt-cloud-document</module>
+        <module>dt-cloud-service</module>
+        <module>dt-cloud-job</module>
+        <module>dt-cloud-common</module>
+        <module>dt-cloud-api</module>
     </modules>
 
     <!--核心版本控制-->
