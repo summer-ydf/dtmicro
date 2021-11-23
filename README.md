@@ -48,8 +48,3 @@ D:\data 为当前服务器存储资源路径，可自行指定。
 
 - Linux安装教程 [最全Linux安装Redis最新版](https://blog.csdn.net/qq_41107231/article/details/111656160)
 
-
-## 联系我们
-
-![输入图片说明](https://images.gitee.com/uploads/images/2021/1113/162401_7b8bb28b_6523828.png "CMS技术交流群20211113150501.png")
-
