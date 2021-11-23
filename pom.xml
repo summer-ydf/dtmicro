@@ -9,7 +9,6 @@
     <version>1.0-SNAPSHOT</version>
 
     <name>dtcmscloud</name>
-    <url>http://www.dt.vip</url>
     <description>CMS微服务系统</description>
 
     <!--子系统模块-->
