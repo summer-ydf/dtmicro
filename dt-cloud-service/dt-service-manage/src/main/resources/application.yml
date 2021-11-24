@@ -14,4 +14,4 @@ management:
         include: '*'
 feign:
   sentinel:
-    enabled: true
+    enabled: true  # 开启服务调用失败处理

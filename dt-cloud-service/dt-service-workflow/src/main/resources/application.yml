@@ -1,5 +1,5 @@
 server:
-  port: 9902
+  port: 8082
 spring:
   application:
     name: cms-service-flow
@@ -7,6 +7,10 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
+    sentinel:
+      transport:
+        dashboard: localhost:9092
+        port: 8719
 management:
   endpoints:
     web:
