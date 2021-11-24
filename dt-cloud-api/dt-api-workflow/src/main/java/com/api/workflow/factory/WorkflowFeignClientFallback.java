@@ -1,5 +1,8 @@
-package com.api.workflow.feign;
+package com.api.workflow.factory;
 
+import com.api.workflow.feign.WorkflowFeignService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.cloud.openfeign.FallbackFactory;
 import org.springframework.stereotype.Component;
 
@@ -8,16 +11,17 @@ import org.springframework.stereotype.Component;
  * @author ydf Created by 2021/11/23 16:05
  */
 @Component
-public class WorkflowFeignClientFallback implements FeignFailFallback , FallbackFactory<WorkflowFeignService> {
+public class WorkflowFeignClientFallback implements FeignFailFallback,FallbackFactory<WorkflowFeignService> {
+
+    Logger log = LoggerFactory.getLogger(WorkflowFeignClientFallback.class);
 
     @Override
     public WorkflowFeignService create(Throwable throwable) {
-        System.out.println("调用接口请求出错->>>"+ throwable.getMessage());
+        log.info("调用接口请求出错：{}",throwable.getMessage());
         return new WorkflowFeignService() {
 
             @Override
             public String getFlowPort(String userId) {
-                System.out.println("调用出错->>>");
                 return fail();
             }
 
