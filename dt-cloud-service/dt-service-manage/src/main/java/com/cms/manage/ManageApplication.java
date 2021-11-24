@@ -9,9 +9,9 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * 核心模块主启动
  * @author ydf Created by 2021/11/23 14:54
  */
-@EnableFeignClients
+@SpringBootApplication
 @EnableDiscoveryClient
-@SpringBootApplication(scanBasePackages = {"com.api.*.feign"})
+@EnableFeignClients(basePackages ={"com.api.*.feign"})
 public class ManageApplication {
 
     public static void main(String[] args) {

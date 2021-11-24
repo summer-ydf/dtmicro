@@ -15,9 +15,16 @@ public class TestServiceImpl implements TestService {
     private WorkflowFeignService workflowFeignService;
 
     @Override
-    public String getTest() {
+    public String getTest(String userId) {
         System.out.println("开启远程服务调用->>>");
         // 远程服务调用
-        return workflowFeignService.getFlowPort();
+        return workflowFeignService.getFlowPort(userId);
+    }
+
+    @Override
+    public String save() {
+        System.out.println("开启远程服务调用->>>");
+        // 远程服务调用
+        return workflowFeignService.savePort();
     }
 }

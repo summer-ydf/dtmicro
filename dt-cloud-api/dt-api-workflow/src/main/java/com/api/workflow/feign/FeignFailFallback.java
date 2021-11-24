@@ -10,6 +10,7 @@ public interface FeignFailFallback {
 //    }
 
     default String fail() {
+        System.out.println("失败处理...");
         return "业务模块未加载";
     }
 }

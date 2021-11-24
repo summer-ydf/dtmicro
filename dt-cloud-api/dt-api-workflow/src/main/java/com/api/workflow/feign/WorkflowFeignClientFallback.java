@@ -11,10 +11,18 @@ import org.springframework.stereotype.Component;
 public class WorkflowFeignClientFallback implements FeignFailFallback , FallbackFactory<WorkflowFeignService> {
 
     @Override
-    public WorkflowFeignService create(Throwable cause) {
+    public WorkflowFeignService create(Throwable throwable) {
+        System.out.println("调用接口请求出错->>>"+ throwable.getMessage());
         return new WorkflowFeignService() {
+
             @Override
-            public String getFlowPort() {
+            public String getFlowPort(String userId) {
+                System.out.println("调用出错->>>");
+                return fail();
+            }
+
+            @Override
+            public String savePort() {
                 return fail();
             }
         };

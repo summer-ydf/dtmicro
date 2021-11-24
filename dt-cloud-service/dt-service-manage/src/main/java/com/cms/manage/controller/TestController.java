@@ -3,6 +3,8 @@ package com.cms.manage.controller;
 import com.cms.manage.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,9 +17,15 @@ public class TestController {
     @Autowired
     private TestService testService;
 
-    @GetMapping(value = "/test1")
-    public String test() {
+    @GetMapping(value = "/test1/{userId}")
+    public String test(@PathVariable String userId) {
         System.out.println("调用方法->>>");
-        return testService.getTest();
+        return testService.getTest(userId);
+    }
+
+    @PostMapping(value = "/save")
+    public String save() {
+        System.out.println("调用方法->>>");
+        return testService.save();
     }
 }
