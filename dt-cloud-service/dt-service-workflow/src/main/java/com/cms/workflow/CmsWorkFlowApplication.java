@@ -10,9 +10,9 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  */
 @EnableDiscoveryClient
 @SpringBootApplication
-public class WorkFlowApplication {
+public class CmsWorkFlowApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(WorkFlowApplication.class,args);
+        SpringApplication.run(CmsWorkFlowApplication.class,args);
     }
 }

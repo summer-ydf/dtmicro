@@ -12,9 +12,9 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients(basePackages ={"com.api.*.feign"})
-public class ManageApplication {
+public class CmsManageApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ManageApplication.class,args);
+        SpringApplication.run(CmsManageApplication.class,args);
     }
 }
