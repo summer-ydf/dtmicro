@@ -17,4 +17,12 @@
         <module>dt-api-workflow</module>
     </modules>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.dt</groupId>
+            <artifactId>dt-cloud-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
 </project>
