@@ -1,5 +1,6 @@
 package com.cms.manage.controller;
 
+import com.cms.common.result.ResultUtil;
 import com.cms.manage.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +19,7 @@ public class TestController {
     private TestService testService;
 
     @GetMapping(value = "/test1/{userId}")
-    public String test(@PathVariable String userId) {
+    public ResultUtil<?> test(@PathVariable String userId) {
         System.out.println("调用方法->>>");
         return testService.getTest(userId);
     }

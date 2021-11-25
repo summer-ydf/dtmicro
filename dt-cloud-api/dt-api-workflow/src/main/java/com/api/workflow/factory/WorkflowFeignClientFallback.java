@@ -1,6 +1,7 @@
 package com.api.workflow.factory;
 
 import com.api.workflow.feign.WorkflowFeignService;
+import com.cms.common.result.ResultUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.openfeign.FallbackFactory;
@@ -21,14 +22,14 @@ public class WorkflowFeignClientFallback implements FeignFailFallback,FallbackFa
         return new WorkflowFeignService() {
 
             @Override
-            public String getFlowPort(String userId) {
+            public ResultUtil<?> getFlowPort(String userId) {
                 log.info("服务降级!",throwable);
                 return fail();
             }
 
             @Override
             public String savePort() {
-                return fail();
+                return "添加出错";
             }
         };
     }
