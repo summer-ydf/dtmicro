@@ -1,0 +1,42 @@
+package com.cms.common.result;
+
+/**
+ * 统一返回状态码
+ * @author ydf Created by 2021/11/25 11:12
+ */
+public enum ResultEnum {
+
+    /**
+     * 统一状态返回
+     */
+    SUCCESS(2000),SUCCESS_MESSAGE("操作成功！"),
+    ERROR(2001),ERROR_MESSAGE("操作失败！"),
+    NO_LOGIN(4001),NO_LOGIN_MESSAGE("匿名用户无权限访问！"),
+    NO_AUTH(4002),NO_AUTH_MESSAGE("无资源访问权限！"),
+    ACCOUNT_OTHERS(4003),ACCOUNT_OTHERS_MESSAGE("账号下线！");
+
+    private Integer code;
+
+    private String msg;
+
+    ResultEnum(Integer code){
+        this.code = code;
+    }
+
+    ResultEnum(String msg){
+        this.msg = msg;
+    }
+
+    ResultEnum(Integer code, String msg) {
+        this.code = code;
+        this.msg = msg;
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public String getMsg() {
+        return msg;
+    }
+}
