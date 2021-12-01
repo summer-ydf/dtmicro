@@ -1,10 +1,12 @@
 package com.cms.workflow;
 
 import lombok.extern.slf4j.Slf4j;
+import org.flowable.engine.HistoryService;
 import org.flowable.engine.ProcessEngine;
 import org.flowable.engine.RepositoryService;
 import org.flowable.engine.RuntimeService;
 import org.flowable.engine.TaskService;
+import org.flowable.engine.history.HistoricActivityInstance;
 import org.flowable.engine.repository.Deployment;
 import org.flowable.engine.repository.ProcessDefinition;
 import org.flowable.engine.runtime.ProcessInstance;
@@ -47,7 +49,7 @@ public class WorkFlowApplicationTest {
     @Test
     void getProcessDefinition() {
         RepositoryService repositoryService = processEngine.getRepositoryService();
-        String deploymentId = "74ccf73e-527a-11ec-a057-005056c00008";
+        String deploymentId = "8f59e523-527f-11ec-a033-005056c00008";
         ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
                 .deploymentId(deploymentId)
                 .singleResult();
@@ -60,7 +62,7 @@ public class WorkFlowApplicationTest {
     @Test
     void startProcessInstanceByDefinitionId() {
         RepositoryService repositoryService = processEngine.getRepositoryService();
-        String deploymentId = "74ccf73e-527a-11ec-a057-005056c00008";
+        String deploymentId = "8f59e523-527f-11ec-a033-005056c00008";
         ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
                 .deploymentId(deploymentId)
                 .singleResult();
@@ -80,7 +82,7 @@ public class WorkFlowApplicationTest {
     void findMyTask() {
         TaskService taskService = processEngine.getTaskService();
         List<Task> tasks = taskService.createTaskQuery()
-                .taskAssignee("李四")
+                .taskAssignee("张三")
                 .orderByTaskCreateTime().asc()
                 .list();
         log.info("个人任务："+tasks.size());
@@ -102,9 +104,34 @@ public class WorkFlowApplicationTest {
     @Test
     void complete() {
         // 根据任务ID完成个人任务
-        String taskId = "8da41416-527e-11ec-b239-005056c00008";
+        String taskId = "b1771b98-527f-11ec-9cbc-005056c00008";
         processEngine.getTaskService().complete(taskId);
         log.info("完成任务======================");
+    }
+
+    /**
+     * 根据流程实例ID 查看历史任务
+     */
+    @Test
+    void findHistory() {
+        // 流程定义ID
+        String processDefinitionId = "myProcess:3:8f87d2f6-527f-11ec-a033-005056c00008";
+        // 流程实例ID
+        String processInstanceId = "b1745c73-527f-11ec-9cbc-005056c00008";
+        HistoryService historyService = processEngine.getHistoryService();
+        List<HistoricActivityInstance> activities =
+                historyService.createHistoricActivityInstanceQuery()
+                        .processInstanceId(processInstanceId)
+                        .finished()
+                        .orderByHistoricActivityInstanceEndTime().asc()
+                        .list();
+
+        for (HistoricActivityInstance activity : activities) {
+            System.out.println("===========历史节点===========");
+            log.info("活动节点ID："+activity.getActivityId());
+            log.info("活动节点名称："+activity.getActivityName());
+            log.info("花费毫秒："+activity.getDurationInMillis() + " milliseconds");
+        }
     }
 
 }

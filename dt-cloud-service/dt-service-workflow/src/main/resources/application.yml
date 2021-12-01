@@ -17,10 +17,10 @@ spring:
       transport:
         dashboard: localhost:9092
         port: 8719
-flowable:
-  async-executor-activate: false
-  database-schema-update: true
-  process-definition-location-prefix: classpath*:/flow/
+#flowable:
+ # async-executor-activate: false
+ # database-schema-update: true
+ # process-definition-location-prefix: classpath*:/flow/
 mybatis-plus:
   typeAliasesPackage: com.cms.workflow.entity
   mapper-locations: classpath*:com/cms/workflow/mapper/**/*.xml

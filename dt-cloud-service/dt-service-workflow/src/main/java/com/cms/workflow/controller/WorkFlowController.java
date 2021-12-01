@@ -26,16 +26,16 @@ public class WorkFlowController {
 
     @Autowired
     private FlowInstanceService flowInstanceService;
-    @Autowired
-    private RepositoryService repositoryService;
-    @Autowired
-    private RuntimeService runtimeService;
-    @Autowired
-    private TaskService taskService;
-    @Autowired
-    private HistoryService historyService;
-    @Autowired
-    private ProcessEngine processEngine;
+//    @Autowired
+//    private RepositoryService repositoryService;
+//    @Autowired
+//    private RuntimeService runtimeService;
+//    @Autowired
+//    private TaskService taskService;
+//    @Autowired
+//    private HistoryService historyService;
+//    @Autowired
+//    private ProcessEngine processEngine;
 
     @GetMapping(value = "/getPort/{userId}")
 //    @SentinelResource(value = "/getPort/{userId}",blockHandler = "testBlockHandler")

@@ -47,10 +47,23 @@
             <version>${mybatis.plus.version}</version>
         </dependency>
         <!--flowable工作流-->
+<!--        <dependency>-->
+<!--            <groupId>org.flowable</groupId>-->
+<!--            <artifactId>flowable-spring-boot-starter</artifactId>-->
+<!--            <version>${flowable.version}</version>-->
+<!--            &lt;!&ndash; 需要排除flowable的mybatis依赖，不然会跟mybatis-plus冲突 &ndash;&gt;-->
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <groupId>org.mybatis</groupId>-->
+<!--                    <artifactId>mybatis</artifactId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
+<!--        </dependency>-->
+        <!-- flowable-engine -->
         <dependency>
             <groupId>org.flowable</groupId>
-            <artifactId>flowable-spring-boot-starter</artifactId>
-            <version>${flowable.version}</version>
+            <artifactId>flowable-engine</artifactId>
+            <version>6.4.1</version>
             <!-- 需要排除flowable的mybatis依赖，不然会跟mybatis-plus冲突 -->
             <exclusions>
                 <exclusion>
@@ -58,6 +71,12 @@
                     <artifactId>mybatis</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.flowable</groupId>
+            <artifactId>flowable-spring</artifactId>
+            <version>6.4.1</version>
         </dependency>
         <!--服务注册-->
         <dependency>

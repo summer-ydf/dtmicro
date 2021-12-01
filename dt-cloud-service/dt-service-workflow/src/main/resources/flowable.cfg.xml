@@ -1,0 +1,34 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+  <bean id="processEngineConfiguration" class="org.flowable.engine.impl.cfg.StandaloneProcessEngineConfiguration">
+    <!-- 数据库配置 -->
+    <property name="dataSource" ref="druidDataSource" />
+    <!-- 没有表则创建表 -->
+    <property name="databaseSchemaUpdate" value="true" />
+  </bean>
+
+  <!-- 数据库配置 -->
+  <bean id="druidDataSource" class="com.alibaba.druid.pool.DruidDataSource">
+    <property name="url" value="jdbc:mysql://127.0.0.1:3306/dtworkflow?useUnicode=true&amp;characterEncoding=utf-8&amp;nullCatalogMeansCurrent=true&amp;serverTimezone=Asia/Shanghai&amp;useSSL=false" />
+    <property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
+    <property name="username" value="root" />
+    <property name="password" value="Passw0rd!" />
+  </bean>
+
+  <!--加载flowable引擎processEngine-->
+  <bean id="processEngine" class="org.flowable.spring.ProcessEngineFactoryBean">
+    <property name="processEngineConfiguration" ref="processEngineConfiguration"/>
+  </bean>
+
+  <!-- 七大服务接口 -->
+  <bean id="repositoryService" factory-bean="processEngine" factory-method="getRepositoryService"/>
+  <bean id="runtimeService" factory-bean="processEngine" factory-method="getRuntimeService"/>
+  <bean id="formService" factory-bean="processEngine" factory-method="getFormService" />
+  <bean id="identityService" factory-bean="processEngine" factory-method="getIdentityService"/>
+  <bean id="taskService" factory-bean="processEngine" factory-method="getTaskService"/>
+  <bean id="historyService" factory-bean="processEngine" factory-method="getHistoryService"/>
+  <bean id="managementService" factory-bean="processEngine" factory-method="getManagementService"/>
+
+</beans>
