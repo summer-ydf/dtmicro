@@ -4,7 +4,7 @@ spring:
   application:
     name: cms-service-flow
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/dtworkflow?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSL=false
+    url: jdbc:mysql://127.0.0.1:3306/dtworkflow?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSL=false&nullCatalogMeansCurrent=true
     username: root
     password: Passw0rd!
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -17,6 +17,9 @@ spring:
       transport:
         dashboard: localhost:9092
         port: 8719
+flowable:
+  async-executor-activate: false
+  database-schema-update: true
 mybatis-plus:
   typeAliasesPackage: com.cms.workflow.entity
   mapper-locations: classpath*:com/cms/workflow/mapper/**/*.xml

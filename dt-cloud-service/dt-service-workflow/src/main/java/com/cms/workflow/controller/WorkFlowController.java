@@ -3,6 +3,11 @@ package com.cms.workflow.controller;
 import com.cms.common.result.ResultUtil;
 import com.cms.workflow.entity.FlowInstanceEntity;
 import com.cms.workflow.service.FlowInstanceService;
+import org.flowable.engine.HistoryService;
+import org.flowable.engine.ProcessEngine;
+import org.flowable.engine.RepositoryService;
+import org.flowable.engine.RuntimeService;
+import org.flowable.engine.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +26,16 @@ public class WorkFlowController {
 
     @Autowired
     private FlowInstanceService flowInstanceService;
+    @Autowired
+    private RepositoryService repositoryService;
+    @Autowired
+    private RuntimeService runtimeService;
+    @Autowired
+    private TaskService taskService;
+    @Autowired
+    private HistoryService historyService;
+    @Autowired
+    private ProcessEngine processEngine;
 
     @GetMapping(value = "/getPort/{userId}")
 //    @SentinelResource(value = "/getPort/{userId}",blockHandler = "testBlockHandler")
@@ -42,4 +57,6 @@ public class WorkFlowController {
         List<FlowInstanceEntity> list = flowInstanceService.list();
         return ResultUtil.success(list);
     }
+
+
 }

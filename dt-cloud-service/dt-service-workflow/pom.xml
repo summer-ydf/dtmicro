@@ -46,6 +46,19 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>${mybatis.plus.version}</version>
         </dependency>
+        <!--flowable工作流-->
+        <dependency>
+            <groupId>org.flowable</groupId>
+            <artifactId>flowable-spring-boot-starter</artifactId>
+            <version>${flowable.version}</version>
+            <!-- 需要排除flowable的mybatis依赖，不然会跟mybatis-plus冲突 -->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.mybatis</groupId>
+                    <artifactId>mybatis</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
         <!--服务注册-->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
