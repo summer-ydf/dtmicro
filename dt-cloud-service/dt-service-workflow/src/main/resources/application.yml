@@ -19,8 +19,10 @@ spring:
         port: 8719
 #flowable:
  # async-executor-activate: false
- # database-schema-update: true
+ # database-schema-update: true 自动生成flowable相关表 第一次生成后建议关闭提高运行速度
  # process-definition-location-prefix: classpath*:/flow/
+    # 保存历史数据级别设置为full最高级别，便于历史数据的追溯
+    #history-level: full
 mybatis-plus:
   typeAliasesPackage: com.cms.workflow.entity
   mapper-locations: classpath*:com/cms/workflow/mapper/**/*.xml

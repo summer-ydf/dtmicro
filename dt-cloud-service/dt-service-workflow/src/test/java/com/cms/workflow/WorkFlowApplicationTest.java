@@ -49,7 +49,7 @@ public class WorkFlowApplicationTest {
     @Test
     void getProcessDefinition() {
         RepositoryService repositoryService = processEngine.getRepositoryService();
-        String deploymentId = "8f59e523-527f-11ec-a033-005056c00008";
+        String deploymentId = "e9306f4e-528b-11ec-8bab-005056c00008";
         ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
                 .deploymentId(deploymentId)
                 .singleResult();
@@ -62,7 +62,7 @@ public class WorkFlowApplicationTest {
     @Test
     void startProcessInstanceByDefinitionId() {
         RepositoryService repositoryService = processEngine.getRepositoryService();
-        String deploymentId = "8f59e523-527f-11ec-a033-005056c00008";
+        String deploymentId = "e9306f4e-528b-11ec-8bab-005056c00008";
         ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
                 .deploymentId(deploymentId)
                 .singleResult();
@@ -70,6 +70,7 @@ public class WorkFlowApplicationTest {
         log.info("==========================启动流程===========================");
         RuntimeService runtimeService = processEngine.getRuntimeService();
         ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
+        int a = 10 / 0;
         log.info("流程实例："+processInstance);
         log.info("流程实例ID："+processInstance.getId());
         log.info("流程定义ID："+processInstance.getProcessDefinitionId());
@@ -104,7 +105,7 @@ public class WorkFlowApplicationTest {
     @Test
     void complete() {
         // 根据任务ID完成个人任务
-        String taskId = "b1771b98-527f-11ec-9cbc-005056c00008";
+        String taskId = "5003";
         processEngine.getTaskService().complete(taskId);
         log.info("完成任务======================");
     }

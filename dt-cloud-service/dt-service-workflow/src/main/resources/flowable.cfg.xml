@@ -1,15 +1,18 @@
+<!--
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
   <bean id="processEngineConfiguration" class="org.flowable.engine.impl.cfg.StandaloneProcessEngineConfiguration">
-    <!-- 数据库配置 -->
+    &lt;!&ndash; 数据库配置 &ndash;&gt;
     <property name="dataSource" ref="druidDataSource" />
-    <!-- 没有表则创建表 -->
+    &lt;!&ndash; 没有表则创建表 &ndash;&gt;
     <property name="databaseSchemaUpdate" value="true" />
+    &lt;!&ndash;开启事务支持&ndash;&gt;
+    <property name="transactionsExternallyManaged" value="true" />
   </bean>
 
-  <!-- 数据库配置 -->
+  &lt;!&ndash; 数据库配置 &ndash;&gt;
   <bean id="druidDataSource" class="com.alibaba.druid.pool.DruidDataSource">
     <property name="url" value="jdbc:mysql://127.0.0.1:3306/dtworkflow?useUnicode=true&amp;characterEncoding=utf-8&amp;nullCatalogMeansCurrent=true&amp;serverTimezone=Asia/Shanghai&amp;useSSL=false" />
     <property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
@@ -17,12 +20,17 @@
     <property name="password" value="Passw0rd!" />
   </bean>
 
-  <!--加载flowable引擎processEngine-->
+  &lt;!&ndash;开启事务支持&ndash;&gt;
+  <bean id="dataSourceTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <property name="dataSource" ref="druidDataSource" />
+  </bean>
+
+  &lt;!&ndash;加载flowable引擎processEngine&ndash;&gt;
   <bean id="processEngine" class="org.flowable.spring.ProcessEngineFactoryBean">
     <property name="processEngineConfiguration" ref="processEngineConfiguration"/>
   </bean>
 
-  <!-- 七大服务接口 -->
+  &lt;!&ndash; 七大服务接口 &ndash;&gt;
   <bean id="repositoryService" factory-bean="processEngine" factory-method="getRepositoryService"/>
   <bean id="runtimeService" factory-bean="processEngine" factory-method="getRuntimeService"/>
   <bean id="formService" factory-bean="processEngine" factory-method="getFormService" />
@@ -32,3 +40,4 @@
   <bean id="managementService" factory-bean="processEngine" factory-method="getManagementService"/>
 
 </beans>
+-->
