@@ -33,6 +33,9 @@
         <fastjson.version>1.2.78</fastjson.version>
         <lombok.version>1.16.20</lombok.version>
         <hutool.version>5.1.1</hutool.version>
+        <mysql.version>8.0.18</mysql.version>
+        <druid.version>1.1.21</druid.version>
+        <mybatis.plus.version>3.4.3</mybatis.plus.version>
     </properties>
 
     <!--引入公共依赖全局使用-->

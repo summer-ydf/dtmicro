@@ -1,13 +1,16 @@
 package com.cms.workflow.controller;
 
-import com.alibaba.csp.sentinel.annotation.SentinelResource;
-import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.cms.common.result.ResultUtil;
+import com.cms.workflow.entity.FlowInstanceEntity;
+import com.cms.workflow.service.FlowInstanceService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * @author ydf Created by 2021/11/23 16:21
@@ -15,6 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/flow")
 public class WorkFlowController {
+
+    @Autowired
+    private FlowInstanceService flowInstanceService;
 
     @GetMapping(value = "/getPort/{userId}")
 //    @SentinelResource(value = "/getPort/{userId}",blockHandler = "testBlockHandler")
@@ -30,4 +36,10 @@ public class WorkFlowController {
 //    public String testBlockHandler(BlockException blockException) {
 //        return "自定义流控："+ blockException;
 //    }
+
+    @GetMapping(value = "/test")
+    public ResultUtil<List<FlowInstanceEntity>> list() {
+        List<FlowInstanceEntity> list = flowInstanceService.list();
+        return ResultUtil.success(list);
+    }
 }
