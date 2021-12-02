@@ -70,7 +70,6 @@ public class WorkFlowApplicationTest {
         log.info("==========================启动流程===========================");
         RuntimeService runtimeService = processEngine.getRuntimeService();
         ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
-        int a = 10 / 0;
         log.info("流程实例："+processInstance);
         log.info("流程实例ID："+processInstance.getId());
         log.info("流程定义ID："+processInstance.getProcessDefinitionId());

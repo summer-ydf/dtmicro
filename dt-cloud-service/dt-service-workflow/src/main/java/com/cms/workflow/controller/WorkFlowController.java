@@ -26,16 +26,6 @@ public class WorkFlowController {
 
     @Autowired
     private FlowInstanceService flowInstanceService;
-//    @Autowired
-//    private RepositoryService repositoryService;
-//    @Autowired
-//    private RuntimeService runtimeService;
-//    @Autowired
-//    private TaskService taskService;
-//    @Autowired
-//    private HistoryService historyService;
-//    @Autowired
-//    private ProcessEngine processEngine;
 
     @GetMapping(value = "/getPort/{userId}")
 //    @SentinelResource(value = "/getPort/{userId}",blockHandler = "testBlockHandler")
@@ -58,5 +48,9 @@ public class WorkFlowController {
         return ResultUtil.success(list);
     }
 
+    @PostMapping(value = "/createDeployment")
+    public ResultUtil<?> createDeployment() {
+        return flowInstanceService.createDeployment();
+    }
 
 }
