@@ -31,6 +31,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static java.lang.System.in;
+
 /**
  * @author ydf Created by 2021/12/2 15:18
  */
@@ -50,48 +52,23 @@ public class WorkFlowServiceImpl implements WorkFlowService {
     private ProcessEngine processEngine;
 
     @Override
-    public void genProcessDiagram(HttpServletResponse httpServletResponse, String processId) {
-        String processDefinitionId = null;
-        if (this.isFinished(processId)) {
-            // 获取历史流程实例
-            HistoricProcessInstance pi = historyService.createHistoricProcessInstanceQuery().processInstanceId(processId).singleResult();
-            processDefinitionId = pi.getProcessDefinitionId();
-        } else {
-            // 获取当前活动状态的流程实例
-            ProcessInstance pi = runtimeService.createProcessInstanceQuery().processInstanceId(processId).singleResult();
-            processDefinitionId = pi.getProcessDefinitionId();
-        }
-
-        List<String> highLightedActivitis = new ArrayList<>();
-
-        // 设置高亮节点
-        List<HistoricActivityInstance> highLightedActivitList =  historyService.createHistoricActivityInstanceQuery().processInstanceId(processId).orderByHistoricActivityInstanceStartTime().asc().list();
-        for(HistoricActivityInstance tempActivity : highLightedActivitList){
-            highLightedActivitis.add(tempActivity.getActivityId());
-        }
-
-        List<String> flows = new ArrayList<>();
-        // 获取BPMN模型对象
-        BpmnModel bpmnModel = repositoryService.getBpmnModel(processDefinitionId);
-        ProcessEngineConfiguration engconf = processEngine.getProcessEngineConfiguration();
-        ProcessDiagramGenerator diagramGenerator = engconf.getProcessDiagramGenerator();
-        InputStream in = diagramGenerator.generateDiagram(bpmnModel, "png", highLightedActivitis, flows, engconf.getActivityFontName(),
-                engconf.getLabelFontName(), engconf.getAnnotationFontName(), engconf.getClassLoader(), 1.0, true);
-        OutputStream out = null;
+    public void genProcessDiagram(HttpServletResponse response, String processId) {
+        InputStream inputStream = createImgInputStream(processId);
+        OutputStream outputStream = null;
         byte[] buf = new byte[1024];
         int length = 0;
         try {
-            out = httpServletResponse.getOutputStream();
-            while ((length = in.read(buf)) != -1) {
-                out.write(buf, 0, length);
+            outputStream = response.getOutputStream();
+            while ((length = inputStream.read(buf)) != -1) {
+                outputStream.write(buf, 0, length);
             }
         } catch (IOException e) {
             log.error("操作异常",e);
         } finally {
-            assert out != null;
+            assert outputStream != null;
             try {
-                out.close();
-                in.close();
+                outputStream.close();
+                inputStream.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -105,6 +82,42 @@ public class WorkFlowServiceImpl implements WorkFlowService {
      */
     public boolean isFinished(String processInstanceId) {
         return historyService.createHistoricProcessInstanceQuery().finished().processInstanceId(processInstanceId).count() > 0;
+    }
+
+    /**
+     * 生成流程图片流
+     * @param processInstanceId 流程实例
+     * @return 返回输入流
+     */
+    public InputStream createImgInputStream(String processInstanceId) {
+        String processDefinitionId = null;
+        // 判断流程实例是否已经结束
+        boolean finished = this.isFinished(processInstanceId);
+        if (finished) {
+            // 获取历史流程实例
+            HistoricProcessInstance pi = historyService.createHistoricProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
+            processDefinitionId = pi.getProcessDefinitionId();
+        } else {
+            // 获取当前活动状态的流程实例
+            ProcessInstance pi = runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
+            processDefinitionId = pi.getProcessDefinitionId();
+        }
+        // 设置高亮节点
+        List<String> highLightActivitis = new ArrayList<>();
+        List<String> highLightFlows = new ArrayList<>();
+        List<HistoricActivityInstance> highLightActivitiList =  historyService.createHistoricActivityInstanceQuery().processInstanceId(processInstanceId).orderByHistoricActivityInstanceStartTime().asc().list();
+        for(HistoricActivityInstance tempActivity : highLightActivitiList) {
+            highLightActivitis.add(tempActivity.getActivityId());
+        }
+        // 获取BPMN模型对象
+        BpmnModel bpmnModel = repositoryService.getBpmnModel(processDefinitionId);
+        ProcessEngineConfiguration engineConfiguration = processEngine.getProcessEngineConfiguration();
+        ProcessDiagramGenerator diagramGenerator = engineConfiguration.getProcessDiagramGenerator();
+        return diagramGenerator.generateDiagram(bpmnModel, "png", highLightActivitis, highLightFlows,
+                engineConfiguration.getActivityFontName(),
+                engineConfiguration.getLabelFontName(),
+                engineConfiguration.getAnnotationFontName(),
+                engineConfiguration.getClassLoader(), 1.0, true);
     }
 
 }

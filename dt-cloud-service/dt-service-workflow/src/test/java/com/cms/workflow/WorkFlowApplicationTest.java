@@ -82,7 +82,7 @@ public class WorkFlowApplicationTest {
     void findMyTask() {
         TaskService taskService = processEngine.getTaskService();
         List<Task> tasks = taskService.createTaskQuery()
-                .taskAssignee("张三")
+                .taskAssignee("李四")
                 .orderByTaskCreateTime().asc()
                 .list();
         log.info("个人任务："+tasks.size());
@@ -104,7 +104,7 @@ public class WorkFlowApplicationTest {
     @Test
     void complete() {
         // 根据任务ID完成个人任务
-        String taskId = "5003";
+        String taskId = "bc44bbf9-5346-11ec-be10-005056c00008";
         processEngine.getTaskService().complete(taskId);
         log.info("完成任务======================");
     }
