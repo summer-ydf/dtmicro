@@ -62,7 +62,7 @@ public class WorkFlowApplicationTest {
     @Test
     void startProcessInstanceByDefinitionId() {
         RepositoryService repositoryService = processEngine.getRepositoryService();
-        String deploymentId = "e9306f4e-528b-11ec-8bab-005056c00008";
+        String deploymentId = "5f0e4333-5328-11ec-9b1a-005056c00008";
         ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
                 .deploymentId(deploymentId)
                 .singleResult();

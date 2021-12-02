@@ -1,13 +1,19 @@
 package com.cms.workflow.config;
 
+import org.flowable.spring.SpringProcessEngineConfiguration;
+import org.flowable.spring.boot.EngineConfigurationConfigurer;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.ImportResource;
 
 /**
- * 开启配置文件扫描
  * @author ydf Created by 2021/12/1 16:43
  */
-/*@Configuration
-@ImportResource(locations = {"classpath:flowable.cfg.xml"})
-public class FlowableConfig {
-}*/
+@Configuration
+public class FlowableConfig implements EngineConfigurationConfigurer<SpringProcessEngineConfiguration> {
+
+    @Override
+    public void configure(SpringProcessEngineConfiguration engineConfiguration) {
+        engineConfiguration.setActivityFontName("宋体");
+        engineConfiguration.setLabelFontName("宋体");
+        engineConfiguration.setAnnotationFontName("宋体");
+    }
+}

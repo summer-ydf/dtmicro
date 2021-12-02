@@ -3,11 +3,7 @@ package com.cms.workflow.controller;
 import com.cms.common.result.ResultUtil;
 import com.cms.workflow.entity.FlowInstanceEntity;
 import com.cms.workflow.service.FlowInstanceService;
-import org.flowable.engine.HistoryService;
-import org.flowable.engine.ProcessEngine;
-import org.flowable.engine.RepositoryService;
-import org.flowable.engine.RuntimeService;
-import org.flowable.engine.TaskService;
+import com.cms.workflow.service.WorkFlowService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -26,6 +23,8 @@ public class WorkFlowController {
 
     @Autowired
     private FlowInstanceService flowInstanceService;
+    @Autowired
+    private WorkFlowService workFlowService;
 
     @GetMapping(value = "/getPort/{userId}")
 //    @SentinelResource(value = "/getPort/{userId}",blockHandler = "testBlockHandler")
@@ -51,6 +50,11 @@ public class WorkFlowController {
     @PostMapping(value = "/createDeployment")
     public ResultUtil<?> createDeployment() {
         return flowInstanceService.createDeployment();
+    }
+
+    @GetMapping(value = "/genProcessDiagram")
+    public void genProcessDiagram(HttpServletResponse httpServletResponse, String processId) {
+        workFlowService.genProcessDiagram(httpServletResponse,processId);
     }
 
 }
