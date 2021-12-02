@@ -1,5 +1,6 @@
 package com.cms.workflow.controller;
 
+import com.api.workflow.feign.WorkflowFeignService;
 import com.cms.common.result.ResultUtil;
 import com.cms.workflow.entity.FlowInstanceEntity;
 import com.cms.workflow.service.FlowInstanceService;
@@ -36,10 +37,6 @@ public class WorkFlowController {
     public String savePort() {
         return "添加成功";
     }
-
-//    public String testBlockHandler(BlockException blockException) {
-//        return "自定义流控："+ blockException;
-//    }
 
     @GetMapping(value = "/test")
     public ResultUtil<List<FlowInstanceEntity>> list() {
