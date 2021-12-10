@@ -1,4 +1,4 @@
-package com.cms.job.jobbean;
+package com.cms.job.task;
 
 import java.io.Serializable;
 import java.util.Map;
