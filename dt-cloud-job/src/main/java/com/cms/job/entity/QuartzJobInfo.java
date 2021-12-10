@@ -40,11 +40,6 @@ public class QuartzJobInfo implements Serializable {
     private String cronExpression;
 
     /**
-     * 任务状态（1：启动 0：关闭）
-     */
-    private Integer status;
-
-    /**
      * 存储数据
      */
     private JobDataMap dataMap;
