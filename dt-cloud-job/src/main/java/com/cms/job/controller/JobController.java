@@ -74,4 +74,10 @@ public class JobController {
             return ResultUtil.error();
         }
     }
+
+    @PostMapping("/checkExistsJob")
+    public ResultUtil<String> checkExists(@RequestParam String taskId) {
+        boolean aBoolean = quartzUtils.checkExists(taskId);
+        return ResultUtil.success(aBoolean ? "任务已经存在" : "任务不存在");
+    }
 }

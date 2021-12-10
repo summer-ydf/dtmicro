@@ -168,11 +168,11 @@ public class QuartzUtils implements ApplicationContextAware {
      * @param taskId 任务ID
      * @return 返回
      */
-    public static boolean checkExists(String taskId){
+    public boolean checkExists(String taskId) {
         boolean flag = true;
         JobKey jobKey = JobKey.jobKey(taskId);
         try {
-            return quartzScheduler.checkExists(jobKey);
+            quartzScheduler.checkExists(jobKey);
         } catch (SchedulerException e) {
             flag = false;
         }
