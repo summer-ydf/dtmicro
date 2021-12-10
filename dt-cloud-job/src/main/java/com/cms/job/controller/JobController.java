@@ -2,7 +2,6 @@ package com.cms.job.controller;
 
 import com.cms.common.result.ResultUtil;
 import com.cms.job.entity.QuartzJobInfo;
-import com.cms.job.jobbean.CronProcessJob;
 import com.cms.job.jobbean.CronProjectJob;
 import com.cms.job.utils.QuartzUtils;
 import org.quartz.SchedulerException;

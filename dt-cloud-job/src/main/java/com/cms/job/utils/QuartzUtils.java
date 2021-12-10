@@ -29,20 +29,26 @@ import org.springframework.util.ObjectUtils;
 @Component
 public class QuartzUtils implements ApplicationContextAware {
 
-//    @Autowired
-//    @Qualifier("Scheduler")
-//    private Scheduler scheduler;
-
     /**
      * 调度任务对象key
      */
     public static final String SCHEDULE_TASK_OBJ_KEY = "scheduleTaskObjKey";
+
     /**
      * taskId参数key
      */
     public static final String TASK_ID = "taskId";
 
     private static Scheduler quartzScheduler;
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        try{
+            quartzScheduler = applicationContext.getBean(Scheduler.class);
+        }catch (Exception e){
+            log.warn("load quartz from spring fail");
+        }
+    }
 
     /**
      * 创建定时任务
@@ -158,15 +164,6 @@ public class QuartzUtils implements ApplicationContextAware {
         } else {
             return false;
         }
-
     }
 
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        try{
-            quartzScheduler = applicationContext.getBean(Scheduler.class);
-        }catch (Exception e){
-            log.warn("load quartz from spring fail");
-        }
-    }
 }
