@@ -1,7 +1,7 @@
 package com.cms.job.utils;
 
+import com.cms.common.utils.SysCmsUtils;
 import com.cms.job.entity.QuartzJobInfo;
-import lombok.extern.slf4j.Slf4j;
 import org.quartz.CronScheduleBuilder;
 import org.quartz.CronTrigger;
 import org.quartz.JobBuilder;
@@ -15,8 +15,6 @@ import org.quartz.Trigger;
 import org.quartz.TriggerBuilder;
 import org.quartz.TriggerKey;
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
@@ -25,7 +23,6 @@ import org.springframework.util.ObjectUtils;
 /**
  * @author ydf Created by 2021/12/10 14:21
  */
-@Slf4j
 @Component
 public class QuartzUtils implements ApplicationContextAware {
 
@@ -46,7 +43,7 @@ public class QuartzUtils implements ApplicationContextAware {
         try{
             quartzScheduler = applicationContext.getBean(Scheduler.class);
         }catch (Exception e){
-            log.warn("load quartz from spring fail");
+            SysCmsUtils.log.warn("load quartz from spring fail");
         }
     }
 
@@ -78,7 +75,7 @@ public class QuartzUtils implements ApplicationContextAware {
         try {
             quartzScheduler.scheduleJob(jobDetail, trigger);
         } catch (SchedulerException e) {
-            log.error("创建任务异常：{}",e.toString());
+            SysCmsUtils.log.warn("创建任务异常：{}",e.toString());
             flag = false;
         }
         return flag;
@@ -154,11 +151,11 @@ public class QuartzUtils implements ApplicationContextAware {
         JobKey jobKey = new JobKey(taskId);
         if (quartzScheduler.checkExists(jobKey) && quartzScheduler.checkExists(triggerKey)) {
             CronTrigger trigger = (CronTrigger) quartzScheduler.getTrigger(triggerKey);
-            // 表达式调度构建器,不立即执行
+            // 不立即执行
             CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(cronExpression).withMisfireHandlingInstructionDoNothing();
-            // 按新的cronExpression表达式重新构建trigger
+            // 重新构建trigger
             trigger = trigger.getTriggerBuilder().withIdentity(triggerKey).withSchedule(scheduleBuilder).build();
-            // 按新的trigger重新设置job执行
+            // 重新设置job
             quartzScheduler.rescheduleJob(triggerKey, trigger);
             return true;
         } else {

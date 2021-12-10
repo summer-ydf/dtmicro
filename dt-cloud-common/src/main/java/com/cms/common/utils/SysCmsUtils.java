@@ -46,7 +46,7 @@ public class SysCmsUtils {
         return SNOW_FLAKE.nextIdStr();
     }
 
-    private static final Log log = LogFactory.get("cms");
+    public static final Log log = LogFactory.get("cms");
 
     public static void main(String[] args) {
         String keyId = generateKeyId();
