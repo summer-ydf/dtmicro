@@ -1,7 +1,9 @@
 package com.cms.job.controller;
 
 import com.cms.common.result.ResultUtil;
+import com.cms.job.entity.QuartzJobInfo;
 import com.cms.job.jobbean.CronProcessJob;
+import com.cms.job.jobbean.CronProjectJob;
 import com.cms.job.utils.QuartzUtils;
 import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +23,17 @@ public class JobController {
     private QuartzUtils quartzUtils;
 
     @PostMapping("/scheduleJob")
-    public ResultUtil<String> scheduleJob(@RequestParam String jobName, @RequestParam String jobCron,
-                                          @RequestParam String jobGroupName, @RequestParam String data) {
-        quartzUtils.addScheduleJob(CronProcessJob.class, jobName, jobCron,jobGroupName, data);
-        return ResultUtil.success(jobName);
+    public ResultUtil<String> scheduleJob(@RequestParam String taskId, @RequestParam String jobName, @RequestParam String jobCron,
+                                          @RequestParam String jobGroupName) {
+        QuartzJobInfo taskInfo = new QuartzJobInfo();
+        taskInfo.setTaskId(taskId);
+        taskInfo.setJobClass(CronProjectJob.class);
+        taskInfo.setCronExpression(jobCron);
+        taskInfo.setTaskName(jobName);
+        taskInfo.setTaskGroupName(jobGroupName);
+        // 启动定时任务
+        Boolean aBoolean = quartzUtils.addScheduleJob(taskInfo);
+        return ResultUtil.success(aBoolean ? "任务开启" : "任务不存在");
     }
 
     @PostMapping("/updateScheduleJob")
