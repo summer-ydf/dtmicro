@@ -104,4 +104,31 @@ public class QuartzUtils {
             return true;
         }
     }
+
+    /**
+     * 修改任务
+     * @param jobName 任务名称
+     * @param jobCron 时间表达式 （如：0/5 * * * * ? ）
+     * @param jobGroupName 任务组名称
+     * @return 返回
+     */
+    public Boolean updateScheduleJob(String jobName, String jobCron, String jobGroupName) throws SchedulerException {
+        TriggerKey triggerKey = TriggerKey.triggerKey(jobName, jobGroupName);
+        JobKey jobKey = new JobKey(jobName, jobGroupName);
+        if (scheduler.checkExists(jobKey) && scheduler.checkExists(triggerKey)) {
+            CronTrigger trigger = (CronTrigger) scheduler.getTrigger(triggerKey);
+            // 表达式调度构建器,不立即执行
+            CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(jobCron).withMisfireHandlingInstructionDoNothing();
+            // 按新的cronExpression表达式重新构建trigger
+            trigger = trigger.getTriggerBuilder().withIdentity(triggerKey)
+                    .withSchedule(scheduleBuilder).build();
+            // 按新的trigger重新设置job执行
+            scheduler.rescheduleJob(triggerKey, trigger);
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
 }
