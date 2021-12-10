@@ -98,26 +98,20 @@ public class QuartzUtils implements ApplicationContextAware {
 
     /**
      * 删除任务
-     * @param jobName 任务名称
-     * @param jobGroupName 任务组名称
+     * @param taskId 任务ID
      */
-    public void deleteScheduleJob(String jobName, String jobGroupName) throws SchedulerException {
-        // 暂停触发器
-        quartzScheduler.pauseTrigger(new TriggerKey(jobName, jobGroupName));
-        // 移除触发器中的任务
-        quartzScheduler.unscheduleJob(new TriggerKey(jobName, jobGroupName));
-        // 删除任务
-        quartzScheduler.deleteJob(new JobKey(jobName, jobGroupName));
+    public void deleteScheduleJob(String taskId) throws SchedulerException {
+        JobKey jobKey = JobKey.jobKey(taskId);
+        quartzScheduler.deleteJob(jobKey);
     }
 
     /**
      * 暂停某个任务
-     * @param jobName 任务名称
-     * @param jobGroupName 任务组名称
+     * @param taskId 任务ID
      * @return 返回
      */
-    public Boolean pauseScheduleJob(String jobName, String jobGroupName) throws SchedulerException {
-        JobKey jobKey = new JobKey(jobName, jobGroupName);
+    public Boolean pauseScheduleJob(String taskId) throws SchedulerException {
+        JobKey jobKey = JobKey.jobKey(taskId);
         JobDetail jobDetail = quartzScheduler.getJobDetail(jobKey);
         if (jobDetail == null) {
             return false;
@@ -129,12 +123,11 @@ public class QuartzUtils implements ApplicationContextAware {
 
     /**
      * 恢复某个任务
-     * @param jobName 任务名称
-     * @param jobGroupName 任务组名称
+     * @param taskId 任务ID
      * @return 返回
      */
-    public Boolean resumeScheduleJob(String jobName, String jobGroupName) throws SchedulerException {
-        JobKey jobKey = new JobKey(jobName, jobGroupName);
+    public Boolean resumeScheduleJob(String taskId) throws SchedulerException {
+        JobKey jobKey = JobKey.jobKey(taskId);
         JobDetail jobDetail = quartzScheduler.getJobDetail(jobKey);
         if (jobDetail == null) {
             return false;
@@ -146,18 +139,17 @@ public class QuartzUtils implements ApplicationContextAware {
 
     /**
      * 修改任务
-     * @param jobName 任务名称
-     * @param jobCron 时间表达式 （如：0/5 * * * * ? ）
-     * @param jobGroupName 任务组名称
+     * @param taskId 任务ID
+     * @param cronExpression 时间表达式 （如：0/5 * * * * ? ）
      * @return 返回
      */
-    public Boolean updateScheduleJob(String jobName, String jobCron, String jobGroupName) throws SchedulerException {
-        TriggerKey triggerKey = TriggerKey.triggerKey(jobName, jobGroupName);
-        JobKey jobKey = new JobKey(jobName, jobGroupName);
+    public Boolean updateScheduleJob(String taskId, String cronExpression) throws SchedulerException {
+        TriggerKey triggerKey = TriggerKey.triggerKey(taskId);
+        JobKey jobKey = new JobKey(taskId);
         if (quartzScheduler.checkExists(jobKey) && quartzScheduler.checkExists(triggerKey)) {
             CronTrigger trigger = (CronTrigger) quartzScheduler.getTrigger(triggerKey);
             // 表达式调度构建器,不立即执行
-            CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(jobCron).withMisfireHandlingInstructionDoNothing();
+            CronScheduleBuilder scheduleBuilder = CronScheduleBuilder.cronSchedule(cronExpression).withMisfireHandlingInstructionDoNothing();
             // 按新的cronExpression表达式重新构建trigger
             trigger = trigger.getTriggerBuilder().withIdentity(triggerKey).withSchedule(scheduleBuilder).build();
             // 按新的trigger重新设置job执行

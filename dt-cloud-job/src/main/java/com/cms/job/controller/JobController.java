@@ -22,8 +22,8 @@ public class JobController {
     @Autowired
     private QuartzUtils quartzUtils;
 
-    @PostMapping("/scheduleJob")
-    public ResultUtil<String> scheduleJob(@RequestParam String taskId, @RequestParam String jobName, @RequestParam String jobCron,
+    @PostMapping("/addScheduleJob")
+    public ResultUtil<String> addScheduleJob(@RequestParam String taskId, @RequestParam String jobName, @RequestParam String jobCron,
                                           @RequestParam String jobGroupName) {
         QuartzJobInfo taskInfo = new QuartzJobInfo();
         taskInfo.setTaskId(taskId);
@@ -37,20 +37,19 @@ public class JobController {
     }
 
     @PostMapping("/updateScheduleJob")
-    public ResultUtil<String> updateScheduleJob(@RequestParam String jobName, @RequestParam String jobCron,
-                                                @RequestParam String jobGroupName) {
+    public ResultUtil<String> updateScheduleJob(@RequestParam String taskId, @RequestParam String jobCron) {
         try {
-            Boolean aBoolean = quartzUtils.updateScheduleJob(jobName, jobCron, jobGroupName);
+            Boolean aBoolean = quartzUtils.updateScheduleJob(taskId, jobCron);
             return ResultUtil.success(aBoolean ? "任务已修改" : "任务不存在");
         } catch (SchedulerException e) {
             return ResultUtil.error();
         }
     }
 
-    @PostMapping("/deleteJob")
-    public ResultUtil<String> deleteJob(@RequestParam String jobName, @RequestParam String jobGroupName) {
+    @PostMapping("/deleteScheduleJob")
+    public ResultUtil<String> deleteScheduleJob(@RequestParam String taskId) {
         try {
-            quartzUtils.deleteScheduleJob(jobName, jobGroupName);
+            quartzUtils.deleteScheduleJob(taskId);
             return ResultUtil.success("删除成功");
         } catch (SchedulerException e) {
             return ResultUtil.success("删除失败");
@@ -58,9 +57,9 @@ public class JobController {
     }
 
     @PostMapping("/pauseScheduleJob")
-    public ResultUtil<String> pauseScheduleJob(@RequestParam String jobName, @RequestParam String jobGroupName) {
+    public ResultUtil<String> pauseScheduleJob(@RequestParam String taskId) {
         try {
-            Boolean aBoolean = quartzUtils.pauseScheduleJob(jobName, jobGroupName);
+            Boolean aBoolean = quartzUtils.pauseScheduleJob(taskId);
             return ResultUtil.success(aBoolean ? "任务已暂停" : "任务不存在");
         } catch (SchedulerException e) {
             return ResultUtil.error();
@@ -68,9 +67,9 @@ public class JobController {
     }
 
     @PostMapping("/resumeScheduleJob")
-    public ResultUtil<String> resumeScheduleJob(@RequestParam String jobName, @RequestParam String jobGroupName) {
+    public ResultUtil<String> resumeScheduleJob(@RequestParam String taskId) {
         try {
-            Boolean aBoolean = quartzUtils.resumeScheduleJob(jobName, jobGroupName);
+            Boolean aBoolean = quartzUtils.resumeScheduleJob(taskId);
             return ResultUtil.success(aBoolean ? "任务已恢复" : "任务不存在");
         } catch (SchedulerException e) {
             return ResultUtil.error();
