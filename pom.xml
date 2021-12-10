@@ -37,6 +37,7 @@
         <druid.version>1.1.21</druid.version>
         <mybatis.plus.version>3.4.3</mybatis.plus.version>
         <flowable.version>6.5.0</flowable.version>
+        <quartz.version>2.3.5.RELEASE</quartz.version>
     </properties>
 
     <!--引入公共依赖全局使用-->
