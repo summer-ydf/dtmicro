@@ -163,4 +163,20 @@ public class QuartzUtils implements ApplicationContextAware {
         }
     }
 
+    /**
+     * 检验是否存在相同的计划任务
+     * @param taskId 任务ID
+     * @return 返回
+     */
+    public static boolean checkExists(String taskId){
+        boolean flag = true;
+        JobKey jobKey = JobKey.jobKey(taskId);
+        try {
+            return quartzScheduler.checkExists(jobKey);
+        } catch (SchedulerException e) {
+            flag = false;
+        }
+        return flag;
+    }
+
 }
