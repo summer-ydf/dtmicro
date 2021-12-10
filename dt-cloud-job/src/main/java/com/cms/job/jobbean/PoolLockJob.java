@@ -27,7 +27,7 @@ public abstract class PoolLockJob implements Job {
             JobDetail jobDetail = jobExecutionContext.getJobDetail();
             JobDataMap jobDataMap = jobDetail.getJobDataMap();
             String taskId = jobDataMap.getString("taskId");
-            log.info("CRON表达式任务执行：{}",taskId);
+            log.info("任务开始执行：{}",taskId);
             execute();
         }finally {
             locker.unlock();

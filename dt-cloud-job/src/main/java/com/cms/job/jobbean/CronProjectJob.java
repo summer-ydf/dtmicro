@@ -14,6 +14,6 @@ public class CronProjectJob extends PoolLockJob {
 
     @Override
     public void execute() {
-        System.out.println("查询数据库->>>"+ DateFormatUtils.format(new Date(),"yyyy-MM-dd HH:mm:ss"));
+        log.info("定时查询订单状态：{}",DateFormatUtils.format(new Date(),"yyyy-MM-dd HH:mm:ss"));
     }
 }
