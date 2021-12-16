@@ -15,3 +15,7 @@ management:
 feign:
   sentinel:
     enabled: true  # 开启服务调用失败处理
+  httpclient:
+    enabled: false # 默认启用的是HttpClient客户端连接，性能不好
+  okhttp:
+    enabled: true # 使用okhttp客户端
