@@ -19,3 +19,7 @@ feign:
     enabled: false # 默认启用的是HttpClient客户端连接，性能不好
   okhttp:
     enabled: true # 使用okhttp客户端
+logging:
+  level:
+    # feign日志以什么级别监控哪个接口
+    com.api.manage.feign.ManageFeignService: debug
