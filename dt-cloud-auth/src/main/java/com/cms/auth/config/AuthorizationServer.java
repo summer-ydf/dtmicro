@@ -15,6 +15,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
+import org.springframework.security.oauth2.provider.code.InMemoryAuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
@@ -54,11 +55,19 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
     /**
      * 授权码模式
      */
-    @Autowired
     private AuthorizationCodeServices authenticationCodeService;
+
+    @Bean
+    public AuthorizationCodeServices authorizationCodeServices() {
+        if (authenticationCodeService == null) {
+            authenticationCodeService = new InMemoryAuthorizationCodeServices();
+        }
+        return authenticationCodeService;
+    }
 
     /**
      * 配置客户端详情服务
+     * 申请授权码：http://localhost:9401/oauth/authorize?client_id=c1&response_type=code&scope=all&redirect_uri=http://www.baidu.com
      * @param clients 客户端信息
      * @throws Exception 异常
      */
@@ -69,7 +78,7 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
                 // 客户端的ID
                 .withClient("c1")
                 // 客户端的秘钥
-                .secret(new BCryptPasswordEncoder().encode("secret"))
+                .secret(passwordEncoder.encode("secret"))
                 // 允许访问的资源列表
                 .resourceIds("res1")
                 // 允许给客户端授权类型，一共五种
