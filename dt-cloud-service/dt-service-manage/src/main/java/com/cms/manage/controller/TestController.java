@@ -6,12 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author ydf Created by 2021/11/23 15:40
  */
 @RestController
+@RequestMapping(value = "/manage")
 public class TestController {
 
     @Autowired
@@ -27,5 +30,10 @@ public class TestController {
     public String save() {
         System.out.println("调用方法->>>");
         return testService.save();
+    }
+
+    @GetMapping("/loadUserByUsername")
+    public String loadUserByUsername(@RequestParam String username){
+        return "调用成功，返回用户信息："+username;
     }
 }

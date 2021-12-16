@@ -15,6 +15,7 @@
     <modules>
         <module>dt-api-manage</module>
         <module>dt-api-workflow</module>
+        <module>dt-api-common</module>
     </modules>
 
     <dependencies>

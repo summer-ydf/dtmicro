@@ -1,5 +1,6 @@
 package com.api.workflow.factory;
 
+import com.api.common.feign.FeignFailFallback;
 import com.api.workflow.feign.WorkflowFeignService;
 import com.cms.common.result.ResultUtil;
 import org.slf4j.Logger;

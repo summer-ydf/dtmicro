@@ -18,10 +18,10 @@
     </properties>
 
     <dependencies>
-        <!-- openfeign服务调用 -->
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <groupId>com.dt</groupId>
+            <artifactId>dt-api-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
