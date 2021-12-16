@@ -22,8 +22,6 @@ import java.util.Set;
 @CommonsLog
 public class CanalClientInstance {
 
-    private static final String destination = "example";
-
     private CanalClient client;
 
     /**
@@ -49,12 +47,13 @@ public class CanalClientInstance {
             String password = environment.getProperty(CanalConstants.CANAL_PASSWORD);
             int port = Integer.parseInt(Objects.requireNonNull(environment.getProperty(CanalConstants.CANAL_PORT)));
             String databases = environment.getProperty(CanalConstants.CANAL_DATABASE);
+            String destination = environment.getProperty(CanalConstants.CANAL_DESTINATION);
             SocketAddress address = new InetSocketAddress(ip, port);
             SysCmsUtils.log.warn("canal链接："+address);
             // 创建Canal链接,ip直连模式
             CanalConnector connector= CanalConnectors.newSingleConnector(address, destination, user, password);
             DefaultMessageConvert convert = new DefaultMessageConvert(databases);
-            Set<Class<?>> classSet = ScanClassUtils.scanClass("com.cms.item.canal.processer", Canal.class);
+            Set<Class<?>> classSet = ScanClassUtils.scanClass(CanalConstants.CANAL_SCAN_CLASS_PATH, Canal.class);
             for (Class<?> aClass : classSet) {
                 convert.register((Class<? extends MessageProcess>) aClass);
             }

@@ -33,3 +33,4 @@ canal:
   password: canal
   port: 11111
   defaultDatabaseName: test_jdbc
+  destination: example

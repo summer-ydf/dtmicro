@@ -12,5 +12,7 @@ public class CanalConstants {
     public static final String CANAL_USER                        = ROOT + "." + "user";
     public static final String CANAL_PASSWORD                    = ROOT + "." + "password";
     public static final String CANAL_DATABASE                    = ROOT + "." + "defaultDatabaseName";
+    public static final String CANAL_DESTINATION                 = ROOT + "." + "destination";
+    public static final String CANAL_SCAN_CLASS_PATH             = "com.cms.item.canal.processer";
 
 }
