@@ -12,8 +12,8 @@ spring:
         locator:
           enabled: true
       routes:
-        - id: cms_routh
-          uri: lb://cms-service-manage
+        - id: cms-auth
+          uri: lb://cms-service-auth
           predicates:
             - Path=/**
 
