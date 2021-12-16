@@ -67,6 +67,7 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
 
     /**
      * 配置客户端详情服务
+     * 参考：https://github.com/hxrui/youlai-mall
      * 申请授权码：http://localhost:9401/oauth/authorize?client_id=c1&response_type=code&scope=all&redirect_uri=http://www.baidu.com
      * @param clients 客户端信息
      * @throws Exception 异常
