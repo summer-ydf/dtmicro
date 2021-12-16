@@ -1,10 +1,9 @@
-package com.cms.manage;
+package com.cms.item;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
@@ -14,11 +13,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @SpringBootApplication
 @EnableTransactionManagement
 @EnableDiscoveryClient
-@MapperScan(basePackages = {"com.cms.manage.mapper"})
-@EnableFeignClients(basePackages ={"com.api.*.feign"})
-public class CmsManageApplication {
+@MapperScan(basePackages = {"com.cms.item.mapper"})
+public class CmsItemApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(CmsManageApplication.class,args);
+        SpringApplication.run(CmsItemApplication.class,args);
     }
 }

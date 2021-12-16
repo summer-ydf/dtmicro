@@ -15,6 +15,7 @@
     <modules>
         <module>dt-service-manage</module>
         <module>dt-service-workflow</module>
+        <module>dt-service-item</module>
     </modules>
 
 </project>
