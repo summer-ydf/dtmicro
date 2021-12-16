@@ -1,6 +1,7 @@
 package com.cms.item;
 
 import com.cms.common.utils.SysCmsUtils;
+import com.cms.item.canal.client.CanalClientInstance;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.boot.SpringApplication;
@@ -34,12 +35,12 @@ public class CmsItemApplication implements DisposableBean {
     @EventListener
     public void deployEventListener(ApplicationReadyEvent event) {
         SysCmsUtils.log.info("程序触发上下文监听完成事件....");
-        //CanalClientInstance.getInstance(environment).start();
+        CanalClientInstance.getInstance(environment).start();
     }
 
     @Override
     public void destroy() {
         SysCmsUtils.log.info("程序触发销毁事件....");
-        //CanalClientInstance.getInstance(environment).stop();
+        CanalClientInstance.getInstance(environment).stop();
     }
 }

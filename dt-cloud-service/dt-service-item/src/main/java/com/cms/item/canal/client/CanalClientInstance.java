@@ -2,6 +2,7 @@ package com.cms.item.canal.client;
 
 import com.alibaba.otter.canal.client.CanalConnector;
 import com.alibaba.otter.canal.client.CanalConnectors;
+import com.cms.common.utils.SysCmsUtils;
 import com.cms.item.canal.CanalConstants;
 import com.cms.item.canal.ScanClassUtils;
 import com.cms.item.canal.annotation.Canal;
@@ -25,7 +26,10 @@ public class CanalClientInstance {
 
     private CanalClient client;
 
-    private static CanalClientInstance instance;
+    /**
+     * 使用volatile关键字修饰共享变量
+     */
+    private static volatile CanalClientInstance instance;
 
     public synchronized static CanalClientInstance getInstance(Environment environment) {
         if (instance == null) {
@@ -38,30 +42,20 @@ public class CanalClientInstance {
         return instance;
     }
 
-    private CanalClientInstance(Environment environment){
-        System.out.println("构造方法开始加载========================");
+    private CanalClientInstance(Environment environment) {
         try{
             String ip = environment.getProperty(CanalConstants.CANAL_IP,"localhost");
             String user = environment.getProperty(CanalConstants.CANAL_USER);
             String password = environment.getProperty(CanalConstants.CANAL_PASSWORD);
             int port = Integer.parseInt(Objects.requireNonNull(environment.getProperty(CanalConstants.CANAL_PORT)));
             String databases = environment.getProperty(CanalConstants.CANAL_DATABASE);
-            System.out.println(ip);
-            System.out.println(user);
-            System.out.println(password);
-            System.out.println(port);
-            System.out.println(databases);
             SocketAddress address = new InetSocketAddress(ip, port);
-            System.out.println("address-》》》"+address);
+            SysCmsUtils.log.warn("canal链接："+address);
             // 创建Canal链接,ip直连模式
             CanalConnector connector= CanalConnectors.newSingleConnector(address, destination, user, password);
             DefaultMessageConvert convert = new DefaultMessageConvert(databases);
-            Set<Class<?>> classSet = ScanClassUtils.scanClass("com.example.dtcanal.canal.processer", Canal.class);
-            System.out.println("类==========");
-            System.out.println(classSet);
+            Set<Class<?>> classSet = ScanClassUtils.scanClass("com.cms.item.canal.processer", Canal.class);
             for (Class<?> aClass : classSet) {
-                System.out.println("===============");
-                System.out.println(aClass.getName());
                 convert.register((Class<? extends MessageProcess>) aClass);
             }
             // 初始化Canal
@@ -69,20 +63,20 @@ public class CanalClientInstance {
             this.client.setConnector(connector);
             this.client.setConvert(convert);
             this.client.setDestination(destination);
-            log.warn("init canal success..");
+            SysCmsUtils.log.warn("canal初始化成功...");
         }catch (Exception e){
-            log.warn("init canal error",e);
+            SysCmsUtils.log.error("canal初始化错误..."+e.getMessage());
         }
     }
 
-    public void start(){
-        if(instance.client!=null){
+    public void start() {
+        if(instance.client != null) {
             instance.client.start();
         }
     }
 
-    public void stop(){
-        if(instance.client!=null){
+    public void stop() {
+        if(instance.client != null) {
             instance.client.stop();
         }
     }

@@ -2,6 +2,7 @@ package com.cms.item.canal.client;
 
 import com.alibaba.otter.canal.client.CanalConnector;
 import com.alibaba.otter.canal.protocol.Message;
+import com.cms.common.utils.SysCmsUtils;
 import com.cms.item.canal.service.MessageConvert;
 import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.util.Assert;
@@ -60,17 +61,15 @@ public class CanalClient implements ClientService {
     private final Thread.UncaughtExceptionHandler handler = new Thread.UncaughtExceptionHandler() {
         @Override
         public void uncaughtException(Thread t, Throwable e) {
-            log.error("解析事件有一个错误 ", e);
+            SysCmsUtils.log.warn("解析事件有一个错误...",e);
         }
     };
 
     @Override
     public void start() {
-        System.out.println("连接器准备就绪============");
-        System.out.println(connector);
         Assert.notNull(connector, "连接器不能为空");
-        log.info("Canal client starting....");
-        thread.setName("main-CanalThread");
+        SysCmsUtils.log.warn("canal连接成功...");
+        thread.setName("cms-canal-thread");
         thread.setUncaughtExceptionHandler(handler);
         thread.start();
         running = true;
@@ -78,7 +77,7 @@ public class CanalClient implements ClientService {
 
     @Override
     public void stop() {
-        log.info("Canal close ....");
+        SysCmsUtils.log.warn("canal关闭...");
         if (!running) {
             return;
         }
@@ -87,7 +86,7 @@ public class CanalClient implements ClientService {
             try {
                 thread.join();
             } catch (InterruptedException e) {
-                log.warn("Canal客户端开始关闭 失败!", e);
+                SysCmsUtils.log.warn("客户端开始关闭 失败!...",e);
             }
         }
     }
@@ -107,7 +106,7 @@ public class CanalClient implements ClientService {
                     long batchId = message.getId();
                     if (batchId == -1 || message.getEntries().isEmpty()) {
                         connector.ack(batchId);
-                        System.out.println("未拿到数据，暂停2000豪秒继续订阅 : " + batchId);
+                        SysCmsUtils.log.info("未拿到数据，暂停2000豪秒继续订阅 : "+ batchId);
                         Thread.sleep(200);
                     } else {
                         try {

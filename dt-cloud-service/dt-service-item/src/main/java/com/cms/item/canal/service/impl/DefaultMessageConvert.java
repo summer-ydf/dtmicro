@@ -6,6 +6,7 @@ import com.alibaba.otter.canal.protocol.CanalEntry.Column;
 import com.alibaba.otter.canal.protocol.CanalEntry.RowChange;
 import com.alibaba.otter.canal.protocol.CanalEntry.RowData;
 import com.alibaba.otter.canal.protocol.Message;
+import com.cms.common.utils.SysCmsUtils;
 import com.cms.item.canal.annotation.Canal;
 import com.cms.item.canal.service.MessageConvert;
 import com.cms.item.canal.service.MessageProcess;
@@ -24,15 +25,13 @@ public class DefaultMessageConvert implements MessageConvert {
 
     protected static final String process_line = "-";
 
-    private static Map<String, MessageProcess> processMap = new ConcurrentHashMap<>();
+    private static final Map<String, MessageProcess> PROCESS_MAP = new ConcurrentHashMap<>();
 
     public DefaultMessageConvert(String database) {
-        System.out.println("类之间的调用===========");
-        System.out.println(database);
-        this.database=database;
+        SysCmsUtils.log.warn("canal初始化处理数据库："+database);
+        this.database = database;
     }
-
-
+    
     @Override
     public void convert(Message message) throws Exception {
         List<CanalEntry.Entry> entrys = message.getEntries();
@@ -44,17 +43,11 @@ public class DefaultMessageConvert implements MessageConvert {
     @Override
     public void register(Class<? extends MessageProcess> process) {
         Canal canal = process.getAnnotation(Canal.class);
-        System.out.println("类调用注册===========");
-        System.out.println(this.database);
-        System.out.println(canal);
-        System.out.println(process);
         if(canal != null) {
             String key = this.database + process_line + canal.table();
-            if(!processMap.containsKey(key)) {
-                System.out.println("->>>");
-                System.out.println(BeanUtils.instantiateClass(process));
+            if(!PROCESS_MAP.containsKey(key)) {
                 // BeanUtils.instantiateClass：初始化对象
-                processMap.put(key, BeanUtils.instantiateClass(process));
+                PROCESS_MAP.put(key, BeanUtils.instantiateClass(process));
             }
         }
     }
@@ -85,15 +78,10 @@ public class DefaultMessageConvert implements MessageConvert {
     private static void rowChange(CanalEntry.Entry entry) throws Exception {
         String dataBaseName = entry.getHeader().getSchemaName();
         String tableName = entry.getHeader().getTableName();
-        System.out.println("================");
-        System.out.println("数据库-》》》"+dataBaseName);
-        System.out.println("数据表-》》》"+tableName);
-        System.out.println("================");
         String key = dataBaseName + process_line + tableName;
-        System.out.println("key-》》》"+key);
-        System.out.println("processMap-》》》"+processMap);
-        if(processMap.containsKey(key)) {
-            MessageProcess process = processMap.get(key);
+        SysCmsUtils.log.info("canal处理数据库表名称："+tableName);
+        if(PROCESS_MAP.containsKey(key)) {
+            MessageProcess process = PROCESS_MAP.get(key);
             RowChange rowChange = RowChange.parseFrom(entry.getStoreValue());
             CanalEntry.EventType eventType = rowChange.getEventType();
             for (RowData rowData : rowChange.getRowDatasList()) {
@@ -122,15 +110,15 @@ public class DefaultMessageConvert implements MessageConvert {
     }
 
     private static void heartbeat(CanalEntry.Entry entry) {
-        System.out.println("心跳数据============");
+        SysCmsUtils.log.info("canal心跳数据...");
     }
 
     private static void transactionBegin(CanalEntry.Entry entry) {
-        System.out.println("事务开始===========");
+        SysCmsUtils.log.info("canal事务开始处理数据库表...");
     }
 
     private static void transactionEnd(CanalEntry.Entry entry) {
-        System.out.println("事务结束===========");
+        SysCmsUtils.log.info("canal事务处理结束...");
     }
 
     protected static JSONObject toJSONObject(List<Column> columns) {

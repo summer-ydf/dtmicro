@@ -26,3 +26,10 @@ mybatis-plus:
   mapper-locations: classpath*:com/cms/item/mapper/**/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+# canal配置
+canal:
+  ip: localhost
+  user: canal
+  password: canal
+  port: 11111
+  defaultDatabaseName: test_jdbc
