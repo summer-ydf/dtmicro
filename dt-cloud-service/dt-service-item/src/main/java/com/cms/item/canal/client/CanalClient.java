@@ -17,15 +17,11 @@ public class CanalClient implements ClientService {
 
     private volatile boolean running = false;
 
-    private static final String desName = "destination";
-
     // Canal链接对象
     private CanalConnector connector;
 
     // 暴露接口调用
     private MessageConvert convert;
-
-    private String destination;
 
     public void setConnector(CanalConnector connector) {
         this.connector = connector;
@@ -41,14 +37,6 @@ public class CanalClient implements ClientService {
 
     public void setConvert(MessageConvert convert) {
         this.convert = convert;
-    }
-
-    public String getDestination() {
-        return destination;
-    }
-
-    public void setDestination(String destination) {
-        this.destination = destination;
     }
 
     private final Thread thread = new Thread(new Runnable() {

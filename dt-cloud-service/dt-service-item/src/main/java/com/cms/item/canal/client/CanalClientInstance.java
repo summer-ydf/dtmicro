@@ -62,7 +62,7 @@ public class CanalClientInstance {
             this.client = new CanalClient();
             this.client.setConnector(connector);
             this.client.setConvert(convert);
-            this.client.setDestination(destination);
+//            this.client.setDestination(destination);
             SysCmsUtils.log.warn("canal初始化成功...");
         }catch (Exception e){
             SysCmsUtils.log.error("canal初始化错误..."+e.getMessage());
