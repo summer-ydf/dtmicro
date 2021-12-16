@@ -97,9 +97,9 @@ public class CanalClient implements ClientService {
             try {
                 Thread.sleep(1000);
                 connector.connect();
-                log.info("Connector connecting!");
+                SysCmsUtils.log.info("Connector connecting!");
                 connector.subscribe();
-                log.info("Connector connecting complate!");
+                SysCmsUtils.log.info("Connector connecting complate!");
                 while (running) {
                     // 获取指定数量的数据
                     Message message =  connector.getWithoutAck(batchSize, 2000L, TimeUnit.MILLISECONDS);
@@ -111,13 +111,13 @@ public class CanalClient implements ClientService {
                     } else {
                         try {
                             if (convert == null) {
-                                log.warn("没有消息处理器，数据丢失 ....");
+                                SysCmsUtils.log.warn("没有消息处理器，数据丢失 ....");
                             } else {
                                 convert.convert(message);
                             }
                             connector.ack(batchId);
                         } catch (Exception e) {
-                            log.error("处理失败, 回滚数据", e);
+                            SysCmsUtils.log.error("处理失败, 回滚数据", e);
                             connector.rollback(batchId);
                             throw e;
                         }
@@ -125,12 +125,12 @@ public class CanalClient implements ClientService {
 
                 }
             } catch (InterruptedException e) {
-                log.warn("线程中断...", e);
+                SysCmsUtils.log.warn("线程中断...", e);
                 running = false;
             } catch (Exception e) {
-                log.error("线程错误!", e);
+                SysCmsUtils.log.error("线程错误!", e);
             } finally {
-                log.info("connector关闭 ....");
+                SysCmsUtils.log.warn("connector关闭 ....");
                 connector.disconnect();
             }
         }
