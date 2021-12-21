@@ -31,14 +31,16 @@
         <spring.cloud.version>2020.0.4</spring.cloud.version>
         <spring.cloud.alibaba.version>2021.1</spring.cloud.alibaba.version>
         <fastjson.version>1.2.78</fastjson.version>
-        <lombok.version>1.16.20</lombok.version>
-        <hutool.version>5.1.1</hutool.version>
-        <mysql.version>8.0.18</mysql.version>
-        <druid.version>1.1.21</druid.version>
-        <mybatis.plus.version>3.4.3</mybatis.plus.version>
-        <flowable.version>6.5.0</flowable.version>
+        <lombok.version>1.18.22</lombok.version>
+        <hutool.version>5.7.17</hutool.version>
+        <mysql.version>8.0.25</mysql.version>
+        <druid.version>1.2.8</druid.version>
+        <mybatis.plus.version>3.4.3.4</mybatis.plus.version>
+        <flowable.version>6.7.1</flowable.version>
         <quartz.version>2.3.5.RELEASE</quartz.version>
-        <canal.version>1.1.4</canal.version>
+        <canal.version>1.1.5</canal.version>
+        <okhttp.version>11.7</okhttp.version>
+        <oauth2.version>2.6.1</oauth2.version>
     </properties>
 
     <!--引入公共依赖全局使用-->
