@@ -10,6 +10,9 @@ import java.util.Map;
  */
 public enum NumberEnum {
 
+    /**
+     * 枚举参数
+     */
     C001("1","一"),
     C002("2","二"),
     C003("3","三"),
@@ -17,9 +20,9 @@ public enum NumberEnum {
     C005("5","五"),
     C006("6","六");
 
-    private String code;
+    private final String code;
 
-    private String value;
+    private final String value;
 
     NumberEnum(String code, String value) {
         this.code = code;
@@ -47,7 +50,7 @@ public enum NumberEnum {
      * 转换为map集合
      * @return 返回map集合
      */
-    public static List<Map<String,String>> toCollateMap(){
+    public static List<Map<String,String>> toCollateMap() {
         NumberEnum[] numberEnums = values();
         List<Map<String,String>> list = new ArrayList<>();
         for(NumberEnum s : numberEnums){
