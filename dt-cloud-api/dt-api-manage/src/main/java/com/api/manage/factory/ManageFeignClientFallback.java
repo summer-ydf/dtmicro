@@ -26,6 +26,11 @@ public class ManageFeignClientFallback implements FeignFailFallback,FallbackFact
                 return error();
             }
 
+            @Override
+            public void deductProduct(Integer a) {
+                log.info("扣减库存服务未启用==============================");
+            }
+
         };
     }
 }

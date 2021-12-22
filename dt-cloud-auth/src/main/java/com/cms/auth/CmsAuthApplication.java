@@ -1,5 +1,6 @@
 package com.cms.auth;
 
+import com.alibaba.cloud.seata.feign.SeataFeignClientAutoConfiguration;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,7 +11,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 /**
  * @author ydf Created by 2021/11/25 11:45
  */
-@SpringBootApplication
+@SpringBootApplication(exclude = {SeataFeignClientAutoConfiguration.class})
 @EnableAuthorizationServer
 @EnableDiscoveryClient
 @EnableFeignClients(basePackages ={"com.api.*.feign"})

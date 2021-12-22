@@ -17,9 +17,10 @@ public class TestProductServiceImpl extends ServiceImpl<TestProductMapper, TestP
     @Transactional(rollbackFor = RuntimeException.class)
     public void deductProduct(Integer a) {
         TestProductEntity productEntity = new TestProductEntity();
-        productEntity.setKey(a);
+        productEntity.setC(a);
         this.baseMapper.insert(productEntity);
         // 远程接口抛出异常
         int n = 10/0;
+        System.out.println("调用成功->>>"+a);
     }
 }

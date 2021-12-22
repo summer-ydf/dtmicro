@@ -13,6 +13,9 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
+    alibaba:   # 配置seata分布式事务解决方案
+      seata:
+        tx-service-group: fsp_tx_group # 自定义事务组名称需要与seata-server中的对应
 management:
   endpoints:
     web:

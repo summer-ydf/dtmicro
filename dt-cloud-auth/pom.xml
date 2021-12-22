@@ -78,6 +78,14 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>${mybatis.plus.version}</version>
         </dependency>
+
+        <!-- Seata分布式事务 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-alibaba-seata</artifactId>
+            <version>2.2.0.RELEASE</version>
+        </dependency>
+
         <!-- OAuth2 -->
 <!--        <dependency>-->
 <!--            <groupId>org.springframework.security.oauth.boot</groupId>-->

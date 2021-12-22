@@ -14,5 +14,5 @@ public class TestProductEntity {
 
     @TableId(type = IdType.AUTO)
     private Integer id;
-    private Integer key;
+    private Integer c;
 }
