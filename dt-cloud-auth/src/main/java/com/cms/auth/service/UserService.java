@@ -20,26 +20,16 @@ import java.util.stream.Collectors;
  */
 @Service
 public class UserService implements UserDetailsService {
-    private List<User> userList;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @PostConstruct
-    public void initData() {
-        String password = passwordEncoder.encode("123456");
-        userList = new ArrayList<>();
-        userList.add(new User("dt", password, AuthorityUtils.commaSeparatedStringToAuthorityList("admin")));
-        userList.add(new User("root", password, AuthorityUtils.commaSeparatedStringToAuthorityList("client")));
-        userList.add(new User("admin", password, AuthorityUtils.commaSeparatedStringToAuthorityList("client")));
-    }
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        List<User> findUserList = userList.stream().filter(user -> user.getUsername().equals(username)).collect(Collectors.toList());
-        if (!CollectionUtils.isEmpty(findUserList)) {
-            return findUserList.get(0);
-        } else {
-            throw new UsernameNotFoundException("用户名或密码错误");
+        String user = "admin";
+        if( !user.equals(username) ) {
+            throw new UsernameNotFoundException("用户不存在");
         }
+        return new User(username, passwordEncoder.encode("123456"), AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_USER"));
     }
 }

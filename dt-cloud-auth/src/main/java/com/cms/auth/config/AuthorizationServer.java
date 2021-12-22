@@ -54,14 +54,13 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
     /**
      * 授权码模式
      */
+    @Autowired
     private AuthorizationCodeServices authenticationCodeService;
 
     @Bean
     public AuthorizationCodeServices authorizationCodeServices() {
-        if (authenticationCodeService == null) {
-            authenticationCodeService = new InMemoryAuthorizationCodeServices();
-        }
-        return authenticationCodeService;
+        // 设置授权码模式的授权码如何 存取，这里采用内存方式
+        return new InMemoryAuthorizationCodeServices();
     }
 
     /**
@@ -76,18 +75,18 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
         //TODO 暂时使用内存的方式配置
         clients.inMemory()
                 // 客户端的ID
-                .withClient("c1")
+                .withClient("client")
                 // 客户端的秘钥
                 .secret(passwordEncoder.encode("secret"))
                 // 允许访问的资源列表
-                .resourceIds("res1")
+                //.resourceIds("res1")
                 // 允许给客户端授权类型，一共五种
                 .authorizedGrantTypes("authorization_code","password","refresh_token","implicit","client_credentials")
                 // 允许的授权范围(读或者写)
-                .scopes("all")
+                .scopes("app")
                 // 自动授权配置，false跳转到授权页面，true直接发送令牌
                 .autoApprove(false)
-                // 验证回调地址
+                // 验证回调地址 授权地址：localhost:8083/oauth/authorize?client_id=client&response_type=code&redirect_uri=http://www.baidu.com
                 .redirectUris("http://www.baidu.com");
     }
 
@@ -119,7 +118,7 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
                 // 提供公钥端点
                 .tokenKeyAccess("permitAll()")
                 // 检测令牌
-                .checkTokenAccess("permitAll()")
+                .checkTokenAccess("isAuthenticated()")
                 // 允许表单认证
                 .allowFormAuthenticationForClients();
     }
