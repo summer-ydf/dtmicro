@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping(value = "/manage")
-public class TestController implements ManageFeignService {
+public class TestController {
 
     @Autowired
     private TestService testService;
@@ -34,11 +34,6 @@ public class TestController implements ManageFeignService {
     public String save() {
         System.out.println("调用方法->>>");
         return testService.save();
-    }
-
-    @Override
-    public String loadUserByUsername(@RequestParam String username) {
-        return "调用成功，返回用户信息："+username;
     }
 
     @PostMapping(value = "/test")
