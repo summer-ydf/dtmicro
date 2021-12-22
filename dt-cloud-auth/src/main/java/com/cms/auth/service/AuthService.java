@@ -18,4 +18,5 @@ public class AuthService {
         String userByUsername = manageFeignService.loadUserByUsername(username);
         return ResultUtil.success(userByUsername);
     }
+
 }

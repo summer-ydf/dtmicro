@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 调用方式：第一种就是我们这里介绍的，Feign和生产者的RequestMapping保持一致
  * 调用方式：第二种方式就是让我们的Controller直接实现Feign接口，不再需要写RequestMapping
+ * 推荐你们在开发中所有feign模块最好能统一包名前缀com.javadaily.feign
  * @author ydf Created by 2021/11/23 15:40
  */
 @RestController

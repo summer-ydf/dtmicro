@@ -34,7 +34,7 @@
         <lombok.version>1.18.22</lombok.version>
         <hutool.version>5.7.17</hutool.version>
         <mysql.version>8.0.25</mysql.version>
-        <druid.version>1.2.8</druid.version>
+        <druid.version>1.1.22</druid.version>
         <mybatis.plus.version>3.4.3.4</mybatis.plus.version>
         <flowable.version>6.7.1</flowable.version>
         <quartz.version>2.3.5.RELEASE</quartz.version>
