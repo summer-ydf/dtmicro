@@ -17,26 +17,26 @@ public enum ResultEnum {
 
     private Integer code;
 
-    private String msg;
+    private String message;
 
     ResultEnum(Integer code){
         this.code = code;
     }
 
-    ResultEnum(String msg){
-        this.msg = msg;
+    ResultEnum(String message){
+        this.message = message;
     }
 
-    ResultEnum(Integer code, String msg) {
+    ResultEnum(Integer code, String message) {
         this.code = code;
-        this.msg = msg;
+        this.message = message;
     }
 
     public Integer getCode() {
         return code;
     }
 
-    public String getMsg() {
-        return msg;
+    public String getMessage() {
+        return message;
     }
 }

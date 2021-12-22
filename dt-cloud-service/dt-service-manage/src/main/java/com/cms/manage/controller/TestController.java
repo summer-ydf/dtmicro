@@ -36,4 +36,9 @@ public class TestController {
     public String loadUserByUsername(@RequestParam String username){
         return "调用成功，返回用户信息："+username;
     }
+
+    @PostMapping(value = "/test")
+    public ResultUtil<?> test() {
+        return ResultUtil.success("返回数据");
+    }
 }
