@@ -1,5 +1,6 @@
 package com.cms.manage.controller;
 
+import com.api.manage.feign.ManageFeignService;
 import com.cms.common.result.ResultUtil;
 import com.cms.manage.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +12,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
+ * 调用方式：第一种就是我们这里介绍的，Feign和生产者的RequestMapping保持一致
+ * 调用方式：第二种方式就是让我们的Controller直接实现Feign接口，不再需要写RequestMapping
  * @author ydf Created by 2021/11/23 15:40
  */
 @RestController
 @RequestMapping(value = "/manage")
-public class TestController {
+public class TestController implements ManageFeignService {
 
     @Autowired
     private TestService testService;
@@ -32,8 +35,8 @@ public class TestController {
         return testService.save();
     }
 
-    @GetMapping("/loadUserByUsername")
-    public String loadUserByUsername(@RequestParam String username){
+    @Override
+    public String loadUserByUsername(@RequestParam String username) {
         return "调用成功，返回用户信息："+username;
     }
 
