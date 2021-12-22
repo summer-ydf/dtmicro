@@ -13,9 +13,32 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
-    alibaba:   # 配置seata分布式事务解决方案
-      seata:
-        tx-service-group: fsp_tx_group # 自定义事务组名称需要与seata-server中的对应
+seata:
+  enabled: true
+  enable-auto-data-source-proxy: true
+  tx-service-group: default_tx_group
+  registry:
+    type: nacos
+    nacos:
+      application: seata-server
+      server-addr: 127.0.0.1:8848
+      username: nacos
+      password: nacos
+  config:
+    type: nacos
+    nacos:
+      server-addr: 127.0.0.1:8848
+      group: SEATA_GROUP
+      username: nacos
+      password: nacos
+      namespace: 0af6e97b-a684-4647-b696-7c6d42aecce7
+  service:
+    vgroup-mapping:
+      default_tx_group: default
+      disable-global-transaction: false
+  client:
+    rm:
+      report-success-enable: false
 management:
   endpoints:
     web:
