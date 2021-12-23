@@ -8,5 +8,5 @@ import com.cms.manage.entity.TestProductEntity;
  */
 public interface TestProductService extends IService<TestProductEntity> {
 
-    void deductProduct(Integer a);
+    void deductProduct(Integer a,String xid);
 }

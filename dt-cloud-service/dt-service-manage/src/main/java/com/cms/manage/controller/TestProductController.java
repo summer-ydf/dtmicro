@@ -21,7 +21,7 @@ public class TestProductController implements ManageFeignService {
     }
 
     @Override
-    public void deductProduct(Integer a) {
-        testProductService.deductProduct(a);
+    public void deductProduct(Integer a, String xid) {
+        testProductService.deductProduct(a,xid);
     }
 }

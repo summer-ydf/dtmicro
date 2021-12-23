@@ -13,9 +13,6 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
-ribbon:
-  ReadTimeout: 5000
-  ConnectTimeout: 5000
 # 分布式事务配置
 seata:
   tx-service-group: mall_tx_group
@@ -44,6 +41,11 @@ feign:
     enabled: false # 默认启用的是HttpClient客户端连接，性能不好
   okhttp:
     enabled: true # 使用okhttp客户端
+  client:
+    config:
+      default: #这里就是指的所有被加载的默认FeignClient实现的服务配置都生效
+        connectTimeout: 11000
+        readTimeout: 11000
 logging:
   level:
     # feign日志以什么级别监控哪个接口

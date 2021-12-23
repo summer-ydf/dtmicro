@@ -27,7 +27,7 @@ public class ManageFeignClientFallback implements FeignFailFallback,FallbackFact
             }
 
             @Override
-            public void deductProduct(Integer a) {
+            public void deductProduct(Integer a, String xid) {
                 log.info("扣减库存服务未启用==============================");
             }
 

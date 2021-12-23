@@ -8,6 +8,7 @@ import com.cms.auth.service.TestOrderService;
 import com.cms.common.result.ResultUtil;
 import io.seata.core.context.RootContext;
 import io.seata.spring.annotation.GlobalTransactional;
+import io.seata.tm.api.GlobalTransactionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,13 +29,17 @@ public class TestOrderServiceImpl extends ServiceImpl<TestOrderMapper, TestOrder
     @GlobalTransactional(rollbackFor = Exception.class)
     public ResultUtil<?> createOrder(TestOrderEntity orderEntity) {
         // 调用本地接口 (主函数入口，必须添加：@Transactional注解)
-        this.saveOrder(orderEntity);
+        String xid = GlobalTransactionContext.getCurrentOrCreate().getXid();
         System.out.println("ORDER XID is: " + RootContext.getXID());
+        System.out.println("xid is: " + xid);
+        RootContext.bind(xid);
+        this.saveOrder(orderEntity);
+
         // 调用远程接口
         // 使用Seata实现了分布式事务，保证了数据的一致性 只需在主函数出添加 @GlobalTransactional
-        manageFeignService.deductProduct(orderEntity.getA());
+        manageFeignService.deductProduct(orderEntity.getA(),xid);
         // 本地抛异常
-        //int a = 10 / 0;
+
         return ResultUtil.success();
     }
 

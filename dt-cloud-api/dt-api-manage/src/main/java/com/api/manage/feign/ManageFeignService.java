@@ -20,5 +20,5 @@ public interface ManageFeignService {
     String loadUserByUsername(@RequestParam String username);
 
     @GetMapping(value = APPLICATION_MANAGE_API_AFFIX + "/deductProduct")
-    void deductProduct(@RequestParam Integer a);
+    void deductProduct(@RequestParam Integer a,@RequestParam String xid);
 }
