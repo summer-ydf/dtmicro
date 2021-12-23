@@ -2,6 +2,7 @@ package com.cms.manage.controller;
 
 import com.api.manage.feign.ManageFeignService;
 import com.cms.common.result.ResultUtil;
+import com.cms.manage.service.TestProductService;
 import com.cms.manage.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +24,13 @@ public class TestController {
 
     @Autowired
     private TestService testService;
+    @Autowired
+    private TestProductService testProductService;
+
+    @PostMapping(value = "/insert")
+    public ResultUtil<?> insert() {
+        return testProductService.insert();
+    }
 
     @GetMapping(value = "/test1/{userId}")
     public ResultUtil<?> test(@PathVariable String userId) {

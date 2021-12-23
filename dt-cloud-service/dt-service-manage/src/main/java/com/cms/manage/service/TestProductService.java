@@ -1,6 +1,7 @@
 package com.cms.manage.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.cms.common.result.ResultUtil;
 import com.cms.manage.entity.TestProductEntity;
 
 /**
@@ -9,4 +10,6 @@ import com.cms.manage.entity.TestProductEntity;
 public interface TestProductService extends IService<TestProductEntity> {
 
     void deductProduct(Integer a,String xid);
+
+    ResultUtil<?> insert();
 }

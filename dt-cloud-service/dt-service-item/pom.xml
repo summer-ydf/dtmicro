@@ -73,9 +73,38 @@
             <artifactId>canal.client</artifactId>
             <version>${canal.version}</version>
         </dependency>
+        <!-- 分布式事务 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-seata</artifactId>
+            <exclusions>
+                <!-- 排除依赖 指定版本和服务器端一致 -->
+                <exclusion>
+                    <groupId>io.seata</groupId>
+                    <artifactId>seata-all</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>io.seata</groupId>
+                    <artifactId>seata-spring-boot-starter</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>io.seata</groupId>
+            <artifactId>seata-all</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.seata</groupId>
+            <artifactId>seata-spring-boot-starter</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.dt</groupId>
             <artifactId>dt-cloud-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.dt</groupId>
+            <artifactId>dt-api-item</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
