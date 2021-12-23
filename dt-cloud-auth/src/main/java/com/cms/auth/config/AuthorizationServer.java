@@ -13,11 +13,15 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
+import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
 import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.code.InMemoryAuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
+
+import javax.annotation.Resource;
+import javax.sql.DataSource;
 
 /**
  * 认证服务器配置
@@ -33,11 +37,19 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
     @Autowired
     private UserService userService;
 
+    @Resource
+    private DataSource dataSource;
+
     /**
      * 客户端详情服务
      */
-    @Autowired
-    private ClientDetailsService clientDetailsService;
+//    @Autowired
+//    private ClientDetailsService clientDetailsService;
+
+    @Bean
+    public ClientDetailsService clientDetails() {
+        return new JdbcClientDetailsService(dataSource);
+    }
 
     /**
      * 令牌策略
@@ -131,7 +143,7 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
     public AuthorizationServerTokenServices tokenServices() {
         DefaultTokenServices services = new DefaultTokenServices();
         // 客户端信息服务
-        services.setClientDetailsService(clientDetailsService);
+        services.setClientDetailsService(clientDetails());
         // 是否刷新令牌
         services.setSupportRefreshToken(true);
         // 令牌存储策略

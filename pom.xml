@@ -27,14 +27,18 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <maven.plugin.version>3.8.1</maven.plugin.version>
-        <spring.boot.version>2.5.6</spring.boot.version>
+
+        <spring.boot.version>2.5.4</spring.boot.version>
         <spring.cloud.version>2020.0.4</spring.cloud.version>
         <spring.cloud.alibaba.version>2021.1</spring.cloud.alibaba.version>
+
+        <seata.version>1.4.2</seata.version>
+
         <fastjson.version>1.2.78</fastjson.version>
         <lombok.version>1.18.22</lombok.version>
         <hutool.version>5.7.17</hutool.version>
-        <mysql.version>8.0.25</mysql.version>
-        <druid.version>1.1.23</druid.version>
+        <mysql.version>8.0.19</mysql.version>
+        <druid.version>1.2.4</druid.version>
         <mybatis.plus.version>3.4.3.4</mybatis.plus.version>
         <flowable.version>6.7.1</flowable.version>
         <quartz.version>2.3.5.RELEASE</quartz.version>
@@ -91,6 +95,17 @@
                 <version>${spring.cloud.alibaba.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <!--seata分布式事务-->
+            <dependency>
+                <groupId>io.seata</groupId>
+                <artifactId>seata-all</artifactId>
+                <version>${seata.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.seata</groupId>
+                <artifactId>seata-spring-boot-starter</artifactId>
+                <version>${seata.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
