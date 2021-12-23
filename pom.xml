@@ -42,7 +42,7 @@
         <mybatis.plus.version>3.4.3.4</mybatis.plus.version>
         <flowable.version>6.7.1</flowable.version>
         <quartz.version>2.3.5.RELEASE</quartz.version>
-        <canal.version>1.1.5</canal.version>
+        <canal.version>1.1.4</canal.version>
         <okhttp.version>11.7</okhttp.version>
         <oauth2.version>2.6.1</oauth2.version>
     </properties>

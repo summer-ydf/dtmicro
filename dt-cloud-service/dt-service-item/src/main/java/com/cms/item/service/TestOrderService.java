@@ -9,4 +9,5 @@ import com.cms.item.entity.TestOrderEntity;
  */
 public interface TestOrderService extends IService<TestOrderEntity> {
 
+    ResultUtil<?> insert(Integer a);
 }

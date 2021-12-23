@@ -2,6 +2,7 @@ package com.api.item.factory;
 
 import com.api.common.feign.FeignFailFallback;
 import com.api.item.feign.ItemFeignService;
+import com.cms.common.result.ResultUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.openfeign.FallbackFactory;
@@ -22,8 +23,9 @@ public class ItemFeignClientFallback implements FeignFailFallback,FallbackFactor
         return new ItemFeignService() {
 
             @Override
-            public void save(Integer a) {
-
+            public ResultUtil<?> save(Integer a) {
+                System.out.println("失败->>>");
+                return null;
             }
         };
     }

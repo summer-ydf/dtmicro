@@ -3,6 +3,7 @@ package com.cms.manage.service.impl;
 import com.api.item.feign.ItemFeignService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cms.common.result.ResultUtil;
+import com.cms.common.utils.SysCmsUtils;
 import com.cms.manage.entity.TestProductEntity;
 import com.cms.manage.mapper.TestProductMapper;
 import com.cms.manage.service.TestProductService;
@@ -41,11 +42,12 @@ public class TestProductServiceImpl extends ServiceImpl<TestProductMapper, TestP
     @Override
     @GlobalTransactional(rollbackFor = Exception.class)
     public ResultUtil<?> insert() {
+        SysCmsUtils.log.warn("分布式事务处理开始====================");
         TestProductEntity testProductEntity = new TestProductEntity();
         testProductEntity.setC(666);
         this.baseMapper.insert(testProductEntity);
         // 调用远程接口
         this.itemFeignService.save(666);
-        return ResultUtil.success();
+        return ResultUtil.success("添加成功");
     }
 }
