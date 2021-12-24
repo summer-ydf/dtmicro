@@ -8,4 +8,5 @@ import com.mall.user.entity.MallUser;
  */
 public interface MallUserService extends IService<MallUser> {
 
+    void reduceMoney(Integer id);
 }

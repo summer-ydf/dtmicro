@@ -12,7 +12,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  */
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 @EnableDiscoveryClient
-@EnableFeignClients(basePackages ={"com.sku.*.feign"})
+@EnableFeignClients(basePackages ={"com.sku.*.feign","com.user.*.feign"})
 @MapperScan(basePackages = {"com.mall.order.mapper"})
 public class CmsMallOrderApplication {
 

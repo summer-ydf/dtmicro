@@ -7,6 +7,7 @@ import com.mall.order.entity.MallOrder;
 import com.mall.order.mapper.MallOrderMapper;
 import com.mall.order.service.MallOrderService;
 import com.sku.api.feign.MallSkuFeignService;
+import com.user.api.feign.MallUserFeignService;
 import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,8 @@ public class MallOrderServiceImpl extends ServiceImpl<MallOrderMapper, MallOrder
 
     @Autowired
     private MallSkuFeignService mallSkuFeignService;
+    @Autowired
+    private MallUserFeignService mallUserFeignService;
 
     //@Transactional(rollbackFor = Exception.class)
     //阿里巴巴的Java开发者手册里面有明确规定，在 @Transactional的方法里面捕获了异常，必须要手动回滚
@@ -32,6 +35,9 @@ public class MallOrderServiceImpl extends ServiceImpl<MallOrderMapper, MallOrder
         MallOrder mallOrder = this.baseMapper.selectById(id);
         log.info("1、扣减库存->>>");
         mallSkuFeignService.reduceStock(mallOrder.getGoodId());
+
+        log.info("2、修改用户余额");
+        mallUserFeignService.reduceMoney(mallOrder.getUserId());
 
         log.info("2、修改订单状态->>>");
         boolean result = this.update(new LambdaUpdateWrapper<MallOrder>().eq(MallOrder::getId, id).eq(MallOrder::getUserId,userId).set(MallOrder::getStatus, 1));
