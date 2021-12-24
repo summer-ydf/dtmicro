@@ -19,6 +19,7 @@
         <module>dt-cloud-job</module>
         <module>dt-cloud-common</module>
         <module>dt-cloud-api</module>
+        <module>dt-cloud-mall</module>
     </modules>
 
     <!--核心版本控制-->
