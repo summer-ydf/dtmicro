@@ -1,2 +1,39 @@
 server:
   port: 9092
+spring:
+  application:
+    name: cms-mall-sku
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/cms_mall_sku?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSL=false&nullCatalogMeansCurrent=true
+    username: root
+    password: Passw0rd!
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+# 分布式事务配置
+seata:
+  tx-service-group: mall_tx_group
+  enable-auto-data-source-proxy: true
+  registry:
+    type: nacos
+    nacos:
+      server-addr: localhost:8848
+      namespace: seata_namespace_id
+      group: SEATA_GROUP
+  config:
+    type: nacos
+    nacos:
+      server-addr: localhost:8848
+      namespace: seata_namespace_id
+      group: SEATA_GROUP
+feign:
+  sentinel:
+    enabled: true  # 开启服务调用失败处理
+mybatis-plus:
+  typeAliasesPackage: com.mall.user.entity
+  mapper-locations: classpath*:com/mall/user/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

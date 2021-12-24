@@ -8,4 +8,5 @@ import com.mall.sku.entity.MallSku;
  */
 public interface MallSkuService extends IService<MallSku> {
 
+    void reduceStock(Integer id);
 }
