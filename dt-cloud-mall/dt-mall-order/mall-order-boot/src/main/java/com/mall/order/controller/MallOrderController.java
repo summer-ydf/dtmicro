@@ -28,4 +28,12 @@ public class MallOrderController {
     public ResultUtil<?> updateOrderStatus(@PathVariable Integer id, @PathVariable Integer userId) {
         return mallOrderService.updateOrderStatus(id,userId);
     }
+
+    /**
+     * 模拟本地事务失效
+     */
+    @GetMapping(value = "/updateTest/{id}")
+    public ResultUtil<?> updateTest(@PathVariable Integer id) {
+        return mallOrderService.updateTest(id);
+    }
 }

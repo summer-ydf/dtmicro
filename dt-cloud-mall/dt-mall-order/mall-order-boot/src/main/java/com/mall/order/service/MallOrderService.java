@@ -10,4 +10,6 @@ import com.mall.order.entity.MallOrder;
 public interface MallOrderService extends IService<MallOrder> {
 
     ResultUtil<?> updateOrderStatus(Integer id, Integer userId);
+
+    ResultUtil<?> updateTest(Integer id);
 }

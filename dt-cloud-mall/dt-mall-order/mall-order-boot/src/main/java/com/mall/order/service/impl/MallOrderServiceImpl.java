@@ -47,4 +47,11 @@ public class MallOrderServiceImpl extends ServiceImpl<MallOrderMapper, MallOrder
             return ResultUtil.success("下单失败");
         }
     }
+
+    @Override
+    @Transactional
+    public ResultUtil<?> updateTest(Integer id) {
+        int n = 10/0;
+        return ResultUtil.success(id);
+    }
 }
