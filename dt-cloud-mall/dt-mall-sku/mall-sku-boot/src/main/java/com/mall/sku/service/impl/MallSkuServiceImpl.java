@@ -23,7 +23,7 @@ public class MallSkuServiceImpl extends ServiceImpl<MallSkuMapper, MallSku> impl
         mallSku.setStock(stock);
         this.baseMapper.updateById(mallSku);
         // 抛出异常，fallback里面控制手动回滚
-        int a = 10 /0;
+//        int a = 10 /0;
         log.info("修改库存成功->>>");
         return ResultUtil.success();
     }
