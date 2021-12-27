@@ -33,19 +33,24 @@ public class MallOrderServiceImpl extends ServiceImpl<MallOrderMapper, MallOrder
     public ResultUtil<?> updateOrderStatus(Integer id, Integer userId) {
 
         MallOrder mallOrder = this.baseMapper.selectById(id);
-        log.info("1、扣减库存->>>");
-        mallSkuFeignService.reduceStock(mallOrder.getGoodId());
+
 
         log.info("2、修改用户余额");
         mallUserFeignService.reduceMoney(mallOrder.getUserId());
 
-        log.info("2、修改订单状态->>>");
-        boolean result = this.update(new LambdaUpdateWrapper<MallOrder>().eq(MallOrder::getId, id).eq(MallOrder::getUserId,userId).set(MallOrder::getStatus, 1));
-        if(result) {
-            return ResultUtil.success("下单成功");
+        log.info("1、扣减库存->>>");
+        ResultUtil<?> reduceStock = mallSkuFeignService.reduceStock(mallOrder.getGoodId());
+        if(reduceStock.isSuccess()) {
+            // 服务调用成功
+            log.info("2、修改订单状态->>>");
+            boolean result = this.update(new LambdaUpdateWrapper<MallOrder>().eq(MallOrder::getId, id).eq(MallOrder::getUserId,userId).set(MallOrder::getStatus, 1));
+            if(result) {
+                return ResultUtil.success("下单成功");
+            }
         }else {
-            return ResultUtil.success("下单失败");
+            return reduceStock;
         }
+        return ResultUtil.error("下单失败");
     }
 
     @Override

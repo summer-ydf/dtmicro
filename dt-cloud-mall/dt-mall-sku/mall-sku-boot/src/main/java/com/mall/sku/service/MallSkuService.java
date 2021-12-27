@@ -1,6 +1,7 @@
 package com.mall.sku.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.cms.common.result.ResultUtil;
 import com.mall.sku.entity.MallSku;
 
 /**
@@ -8,5 +9,5 @@ import com.mall.sku.entity.MallSku;
  */
 public interface MallSkuService extends IService<MallSku> {
 
-    void reduceStock(Integer id);
+    ResultUtil<?> reduceStock(Integer id);
 }

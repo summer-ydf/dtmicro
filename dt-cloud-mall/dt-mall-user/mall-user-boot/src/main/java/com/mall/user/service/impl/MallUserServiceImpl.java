@@ -21,7 +21,6 @@ public class MallUserServiceImpl extends ServiceImpl<MallUserMapper, MallUser> i
         double money = mallUser.getMoney() - 1;
         mallUser.setMoney(money);
         this.baseMapper.updateById(mallUser);
-        int a = 10/0;
         log.info("修改用户金额成功->>>");
     }
 }

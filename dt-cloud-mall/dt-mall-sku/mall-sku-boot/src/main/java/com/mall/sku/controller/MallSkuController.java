@@ -1,5 +1,6 @@
 package com.mall.sku.controller;
 
+import com.cms.common.result.ResultUtil;
 import com.mall.sku.service.MallSkuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +19,7 @@ public class MallSkuController {
     private MallSkuService mallSkuService;
 
     @GetMapping(value = "reduceStock")
-    public void reduceStock(@RequestParam Integer id) {
-        mallSkuService.reduceStock(id);
+    public ResultUtil<?> reduceStock(@RequestParam Integer id) {
+        return mallSkuService.reduceStock(id);
     }
 }
