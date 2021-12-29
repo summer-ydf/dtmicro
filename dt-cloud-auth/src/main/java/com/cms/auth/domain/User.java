@@ -11,6 +11,8 @@ import java.util.List;
  */
 public class User implements UserDetails {
 
+    private static final long serialVersionUID = -6398633891139045949L;
+
     private String username;
     private String password;
     private List<GrantedAuthority> authorities;

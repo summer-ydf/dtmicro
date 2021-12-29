@@ -28,7 +28,7 @@ import javax.sql.DataSource;
  * @author ydf Created by 2021/12/14 14:46
  */
 @Configuration
-@EnableAuthorizationServer
+@EnableAuthorizationServer  // 开启认证服务
 public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
 
     @Autowired
@@ -43,13 +43,13 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
     /**
      * 客户端详情服务
      */
-//    @Autowired
-//    private ClientDetailsService clientDetailsService;
+    @Autowired
+    private ClientDetailsService clientDetailsService;
 
-    @Bean
-    public ClientDetailsService clientDetails() {
-        return new JdbcClientDetailsService(dataSource);
-    }
+//    @Bean
+//    public ClientDetailsService clientDetails() {
+//        return new JdbcClientDetailsService(dataSource);
+//    }
 
     /**
      * 令牌策略
@@ -78,7 +78,10 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
     /**
      * 配置客户端详情服务
      * 参考：https://github.com/hxrui/youlai-mall
-     * 申请授权码：http://localhost:9401/oauth/authorize?client_id=c1&response_type=code&scope=all&redirect_uri=http://www.baidu.com
+     * 申请授权码：http://localhost:8083/oauth/authorize?client_id=client&response_type=code&scope=app&redirect_uri=http://www.baidu.com
+     * http://localhost:8083/oauth/token?client_id=client&client_secret=secret&grant_type=authorization_code&code&redirect_url=http://www.baidu.com
+     * http://localhost:8083/oauth/authorize?client_id=client&response_type=code
+     * 登录成功之后：获取授权码请求地址：http://client:secret@localhost:8083/oauth/token
      * @param clients 客户端信息
      * @throws Exception 异常
      */
@@ -95,11 +98,11 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
                 // 允许给客户端授权类型，一共五种
                 .authorizedGrantTypes("authorization_code","password","refresh_token","implicit","client_credentials")
                 // 允许的授权范围(读或者写)
-                .scopes("app")
+                .scopes("app");
                 // 自动授权配置，false跳转到授权页面，true直接发送令牌
-                .autoApprove(false)
+                //.autoApprove(false);
                 // 验证回调地址 授权地址：localhost:8083/oauth/authorize?client_id=client&response_type=code&redirect_uri=http://www.baidu.com
-                .redirectUris("http://www.baidu.com");
+                //.redirectUris("http://www.baidu.com");
     }
 
     /**
@@ -143,7 +146,7 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
     public AuthorizationServerTokenServices tokenServices() {
         DefaultTokenServices services = new DefaultTokenServices();
         // 客户端信息服务
-        services.setClientDetailsService(clientDetails());
+        services.setClientDetailsService(clientDetailsService);
         // 是否刷新令牌
         services.setSupportRefreshToken(true);
         // 令牌存储策略

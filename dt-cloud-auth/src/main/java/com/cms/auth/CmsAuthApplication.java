@@ -10,9 +10,8 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
  * @author ydf Created by 2021/11/25 11:45
  */
 @SpringBootApplication
-@EnableAuthorizationServer
+@EnableAuthorizationServer // 开启授权服务器
 @EnableDiscoveryClient
-@EnableFeignClients(basePackages ={"com.api.*.feign"})
 @MapperScan(basePackages = {"com.cms.auth.mapper"})
 public class CmsAuthApplication {
 
