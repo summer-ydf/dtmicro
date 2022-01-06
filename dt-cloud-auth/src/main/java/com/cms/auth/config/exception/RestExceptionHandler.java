@@ -29,11 +29,11 @@ public class RestExceptionHandler {
         } else if (ex instanceof DisabledException) {
             return ResultUtil.error(ResultEnum.OAuth2Exception.getCode(),"账户被禁用");
         } else if (ex instanceof ParameterAuthenticationException) {
-            return ResultUtil.error(ResultEnum.OAuth2Exception.getCode(),ex.getMessage());
+            return ResultUtil.error(ResultEnum.VALID_CODE_ERROR.getCode(),ex.getMessage());
         } else if (ex instanceof InsufficientAuthenticationException) {
             return ResultUtil.error(ResultEnum.OAuth2Exception.getCode(),"认证错误");
         } else if (ex instanceof TokenAuthenticationException) {
-            return ResultUtil.error(ResultEnum.REQUEST_OAUTH_EXP.getCode(),ResultEnum.REQUEST_OAUTH_EXP.getMessage());
+            return ResultUtil.error(ResultEnum.RESOURCE_OAUTH_EXP.getCode(),ResultEnum.RESOURCE_OAUTH_EXP.getMessage());
         } else if (ex instanceof IccOAuth2Exception) {
             // client_id和secret的验证
             IccOAuth2Exception exception = (IccOAuth2Exception)ex;

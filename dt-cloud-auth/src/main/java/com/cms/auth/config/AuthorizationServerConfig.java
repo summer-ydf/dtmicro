@@ -1,14 +1,16 @@
 package com.cms.auth.config;
 
 
-import com.cms.auth.config.exception.OAuth2AuthenticationFailureHandler;
-import com.cms.auth.config.exception.OAuth2WebResponseExceptionTranslator;
-import com.cms.auth.config.exception.RestExceptionHandler;
-import com.cms.auth.config.exception.TokenAuthenticationFailureHandler;
-import com.cms.auth.config.filter.IccCaptchaAuthenticationFilter;
+import cn.hutool.http.HttpStatus;
+import cn.hutool.json.JSONUtil;
+import com.cms.auth.config.exception.*;
+import com.cms.auth.config.filter.CmsCaptchaAuthenticationFilter;
+import com.cms.common.result.ResultEnum;
+import com.cms.common.result.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,21 +20,20 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
-import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
-import org.springframework.security.oauth2.provider.code.InMemoryAuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.web.AuthenticationEntryPoint;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 /**
- * 认证服务器配置
+ * OAuth2认证服务器配置
  * @author ydf Created by 2021/12/14 14:46
  */
 @Configuration
-@EnableAuthorizationServer  // 开启认证服务
+@EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
     @Autowired
@@ -61,26 +62,17 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private TokenStore tokenStore;
 
+    /**
+     * 自定义异常处理类
+     */
     @Autowired
     private RestExceptionHandler restExceptionHandler;
 
     /**
-     * 认证管理器
+     * 认证管理器：密码模式需要
      */
     @Autowired
     private AuthenticationManager authenticationManager;
-
-    /**
-     * 授权码模式
-     */
-//    @Autowired
-//    private AuthorizationCodeServices authenticationCodeService;
-
-    @Bean
-    public AuthorizationCodeServices authorizationCodeServices() {
-        // 设置授权码模式的授权码如何 存取，这里采用内存方式
-        return new InMemoryAuthorizationCodeServices();
-    }
 
     /**
      * 自定义异常处理
@@ -98,11 +90,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     /**
      * 验证码校验
-     * @return
      */
     @Bean
-    public IccCaptchaAuthenticationFilter iccCaptchaAuthenticationFilter() {
-        return new IccCaptchaAuthenticationFilter();
+    public CmsCaptchaAuthenticationFilter cmsCaptchaAuthenticationFilter() {
+        return new CmsCaptchaAuthenticationFilter();
     }
 
     /**
@@ -120,9 +111,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         //TODO 暂时使用内存的方式配置
         clients.inMemory()
                 // 客户端的ID
-                .withClient("myjszl")
+                .withClient("cms")
                 // 客户端的秘钥
-                .secret(passwordEncoder.encode("123"))
+                .secret(passwordEncoder.encode("dt666"))
                 // 允许访问的资源列表
                 //.resourceIds("res1")
                 // 允许给客户端授权类型，一共五种
@@ -144,8 +135,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         endpoints
                 // 密码模式需要
                 .authenticationManager(authenticationManager)
-                // 授权码模式需要
-                .authorizationCodeServices(authorizationCodeServices())
                 // 令牌管理服务
                 .tokenServices(tokenServices())
                 // 允许端点POST提交访问令牌
@@ -156,32 +145,26 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     /**
      * 配置令牌访问端点安全的约束
-     * @param oauthServer 返回
+     * @param oauthServer 对象
      */
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
+        // 检测令牌
         oauthServer.tokenKeyAccess("isAuthenticated()").checkTokenAccess("isAuthenticated()");
+        // oauthServer.allowFormAuthenticationForClients();
 
-        // 自定义异常处理端口，访问oauth/token时，当信息不全将拒绝,这里主要是client_id和secret的验证,无论是认证服务还是资源服务都在这里处理
-        oauthServer.authenticationEntryPoint(restExceptionHandler::loginExceptionHandler);
+        // 自定义client_id异常处理
+        CustomClientCredentialsTokenEndpointFilter endpointFilter = new CustomClientCredentialsTokenEndpointFilter(oauthServer);
+        endpointFilter.afterPropertiesSet();
+        endpointFilter.setAuthenticationEntryPoint(authenticationEntryPoint());
         // 客户端认证之前的过滤器
-        //security.addTokenEndpointAuthenticationFilter(iccLoginClaimsFilter());
-        // 验证码校验
-        oauthServer.addTokenEndpointAuthenticationFilter(iccCaptchaAuthenticationFilter());
-        //security.addTokenEndpointAuthenticationFilter(iccLockAuthenticationFilter());
-        oauthServer.allowFormAuthenticationForClients();
-        oauthServer.accessDeniedHandler((req,res,ex)-> {
-            System.out.println("sss----"+ex.getMessage());
-        });
+        oauthServer.addTokenEndpointAuthenticationFilter(endpointFilter);
 
-//        security
-//                // 提供公钥端点
-//                .tokenKeyAccess("permitAll()")
-//                // 检测令牌
-//                .checkTokenAccess("isAuthenticated()")
-//                // 支持client_id和client_secret做登录认证
-//                .allowFormAuthenticationForClients()
-//                .addTokenEndpointAuthenticationFilter(new JiheBasicAuthenticationFilter());
+        // 自定义异常处理端口，访问oauth/token
+        oauthServer.authenticationEntryPoint(restExceptionHandler::loginExceptionHandler);
+        // 验证码校验
+        oauthServer.addTokenEndpointAuthenticationFilter(cmsCaptchaAuthenticationFilter());
+        oauthServer.accessDeniedHandler((req,res,ex)-> System.out.println("sss----"+ex.getMessage()));
     }
 
     /**
@@ -206,5 +189,19 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         // 刷新令牌默认有效期3天
         services.setRefreshTokenValiditySeconds(259200);
         return services;
+    }
+
+    @Bean
+    public AuthenticationEntryPoint authenticationEntryPoint() {
+        return (request, response, e) -> {
+            response.setStatus(HttpStatus.HTTP_OK);
+            response.setHeader(HttpHeaders.CONTENT_TYPE, "application/json;charset=UTF-8");
+            response.setHeader("Access-Control-Allow-Origin", "*");
+            response.setHeader("Cache-Control", "no-cache");
+            ResultUtil<Object> error = ResultUtil.error(ResultEnum.OAUTH2_BASE_ERROR.getCode(),
+                    ResultEnum.OAUTH2_BASE_ERROR.getMessage());
+            response.getWriter().print(JSONUtil.toJsonStr(error));
+            response.getWriter().flush();
+        };
     }
 }
