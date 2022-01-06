@@ -18,18 +18,18 @@ import java.util.stream.Collectors;
 /**
  * @author ydf Created by 2021/12/14 14:47
  */
-@Service
-public class UserService implements UserDetailsService {
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        String user = "admin";
-        if( !user.equals(username) ) {
-            throw new UsernameNotFoundException("用户不存在");
-        }
-        return new User(username, passwordEncoder.encode("123456"), AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_USER"));
-    }
-}
+//@Service
+//public class UserService implements UserDetailsService {
+//
+//    @Autowired
+//    private PasswordEncoder passwordEncoder;
+//
+//    @Override
+//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//        String user = "admin";
+//        if( !user.equals(username) ) {
+//            throw new UsernameNotFoundException("用户不存在");
+//        }
+//        return new User(username, passwordEncoder.encode("123456"), AuthorityUtils.commaSeparatedStringToAuthorityList("ROLE_USER"));
+//    }
+//}

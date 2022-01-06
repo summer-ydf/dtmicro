@@ -13,7 +13,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
  * @date 2021/12/14 19:25
  */
 @Configuration
-public class TokenConfig {
+public class AccessTokenConfig {
 
     /**
      * 密钥

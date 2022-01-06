@@ -1,6 +1,6 @@
 package com.cms.auth.config;
 
-import com.cms.auth.service.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,13 +29,13 @@ import javax.sql.DataSource;
  */
 @Configuration
 @EnableAuthorizationServer  // 开启认证服务
-public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
+public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private UserService userService;
+//    @Autowired
+//    private UserService userService;
 
     @Resource
     private DataSource dataSource;
@@ -66,8 +66,8 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
     /**
      * 授权码模式
      */
-    @Autowired
-    private AuthorizationCodeServices authenticationCodeService;
+//    @Autowired
+//    private AuthorizationCodeServices authenticationCodeService;
 
     @Bean
     public AuthorizationCodeServices authorizationCodeServices() {
@@ -90,19 +90,19 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
         //TODO 暂时使用内存的方式配置
         clients.inMemory()
                 // 客户端的ID
-                .withClient("client")
+                .withClient("myjszl")
                 // 客户端的秘钥
-                .secret(passwordEncoder.encode("secret"))
+                .secret(passwordEncoder.encode("123"))
                 // 允许访问的资源列表
-                //.resourceIds("res1")
+                .resourceIds("res1")
                 // 允许给客户端授权类型，一共五种
                 .authorizedGrantTypes("authorization_code","password","refresh_token","implicit","client_credentials")
                 // 允许的授权范围(读或者写)
-                .scopes("app");
+                .scopes("all")
                 // 自动授权配置，false跳转到授权页面，true直接发送令牌
-                //.autoApprove(false);
+                .autoApprove(false)
                 // 验证回调地址 授权地址：localhost:8083/oauth/authorize?client_id=client&response_type=code&redirect_uri=http://www.baidu.com
-                //.redirectUris("http://www.baidu.com");
+                .redirectUris("http://www.baidu.com");
     }
 
     /**
@@ -115,7 +115,7 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
                 // 密码模式需要
                 .authenticationManager(authenticationManager)
                 // 授权码模式需要
-                .authorizationCodeServices(authenticationCodeService)
+                .authorizationCodeServices(authorizationCodeServices())
                 // 令牌管理服务
                 .tokenServices(tokenServices())
                 // 允许端点POST提交访问令牌
@@ -134,7 +134,7 @@ public class AuthorizationServer extends AuthorizationServerConfigurerAdapter {
                 .tokenKeyAccess("permitAll()")
                 // 检测令牌
                 .checkTokenAccess("isAuthenticated()")
-                // 允许表单认证
+                // 支持client_id和client_secret做登录认证
                 .allowFormAuthenticationForClients();
     }
 
