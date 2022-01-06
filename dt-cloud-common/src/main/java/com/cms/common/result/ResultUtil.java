@@ -67,6 +67,10 @@ public class ResultUtil<T> implements Serializable {
         return new ResultUtil<>(code.getCode(), message.getMessage(), data,true, System.currentTimeMillis());
     }
 
+    public static <T> ResultUtil<T> success(ResultEnum code, String message, T data) {
+        return new ResultUtil<>(code.getCode(), message, data,true, System.currentTimeMillis());
+    }
+
     /**
      * 操作失败
      * @param <T> 泛型

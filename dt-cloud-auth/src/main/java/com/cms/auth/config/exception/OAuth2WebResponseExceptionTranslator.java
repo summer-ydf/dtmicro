@@ -56,27 +56,24 @@ public class OAuth2WebResponseExceptionTranslator implements WebResponseExceptio
     }
 
     private ResponseEntity<OAuth2Exception> handleOAuth2Exception(OAuth2Exception e) throws IOException {
+        int status = e.getHttpErrorCode();
         HttpHeaders headers = new HttpHeaders();
         headers.set("Cache-Control", "no-store");
         headers.set("Pragma", "no-cache");
-        if (e.getHttpErrorCode() == HttpStatus.UNAUTHORIZED.value() || (e instanceof InsufficientScopeException)) {
+        if (status == HttpStatus.UNAUTHORIZED.value() || (e instanceof InsufficientScopeException)) {
             headers.set("WWW-Authenticate", String.format("%s %s", OAuth2AccessToken.BEARER_TYPE, e.getSummary()));
         }
-//        IccOAuth2Exception exception;
-//        // 用户名密码验证错误
-//        if(StringUtils.equals(e.getOAuth2ErrorCode(),"invalid_grant")){
-//            exception = oAuth2AuthenticationFailureHandler.onAuthenticationFailure(e);
-//        }else {
-//            exception = new IccOAuth2Exception(e.getMessage(), e);
-//            exception.setHttpErrorCode(e.getHttpErrorCode());
-//            exception.setOauth2ErrorCode(e.getOAuth2ErrorCode());
-//        }
-//        return new ResponseEntity<OAuth2Exception>(exception, headers,HttpStatus.OK);
-        System.out.println("输出错误消息==================");
-        System.out.println(e);
-        return null;
 
+        //按自定义格式输出错误码
+        JiheOauth2Exception exception = new JiheOauth2Exception(e.getMessage(), e);
+
+        ResponseEntity<OAuth2Exception> response = new ResponseEntity<OAuth2Exception>(exception, headers,
+                HttpStatus.valueOf(status));
+        System.out.println("输出错误消息==================");
+        System.out.println(response);
+        return response;
     }
+
     @SuppressWarnings("serial")
     private static class ForbiddenException extends OAuth2Exception {
 

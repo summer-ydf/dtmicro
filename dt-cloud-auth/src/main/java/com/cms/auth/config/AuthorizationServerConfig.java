@@ -1,7 +1,10 @@
 package com.cms.auth.config;
 
 
+import com.cms.auth.config.exception.JiheBasicAuthenticationFilter;
 import com.cms.auth.config.exception.OAuth2WebResponseExceptionTranslator;
+import com.cms.auth.config.exception.RestExceptionHandler;
+import com.cms.auth.config.filter.IccCaptchaAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,6 +23,7 @@ import org.springframework.security.oauth2.provider.code.InMemoryAuthorizationCo
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.web.authentication.preauth.j2ee.J2eePreAuthenticatedProcessingFilter;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
@@ -58,6 +62,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private TokenStore tokenStore;
 
+    @Autowired
+    private RestExceptionHandler restExceptionHandler;
+
     /**
      * 认证管理器
      */
@@ -79,6 +86,15 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Bean
     public OAuth2WebResponseExceptionTranslator oAuth2WebResponseExceptionTranslator() {
         return new OAuth2WebResponseExceptionTranslator();
+    }
+
+    /**
+     * 验证码校验
+     * @return
+     */
+    @Bean
+    public IccCaptchaAuthenticationFilter iccCaptchaAuthenticationFilter() {
+        return new IccCaptchaAuthenticationFilter();
     }
 
     /**
@@ -136,13 +152,27 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      */
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) {
-        security
-                // 提供公钥端点
-                .tokenKeyAccess("permitAll()")
-                // 检测令牌
-                .checkTokenAccess("isAuthenticated()")
-                // 支持client_id和client_secret做登录认证
-                .allowFormAuthenticationForClients();
+        security.tokenKeyAccess("isAuthenticated()").checkTokenAccess("isAuthenticated()");
+        security.allowFormAuthenticationForClients();
+        // 自定义异常处理端口，访问oauth/token时，当信息不全将拒绝,这里主要是client_id和secret的验证,无论是认证服务还是资源服务都在这里处理
+        security.authenticationEntryPoint(restExceptionHandler::loginExceptionHandler);
+
+        // 客户端认证之前的过滤器
+        //security.addTokenEndpointAuthenticationFilter(iccLoginClaimsFilter());
+        security.addTokenEndpointAuthenticationFilter(iccCaptchaAuthenticationFilter());
+        //security.addTokenEndpointAuthenticationFilter(iccLockAuthenticationFilter());
+        security.accessDeniedHandler((req,res,ex)-> {
+            System.out.println("sss----"+ex.getMessage());
+        });
+
+//        security
+//                // 提供公钥端点
+//                .tokenKeyAccess("permitAll()")
+//                // 检测令牌
+//                .checkTokenAccess("isAuthenticated()")
+//                // 支持client_id和client_secret做登录认证
+//                .allowFormAuthenticationForClients()
+//                .addTokenEndpointAuthenticationFilter(new JiheBasicAuthenticationFilter());
     }
 
     /**
