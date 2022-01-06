@@ -1,5 +1,6 @@
-package com.cms.auth.config.exception;
+package com.cms.auth.config.handler;
 
+import com.cms.auth.config.exception.CmsOAuth2Exception;
 import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 
 /**

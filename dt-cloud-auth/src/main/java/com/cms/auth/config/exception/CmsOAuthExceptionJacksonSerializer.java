@@ -1,10 +1,10 @@
 package com.cms.auth.config.exception;
 
+import com.cms.auth.config.handler.RestExceptionHandler;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 
 import java.io.IOException;
 

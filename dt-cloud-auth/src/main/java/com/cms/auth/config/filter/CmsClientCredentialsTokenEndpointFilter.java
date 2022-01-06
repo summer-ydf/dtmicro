@@ -1,9 +1,5 @@
-package com.cms.auth.config.exception;
+package com.cms.auth.config.filter;
 
-/**
- * @author DT
- * @date 2022/1/6 20:16
- */
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.client.ClientCredentialsTokenEndpointFilter;
@@ -11,14 +7,16 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 
 /**
  * 重写filter实现客户端自定义异常处理
+ * @author DT
+ * @date 2022/1/6 20:16
  */
-public class CustomClientCredentialsTokenEndpointFilter extends ClientCredentialsTokenEndpointFilter {
+public class CmsClientCredentialsTokenEndpointFilter extends ClientCredentialsTokenEndpointFilter {
 
-    private AuthorizationServerSecurityConfigurer configurer;
+    private final AuthorizationServerSecurityConfigurer configurer;
+
     private AuthenticationEntryPoint authenticationEntryPoint;
 
-
-    public CustomClientCredentialsTokenEndpointFilter(AuthorizationServerSecurityConfigurer configurer) {
+    public CmsClientCredentialsTokenEndpointFilter(AuthorizationServerSecurityConfigurer configurer) {
         this.configurer = configurer;
     }
 

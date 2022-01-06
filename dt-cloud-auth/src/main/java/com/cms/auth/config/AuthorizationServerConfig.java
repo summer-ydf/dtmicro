@@ -5,6 +5,10 @@ import cn.hutool.http.HttpStatus;
 import cn.hutool.json.JSONUtil;
 import com.cms.auth.config.exception.*;
 import com.cms.auth.config.filter.CmsCaptchaAuthenticationFilter;
+import com.cms.auth.config.filter.CmsClientCredentialsTokenEndpointFilter;
+import com.cms.auth.config.handler.OAuth2AuthenticationFailureHandler;
+import com.cms.auth.config.handler.RestExceptionHandler;
+import com.cms.auth.config.handler.TokenAuthenticationFailureHandler;
 import com.cms.common.result.ResultEnum;
 import com.cms.common.result.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -153,7 +157,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         // oauthServer.allowFormAuthenticationForClients();
 
         // 自定义client_id异常处理
-        CustomClientCredentialsTokenEndpointFilter endpointFilter = new CustomClientCredentialsTokenEndpointFilter(oauthServer);
+        CmsClientCredentialsTokenEndpointFilter endpointFilter = new CmsClientCredentialsTokenEndpointFilter(oauthServer);
         endpointFilter.afterPropertiesSet();
         endpointFilter.setAuthenticationEntryPoint(authenticationEntryPoint());
         // 客户端认证之前的过滤器

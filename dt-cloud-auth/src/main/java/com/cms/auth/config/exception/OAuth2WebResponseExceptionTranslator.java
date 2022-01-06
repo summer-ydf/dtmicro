@@ -1,5 +1,6 @@
 package com.cms.auth.config.exception;
 
+import com.cms.auth.config.handler.OAuth2AuthenticationFailureHandler;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

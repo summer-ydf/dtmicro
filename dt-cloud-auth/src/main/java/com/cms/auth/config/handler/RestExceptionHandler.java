@@ -1,6 +1,8 @@
-package com.cms.auth.config.exception;
+package com.cms.auth.config.handler;
 
 import com.alibaba.fastjson.JSON;
+import com.cms.auth.config.exception.CmsOAuth2Exception;
+import com.cms.auth.config.exception.TokenAuthenticationException;
 import com.cms.auth.exception.ParameterAuthenticationException;
 import com.cms.common.result.ResultEnum;
 import com.cms.common.result.ResultUtil;

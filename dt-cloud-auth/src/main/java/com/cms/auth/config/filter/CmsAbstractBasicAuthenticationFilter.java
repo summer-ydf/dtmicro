@@ -1,6 +1,6 @@
 package com.cms.auth.config.filter;
 
-import com.cms.auth.config.exception.RestExceptionHandler;
+import com.cms.auth.config.handler.RestExceptionHandler;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.filter.OncePerRequestFilter;
