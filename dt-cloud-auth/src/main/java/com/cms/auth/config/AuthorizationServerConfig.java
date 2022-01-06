@@ -1,6 +1,7 @@
 package com.cms.auth.config;
 
 
+import com.cms.auth.config.exception.OAuth2WebResponseExceptionTranslator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -75,6 +76,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         return new InMemoryAuthorizationCodeServices();
     }
 
+    @Bean
+    public OAuth2WebResponseExceptionTranslator oAuth2WebResponseExceptionTranslator() {
+        return new OAuth2WebResponseExceptionTranslator();
+    }
+
     /**
      * 配置客户端详情服务
      * 参考：https://github.com/hxrui/youlai-mall
@@ -94,15 +100,15 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 // 客户端的秘钥
                 .secret(passwordEncoder.encode("123"))
                 // 允许访问的资源列表
-                .resourceIds("res1")
+                //.resourceIds("res1")
                 // 允许给客户端授权类型，一共五种
-                .authorizedGrantTypes("authorization_code","password","refresh_token","implicit","client_credentials")
+                .authorizedGrantTypes("password","refresh_token")
                 // 允许的授权范围(读或者写)
-                .scopes("all")
+                .scopes("all");
                 // 自动授权配置，false跳转到授权页面，true直接发送令牌
-                .autoApprove(false)
+                //.autoApprove(false)
                 // 验证回调地址 授权地址：localhost:8083/oauth/authorize?client_id=client&response_type=code&redirect_uri=http://www.baidu.com
-                .redirectUris("http://www.baidu.com");
+                //.redirectUris("http://www.baidu.com");
     }
 
     /**
@@ -119,8 +125,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 // 令牌管理服务
                 .tokenServices(tokenServices())
                 // 允许端点POST提交访问令牌
-                .allowedTokenEndpointRequestMethods(HttpMethod.POST);
-
+                .allowedTokenEndpointRequestMethods(HttpMethod.POST)
+                // 自定义异常处理
+                .exceptionTranslator(oAuth2WebResponseExceptionTranslator());
     }
 
     /**
