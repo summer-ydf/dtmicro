@@ -10,6 +10,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,7 +36,6 @@ public class RestExceptionHandler {
         } else if (ex instanceof CmsOAuth2Exception) {
             // 账号密码的验证
             CmsOAuth2Exception exception = (CmsOAuth2Exception)ex;
-            System.out.println("client_id和secret的验证->>>");
             return ResultUtil.error(ResultEnum.OAuth2Exception.getCode(),exception.getOauth2ErrorCode());
         }
         return null;
@@ -44,7 +44,7 @@ public class RestExceptionHandler {
     private ResultUtil<?> loginResponseObject(Throwable ex) {
         ResultUtil<?> customException = customException(null, null, ex);
         if(customException == null) {
-            System.out.println("为null==================");
+            System.out.println("未知异常捕获==================");
             return ResultUtil.error(ResultEnum.OAuth2Exception.getCode(),ResultEnum.OAuth2Exception.getMessage());
         }
         return customException;
@@ -52,25 +52,25 @@ public class RestExceptionHandler {
 
     public void loginExceptionHandler(HttpServletRequest request,HttpServletResponse response,Throwable ex) {
         ResultUtil<?> apiResponse = loginResponseObject(ex);
-        writeJSON(request,response, apiResponse);
-        System.out.println("登录异常->>>");
-        System.out.println("request->>>"+request);
-        System.out.println("response->>>"+response);
-        System.out.println("ex->>>"+ex);
+        writeToJson(request,response, apiResponse);
     }
 
     public void loginExceptionHandler(JsonGenerator jgen, CmsOAuth2Exception exception) throws IOException {
         jgen.writeStartObject();
         ResultUtil<?> apiResponse = loginResponseObject(exception);
-        System.out.println("自定义输出->>>"+apiResponse);
         jgen.writeNumberField("code",apiResponse.getCode());
         jgen.writeStringField("message",apiResponse.getMessage());
+        // 非密码模式输出
+        if(exception.getOauth2ErrorCode().equals(OAuth2Exception.UNSUPPORTED_GRANT_TYPE)) {
+            jgen.writeNumberField("code",ResultEnum.OAUTH2_GRANTTYPE_ERROR.getCode());
+            jgen.writeStringField("message",ResultEnum.OAUTH2_GRANTTYPE_ERROR.getMessage());
+        }
         jgen.writeBooleanField("success",false);
         jgen.writeNumberField("timestamp",System.currentTimeMillis());
         jgen.writeEndObject();
     }
 
-    public static void writeJSON(HttpServletRequest request, HttpServletResponse response, Object o) {
+    public static void writeToJson(HttpServletRequest request, HttpServletResponse response, Object o) {
         Writer writer = null;
         try {
             request.setCharacterEncoding("UTF-8");
@@ -80,7 +80,6 @@ public class RestExceptionHandler {
             writer.write(JSON.toJSONString(o));
             writer.flush();
         } catch (IOException ignored) {
-
         } finally {
             IOUtils.closeQuietly(writer);
         }

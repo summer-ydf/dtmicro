@@ -23,10 +23,10 @@ public abstract class CmsAbstractBasicAuthenticationFilter extends OncePerReques
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         // 校验是否密码模式
         if (!StringUtils.equals(request.getRequestURI(),"/oauth/token") || !StringUtils.equals("password",request.getParameter("grant_type"))) {
-            System.out.println("密码模式->>>");
             filterChain.doFilter(request, response);
             return;
         }
+
         try{
             handle(request,response,filterChain);
             filterChain.doFilter(request, response);
