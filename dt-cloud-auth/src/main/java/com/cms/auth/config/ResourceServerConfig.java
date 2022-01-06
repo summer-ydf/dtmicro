@@ -17,6 +17,6 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         // 配置需要保护的资源路径
-        http.authorizeRequests().antMatchers("/**").access("#oauth2.hasScope('all')").anyRequest().authenticated();
+        http.authorizeRequests().antMatchers("/**").access("#oauth2.hasScope('web1')").anyRequest().authenticated();
     }
 }

@@ -122,7 +122,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 // 允许给客户端授权类型，一共五种
                 .authorizedGrantTypes("password","refresh_token")
                 // 允许的授权范围(读或者写)
-                .scopes("all");
+                .scopes("web");
                 // 自动授权配置，false跳转到授权页面，true直接发送令牌
                 //.autoApprove(false)
                 // 验证回调地址 授权地址：localhost:8083/oauth/authorize?client_id=client&response_type=code&redirect_uri=http://www.baidu.com
