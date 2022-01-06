@@ -32,13 +32,12 @@ public class RestExceptionHandler {
             return ResultUtil.error(ResultEnum.OAuth2Exception.getCode(),ex.getMessage());
         } else if (ex instanceof InsufficientAuthenticationException) {
             return ResultUtil.error(ResultEnum.OAuth2Exception.getCode(),"认证错误");
-        }
-//        else if (ex instanceof TokenAuthenticationException) {
-//            return ApiResponseHelper.response(null, IcpError.REQUEST_OAUTH_EXP.getCode(),IcpError.REQUEST_OAUTH_EXP.getMessage());
-//        }
-        else if (ex instanceof IccOAuth2Exception) {
+        } else if (ex instanceof TokenAuthenticationException) {
+            return ResultUtil.error(ResultEnum.REQUEST_OAUTH_EXP.getCode(),ResultEnum.REQUEST_OAUTH_EXP.getMessage());
+        } else if (ex instanceof IccOAuth2Exception) {
             // client_id和secret的验证
             IccOAuth2Exception exception = (IccOAuth2Exception)ex;
+            System.out.println("client_id和secret的验证->>>");
             return ResultUtil.error(ResultEnum.OAuth2Exception.getCode(),exception.getOauth2ErrorCode());
         }
         return null;
