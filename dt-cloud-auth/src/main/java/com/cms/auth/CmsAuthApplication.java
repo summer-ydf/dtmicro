@@ -9,10 +9,11 @@ import org.springframework.context.annotation.Import;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 
 /**
+ * OAuth2授权服务启动器
  * @author ydf Created by 2021/11/25 11:45
  */
 @SpringBootApplication
-@EnableAuthorizationServer // 开启授权服务器
+@EnableAuthorizationServer
 @EnableDiscoveryClient
 @Import({RestExceptionHandler.class})
 @MapperScan(basePackages = {"com.cms.auth.mapper"})
