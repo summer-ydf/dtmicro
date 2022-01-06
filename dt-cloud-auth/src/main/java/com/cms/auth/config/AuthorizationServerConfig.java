@@ -1,8 +1,6 @@
 package com.cms.auth.config;
 
 
-import com.cms.auth.config.exception.IccBasicAuthenticationFilter;
-import com.cms.auth.config.exception.JiheBasicAuthenticationFilter;
 import com.cms.auth.config.exception.OAuth2AuthenticationFailureHandler;
 import com.cms.auth.config.exception.OAuth2WebResponseExceptionTranslator;
 import com.cms.auth.config.exception.RestExceptionHandler;
@@ -20,13 +18,11 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
-import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
 import org.springframework.security.oauth2.provider.code.AuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.code.InMemoryAuthorizationCodeServices;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
-import org.springframework.security.web.authentication.preauth.j2ee.J2eePreAuthenticatedProcessingFilter;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
@@ -110,14 +106,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     }
 
     /**
-     * clinet_id client_secret校验
-     * @return
-     */
-    public IccBasicAuthenticationFilter iccBasicAuthenticationFilter() {
-        return new IccBasicAuthenticationFilter();
-    }
-
-    /**
      * 配置客户端详情服务
      * 参考：https://github.com/hxrui/youlai-mall
      * 申请授权码：http://localhost:8083/oauth/authorize?client_id=client&response_type=code&scope=app&redirect_uri=http://www.baidu.com
@@ -168,23 +156,21 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     /**
      * 配置令牌访问端点安全的约束
-     * @param security 返回
+     * @param oauthServer 返回
      */
     @Override
-    public void configure(AuthorizationServerSecurityConfigurer security) {
-        security.tokenKeyAccess("isAuthenticated()").checkTokenAccess("isAuthenticated()");
-        security.allowFormAuthenticationForClients();
-        // 自定义异常处理端口，访问oauth/token时，当信息不全将拒绝,这里主要是client_id和secret的验证,无论是认证服务还是资源服务都在这里处理
-        security.authenticationEntryPoint(restExceptionHandler::loginExceptionHandler);
+    public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
+        oauthServer.tokenKeyAccess("isAuthenticated()").checkTokenAccess("isAuthenticated()");
 
+        // 自定义异常处理端口，访问oauth/token时，当信息不全将拒绝,这里主要是client_id和secret的验证,无论是认证服务还是资源服务都在这里处理
+        oauthServer.authenticationEntryPoint(restExceptionHandler::loginExceptionHandler);
         // 客户端认证之前的过滤器
         //security.addTokenEndpointAuthenticationFilter(iccLoginClaimsFilter());
-        // OAuth2基础信息校验
-        security.addTokenEndpointAuthenticationFilter(iccBasicAuthenticationFilter());
         // 验证码校验
-        security.addTokenEndpointAuthenticationFilter(iccCaptchaAuthenticationFilter());
+        oauthServer.addTokenEndpointAuthenticationFilter(iccCaptchaAuthenticationFilter());
         //security.addTokenEndpointAuthenticationFilter(iccLockAuthenticationFilter());
-        security.accessDeniedHandler((req,res,ex)-> {
+        oauthServer.allowFormAuthenticationForClients();
+        oauthServer.accessDeniedHandler((req,res,ex)-> {
             System.out.println("sss----"+ex.getMessage());
         });
 
