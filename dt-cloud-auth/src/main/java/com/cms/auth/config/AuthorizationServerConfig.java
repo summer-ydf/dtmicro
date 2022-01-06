@@ -1,9 +1,12 @@
 package com.cms.auth.config;
 
 
+import com.cms.auth.config.exception.IccBasicAuthenticationFilter;
 import com.cms.auth.config.exception.JiheBasicAuthenticationFilter;
+import com.cms.auth.config.exception.OAuth2AuthenticationFailureHandler;
 import com.cms.auth.config.exception.OAuth2WebResponseExceptionTranslator;
 import com.cms.auth.config.exception.RestExceptionHandler;
+import com.cms.auth.config.exception.TokenAuthenticationFailureHandler;
 import com.cms.auth.config.filter.IccCaptchaAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -83,9 +86,18 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         return new InMemoryAuthorizationCodeServices();
     }
 
+    /**
+     * 自定义异常处理
+     * @return
+     */
     @Bean
     public OAuth2WebResponseExceptionTranslator oAuth2WebResponseExceptionTranslator() {
-        return new OAuth2WebResponseExceptionTranslator();
+        return new OAuth2WebResponseExceptionTranslator(oAuth2AuthenticationFailureHandler());
+    }
+
+    @Bean
+    public OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler() {
+        return new TokenAuthenticationFailureHandler();
     }
 
     /**
@@ -95,6 +107,14 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Bean
     public IccCaptchaAuthenticationFilter iccCaptchaAuthenticationFilter() {
         return new IccCaptchaAuthenticationFilter();
+    }
+
+    /**
+     * clinet_id client_secret校验
+     * @return
+     */
+    public IccBasicAuthenticationFilter iccBasicAuthenticationFilter() {
+        return new IccBasicAuthenticationFilter();
     }
 
     /**
@@ -159,6 +179,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
         // 客户端认证之前的过滤器
         //security.addTokenEndpointAuthenticationFilter(iccLoginClaimsFilter());
+        // OAuth2基础信息校验
+        security.addTokenEndpointAuthenticationFilter(iccBasicAuthenticationFilter());
+        // 验证码校验
         security.addTokenEndpointAuthenticationFilter(iccCaptchaAuthenticationFilter());
         //security.addTokenEndpointAuthenticationFilter(iccLockAuthenticationFilter());
         security.accessDeniedHandler((req,res,ex)-> {

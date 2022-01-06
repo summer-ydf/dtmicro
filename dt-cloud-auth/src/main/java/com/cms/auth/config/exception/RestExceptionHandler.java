@@ -11,6 +11,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,11 +35,12 @@ public class RestExceptionHandler {
         }
 //        else if (ex instanceof TokenAuthenticationException) {
 //            return ApiResponseHelper.response(null, IcpError.REQUEST_OAUTH_EXP.getCode(),IcpError.REQUEST_OAUTH_EXP.getMessage());
-//        }else if (ex instanceof IccOAuth2Exception) {
-//            // client_id和secret的验证
-//            IccOAuth2Exception exception=(IccOAuth2Exception)ex;
-//            return ApiResponseHelper.response(null, IcpError.OAuth2Exception.getCode(),exception.getOauth2ErrorCode());
 //        }
+        else if (ex instanceof IccOAuth2Exception) {
+            // client_id和secret的验证
+            IccOAuth2Exception exception = (IccOAuth2Exception)ex;
+            return ResultUtil.error(ResultEnum.OAuth2Exception.getCode(),exception.getOauth2ErrorCode());
+        }
         return null;
     }
 
@@ -58,6 +60,15 @@ public class RestExceptionHandler {
         System.out.println("request->>>"+request);
         System.out.println("response->>>"+response);
         System.out.println("ex->>>"+ex);
+    }
+
+    public void loginExceptionHandler(JsonGenerator jgen, IccOAuth2Exception exception) throws IOException {
+        jgen.writeStartObject();
+        ResultUtil<?> apiResponse=loginResponseObject(exception);
+        System.out.println("自定义输出->>>"+apiResponse);
+        jgen.writeStringField("errmsg",apiResponse.getMessage());
+        jgen.writeNumberField("errcode",apiResponse.getCode());
+        jgen.writeEndObject();
     }
 
     public static void writeJSON(HttpServletRequest request, HttpServletResponse response, Object o) {
