@@ -10,15 +10,17 @@ import java.io.IOException;
 /**
  * @author ydf Created by 2022/1/6 15:01
  */
-public class IccOAuthExceptionJacksonSerializer extends StdSerializer<IccOAuth2Exception> {
+public class CmsOAuthExceptionJacksonSerializer extends StdSerializer<CmsOAuth2Exception> {
+
     @Autowired
     private RestExceptionHandler restExceptionHandler;
-    protected IccOAuthExceptionJacksonSerializer() {
-        super(IccOAuth2Exception.class);
+
+    protected CmsOAuthExceptionJacksonSerializer() {
+        super(CmsOAuth2Exception.class);
     }
 
     @Override
-    public void serialize(IccOAuth2Exception value, JsonGenerator jgen, SerializerProvider serializerProvider) throws IOException {
+    public void serialize(CmsOAuth2Exception value, JsonGenerator jgen, SerializerProvider serializerProvider) throws IOException {
         restExceptionHandler.loginExceptionHandler(jgen,value);
     }
 }

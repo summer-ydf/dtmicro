@@ -8,5 +8,5 @@ import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 @FunctionalInterface
 public interface OAuth2AuthenticationFailureHandler {
 
-    IccOAuth2Exception onAuthenticationFailure(OAuth2Exception exception);
+    CmsOAuth2Exception onAuthenticationFailure(OAuth2Exception exception);
 }

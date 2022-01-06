@@ -6,12 +6,10 @@ import com.cms.common.result.ResultEnum;
 import com.cms.common.result.ResultUtil;
 import com.fasterxml.jackson.core.JsonGenerator;
 import org.apache.commons.io.IOUtils;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,9 +32,9 @@ public class RestExceptionHandler {
             return ResultUtil.error(ResultEnum.OAuth2Exception.getCode(),"认证错误");
         } else if (ex instanceof TokenAuthenticationException) {
             return ResultUtil.error(ResultEnum.RESOURCE_OAUTH_EXP.getCode(),ResultEnum.RESOURCE_OAUTH_EXP.getMessage());
-        } else if (ex instanceof IccOAuth2Exception) {
-            // client_id和secret的验证
-            IccOAuth2Exception exception = (IccOAuth2Exception)ex;
+        } else if (ex instanceof CmsOAuth2Exception) {
+            // 账号密码的验证
+            CmsOAuth2Exception exception = (CmsOAuth2Exception)ex;
             System.out.println("client_id和secret的验证->>>");
             return ResultUtil.error(ResultEnum.OAuth2Exception.getCode(),exception.getOauth2ErrorCode());
         }
@@ -61,12 +59,14 @@ public class RestExceptionHandler {
         System.out.println("ex->>>"+ex);
     }
 
-    public void loginExceptionHandler(JsonGenerator jgen, IccOAuth2Exception exception) throws IOException {
+    public void loginExceptionHandler(JsonGenerator jgen, CmsOAuth2Exception exception) throws IOException {
         jgen.writeStartObject();
-        ResultUtil<?> apiResponse=loginResponseObject(exception);
+        ResultUtil<?> apiResponse = loginResponseObject(exception);
         System.out.println("自定义输出->>>"+apiResponse);
-        jgen.writeStringField("errmsg",apiResponse.getMessage());
-        jgen.writeNumberField("errcode",apiResponse.getCode());
+        jgen.writeNumberField("code",apiResponse.getCode());
+        jgen.writeStringField("message",apiResponse.getMessage());
+        jgen.writeBooleanField("success",false);
+        jgen.writeNumberField("timestamp",System.currentTimeMillis());
         jgen.writeEndObject();
     }
 

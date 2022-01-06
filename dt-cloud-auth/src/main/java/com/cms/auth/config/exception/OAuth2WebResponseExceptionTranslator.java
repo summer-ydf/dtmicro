@@ -66,12 +66,12 @@ public class OAuth2WebResponseExceptionTranslator implements WebResponseExceptio
         if (e.getHttpErrorCode() == HttpStatus.UNAUTHORIZED.value() || (e instanceof InsufficientScopeException)) {
             headers.set("WWW-Authenticate", String.format("%s %s", OAuth2AccessToken.BEARER_TYPE, e.getSummary()));
         }
-        IccOAuth2Exception exception;
+        CmsOAuth2Exception exception;
         // 用户名密码验证错误
         if(StringUtils.equals(e.getOAuth2ErrorCode(),"invalid_grant")){
             exception = oAuth2AuthenticationFailureHandler.onAuthenticationFailure(e);
         }else {
-            exception = new IccOAuth2Exception(e.getMessage(), e);
+            exception = new CmsOAuth2Exception(e.getMessage(), e);
             exception.setHttpErrorCode(e.getHttpErrorCode());
             exception.setOauth2ErrorCode(e.getOAuth2ErrorCode());
         }

@@ -76,7 +76,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     /**
      * 自定义异常处理
-     * @return
      */
     @Bean
     public OAuth2WebResponseExceptionTranslator oAuth2WebResponseExceptionTranslator() {

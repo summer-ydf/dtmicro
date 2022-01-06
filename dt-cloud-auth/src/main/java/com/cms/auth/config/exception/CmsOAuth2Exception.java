@@ -6,15 +6,18 @@ import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 /**
  * @author ydf Created by 2022/1/6 15:01
  */
-@JsonSerialize(using = IccOAuthExceptionJacksonSerializer.class)
-public class IccOAuth2Exception extends OAuth2Exception {
+@JsonSerialize(using = CmsOAuthExceptionJacksonSerializer.class)
+public class CmsOAuth2Exception extends OAuth2Exception {
+
     private String oauth2ErrorCode;
+
     private int httpErrorCode;
-    public IccOAuth2Exception(String msg, Throwable t) {
+
+    public CmsOAuth2Exception(String msg, Throwable t) {
         super(msg, t);
     }
 
-    public IccOAuth2Exception(String msg) {
+    public CmsOAuth2Exception(String msg) {
         super(msg);
     }
 
