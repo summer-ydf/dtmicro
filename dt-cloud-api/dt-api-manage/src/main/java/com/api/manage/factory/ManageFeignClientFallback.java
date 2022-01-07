@@ -14,21 +14,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class ManageFeignClientFallback implements FeignFailFallback,FallbackFactory<ManageFeignService> {
 
-    Logger log = LoggerFactory.getLogger(ManageFeignClientFallback.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(ManageFeignClientFallback.class);
 
     @Override
     public ManageFeignService create(Throwable throwable) {
-        log.info("调用接口请求出错：{}",throwable.getMessage());
+        LOGGER.info("调用接口请求出错：{}",throwable.getMessage());
         return new ManageFeignService() {
 
             @Override
-            public String loadUserByUsername(String username) {
-                return error();
-            }
-
-            @Override
             public void deductProduct(Integer a, String xid) {
-                log.info("扣减库存服务未启用==============================");
+                LOGGER.info("扣减库存服务未启用==============================");
             }
 
         };

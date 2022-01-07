@@ -1,5 +1,7 @@
 package com.cms.auth.config;
 
+import com.cms.auth.service.RpcUserDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -7,11 +9,8 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 /**
  * @author ydf Created by 2021/12/14 14:43
@@ -19,6 +18,9 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private RpcUserDetailsService rpcUserDetailsService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -45,12 +47,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll();
     }
 
-    // 内存用户
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("admin").password(new BCryptPasswordEncoder().encode("123456")).roles("A")
-                .and()
-                .withUser("root").password(new BCryptPasswordEncoder().encode("123456")).roles("B");
+        // 内存的方式
+        // auth.inMemoryAuthentication().withUser("admin").password(new BCryptPasswordEncoder().encode("123456")).roles("A")
+        auth.userDetailsService(rpcUserDetailsService).passwordEncoder(passwordEncoder());
     }
 }

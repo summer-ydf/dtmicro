@@ -16,8 +16,4 @@ public interface FeignFailFallback {
         return ResultUtil.error("业务模块未启动");
     }
 
-    default String error() {
-        log.info("调用失败统一处理返回：服务未开启====================");
-        return "服务未开启";
-    }
 }

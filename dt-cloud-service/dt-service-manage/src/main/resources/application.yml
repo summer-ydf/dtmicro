@@ -3,6 +3,8 @@ server:
 spring:
   application:
     name: cms-service-manage
+  main:
+    allow-bean-definition-overriding: true
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/dtmanage?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSL=false&nullCatalogMeansCurrent=true
     username: root

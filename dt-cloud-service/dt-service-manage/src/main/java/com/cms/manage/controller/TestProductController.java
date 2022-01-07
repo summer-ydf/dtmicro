@@ -16,11 +16,6 @@ public class TestProductController implements ManageFeignService {
     private TestProductService testProductService;
 
     @Override
-    public String loadUserByUsername(String username) {
-        return "调用成功，返回用户信息："+username;
-    }
-
-    @Override
     public void deductProduct(Integer a, String xid) {
         testProductService.deductProduct(a,xid);
     }

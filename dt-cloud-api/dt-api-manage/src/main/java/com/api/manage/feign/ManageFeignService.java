@@ -16,9 +16,6 @@ import static com.api.common.ApiConstants.APPLICATION_NAME_MANAGE;
 @FeignClient(value = APPLICATION_NAME_MANAGE,fallbackFactory = ManageFeignClientFallback.class)
 public interface ManageFeignService {
 
-    @GetMapping(value = APPLICATION_MANAGE_API_AFFIX + "/loadUserByUsername")
-    String loadUserByUsername(@RequestParam String username);
-
     @GetMapping(value = APPLICATION_MANAGE_API_AFFIX + "/deductProduct")
     void deductProduct(@RequestParam Integer a,@RequestParam String xid);
 }

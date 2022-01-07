@@ -13,6 +13,7 @@ import com.cms.auth.config.handler.RestExceptionHandler;
 import com.cms.auth.config.handler.TokenAuthenticationFailureHandler;
 import com.cms.auth.config.handler.TokenAuthenticationSuccessHandler;
 import com.cms.auth.config.interceptor.AuthorizationInterceptor;
+import com.cms.auth.service.RpcUserDetailsService;
 import com.cms.common.result.ResultEnum;
 import com.cms.common.result.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,8 +61,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-//    @Autowired
-//    private UserService userService;
+    @Autowired
+    private RpcUserDetailsService rpcUserDetailsService;
 
     @Resource
     private DataSource dataSource;
@@ -158,6 +159,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .authenticationManager(authenticationManager)
                 // 令牌管理服务
                 .tokenServices(defaultTokenServices())
+                // 配置加载用户信息的服务
+                .userDetailsService(rpcUserDetailsService)
                 // 自定义异常处理
                 .exceptionTranslator(oAuth2WebResponseExceptionTranslator());
     }
