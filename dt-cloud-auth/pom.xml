@@ -81,7 +81,13 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-oauth2</artifactId>
-            <version>2.2.5.RELEASE</version>
+            <version>${oauth.version}</version>
+        </dependency>
+        <!--JWT进行解码-->
+        <dependency>
+            <groupId>com.nimbusds</groupId>
+            <artifactId>nimbus-jose-jwt</artifactId>
+            <version>8.20</version>
         </dependency>
         <!-- redis相关依赖包 -->
         <dependency>

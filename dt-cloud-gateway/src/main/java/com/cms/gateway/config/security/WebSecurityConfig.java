@@ -9,8 +9,8 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 /**
  * @author ydf Created by 2022/1/7 17:51
  */
-@EnableWebFluxSecurity
 @Configuration
+@EnableWebFluxSecurity
 public class WebSecurityConfig {
 
     @Bean

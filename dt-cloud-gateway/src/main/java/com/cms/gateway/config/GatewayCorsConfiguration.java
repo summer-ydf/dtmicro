@@ -12,7 +12,7 @@ import org.springframework.web.util.pattern.PathPatternParser;
  * @author ydf Created by 2021/11/24 17:57
  */
 @Configuration
-public class CmsCorsConfig {
+public class GatewayCorsConfiguration {
 
     private CorsConfiguration buildConfig() {
         CorsConfiguration corsConfiguration = new CorsConfiguration();

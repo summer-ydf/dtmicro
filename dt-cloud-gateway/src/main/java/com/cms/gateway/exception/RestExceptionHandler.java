@@ -8,9 +8,10 @@ import reactor.core.publisher.Mono;
 
 @Slf4j
 public class RestExceptionHandler implements ErrorWebExceptionHandler {
+
     @Override
     public Mono<Void> handle(ServerWebExchange exchange, Throwable ex) {
-        if(ex instanceof NotFoundException){
+        if(ex instanceof NotFoundException) {
             log.warn("not found ex->{}",ex.getMessage());
         }else {
             log.warn("捕捉到异常:",ex);

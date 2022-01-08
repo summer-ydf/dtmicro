@@ -18,8 +18,13 @@ spring:
           uri: lb://cms-service-auth
           predicates:
             - Path=/**
-management:
-  endpoints:
-    web:
-      exposure:
-        include: '*'
+security:
+  oauth2:
+    resourceserver:
+      jwt:
+        jwk-set-uri: 'http://localhost:8083/rsa/publicKey' #配置RSA的公钥访问地址
+secure:
+  ignore:
+    urls: #配置白名单路径
+      - auth = /anonymous/**
+      - auth = /oauth/**
