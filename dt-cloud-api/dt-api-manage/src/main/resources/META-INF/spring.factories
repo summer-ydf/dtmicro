@@ -1,2 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.api.manage.factory.ManageFeignClientFallback\
-  ,com.api.manage.factory.OauthFeignClientFallback
+#org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.api.manage.feign.OauthFeignClientFallback

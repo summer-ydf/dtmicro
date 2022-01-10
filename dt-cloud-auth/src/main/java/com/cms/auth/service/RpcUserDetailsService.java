@@ -1,8 +1,8 @@
 package com.cms.auth.service;
 
-import com.api.manage.feign.OauthFeignClientService;
 import com.cms.auth.domain.SecurityUser;
 import com.cms.common.entity.SecurityClaimsUser;
+import com.cms.common.feign.OauthFeignClientService;
 import com.cms.common.result.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,8 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 @Service
 public class RpcUserDetailsService implements UserDetailsService {
 
-//    @Autowired
-//    private OauthFeignClientService oauthFeignClientService;
+    @Autowired
+    private OauthFeignClientService oauthFeignClientService;
 
     /**
      * 登陆验证时，通过username获取用户的所有权限信息
@@ -40,17 +40,16 @@ public class RpcUserDetailsService implements UserDetailsService {
 //        R<SecurityClaimsUser> userR = feignIcplClient.loadUserByUsername(params.getScope(),params.getSchool(),username,params.getOpenid());
 //        if(!userR.isNotNull()) throw new UsernameNotFoundException(userR.getMessage());
 //        return SecurityUser.from(userR.getData());
-//        ResultUtil<SecurityClaimsUser> claimsUserResultUtil = oauthFeignClientService.loadUserByUsername(username);
-//        System.out.println("远程调用回调结果->>>");
-//        System.out.println(claimsUserResultUtil);
-//        if (!claimsUserResultUtil.isSuccess()) {
-//            throw new UsernameNotFoundException(claimsUserResultUtil.getMessage());
-//        }
-        ResultUtil<SecurityClaimsUser> claimsUserResultUtil = new ResultUtil<>();
+        ResultUtil<SecurityClaimsUser> claimsUserResultUtil = oauthFeignClientService.loadUserByUsername(username);
+        System.out.println("远程调用回调结果->>>");
+        System.out.println(claimsUserResultUtil);
+        if (!claimsUserResultUtil.isSuccess()) {
+            throw new UsernameNotFoundException(claimsUserResultUtil.getMessage());
+        }
         return SecurityUser.from(claimsUserResultUtil.getData());
     }
 
-    public static HttpServletRequest  currentRequest() {
+    public static HttpServletRequest currentRequest() {
         RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
         if (requestAttributes != null) {
             return ((ServletRequestAttributes) requestAttributes).getRequest();

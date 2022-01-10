@@ -1,6 +1,5 @@
 package com.cms.manage.controller;
 
-import com.api.manage.feign.ManageFeignService;
 import com.cms.common.result.ResultUtil;
 import com.cms.manage.service.TestProductService;
 import com.cms.manage.service.TestService;

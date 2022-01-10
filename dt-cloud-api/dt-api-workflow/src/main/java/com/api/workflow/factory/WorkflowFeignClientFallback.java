@@ -3,9 +3,10 @@ package com.api.workflow.factory;
 import com.api.common.feign.FeignFailFallback;
 import com.api.workflow.feign.WorkflowFeignService;
 import com.cms.common.result.ResultUtil;
+import feign.hystrix.FallbackFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cloud.openfeign.FallbackFactory;
+
 import org.springframework.stereotype.Component;
 
 /**
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Component;
  * @author ydf Created by 2021/11/23 16:05
  */
 @Component
-public class WorkflowFeignClientFallback implements FeignFailFallback,FallbackFactory<WorkflowFeignService> {
+public class WorkflowFeignClientFallback implements FeignFailFallback, FallbackFactory<WorkflowFeignService> {
 
     Logger log = LoggerFactory.getLogger(WorkflowFeignClientFallback.class);
 
