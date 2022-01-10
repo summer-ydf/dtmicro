@@ -14,12 +14,13 @@ public class AuthController {
 
     @GetMapping("/hello")
     public String hello() {
+        System.out.println("不需要校验======================");
         return "hello!!!!";
     }
 
     @GetMapping("/admin")
-    @PreAuthorize("hasRole('ROLE_admin')")
     public String admin() {
+        System.out.println("获取资源===============");
         return "admin!!!!";
     }
 

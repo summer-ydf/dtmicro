@@ -12,12 +12,12 @@ spring:
         - id: cms-service-auth
           uri: lb://cms-service-auth
           predicates:
-            - Path=/auth/oauth/**,/auth/security/**,/auth/anonymous/**
+            - Path=/auth/oauth/**,/auth/security/**,/auth/anonymous/**,/auth/hello
   main:
     allow-bean-definition-overriding: true
-
 secure:
   ignore:
     urls: #配置白名单路径
       - auth = /anonymous/**
       - auth = /oauth/**
+      - auth = /hello

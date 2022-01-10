@@ -28,7 +28,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         // 配置需要保护的资源路径
-        http.authorizeRequests().antMatchers("/rsa/publicKey").permitAll();
+        http.authorizeRequests().antMatchers("/rsa/publicKey","/hello").permitAll();
         http.authorizeRequests().antMatchers("/**").access("#oauth2.hasScope('web')").anyRequest().authenticated();
     }
 }

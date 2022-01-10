@@ -6,9 +6,9 @@ spring:
   main:
     allow-bean-definition-overriding: true
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/dtcms1.0?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSL=false&nullCatalogMeansCurrent=true
+    url: jdbc:mysql://127.0.0.1:3306/dtmanage?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSL=false&nullCatalogMeansCurrent=true
     username: root
-    password: 123456
+    password: Passw0rd!
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
   redis:
@@ -34,6 +34,7 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
+        enabled: true
 management:
   endpoints:
     web:
