@@ -25,6 +25,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -40,7 +41,7 @@ public class TokenFilter implements GlobalFilter, Ordered {
     @Autowired
     private TokenStore tokenStore;
 
-    private static final PathMatcher PATH_MATCHER = new AntPathMatcher();
+    private static PathMatcher PATH_MATCHER = new AntPathMatcher();
 
     public static boolean urlMatch(String[] urls, String requestPath) {
         return StringUtils.isNotBlank(requestPath) && Arrays.stream(urls).anyMatch(url->PATH_MATCHER.match(url, requestPath));
@@ -49,9 +50,17 @@ public class TokenFilter implements GlobalFilter, Ordered {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         RequestPath requestPath = exchange.getRequest().getPath();
-        if(urlMatch(ignoreUrlsConfig.filterAllUrls(),requestPath.toString())) {
-            return chain.filter(exchange);
+        log.info("当前请求路径: {}", requestPath);
+        PathMatcher pathMatcher = new AntPathMatcher();
+        //白名单路径放行
+        List<String> ignoreUrls = ignoreUrlsConfig.getUrls();
+        for (String ignoreUrl : ignoreUrls) {
+            if (pathMatcher.match(ignoreUrl, requestPath.toString())) {
+                System.out.println("直接放行->>>");
+                return chain.filter(exchange);
+            }
         }
+
         String token = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
         if(StringUtils.isNotBlank(token)) {
             token = token.substring(7);

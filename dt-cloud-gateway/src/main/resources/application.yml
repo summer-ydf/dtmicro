@@ -1,6 +1,8 @@
 spring:
   application:
     name: cms-service-gateway
+  main:
+    allow-bean-definition-overriding: true
   profiles:
     active: dev
   cloud:
@@ -9,15 +11,12 @@ spring:
         enabled: false
     gateway:
       routes:
-        - id: cms-service-auth
+        - id: cms-auth
           uri: lb://cms-service-auth
           predicates:
-            - Path=/auth/oauth/**,/auth/security/**,/auth/anonymous/**,/auth/hello
-  main:
-    allow-bean-definition-overriding: true
-secure:
+            - Path=/oauth/**,/hello,/admin
+secure:  #配置白名单路径
   ignore:
-    urls: #配置白名单路径
-      - auth = /anonymous/**
-      - auth = /oauth/**
-      - auth = /hello
+    urls:
+      - /oauth/**
+      - /hello

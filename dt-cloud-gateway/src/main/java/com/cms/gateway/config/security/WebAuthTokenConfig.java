@@ -20,12 +20,12 @@ public class WebAuthTokenConfig {
     public JwtAccessTokenConverter jwtAccessTokenConverter() {
         JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();
         jwtAccessTokenConverter.setKeyPair(keyPair());
-        System.out.println("jwtAccessTokenConverter->>>"+jwtAccessTokenConverter);
         return jwtAccessTokenConverter;
     }
+
     @Bean
     public KeyPair keyPair() {
-        //从classpath下的证书中获取秘钥对
+        // 从classpath下的证书中获取秘钥对
         KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("jwt/jwt.jks"), "123456".toCharArray());
         return keyStoreKeyFactory.getKeyPair("jwt", "123456".toCharArray());
     }
