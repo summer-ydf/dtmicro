@@ -1,28 +1,21 @@
-server:
-  port: 9090
 spring:
   application:
     name: cms-service-gateway
-  main:
-    allow-bean-definition-overriding: true
+  profiles:
+    active: dev
   cloud:
-    nacos:
-      discovery:
-        server-addr: 127.0.0.1:8848
+    loadbalancer:
+      retry:
+        enabled: false
     gateway:
-      discovery:
-        locator:
-          enabled: true
       routes:
-        - id: cms-auth
+        - id: cms-service-auth
           uri: lb://cms-service-auth
           predicates:
-            - Path=/**
-security:
-  oauth2:
-    resourceserver:
-      jwt:
-        jwk-set-uri: 'http://localhost:8083/rsa/publicKey' #配置RSA的公钥访问地址
+            - Path=/auth/oauth/**,/auth/security/**,/auth/anonymous/**
+  main:
+    allow-bean-definition-overriding: true
+
 secure:
   ignore:
     urls: #配置白名单路径

@@ -1,0 +1,21 @@
+server:
+  port: 9091
+spring:
+  application:
+    name: cms-service-test
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        enabled: true
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: cms-auth
+          uri: lb://cms-service-auth
+          predicates:
+            - Path=/**

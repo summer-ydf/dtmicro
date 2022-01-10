@@ -1,11 +1,12 @@
 package com.cms.gateway.filter;
 
-import cn.hutool.core.util.StrUtil;
+
+import com.cms.gateway.GatewayConstant;
 import com.cms.gateway.config.IgnoreUrlsConfig;
-import com.nimbusds.jose.JWSObject;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.MapUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -14,7 +15,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.RequestPath;
 import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.security.oauth2.core.OAuth2AccessToken;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.MultiValueMap;
@@ -22,7 +24,6 @@ import org.springframework.util.PathMatcher;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-import java.text.ParseException;
 import java.util.Arrays;
 import java.util.Map;
 
@@ -36,8 +37,8 @@ public class TokenFilter implements GlobalFilter, Ordered {
     @Autowired
     private IgnoreUrlsConfig ignoreUrlsConfig;
 
-//        @Autowired
-//    private TokenStore tokenStore;
+    @Autowired
+    private TokenStore tokenStore;
 
     private static final PathMatcher PATH_MATCHER = new AntPathMatcher();
 
@@ -47,96 +48,41 @@ public class TokenFilter implements GlobalFilter, Ordered {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        RequestPath requestPath =exchange.getRequest().getPath();
+        RequestPath requestPath = exchange.getRequest().getPath();
         if(urlMatch(ignoreUrlsConfig.filterAllUrls(),requestPath.toString())) {
             return chain.filter(exchange);
         }
         String token = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
-        if (StrUtil.isEmpty(token)) {
-            System.out.println("token不存在->>>");
-            return chain.filter(exchange);
+        if(StringUtils.isNotBlank(token)) {
+            token = token.substring(7);
+            System.out.println("token->>>"+token);
+        }else {
+            MultiValueMap<String, String> multiValueMap=exchange.getRequest().getQueryParams();
+            token = ObjectUtils.toString(multiValueMap.getFirst("access_token"));
+            System.out.println("token->>>"+token);
         }
-
+        if(StringUtils.isEmpty(token)) {
+            return GatewayConstant.response(exchange, HttpStatus.UNAUTHORIZED, GatewayConstant.UNAUTHORIZED_TEXT, GatewayConstant.UNAUTHORIZED_JSON);
+        }
         //3 判断是否是有效的token
-//        OAuth2AccessToken oAuth2AccessToken = null;
-//        try{
-//            oAuth2AccessToken = tokenStore.readAccessToken(token);
-//            if(oAuth2AccessToken==null) {
-//                return GatewayConstant.response(exchange, HttpStatus.UNAUTHORIZED, GatewayConstant.UNAUTHORIZED_TEXT, GatewayConstant.UNAUTHORIZED_JSON);
-//            }
-//            Map<String, Object> additionalInformation = oAuth2AccessToken.getAdditionalInformation();
-//            String claims = MapUtils.getString(additionalInformation,"claims");
-//            String de_claims= EncryptUtils.decryptAES_CBC(claims,token_claims_password,token_claims_ivs, EncryptUtils.EncodeType.Base64);
-//            ServerHttpRequest request = exchange.getRequest().mutate().header(token_gateway_header_name, de_claims).build();
-//            //将现在的request 变成 exchange对象
-//            return chain.filter(exchange.mutate().request(request).build());
-//        }catch (Exception e){
-//            log.info("无效的token: {}，ex:{}", token,e.getMessage());
-//        }
-
-        try {
-            System.out.println("token存在->>>"+token);
-            // 从token中解析用户信息并设置到Header中去
-            String realToken = token.replace("Bearer ", "");
-            JWSObject jwsObject = JWSObject.parse(realToken);
-            String userStr = jwsObject.getPayload().toString();
-            System.out.println("AuthGlobalFilter.filter() user:{}"+userStr);
-            ServerHttpRequest request = exchange.getRequest().mutate().header("user", userStr).build();
-            exchange = exchange.mutate().request(request).build();
-        } catch (ParseException e) {
-            e.printStackTrace();
+        OAuth2AccessToken oAuth2AccessToken = null;
+        try{
+            oAuth2AccessToken = tokenStore.readAccessToken(token);
+            Map<String, Object> additionalInformation = oAuth2AccessToken.getAdditionalInformation();
+            String claims = MapUtils.getString(additionalInformation,"claims");
+            //String de_claims= EncryptUtils.decryptAES_CBC(claims,token_claims_password,token_claims_ivs, EncryptUtils.EncodeType.Base64);
+            String de_claims= "abc";
+            ServerHttpRequest request = exchange.getRequest().mutate().header("Icc-Gateway-Authorization", de_claims).build();
+            //将现在的request 变成 exchange对象
+            return chain.filter(exchange.mutate().request(request).build());
+        }catch (Exception e){
+            log.info("无效的token: {}，ex:{}", token,e.getMessage());
         }
-        return chain.filter(exchange);
+        return GatewayConstant.response(exchange,HttpStatus.UNAUTHORIZED, GatewayConstant.UNAUTHORIZED_TEXT, GatewayConstant.UNAUTHORIZED_JSON);
     }
 
     @Override
     public int getOrder() {
         return 0;
     }
-
-//
-
-//
-//    @Override
-//    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-//        RequestPath requestPath =exchange.getRequest().getPath();
-//        if(urlMatch(ignoreUrlsConfig.filterAllUrls(),requestPath.toString())){
-//            return chain.filter(exchange);
-//        }
-//        String token = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
-//        if(StringUtils.isNotBlank(token)){
-//            token=token.substring(7);
-//        }else {
-//            MultiValueMap multiValueMap=exchange.getRequest().getQueryParams();
-//            token= ObjectUtils.toString(multiValueMap.getFirst("access_token"));
-//        }
-//        if(StringUtils.isEmpty(token)){
-//            return GatewayConstant.response(exchange,HttpStatus.UNAUTHORIZED, GatewayConstant.UNAUTHORIZED_TEXT, GatewayConstant.UNAUTHORIZED_JSON);
-//        }
-//        //3 判断是否是有效的token
-//        OAuth2AccessToken oAuth2AccessToken=null;
-//        try{
-//            oAuth2AccessToken=tokenStore.readAccessToken(token);
-//            if(oAuth2AccessToken==null){
-//                return GatewayConstant.response(exchange, HttpStatus.UNAUTHORIZED, GatewayConstant.UNAUTHORIZED_TEXT, GatewayConstant.UNAUTHORIZED_JSON);
-//            }
-//            Map<String, Object> additionalInformation = oAuth2AccessToken.getAdditionalInformation();
-//            String claims = MapUtils.getString(additionalInformation,"claims");
-//            String de_claims= EncryptUtils.decryptAES_CBC(claims,token_claims_password,token_claims_ivs, EncryptUtils.EncodeType.Base64);
-//            ServerHttpRequest request = exchange.getRequest().mutate().header(token_gateway_header_name, de_claims).build();
-//            //将现在的request 变成 exchange对象
-//            return chain.filter(exchange.mutate().request(request).build());
-//        }catch (Exception e){
-//            log.info("无效的token: {}，ex:{}", token,e.getMessage());
-//        }
-//        return GatewayConstant.response(exchange,HttpStatus.UNAUTHORIZED, GatewayConstant.UNAUTHORIZED_TEXT, GatewayConstant.UNAUTHORIZED_JSON);
-//    }
-//    @Override
-//    public int getOrder() {
-//        return 10;
-//    }
-
-
-
-
 }

@@ -7,10 +7,10 @@ import org.springframework.security.config.web.server.ServerHttpSecurity;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 
 /**
- * @author ydf Created by 2022/1/7 17:51
+ * @author ydf Created by 2022/1/10 12:28
  */
-@Configuration
 @EnableWebFluxSecurity
+@Configuration
 public class WebSecurityConfig {
 
     @Bean
