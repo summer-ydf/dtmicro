@@ -1,8 +1,8 @@
 package com.cms.auth.service;
 
+import com.api.manage.feign.OauthFeignClientService;
 import com.cms.auth.domain.SecurityUser;
 import com.cms.common.entity.SecurityClaimsUser;
-import com.cms.common.feign.OauthFeignClientService;
 import com.cms.common.result.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

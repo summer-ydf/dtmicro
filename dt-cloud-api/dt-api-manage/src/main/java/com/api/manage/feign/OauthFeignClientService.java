@@ -1,5 +1,6 @@
 package com.api.manage.feign;
 
+import com.api.manage.factory.OauthFeignClientFallback;
 import com.cms.common.entity.SecurityClaimsUser;
 import com.cms.common.result.ResultUtil;
 import org.springframework.cloud.openfeign.FeignClient;
