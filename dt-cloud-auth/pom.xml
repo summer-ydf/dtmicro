@@ -39,21 +39,14 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.cloud</groupId>-->
-<!--            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>-->
-<!--        </dependency>-->
+
         <!-- OpenFeign的http客户端 -->
 <!--        <dependency>-->
 <!--            <groupId>io.github.openfeign</groupId>-->
 <!--            <artifactId>feign-okhttp</artifactId>-->
 <!--            <version>${okhttp.version}</version>-->
 <!--        </dependency>-->
-        <!-- SpringCloud Loadbalancer -->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.cloud</groupId>-->
-<!--            <artifactId>spring-cloud-starter-loadbalancer</artifactId>-->
-<!--        </dependency>-->
+
         <!-- SpringCloud-ailibaba-sentinel服务监控 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
@@ -90,7 +83,7 @@
         <dependency>
             <groupId>com.nimbusds</groupId>
             <artifactId>nimbus-jose-jwt</artifactId>
-            <version>8.20</version>
+            <version>${nimbusds.jwt.version}</version>
         </dependency>
         <!-- redis相关依赖包 -->
         <dependency>
@@ -100,12 +93,6 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-pool2</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.2.75</version>
         </dependency>
 
         <dependency>
@@ -119,5 +106,24 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.cms.auth.CmsAuthApplication</mainClass>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>
