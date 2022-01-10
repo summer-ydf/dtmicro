@@ -20,7 +20,8 @@ public enum ResultEnum {
     OAUTH2_BASE_ERROR(50003, "客户端认证失败！"),
     RESOURCE_OAUTH_EXP(50004, "服务端授权过期！"),
     VALID_CODE_ERROR(50005, "验证码错误！"),
-    VALID_USERNAME_ERROR(50006, "用户名或者密码错误！");
+    VALID_USERNAME_ERROR(50006, "用户名或者密码错误！"),
+    GATEWAY_TIMEOUT_ERROR(50018, "网关超时");
 
     private Integer code;
 

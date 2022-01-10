@@ -5,7 +5,6 @@ import com.cms.gateway.GatewayConstant;
 import com.cms.gateway.config.IgnoreUrlsConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections.MapUtils;
-import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -19,12 +18,10 @@ import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
-import org.springframework.util.MultiValueMap;
 import org.springframework.util.PathMatcher;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -41,44 +38,33 @@ public class TokenFilter implements GlobalFilter, Ordered {
     @Autowired
     private TokenStore tokenStore;
 
-    private static PathMatcher PATH_MATCHER = new AntPathMatcher();
-
-    public static boolean urlMatch(String[] urls, String requestPath) {
-        return StringUtils.isNotBlank(requestPath) && Arrays.stream(urls).anyMatch(url->PATH_MATCHER.match(url, requestPath));
-    }
-
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         RequestPath requestPath = exchange.getRequest().getPath();
         log.info("当前请求路径: {}", requestPath);
         PathMatcher pathMatcher = new AntPathMatcher();
-        //白名单路径放行
+        // 白名单路径放行
         List<String> ignoreUrls = ignoreUrlsConfig.getUrls();
         for (String ignoreUrl : ignoreUrls) {
             if (pathMatcher.match(ignoreUrl, requestPath.toString())) {
-                System.out.println("直接放行->>>");
                 return chain.filter(exchange);
             }
         }
-
+        // 获取token令牌
         String token = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
         if(StringUtils.isNotBlank(token)) {
             token = token.substring(7);
             System.out.println("token->>>"+token);
         }else {
-            MultiValueMap<String, String> multiValueMap=exchange.getRequest().getQueryParams();
-            token = ObjectUtils.toString(multiValueMap.getFirst("access_token"));
-            System.out.println("token->>>"+token);
-        }
-        if(StringUtils.isEmpty(token)) {
             return GatewayConstant.response(exchange, HttpStatus.UNAUTHORIZED, GatewayConstant.UNAUTHORIZED_TEXT, GatewayConstant.UNAUTHORIZED_JSON);
         }
-        //3 判断是否是有效的token
+        // 判断是否是有效的token
         OAuth2AccessToken oAuth2AccessToken = null;
         try{
             oAuth2AccessToken = tokenStore.readAccessToken(token);
             Map<String, Object> additionalInformation = oAuth2AccessToken.getAdditionalInformation();
             String claims = MapUtils.getString(additionalInformation,"claims");
+            System.out.println("claims->>>"+claims);
             //String de_claims= EncryptUtils.decryptAES_CBC(claims,token_claims_password,token_claims_ivs, EncryptUtils.EncodeType.Base64);
             String de_claims= "abc";
             ServerHttpRequest request = exchange.getRequest().mutate().header("Icc-Gateway-Authorization", de_claims).build();
