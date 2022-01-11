@@ -4,7 +4,9 @@
 
  **Spring Boot前后端分离架构，大道至简、代码玄学、开箱即用**  <br>
 
-![输入图片说明](https://img.shields.io/badge/spring--boot-2.3.2-green.svg "在这里输入图片标题") ![输入图片说明](https://img.shields.io/badge/Vue-3.5.0-brightgreen "在这里输入图片标题") ![输入图片说明](https://img.shields.io/badge/redis-6.0.6-brightgreen "在这里输入图片标题") ![输入图片说明](https://img.shields.io/badge/kaptcha-2.3.2-brightgreen "在这里输入图片标题") ![输入图片说明](https://img.shields.io/badge/MySQL-8.0.81-brightgreen "在这里输入图片标题") ![输入图片说明](https://img.shields.io/badge/mybatisplus-3.4.6-brightgreen "在这里输入图片标题") ![输入图片说明](https://img.shields.io/badge/easyexcel-2.2.0beta2-brightgreen "在这里输入图片标题")
+![SpringBoot版本](https://img.shields.io/badge/spring--boot-2.3.2-green.svg "在这里输入图片标题") 
+[SpringCloud版本](https://img.shields.io/badge/spring-cloud--Hoxton.SR9-brightgreen.svg)
+![输入图片说明](https://img.shields.io/badge/Vue-3.5.0-brightgreen "在这里输入图片标题") ![输入图片说明](https://img.shields.io/badge/redis-6.0.6-brightgreen "在这里输入图片标题") ![输入图片说明](https://img.shields.io/badge/kaptcha-2.3.2-brightgreen "在这里输入图片标题") ![输入图片说明](https://img.shields.io/badge/MySQL-8.0.81-brightgreen "在这里输入图片标题") ![输入图片说明](https://img.shields.io/badge/mybatisplus-3.4.6-brightgreen "在这里输入图片标题") ![输入图片说明](https://img.shields.io/badge/easyexcel-2.2.0beta2-brightgreen "在这里输入图片标题")
 
 
 # 平台简介
