@@ -1,7 +1,6 @@
 package com.cms.auth;
 import com.cms.auth.config.handler.RestExceptionHandler;
 import com.cms.common.utils.SysCmsUtils;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -17,7 +16,6 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 @EnableAuthorizationServer
 @EnableDiscoveryClient
 @Import({RestExceptionHandler.class})
-@MapperScan(basePackages = {"com.cms.auth.mapper"})
 @EnableFeignClients(basePackages ={"com.api.manage.feign"})
 public class CmsAuthApplication {
 

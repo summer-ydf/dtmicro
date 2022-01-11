@@ -35,6 +35,7 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.client.JdbcClientDetailsService;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
@@ -59,7 +60,7 @@ import java.util.Map;
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private StringRedisTemplate stringRedisTemplate;
 
     @Autowired
     private RpcUserDetailsService rpcUserDetailsService;
@@ -67,16 +68,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Resource
     private DataSource dataSource;
 
-    /**
-     * 客户端详情服务
-     */
-    @Autowired
-    private ClientDetailsService clientDetailsService;
-
-//    @Bean
-//    public ClientDetailsService clientDetails() {
-//        return new JdbcClientDetailsService(dataSource);
-//    }
+    @Bean
+    public ClientDetailsService clientDetails() {
+        return new JdbcClientDetailsService(dataSource);
+    }
 
     /**
      * 自定义异常处理类
@@ -102,9 +97,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         return new TokenAuthenticationSuccessHandler();
     }
 
-    @Autowired
-    private StringRedisTemplate stringRedisTemplate;
-
     /**
      * 自定义异常处理
      */
@@ -113,6 +105,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         return new OAuth2WebResponseExceptionTranslator(oAuth2AuthenticationFailureHandler());
     }
 
+    /**
+     * 账号密码错误处理
+     */
     @Bean
     public OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler() {
         return new TokenAuthenticationFailureHandler();
@@ -128,22 +123,13 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
     /**
      * 配置客户端详情服务
-     * 参考：https://github.com/hxrui/youlai-mall
      * @param clients 客户端信息
      * @throws Exception 抛出异常
      */
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        // 使用内存的方式配置
-        clients.inMemory()
-                // 客户端的ID
-                .withClient("cms")
-                // 客户端的秘钥
-                .secret(passwordEncoder.encode("dt666"))
-                // 允许的授权范围(读或者写)
-                .scopes("web")
-                // 允许给客户端授权类型，一共五种
-                .authorizedGrantTypes("password","refresh_token");
+        // 从jdbc查出数据来存储
+        clients.withClientDetails(clientDetails());
     }
 
     /**
@@ -152,8 +138,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
-        // 允许端点POST提交访问令牌
-        endpoints.allowedTokenEndpointRequestMethods(HttpMethod.POST).addInterceptor(authorizationInterceptor());
         endpoints
                 // 密码模式需要
                 .authenticationManager(authenticationManager)
@@ -162,7 +146,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 // 配置加载用户信息的服务
                 .userDetailsService(rpcUserDetailsService)
                 // 自定义异常处理
-                .exceptionTranslator(oAuth2WebResponseExceptionTranslator());
+                .exceptionTranslator(oAuth2WebResponseExceptionTranslator())
+                // 允许端点POST提交访问令牌
+                .allowedTokenEndpointRequestMethods(HttpMethod.POST).addInterceptor(authorizationInterceptor());
     }
 
     /**
@@ -265,8 +251,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
             response.setHeader(HttpHeaders.CONTENT_TYPE, "application/json;charset=UTF-8");
             response.setHeader("Access-Control-Allow-Origin", "*");
             response.setHeader("Cache-Control", "no-cache");
-            ResultUtil<Object> error = ResultUtil.error(ResultEnum.OAUTH2_BASE_ERROR.getCode(),
-                    ResultEnum.OAUTH2_BASE_ERROR.getMessage());
+            ResultUtil<Object> error = ResultUtil.error(ResultEnum.OAUTH2_BASE_ERROR.getCode(), ResultEnum.OAUTH2_BASE_ERROR.getMessage());
             response.getWriter().print(JSONUtil.toJsonStr(error));
             response.getWriter().flush();
         };

@@ -39,14 +39,6 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
-
-        <!-- OpenFeign的http客户端 -->
-<!--        <dependency>-->
-<!--            <groupId>io.github.openfeign</groupId>-->
-<!--            <artifactId>feign-okhttp</artifactId>-->
-<!--            <version>${okhttp.version}</version>-->
-<!--        </dependency>-->
-
         <!-- SpringCloud-ailibaba-sentinel服务监控 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>

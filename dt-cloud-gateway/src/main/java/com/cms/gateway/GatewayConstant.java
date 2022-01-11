@@ -19,6 +19,10 @@ public class GatewayConstant {
 
     public static final byte[] UNAUTHORIZED_TEXT = ResultEnum.GATEWAY_TIMEOUT_ERROR.getMessage().getBytes(StandardCharsets.UTF_8);
 
+    public static final byte[] UNAVAILABLE_JSON = JSON.toJSONBytes(ResultUtil.error(ResultEnum.SERVICE_UNAVAILABLE_ERROR.getCode(),ResultEnum.SERVICE_UNAVAILABLE_ERROR.getMessage()));
+
+    public static final byte[] UNAVAILABLE_TEXT = ResultEnum.SERVICE_UNAVAILABLE_ERROR.getMessage().getBytes(StandardCharsets.UTF_8);
+
     public static Mono<Void> response(ServerWebExchange exchange,HttpStatus statusCode,byte[] html_bytes,byte[] json_bytes) {
         return Mono.defer(() -> {
             String accept = exchange.getRequest().getHeaders().getFirst(HttpHeaders.ACCEPT);

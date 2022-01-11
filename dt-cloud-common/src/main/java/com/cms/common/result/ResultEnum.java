@@ -14,14 +14,17 @@ public enum ResultEnum {
     NO_LOGIN(4001),NO_LOGIN_MESSAGE("匿名用户无权限访问！"),
     NO_AUTH(4002),NO_AUTH_MESSAGE("无资源访问权限！"),
     ACCOUNT_OTHERS(4003),ACCOUNT_OTHERS_MESSAGE("账号下线！"),
+
     SYSTEM_ERROR(50000, "系统执行错误！"),
     OAuth2Exception(50001, "认证错误！"),
-    OAUTH2_GRANTTYPE_ERROR(50003, "非密码模式！"),
-    OAUTH2_BASE_ERROR(50003, "客户端认证失败！"),
-    RESOURCE_OAUTH_EXP(50004, "服务端授权过期！"),
-    VALID_CODE_ERROR(50005, "验证码错误！"),
-    VALID_USERNAME_ERROR(50006, "用户名或者密码错误！"),
-    GATEWAY_TIMEOUT_ERROR(50018, "网关超时");
+    OAUTH2_GRANT_TYPE_ERROR(50002, "非密码模式！"),
+    OAUTH2_INVALID_SCOPE_ERROR(50003, "非授权范围！"),
+    OAUTH2_BASE_ERROR(50004, "客户端认证失败！"),
+    RESOURCE_OAUTH_EXP(50005, "服务端授权过期！"),
+    VALID_CODE_ERROR(50006, "验证码错误！"),
+    VALID_USERNAME_ERROR(50007, "用户名或者密码错误！"),
+    GATEWAY_TIMEOUT_ERROR(50008, "网关超时"),
+    SERVICE_UNAVAILABLE_ERROR(50009, "服务模块未启动");
 
     private Integer code;
 

@@ -37,7 +37,7 @@ public class RestExceptionHandler {
         } else if (ex instanceof TokenAuthenticationException) {
             return ResultUtil.error(ResultEnum.RESOURCE_OAUTH_EXP.getCode(),ResultEnum.RESOURCE_OAUTH_EXP.getMessage());
         } else if (ex instanceof CmsOAuth2Exception) {
-            // 账号密码的验证
+            // 账号密码、非授权范围的验证
             CmsOAuth2Exception exception = (CmsOAuth2Exception)ex;
             return ResultUtil.error(ResultEnum.OAuth2Exception.getCode(),exception.getOauth2ErrorCode());
         }
@@ -65,8 +65,13 @@ public class RestExceptionHandler {
         jgen.writeStringField("message",apiResponse.getMessage());
         // 非密码模式输出
         if(exception.getOauth2ErrorCode().equals(OAuth2Exception.UNSUPPORTED_GRANT_TYPE)) {
-            jgen.writeNumberField("code",ResultEnum.OAUTH2_GRANTTYPE_ERROR.getCode());
-            jgen.writeStringField("message",ResultEnum.OAUTH2_GRANTTYPE_ERROR.getMessage());
+            jgen.writeNumberField("code",ResultEnum.OAUTH2_GRANT_TYPE_ERROR.getCode());
+            jgen.writeStringField("message",ResultEnum.OAUTH2_GRANT_TYPE_ERROR.getMessage());
+        }
+        // 非授权范围输出
+        if(exception.getOauth2ErrorCode().equals(OAuth2Exception.INVALID_SCOPE)) {
+            jgen.writeNumberField("code",ResultEnum.OAUTH2_INVALID_SCOPE_ERROR.getCode());
+            jgen.writeStringField("message",ResultEnum.OAUTH2_INVALID_SCOPE_ERROR.getMessage());
         }
         jgen.writeBooleanField("success",false);
         jgen.writeNumberField("timestamp",System.currentTimeMillis());

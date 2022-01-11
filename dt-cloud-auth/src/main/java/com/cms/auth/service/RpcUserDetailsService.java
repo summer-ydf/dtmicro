@@ -1,6 +1,7 @@
 package com.cms.auth.service;
 
 import com.api.manage.feign.OauthFeignClientService;
+import com.cms.auth.domain.SecurityClaimsParams;
 import com.cms.auth.domain.SecurityUser;
 import com.cms.common.entity.SecurityClaimsUser;
 import com.cms.common.result.ResultUtil;
@@ -10,6 +11,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author ydf Created by 2022/1/7 16:00
@@ -26,6 +33,12 @@ public class RpcUserDetailsService implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        HttpServletRequest request = currentRequest();
+        SecurityClaimsParams params = (SecurityClaimsParams) request.getAttribute(SecurityClaimsParams.class.getName());
+        if(ObjectUtils.isEmpty(params)) {
+            throw new UsernameNotFoundException("缺少登录附加参数");
+        }
+        SysCmsUtils.log.info("远程调用设置参数->>>" + params);
         ResultUtil<SecurityClaimsUser> claimsUserResultUtil = oauthFeignClientService.loadUserByUsername(username);
         SysCmsUtils.log.info("远程调用回调结果->>>" + claimsUserResultUtil);
         if (!claimsUserResultUtil.isSuccess()) {
@@ -34,4 +47,8 @@ public class RpcUserDetailsService implements UserDetailsService {
         return SecurityUser.from(claimsUserResultUtil.getData());
     }
 
+    public static HttpServletRequest currentRequest() {
+        RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
+        return ((ServletRequestAttributes) requestAttributes).getRequest();
+    }
 }

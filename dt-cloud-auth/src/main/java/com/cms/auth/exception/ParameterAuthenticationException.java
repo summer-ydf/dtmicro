@@ -8,6 +8,7 @@ import org.springframework.security.core.AuthenticationException;
 public class ParameterAuthenticationException extends AuthenticationException {
 
     private int code;
+
     public ParameterAuthenticationException(String msg, Throwable t) {
         super(msg, t);
     }
