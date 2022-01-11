@@ -20,9 +20,8 @@ public class TokenAuthenticationSuccessHandler implements OAuth2AuthenticationSu
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, OAuth2Authentication authentication) throws IOException, ServletException {
-        SysCmsUtils.log.info("登录成功写入日志->>>"+authentication.getPrincipal());
-        SecurityClaimsUser securityClaimsUser= (SecurityClaimsUser) authentication.getPrincipal();
-        SysCmsUtils.log.info("转换->>>"+securityClaimsUser);
+        SecurityClaimsUser securityClaimsUser = (SecurityClaimsUser) authentication.getPrincipal();
+        SysCmsUtils.log.info("登录成功写入日志->>>" + securityClaimsUser);
 //        olapKafkaProducer.clickStreamLog(request,securityClaimsUser, "用户点击了[登录]按钮","btn-login");
 //        olapKafkaProducer.loginLog(request,securityClaimsUser, JSON.toJSONString(CoreWebUtils.requestMap(request)),false);
 //        System.out.println("登录成功写入日志->>>"+securityClaimsUser);
