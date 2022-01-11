@@ -11,6 +11,7 @@
 ![OAuth2版本](https://img.shields.io/badge/oauth2-2.2.5-brightgreen.svg "OAuth2版本")
 ![canal版本](https://img.shields.io/badge/canal-1.1.4-brightgreen.svg "canal版本")
 ![flowable版本](https://img.shields.io/badge/flowable-6.7.1-brightgreen.svg "flowable版本")
+![quartz版本](https://img.shields.io/badge/quartz-2.3.5-brightgreen.svg "quartz版本")
 
 ![输入图片说明](https://img.shields.io/badge/Vue-3.5.0-brightgreen "在这里输入图片标题") ![输入图片说明](https://img.shields.io/badge/redis-6.0.6-brightgreen "在这里输入图片标题") ![输入图片说明](https://img.shields.io/badge/kaptcha-2.3.2-brightgreen "在这里输入图片标题") ![输入图片说明](https://img.shields.io/badge/MySQL-8.0.81-brightgreen "在这里输入图片标题") ![输入图片说明](https://img.shields.io/badge/mybatisplus-3.4.6-brightgreen "在这里输入图片标题") ![输入图片说明](https://img.shields.io/badge/easyexcel-2.2.0beta2-brightgreen "在这里输入图片标题")
 
