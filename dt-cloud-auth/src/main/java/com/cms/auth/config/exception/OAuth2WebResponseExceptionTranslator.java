@@ -1,6 +1,7 @@
 package com.cms.auth.config.exception;
 
 import com.cms.auth.config.handler.OAuth2AuthenticationFailureHandler;
+import com.cms.common.utils.SysCmsUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -33,7 +34,7 @@ public class OAuth2WebResponseExceptionTranslator implements WebResponseExceptio
 
     @Override
     public ResponseEntity<OAuth2Exception> translate(Exception e) throws Exception {
-        System.out.println("OAuth2请求异常处理->>>");
+        SysCmsUtils.log.info("OAuth2认证失败统一异常处理：====================");
         // Try to extract a SpringSecurityException from the stacktrace
         Throwable[] causeChain = throwableAnalyzer.determineCauseChain(e);
         // 异常栈获取OAuth2Exception异常
@@ -81,59 +82,47 @@ public class OAuth2WebResponseExceptionTranslator implements WebResponseExceptio
 
     @SuppressWarnings("serial")
     private static class ForbiddenException extends OAuth2Exception {
-
         public ForbiddenException(String msg, Throwable t) {
             super(msg, t);
         }
-
         @Override
         public String getOAuth2ErrorCode() {
             return "access_denied";
         }
-
         @Override
         public int getHttpErrorCode() {
             return 403;
         }
-
     }
 
     @SuppressWarnings("serial")
     private static class ServerErrorException extends OAuth2Exception {
-
         public ServerErrorException(String msg, Throwable t) {
             super(msg, t);
         }
-
         @Override
         public String getOAuth2ErrorCode() {
             return "server_error";
         }
-
         @Override
         public int getHttpErrorCode() {
             return 500;
         }
-
     }
 
     @SuppressWarnings("serial")
     private static class UnauthorizedException extends OAuth2Exception {
-
         public UnauthorizedException(String msg, Throwable t) {
             super(msg, t);
         }
-
         @Override
         public String getOAuth2ErrorCode() {
             return "unauthorized";
         }
-
         @Override
         public int getHttpErrorCode() {
             return 401;
         }
-
     }
 
     @SuppressWarnings("serial")

@@ -23,7 +23,6 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, @Nullable Exception ex) throws Exception {
         OAuth2Authentication authentication = SecurityOAuth2AuthenticationHolder.getAuthentication();
-        System.out.println("authentication->>>"+authentication);
         if(authentication != null) {
             try{
                 oAuth2AuthenticationSuccessHandler.onAuthenticationSuccess(request,response,authentication);

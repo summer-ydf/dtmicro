@@ -17,10 +17,24 @@ import java.io.Serializable;
 public class SecurityClaimsUser implements Serializable {
 
     private static final long serialVersionUID = -7487458381816891683L;
-
+    /**
+     * 登录系统范围
+     */
     String scope;
-    String username;//登录用户账号
+    /**
+     * 登录用户账号
+     */
+    String username;
+    /**
+     * 登录用户密码
+     */
     String password;
-    String userid;//登录用户ID
-    String jti;//登录token id
+    /**
+     * 登录用户ID
+     */
+    String userid;
+    /**
+     * 登录token id
+     */
+    String jti;
 }

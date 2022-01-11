@@ -6,6 +6,7 @@ import com.cms.auth.config.exception.TokenAuthenticationException;
 import com.cms.auth.exception.ParameterAuthenticationException;
 import com.cms.common.result.ResultEnum;
 import com.cms.common.result.ResultUtil;
+import com.cms.common.utils.SysCmsUtils;
 import com.fasterxml.jackson.core.JsonGenerator;
 import org.apache.commons.io.IOUtils;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -46,7 +47,7 @@ public class RestExceptionHandler {
     private ResultUtil<?> loginResponseObject(Throwable ex) {
         ResultUtil<?> customException = customException(null, null, ex);
         if(customException == null) {
-            System.out.println("未知异常捕获==================");
+            SysCmsUtils.log.info("未知异常捕获==================");
             return ResultUtil.error(ResultEnum.OAuth2Exception.getCode(),ResultEnum.OAuth2Exception.getMessage());
         }
         return customException;

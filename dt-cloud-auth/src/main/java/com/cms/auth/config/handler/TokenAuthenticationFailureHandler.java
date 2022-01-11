@@ -1,6 +1,7 @@
 package com.cms.auth.config.handler;
 
 import com.cms.auth.config.exception.CmsOAuth2Exception;
+import com.cms.common.utils.SysCmsUtils;
 import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 
 /**
@@ -12,8 +13,7 @@ public class TokenAuthenticationFailureHandler implements OAuth2AuthenticationFa
     @Override
     public CmsOAuth2Exception onAuthenticationFailure(OAuth2Exception oAuth2Exception) {
         CmsOAuth2Exception ex = new CmsOAuth2Exception(oAuth2Exception.getMessage(), oAuth2Exception);
-        System.out.println("账号密码错误异常处理->>>");
-        System.out.println(oAuth2Exception.getMessage());
+        SysCmsUtils.log.info("账号密码错误异常处理：====================");
         ex.setOauth2ErrorCode("账号或者密码错误");
         // TODO 加入Redis匹配超时账号锁定校验
         return ex;
