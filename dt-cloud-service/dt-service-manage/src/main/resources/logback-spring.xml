@@ -18,7 +18,7 @@
     <!-- 输出到文件 -->
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_HOME}/cms-auth-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <fileNamePattern>${LOG_HOME}/cms-manage-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <!-- 日志保留天数 -->
             <MaxHistory>100</MaxHistory>
             <!-- 日志文件最大值 -->

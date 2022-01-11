@@ -1,6 +1,7 @@
 package com.cms.manage;
 
 import com.alibaba.cloud.seata.feign.SeataFeignClientAutoConfiguration;
+import com.cms.common.utils.SysCmsUtils;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,5 +23,8 @@ public class CmsManageApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(CmsManageApplication.class,args);
+        SysCmsUtils.log.info("============================================");
+        SysCmsUtils.log.info("===============$管理服务已启动:===============");
+        SysCmsUtils.log.info("============================================");
     }
 }

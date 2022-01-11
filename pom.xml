@@ -48,7 +48,7 @@
         <canal.version>1.1.4</canal.version>
         <okhttp.version>11.7</okhttp.version>
         <oauth.version>2.2.5.RELEASE</oauth.version>
-        <nimbusds.jwt.version>8.20</nimbusds.jwt.version>
+        <nimbusds.jwt.version>9.15.2</nimbusds.jwt.version>
     </properties>
 
     <!--引入公共依赖全局使用-->
