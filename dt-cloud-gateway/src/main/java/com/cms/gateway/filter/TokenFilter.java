@@ -1,6 +1,7 @@
 package com.cms.gateway.filter;
 
 
+import com.cms.common.utils.SysCmsUtils;
 import com.cms.gateway.GatewayConstant;
 import com.cms.gateway.config.IgnoreUrlsConfig;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +29,6 @@ import java.util.Map;
 /**
  * @author ydf Created by 2022/1/7 17:52
  */
-@Slf4j
 @Component
 public class TokenFilter implements GlobalFilter, Ordered {
 
@@ -41,7 +41,7 @@ public class TokenFilter implements GlobalFilter, Ordered {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         RequestPath requestPath = exchange.getRequest().getPath();
-        log.info("当前请求路径: {}", requestPath);
+        SysCmsUtils.log.info("当前请求路径: {}", requestPath);
         PathMatcher pathMatcher = new AntPathMatcher();
         // 白名单路径放行
         List<String> ignoreUrls = ignoreUrlsConfig.getUrls();
@@ -70,8 +70,8 @@ public class TokenFilter implements GlobalFilter, Ordered {
             ServerHttpRequest request = exchange.getRequest().mutate().header("Icc-Gateway-Authorization", de_claims).build();
             //将现在的request 变成 exchange对象
             return chain.filter(exchange.mutate().request(request).build());
-        }catch (Exception e){
-            log.info("无效的token: {}，ex:{}", token,e.getMessage());
+        }catch (Exception e) {
+            SysCmsUtils.log.info("无效的token: {}，ex:{}", token,e.getMessage());
         }
         return GatewayConstant.response(exchange,HttpStatus.UNAUTHORIZED, GatewayConstant.UNAUTHORIZED_TEXT, GatewayConstant.UNAUTHORIZED_JSON);
     }
