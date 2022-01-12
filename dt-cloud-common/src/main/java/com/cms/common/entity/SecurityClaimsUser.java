@@ -1,5 +1,6 @@
 package com.cms.common.entity;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,24 +18,19 @@ import java.io.Serializable;
 public class SecurityClaimsUser implements Serializable {
 
     private static final long serialVersionUID = -7487458381816891683L;
-    /**
-     * 登录系统范围
-     */
+
+    @ApiModelProperty(value = "授权范围")
     String scope;
-    /**
-     * 登录用户账号
-     */
+
+    @ApiModelProperty(value = "登录用户账号")
     String username;
-    /**
-     * 登录用户密码
-     */
+
+    @ApiModelProperty(value = "登录用户密码")
     String password;
-    /**
-     * 登录用户ID
-     */
+
+    @ApiModelProperty(value = "登录用户ID")
     String userid;
-    /**
-     * 登录token id
-     */
+
+    @ApiModelProperty(value = "登录token")
     String jti;
 }

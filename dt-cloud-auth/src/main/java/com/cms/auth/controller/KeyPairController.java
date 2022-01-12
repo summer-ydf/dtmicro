@@ -18,14 +18,14 @@ import java.util.Map;
  * @author DT
  * @date 2022/1/8 12:47
  */
-@Api(tags = "系统部门信息API")
+@Api(tags = "RSA公钥API")
 @RestController
 public class KeyPairController {
 
     @Autowired
     private KeyPair keyPair;
 
-    @ApiOperation(value = "查询部门树列表")
+    @ApiOperation(value = "获取RSA公钥接口")
     @GetMapping("/rsa/publicKey")
     public Map<String, Object> getKey() {
         RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
