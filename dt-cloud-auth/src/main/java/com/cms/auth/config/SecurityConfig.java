@@ -33,13 +33,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
+    @Bean
+    public IgnoreUrlsConfig ignoreUrlsConfig() {
+        return new IgnoreUrlsConfig();
+    }
+
     @Override
     public void configure(HttpSecurity http) throws Exception {
+        // 设置白名单不拦截
+        for (String url : ignoreUrlsConfig().getUrls()) {
+            http.authorizeRequests().antMatchers(url).permitAll();
+        }
         http.csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/oauth/**", "/login/**", "/logout/**","/rsa/publicKey","/hello")
-                .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

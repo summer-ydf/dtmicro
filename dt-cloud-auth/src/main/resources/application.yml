@@ -17,7 +17,7 @@ management:
     web:
       exposure:
         include: '*'
-#对Feign的支持
+# 对Feign的支持
 feign:
   sentinel:
     enabled: true
@@ -29,3 +29,22 @@ mybatis-plus:
   mapper-locations: classpath*:com/cms/auth/mapper/**/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+secure:
+  ignored:
+    urls: # 安全路径白名单
+      - /doc.html
+      - /swagger-resources/**
+      - /webjars/**
+      - /*/api-docs
+      - /css/**
+      - /js/**
+      - /img/**
+      - /fonts/**
+      - /index.html
+      - /actuator/**
+      - /druid/**
+      - /oauth/**
+      - /login/**
+      - /logout/**
+      - /rsa/publicKey
+      - /hello

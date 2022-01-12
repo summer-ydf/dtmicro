@@ -1,6 +1,7 @@
 package com.cms.auth;
 import com.cms.auth.config.handler.RestExceptionHandler;
 import com.cms.auth.service.OauthClientService;
+import com.cms.common.swagger.Swagger2Config;
 import com.cms.common.utils.SysCmsUtils;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -11,6 +12,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * OAuth2授权服务启动器
@@ -19,7 +21,8 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 @SpringBootApplication
 @EnableAuthorizationServer
 @EnableDiscoveryClient
-@Import({RestExceptionHandler.class})
+@EnableSwagger2
+@Import({RestExceptionHandler.class, Swagger2Config.class})
 @MapperScan(basePackages = {"com.cms.auth.mapper"})
 @EnableFeignClients(basePackages ={"com.api.manage.feign"})
 public class CmsAuthApplication {

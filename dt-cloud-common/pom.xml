@@ -16,6 +16,9 @@
         <hutool.version>5.7.17</hutool.version>
         <commons.codec.version>1.10</commons.codec.version>
         <commons.collections.version>3.2.2</commons.collections.version>
+        <swagger2.version>2.9.2</swagger2.version>
+        <swagger2.ui.version>1.9.3</swagger2.ui.version>
+        <swagger2.models.version>1.5.21</swagger2.models.version>
     </properties>
 
     <dependencies>
@@ -41,6 +44,27 @@
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
             <version>${commons.collections.version}</version>
+        </dependency>
+        <!-- swagger文档api -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${swagger2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>swagger-bootstrap-ui</artifactId>
+            <version>${swagger2.ui.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>${swagger2.models.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-models</artifactId>
+            <version>${swagger2.models.version}</version>
         </dependency>
     </dependencies>
 
