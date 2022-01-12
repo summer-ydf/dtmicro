@@ -1,15 +1,15 @@
 package com.cms.auth.config.exception;
 
-import cn.hutool.http.HttpStatus;
-import cn.hutool.json.JSONUtil;
+import com.alibaba.fastjson.JSON;
 import com.cms.common.result.ResultEnum;
 import com.cms.common.result.ResultUtil;
+import com.cms.common.utils.SysCmsUtils;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -23,15 +23,14 @@ import java.io.IOException;
 public class CmsTokenExpireAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        System.out.println("Token失效处理："+authException);
-        response.setStatus(HttpStatus.HTTP_OK);
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
+        SysCmsUtils.log.info("Token失效处理："+authException);
+        response.setStatus(HttpStatus.OK.value());
         response.setHeader(HttpHeaders.CONTENT_TYPE, "application/json;charset=UTF-8");
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Cache-Control", "no-cache");
-        ResultUtil<Object> error = ResultUtil.error(ResultEnum.RESOURCE_OAUTH_EXP.getCode(),
-                ResultEnum.RESOURCE_OAUTH_EXP.getMessage());
-        response.getWriter().print(JSONUtil.toJsonStr(error));
+        response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
+        response.setHeader(HttpHeaders.CACHE_CONTROL, "no-cache");
+        ResultUtil<Object> error = ResultUtil.error(ResultEnum.RESOURCE_OAUTH_EXP.getCode(), ResultEnum.RESOURCE_OAUTH_EXP.getMessage());
+        response.getWriter().print(JSON.toJSONString(error));
         response.getWriter().flush();
     }
 }

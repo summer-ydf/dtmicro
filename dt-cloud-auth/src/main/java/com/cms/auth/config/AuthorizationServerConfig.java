@@ -1,8 +1,7 @@
 package com.cms.auth.config;
 
 
-import cn.hutool.http.HttpStatus;
-import cn.hutool.json.JSONUtil;
+import com.alibaba.fastjson.JSON;
 import com.cms.auth.config.custom.IccJwtTokenStore;
 import com.cms.auth.config.exception.*;
 import com.cms.auth.config.filter.CmsCaptchaAuthenticationFilter;
@@ -24,8 +23,8 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -247,12 +246,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Bean
     public AuthenticationEntryPoint authenticationEntryPoint() {
         return (request, response, e) -> {
-            response.setStatus(HttpStatus.HTTP_OK);
+            response.setStatus(HttpStatus.OK.value());
             response.setHeader(HttpHeaders.CONTENT_TYPE, "application/json;charset=UTF-8");
-            response.setHeader("Access-Control-Allow-Origin", "*");
-            response.setHeader("Cache-Control", "no-cache");
+            response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
+            response.setHeader(HttpHeaders.CACHE_CONTROL, "no-cache");
             ResultUtil<Object> error = ResultUtil.error(ResultEnum.OAUTH2_BASE_ERROR.getCode(), ResultEnum.OAUTH2_BASE_ERROR.getMessage());
-            response.getWriter().print(JSONUtil.toJsonStr(error));
+            response.getWriter().print(JSON.toJSONString(error));
             response.getWriter().flush();
         };
     }

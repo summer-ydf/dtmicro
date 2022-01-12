@@ -35,10 +35,8 @@
 
         <seata.version>1.3.0</seata.version>
 
-        <fastjson.version>1.2.78</fastjson.version>
-        <commons.collections.version>3.2.2</commons.collections.version>
         <lombok.version>1.18.22</lombok.version>
-        <hutool.version>5.7.17</hutool.version>
+        <fastjson.version>1.2.78</fastjson.version>
         <mysql.version>8.0.19</mysql.version>
         <druid.version>1.2.4</druid.version>
         <mybatis.plus.version>3.4.3.4</mybatis.plus.version>
@@ -58,11 +56,11 @@
             <artifactId>lombok</artifactId>
             <version>${lombok.version}</version>
         </dependency>
-        <!-- hutool工具类 -->
+        <!--fastjson-->
         <dependency>
-            <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
-            <version>${hutool.version}</version>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
         </dependency>
         <!--测试依赖-->
         <dependency>
@@ -165,24 +163,24 @@
         </plugins>
     </build>
 
-<!--    <repositories>-->
-<!--        <repository>-->
-<!--            <id>aliyun-repos</id>-->
-<!--            <url>https://maven.aliyun.com/nexus/content/groups/public/</url>-->
-<!--            <snapshots>-->
-<!--                <enabled>false</enabled>-->
-<!--            </snapshots>-->
-<!--        </repository>-->
-<!--    </repositories>-->
+    <repositories>
+        <repository>
+            <id>aliyun-repos</id>
+            <url>https://maven.aliyun.com/nexus/content/groups/public/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 
-<!--    <pluginRepositories>-->
-<!--        <pluginRepository>-->
-<!--            <id>aliyun-plugin</id>-->
-<!--            <url>https://maven.aliyun.com/nexus/content/groups/public/</url>-->
-<!--            <snapshots>-->
-<!--                <enabled>false</enabled>-->
-<!--            </snapshots>-->
-<!--        </pluginRepository>-->
-<!--    </pluginRepositories>-->
+    <pluginRepositories>
+        <pluginRepository>
+            <id>aliyun-plugin</id>
+            <url>https://maven.aliyun.com/nexus/content/groups/public/</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
 
 </project>
