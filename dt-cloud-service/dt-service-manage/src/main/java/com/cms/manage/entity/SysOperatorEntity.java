@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.cms.common.entity.PageEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -25,7 +26,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @TableName("sys_operator")
 @ApiModel(value="操作员对象")
-public class SysOperatorEntity implements Serializable {
+public class SysOperatorEntity extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 3660353661543747205L;
 
