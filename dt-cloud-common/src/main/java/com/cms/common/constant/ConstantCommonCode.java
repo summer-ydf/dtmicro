@@ -108,4 +108,10 @@ public class ConstantCommonCode {
     public static String CACHE_LOGIN_LOCK = CMS_KEY_PREX + "auth:login:lock:";
     // 登录token前缀
     public static String CACHE_LOGIN_TOKEN = CMS_KEY_PREX + "auth:login:token:";
+
+    // OAuth2客户端初始化常量
+    public static String OAUTH_CLIENT_ID = "cms";
+    public static String OAUTH_CLIENT_SECRET = "dt$pwd123";
+    public static String OAUTH_SCOPE = "web";
+    public static String OAUTH_GRANT_TYPE = "password,refresh_token";
 }
