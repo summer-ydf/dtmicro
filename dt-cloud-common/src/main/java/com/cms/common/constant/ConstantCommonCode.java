@@ -101,4 +101,11 @@ public class ConstantCommonCode {
     public static String SIGNOUT_STRING_TITLE = "退出系统";
     public static String SIGNOUT_MESSAGE_SUCCESS = "退出成功";
     public static String LOGIN_STRING_OS = "移动终端";
+
+    // redis key
+    public static String CMS_KEY_PREX = "cms:";
+    // 登录锁定
+    public static String CACHE_LOGIN_LOCK = CMS_KEY_PREX + "auth:login:lock:";
+    // 登录token前缀
+    public static String CACHE_LOGIN_TOKEN = CMS_KEY_PREX + "auth:login:token:";
 }

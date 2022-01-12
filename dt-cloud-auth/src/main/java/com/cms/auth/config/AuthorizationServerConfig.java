@@ -2,7 +2,7 @@ package com.cms.auth.config;
 
 
 import com.alibaba.fastjson.JSON;
-import com.cms.auth.config.custom.IccJwtTokenStore;
+import com.cms.auth.config.custom.CmsTokenStore;
 import com.cms.auth.config.exception.*;
 import com.cms.auth.config.filter.CmsCaptchaAuthenticationFilter;
 import com.cms.auth.config.filter.CmsClientCredentialsTokenEndpointFilter;
@@ -202,7 +202,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      */
     @Bean
     public TokenStore tokenStore() {
-        return new IccJwtTokenStore(jwtAccessTokenConverter(),stringRedisTemplate);
+        return new CmsTokenStore(jwtAccessTokenConverter(),stringRedisTemplate);
     }
 
     /**

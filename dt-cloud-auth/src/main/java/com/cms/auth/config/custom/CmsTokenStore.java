@@ -10,14 +10,16 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 
 import java.util.concurrent.TimeUnit;
 
+import static com.cms.common.constant.ConstantCommonCode.CACHE_LOGIN_TOKEN;
+
 /**
  * @author ydf Created by 2022/1/7 14:27
  */
-public class IccJwtTokenStore extends JwtTokenStore {
+public class CmsTokenStore extends JwtTokenStore {
 
     private final StringRedisTemplate stringRedisTemplate;
 
-    public IccJwtTokenStore(JwtAccessTokenConverter jwtTokenEnhancer, StringRedisTemplate stringRedisTemplate) {
+    public CmsTokenStore(JwtAccessTokenConverter jwtTokenEnhancer, StringRedisTemplate stringRedisTemplate) {
         super(jwtTokenEnhancer);
         this.stringRedisTemplate = stringRedisTemplate;
     }
@@ -28,13 +30,13 @@ public class IccJwtTokenStore extends JwtTokenStore {
         String claims = MapUtils.getString(token.getAdditionalInformation(),"claims");
         System.out.println("jti->>>"+jti);
         System.out.println("claims->>>"+claims);
-        stringRedisTemplate.opsForValue().set("cms:clc:login:token:"+jti,claims,token.getExpiresIn(), TimeUnit.SECONDS);
+        stringRedisTemplate.opsForValue().set(CACHE_LOGIN_TOKEN + jti,claims,token.getExpiresIn(), TimeUnit.SECONDS);
         SecurityOAuth2AuthenticationHolder.setAuthentication(authentication);
     }
 
     // 这里用DefaultOAuth2AccessToken的value来构造jti
     @Override
     public void removeAccessToken(OAuth2AccessToken token) {
-        stringRedisTemplate.delete("cms:clc:login:token:"+token.getValue());
+        stringRedisTemplate.delete(CACHE_LOGIN_TOKEN + token.getValue());
     }
 }
