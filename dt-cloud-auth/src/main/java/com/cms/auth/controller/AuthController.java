@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
+ * // 第三方登录，参考：https://www.cnblogs.com/haoxianrui/
  * @author ydf Created by 2021/12/16 11:19
  */
 @RestController
