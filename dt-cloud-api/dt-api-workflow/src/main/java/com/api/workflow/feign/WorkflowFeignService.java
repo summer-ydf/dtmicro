@@ -1,6 +1,5 @@
 package com.api.workflow.feign;
 
-import com.api.workflow.factory.WorkflowFeignClientFallback;
 import com.cms.common.result.ResultUtil;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;

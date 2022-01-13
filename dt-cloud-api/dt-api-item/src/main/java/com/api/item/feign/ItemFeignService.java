@@ -1,6 +1,5 @@
 package com.api.item.feign;
 
-import com.api.item.factory.ItemFeignClientFallback;
 import com.cms.common.result.ResultUtil;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;

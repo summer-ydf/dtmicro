@@ -1,7 +1,6 @@
 package com.cms.item.service.impl;
 
 
-import com.api.item.feign.ItemFeignService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 
 import com.cms.common.result.ResultUtil;
@@ -9,7 +8,6 @@ import com.cms.item.entity.TestOrderEntity;
 import com.cms.item.mapper.TestOrderMapper;
 import com.cms.item.service.TestOrderService;
 import io.seata.spring.annotation.GlobalTransactional;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 

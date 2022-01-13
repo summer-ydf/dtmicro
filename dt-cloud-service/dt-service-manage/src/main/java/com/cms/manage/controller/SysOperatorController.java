@@ -4,8 +4,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.cms.common.result.ResultUtil;
 import com.cms.manage.entity.SysOperatorEntity;
 import com.cms.manage.service.SysOperatorService;
+import com.cms.manage.vo.SysOperatorPage;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,10 +23,9 @@ public class SysOperatorController {
         this.sysOperatorService = sysOperatorService;
     }
 
-    @ApiOperation(value = "查询用户列表")
-    @GetMapping("list")
-    public ResultUtil<IPage<SysOperatorEntity>> list(SysOperatorEntity request){
-//        return sysOperatorService.queryList(request);
-        return null;
+    @ApiOperation(value = "分页查询用户列表")
+    @GetMapping("/page")
+    public ResultUtil<IPage<SysOperatorEntity>> page(SysOperatorPage request) {
+        return sysOperatorService.pageSearch(request);
     }
 }

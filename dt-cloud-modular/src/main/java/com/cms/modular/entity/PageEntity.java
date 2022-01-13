@@ -1,4 +1,4 @@
-package com.cms.common.entity;
+package com.cms.modular.entity;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
