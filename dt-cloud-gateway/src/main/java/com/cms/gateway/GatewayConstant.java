@@ -12,6 +12,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 
 public class GatewayConstant {
 
@@ -26,7 +27,7 @@ public class GatewayConstant {
     public static Mono<Void> response(ServerWebExchange exchange,HttpStatus statusCode,byte[] html_bytes,byte[] json_bytes) {
         return Mono.defer(() -> {
             String accept = exchange.getRequest().getHeaders().getFirst(HttpHeaders.ACCEPT);
-            if(accept.contains("text/html")){
+            if(Objects.requireNonNull(accept).contains("text/html")) {
                 // 设置status
                 exchange.getResponse().setStatusCode(statusCode);
                 final ServerHttpResponse response = exchange.getResponse();

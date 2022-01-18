@@ -31,14 +31,11 @@ public class SysOperatorEntity extends BaseEntity implements Serializable {
     private static final long serialVersionUID = 3660353661543747205L;
 
     @ApiModelProperty(value = "主键")
-    @TableId(value = "id", type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.INPUT)
     private Long id;
 
     @ApiModelProperty(value = "账号")
     private String username;
-
-    @ApiModelProperty(value = "用户名")
-    private String accountName;
 
     @ApiModelProperty(value = "密码")
     private String password;
@@ -57,9 +54,6 @@ public class SysOperatorEntity extends BaseEntity implements Serializable {
 
     @ApiModelProperty(value = "帐户是否可用(1 可用，0 删除用户)")
     private boolean isEnabled = true;
-
-    @ApiModelProperty(value = "是否是管理员(1 是, 0 不是)")
-    private String isAdmin;
 
     @ApiModelProperty(value = "权限列表")
     @TableField(exist = false)

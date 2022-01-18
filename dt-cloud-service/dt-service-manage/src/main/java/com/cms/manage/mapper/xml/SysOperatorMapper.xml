@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cms.manage.mapper.SysOperatorMapper">
 
+    <!--分页查询操作员-->
     <select id="pageSearch" resultType="com.cms.manage.entity.SysOperatorEntity">
-        SELECT su.* FROM sys_operator AS su
-        ORDER BY su.create_time DESC
+        SELECT su.* FROM sys_operator AS su ORDER BY su.create_time DESC
     </select>
 
 </mapper>

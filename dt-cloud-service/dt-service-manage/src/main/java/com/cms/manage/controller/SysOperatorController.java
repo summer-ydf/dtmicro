@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @author ydf Created by 2022/1/12 15:59
  */
 @RestController
-@RequestMapping(value = "/manage")
+@RequestMapping(value = "/operator")
 public class SysOperatorController {
 
     private final SysOperatorService sysOperatorService;

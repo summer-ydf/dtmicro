@@ -20,8 +20,9 @@ public class PageEntity implements Serializable {
     private static final long serialVersionUID = 7143289007025794445L;
 
     @ApiModelProperty(value = "当前页")
-    private Integer current;
+    private Integer current = 1;
 
     @ApiModelProperty(value = "每页容量")
-    private Integer size;
+    private Integer size = 10;
+
 }
