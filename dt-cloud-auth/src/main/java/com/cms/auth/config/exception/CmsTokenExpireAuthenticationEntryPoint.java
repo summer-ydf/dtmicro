@@ -24,6 +24,7 @@ public class CmsTokenExpireAuthenticationEntryPoint implements AuthenticationEnt
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException {
+        SysCmsUtils.log.info("资源请求路径："+request.getRequestURI());
         SysCmsUtils.log.info("Token失效处理："+authException);
         response.setStatus(HttpStatus.OK.value());
         response.setHeader(HttpHeaders.CONTENT_TYPE, "application/json;charset=UTF-8");
