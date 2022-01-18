@@ -23,7 +23,6 @@ public class ConstantCommonCode {
     /**
      * 系统缓存常量
      */
-    public static final String KAPTCHA_KEY = "dt::kaptcha";
     public static final String USER_KEY = "dt::user::";
     public static final String PERMISSION_KEY = "dt::permission::";
     public static final Long REDIS_EXP_TIME = 60 * 60L;
@@ -106,8 +105,10 @@ public class ConstantCommonCode {
     public static String CMS_KEY_PREX = "cms:";
     // 登录锁定
     public static String CACHE_LOGIN_LOCK = CMS_KEY_PREX + "auth:login:lock:";
-    // 登录token前缀
+    // 登录token
     public static String CACHE_LOGIN_TOKEN = CMS_KEY_PREX + "auth:login:token:";
+    // 登录验证码
+    public static String CACHE_CODE_KEY = CMS_KEY_PREX + "auth:login:code";
 
     // OAuth2客户端初始化常量
     public static String OAUTH_CLIENT_ID = "cms";

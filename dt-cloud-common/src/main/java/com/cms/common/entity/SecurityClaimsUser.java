@@ -18,18 +18,28 @@ public class SecurityClaimsUser implements Serializable {
 
     private static final long serialVersionUID = -7487458381816891683L;
 
-    //@ApiModelProperty(value = "授权范围")
+    /**
+     * 授权范围
+     */
     String scope;
 
-    //@ApiModelProperty(value = "登录用户账号")
+    /**
+     * 登录用户账号
+     */
     String username;
 
-    //@ApiModelProperty(value = "登录用户密码")
+    /**
+     * 登录用户密码
+     */
     String password;
 
-    //@ApiModelProperty(value = "登录用户ID")
+    /**
+     * 登录用户ID
+     */
     String userid;
 
-    //@ApiModelProperty(value = "登录token")
+    /**
+     * 登录token
+     */
     String jti;
 }

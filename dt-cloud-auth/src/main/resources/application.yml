@@ -48,3 +48,4 @@ secure:
       - /logout/**
       - /rsa/publicKey
       - /hello
+      - /valid_code

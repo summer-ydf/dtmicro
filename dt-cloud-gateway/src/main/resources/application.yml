@@ -14,7 +14,7 @@ spring:
         - id: cms-auth
           uri: lb://cms-service-auth
           predicates:
-            - Path=/auth/oauth/**,/auth/hello,/auth/admin
+            - Path=/auth/oauth/**,/auth/hello,/auth/admin,/auth/valid_code,/auth/logout
           filters:
             - StripPrefix=1
         - id: cms-manage
@@ -28,4 +28,6 @@ secure:  #配置白名单路径
     urls:
       - /auth/oauth/**
       - /auth/hello
+      - /auth/valid_code
+      - /auth/logout
       - /api/operator/page
