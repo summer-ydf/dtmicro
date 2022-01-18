@@ -44,8 +44,8 @@ secure:
       - /actuator/**
       - /druid/**
       - /oauth/**
-      - /login/**
-      - /logout/**
+      - /security/logout/**
+      - /anonymous/valid_code/**
       - /rsa/publicKey
       - /hello
-      - /valid_code
+

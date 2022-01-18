@@ -1,17 +1,11 @@
 package com.cms.auth.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.cms.common.entity.SecurityClaimsUser;
 import com.cms.common.result.ResultUtil;
 import com.cms.common.utils.SysCmsUtils;
 import com.cms.common.utils.VerifyCodeUtils;
 import io.swagger.annotations.ApiOperation;
-import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.imageio.ImageIO;
@@ -40,7 +34,7 @@ public class AuthController {
         this.stringRedisTemplate = stringRedisTemplate;
     }
 
-    @GetMapping("/valid_code")
+    @GetMapping("/anonymous/valid_code")
     @ApiOperation(value = "获取验证码接口")
     public void getCode(HttpServletResponse response) throws IOException {
         // 禁止缓存
@@ -62,7 +56,7 @@ public class AuthController {
         out.close();
     }
 
-    @GetMapping("/logout")
+    @GetMapping("/security/logout")
     public Object test(HttpServletRequest request) {
         String token = request.getHeader("Icc-Gateway-Authorization");
         SysCmsUtils.log.info("退出登录token->>>"+token);
