@@ -13,6 +13,7 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
+        enabled: true
 # 分布式事务配置
 seata:
   tx-service-group: mall_tx_group

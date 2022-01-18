@@ -1,7 +1,7 @@
-package com.sku.api.factory;
+package com.user.api.factory;
 
-import com.cms.common.result.ResultUtil;
-import com.sku.api.feign.MallSkuFeignService;
+
+import com.user.api.feign.MallUserFeignService;
 import feign.hystrix.FallbackFactory;
 import io.seata.core.context.RootContext;
 import io.seata.core.exception.TransactionException;
@@ -15,17 +15,16 @@ import org.springframework.stereotype.Component;
  * @author ydf Created by 2021/11/23 16:05
  */
 @Component
-public class MallSkuFeignClientFallback implements FallbackFactory<MallSkuFeignService> {
+public class MallUserFeignClientFallback implements FallbackFactory<MallUserFeignService> {
 
-    Logger log = LoggerFactory.getLogger(MallSkuFeignClientFallback.class);
+    Logger log = LoggerFactory.getLogger(MallUserFeignClientFallback.class);
 
     @Override
-    public MallSkuFeignService create(Throwable throwable) {
+    public MallUserFeignService create(Throwable throwable) {
         log.info("调用接口请求出错：{}",throwable.getMessage());
-        return new MallSkuFeignService() {
-
+        return new MallUserFeignService() {
             @Override
-            public ResultUtil<?> reduceStock(Integer id) {
+            public void reduceMoney(Integer id) {
                 log.info("=============FILE START=================");
                 log.info("当前 XID: {}", RootContext.getXID());
                 try {
@@ -34,7 +33,6 @@ public class MallSkuFeignClientFallback implements FallbackFactory<MallSkuFeignS
                 } catch (TransactionException ex) {
                     ex.printStackTrace();
                 }
-                return ResultUtil.error("扣减库存失败");
             }
         };
     }

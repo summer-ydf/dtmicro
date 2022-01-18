@@ -24,16 +24,17 @@ public class MallUserServiceImpl extends ServiceImpl<MallUserMapper, MallUser> i
         double money = mallUser.getMoney() - 1;
         mallUser.setMoney(money);
         this.baseMapper.updateById(mallUser);
-        // 手动try/catch 必须手动回滚事务，catch事务异常类必须使用：TransactionException 否则也会无法回滚
-        try {
-            log.info("=============FILE START=================");
-            log.info("当前事务XID: "+RootContext.getXID());
-            int a = 10/0;
-            GlobalTransactionContext.reload(RootContext.getXID()).rollback();
-            log.info("=============FILE END=================");
-        } catch (TransactionException ex) {
-            ex.printStackTrace();
-        }
+        // 手动try/catch 必须手动回滚事务，catch事务异常类必须使用：TransactionException 否则也会无法回滚 ： 手动回滚不推荐，应该统一使用fallback来处理
+//        try {
+//            log.info("=============FILE START=================");
+//            log.info("当前事务XID: "+RootContext.getXID());
+//            //int a = 10/0;
+//            GlobalTransactionContext.reload(RootContext.getXID()).rollback();
+//            log.info("=============FILE END=================");
+//        } catch (TransactionException ex) {
+//            ex.printStackTrace();
+//        }
+        int a = 10/0;
         log.info("修改用户金额成功->>>");
     }
 }

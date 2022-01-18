@@ -29,11 +29,6 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
-        <!-- SpringCloud Loadbalancer -->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.cloud</groupId>-->
-<!--            <artifactId>spring-cloud-starter-loadbalancer</artifactId>-->
-<!--        </dependency>-->
         <!-- SpringCloud-ailibaba-sentinel服务监控 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
