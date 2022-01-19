@@ -15,4 +15,6 @@ public interface SysOperatorService extends IService<SysOperatorEntity> {
     ResultUtil<SecurityClaimsUser> loadUserByUsername(String username);
 
     ResultUtil<IPage<SysOperatorEntity>> pageSearch(SysOperatorPage request);
+
+    ResultUtil<SysOperatorEntity> saveOperator(SysOperatorEntity request);
 }

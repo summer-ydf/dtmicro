@@ -102,17 +102,17 @@ public class ConstantCommonCode {
     public static String LOGIN_STRING_OS = "移动终端";
 
     // redis key
-    public static String CMS_KEY_PREX = "cms:";
+    public static final String CMS_KEY_PREX = "cms:";
     // 登录锁定
-    public static String CACHE_LOGIN_LOCK = CMS_KEY_PREX + "auth:login:lock:";
+    public static final String CACHE_LOGIN_LOCK = CMS_KEY_PREX + "auth:login:lock:";
     // 登录token
-    public static String CACHE_LOGIN_TOKEN = CMS_KEY_PREX + "auth:login:token:";
+    public static final String CACHE_LOGIN_TOKEN = CMS_KEY_PREX + "auth:login:token:";
     // 登录验证码
-    public static String CACHE_CODE_KEY = CMS_KEY_PREX + "auth:login:code";
+    public static final String CACHE_CODE_KEY = CMS_KEY_PREX + "auth:login:code";
 
     // OAuth2客户端初始化常量
-    public static String OAUTH_CLIENT_ID = "cms";
-    public static String OAUTH_CLIENT_SECRET = "dt$pwd123";
-    public static String OAUTH_SCOPE = "web";
-    public static String OAUTH_GRANT_TYPE = "password,refresh_token";
+    public static final String OAUTH_CLIENT_ID = "cms";
+    public static final String OAUTH_CLIENT_SECRET = "dt$pwd123";
+    public static final String OAUTH_SCOPE = "web";
+    public static final String OAUTH_GRANT_TYPE = "password,refresh_token";
 }
