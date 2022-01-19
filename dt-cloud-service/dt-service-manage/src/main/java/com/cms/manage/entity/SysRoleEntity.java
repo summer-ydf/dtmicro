@@ -1,6 +1,7 @@
 package com.cms.manage.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.cms.modular.entity.BaseEntity;
@@ -12,6 +13,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 
 /**
  * 系统：角色实体
@@ -29,7 +32,7 @@ public class SysRoleEntity extends BaseEntity implements Serializable {
     private static final long serialVersionUID = -9168028949756773517L;
 
     @ApiModelProperty(value = "主键")
-    @TableId(type = IdType.AUTO)
+    @TableId(type = IdType.INPUT)
     private Long id;
 
     @ApiModelProperty(value = "角色名称")
@@ -38,4 +41,14 @@ public class SysRoleEntity extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "角色备注")
     private String remark;
 
+    @ApiModelProperty(value = "查询开始时间")
+    @TableField(exist = false)
+    private Date startTime;
+
+    @ApiModelProperty(value = "查询结束时间")
+    @TableField(exist = false)
+    private Date endTime;
+
+    @ApiModelProperty(value = "权限集合")
+    private List<SysPermissionEntity> children;
 }

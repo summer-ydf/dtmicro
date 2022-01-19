@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cms.manage.mapper.SysRoleMapper">
+
+    <select id="getPermissionListByRoleId" resultType="com.cms.manage.entity.SysPermissionEntity">
+        SELECT DISTINCT p.* FROM sys_permission AS p
+        JOIN sys_role_permission AS rp ON p.id = rp.permission_id
+        JOIN sys_role AS sr ON rp.role_id = sr.id
+        WHERE rp.role_id = #{roleId}
+    </select>
+
+    <select id="listRolePermissionByRoleId" resultType="java.lang.Long">
+        SELECT * FROM sys_role_permission WHERE role_id = #{id}
+    </select>
+
+    <delete id="deleteRolePermissionByIds">
+        DELETE FROM sys_role_permission WHERE id IN (#{ids})
+    </delete>
+
+</mapper>
