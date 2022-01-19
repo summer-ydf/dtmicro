@@ -7,4 +7,19 @@
         SELECT su.* FROM sys_operator AS su ORDER BY su.create_time DESC
     </select>
 
+    <!--添加操作员角色关联信息-->
+    <insert id="saveOperatorRole">
+       INSERT INTO sys_operator_role(id, user_id, role_id) VALUES (#{id},#{userId},#{roleId})
+    </insert>
+
+    <!--删除操作员角色关联信息-->
+    <delete id="deleteOperatorRoleByUserId">
+        DELETE FROM sys_operator_role WHERE user_id = #{userId}
+    </delete>
+
+    <!--修改操作员角色关联信息-->
+    <update id="updateOperatorRoleByUserId">
+        UPDATE sys_operator_role SET role_id = #{roleId} WHERE user_id = #{userId}
+    </update>
+
 </mapper>

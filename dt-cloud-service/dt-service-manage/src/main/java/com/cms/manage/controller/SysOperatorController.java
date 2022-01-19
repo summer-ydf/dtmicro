@@ -38,25 +38,26 @@ public class SysOperatorController {
 
     @ApiOperation(value = "添加操作员")
     @PostMapping("/save")
-    public ResultUtil<SysOperatorEntity> save(@RequestBody SysOperatorEntity request){
+    public ResultUtil<SysOperatorEntity> save(@RequestBody SysOperatorEntity request) {
         return sysOperatorService.saveOperator(request);
     }
 
-//    @GetMapping("getById/{id}")
-//    @ApiOperation(value = "根据id查询用户")
-//    public ResultUtil<SysUserResponse> getById(@PathVariable Long id){
-//        return sysUserService.getUserById(id);
-//    }
-//
-//    @PutMapping("update")
-//    @ApiOperation(value = "修改系统用户")
-//    public ResultUtil<SysUserSaveRequest> update(@RequestBody @Valid SysUserSaveRequest request){
-//        return sysUserService.updateUser(request);
-//    }
-//
-//    @DeleteMapping("delete/{id}")
-//    @ApiOperation(value = "删除系统部门")
-//    public ResultUtil<SysUserEntity> delete(@PathVariable Long id){
-//        return sysUserService.deleteUser(id);
-//    }
+    @ApiOperation(value = "根据id获取操作员信息")
+    @GetMapping("/getById/{id}")
+    public ResultUtil<SysOperatorEntity> getById(@PathVariable Long id) {
+        SysOperatorEntity operator = sysOperatorService.getById(id);
+        return ResultUtil.success(operator);
+    }
+
+    @ApiOperation(value = "修改操作员")
+    @PutMapping("/update")
+    public ResultUtil<SysOperatorEntity> update(@RequestBody SysOperatorEntity request) {
+        return sysOperatorService.updateOperatorById(request);
+    }
+
+    @ApiOperation(value = "删除操作员")
+    @DeleteMapping("/delete/{id}")
+    public ResultUtil<SysOperatorEntity> delete(@PathVariable Long id) {
+        return sysOperatorService.deleteOperatorById(id);
+    }
 }

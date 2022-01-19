@@ -11,13 +11,12 @@ import com.cms.manage.entity.SysOperatorRoleEntity;
 import com.cms.manage.mapper.SysOperatorMapper;
 import com.cms.manage.service.SysOperatorService;
 import com.cms.manage.vo.SysOperatorPage;
+import com.github.yitter.idgen.YitIdHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
-
-import javax.annotation.Resource;
 
 /**
  * @author ydf Created by 2022/1/7 17:22
@@ -25,7 +24,7 @@ import javax.annotation.Resource;
 @Service
 public class SysOperatorServiceImpl extends ServiceImpl<SysOperatorMapper, SysOperatorEntity> implements SysOperatorService {
 
-    @Resource
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Override
@@ -55,11 +54,28 @@ public class SysOperatorServiceImpl extends ServiceImpl<SysOperatorMapper, SysOp
         if(!ObjectUtils.isEmpty(operator)) {
             return ResultUtil.error("账号已经存在！");
         }
-        operator.setPassword(passwordEncoder.encode(request.getPassword()));
-        this.baseMapper.insert(operator);
-        // 添加角色用户关联信息
-//        SysOperatorRoleEntity.builder().id().roleId(request).userId(operator.getId()).build();
-//        sysUserRoleService.save();
+        request.setId(YitIdHelper.nextId());
+        request.setPassword(passwordEncoder.encode(request.getPassword()));
+        this.baseMapper.insert(request);
+        // 添加操作员角色关联信息
+        this.baseMapper.saveOperatorRole(SysOperatorRoleEntity.builder()
+                .id(YitIdHelper.nextId()).roleId(request.getRoleId()).userId(request.getId()).build());
         return ResultUtil.success(request);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResultUtil<SysOperatorEntity> deleteOperatorById(Long id) {
+        this.baseMapper.deleteById(id);
+        this.baseMapper.deleteOperatorRoleByUserId(id);
+        return ResultUtil.success();
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResultUtil<SysOperatorEntity> updateOperatorById(SysOperatorEntity request) {
+        this.baseMapper.updateOperatorRoleByUserId(request.getId(),request.getRoleId());
+        this.baseMapper.updateById(request);
+        return ResultUtil.success();
     }
 }

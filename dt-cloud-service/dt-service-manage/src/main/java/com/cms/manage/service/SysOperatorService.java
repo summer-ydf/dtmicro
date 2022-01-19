@@ -17,4 +17,8 @@ public interface SysOperatorService extends IService<SysOperatorEntity> {
     ResultUtil<IPage<SysOperatorEntity>> pageSearch(SysOperatorPage request);
 
     ResultUtil<SysOperatorEntity> saveOperator(SysOperatorEntity request);
+
+    ResultUtil<SysOperatorEntity> deleteOperatorById(Long id);
+
+    ResultUtil<SysOperatorEntity> updateOperatorById(SysOperatorEntity request);
 }
