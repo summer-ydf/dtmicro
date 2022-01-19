@@ -68,8 +68,9 @@ public class SysPermissionEntity extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "备注")
     private String remark;
 
-    @ApiModelProperty(value = "权限列表")
+    @ApiModelProperty(value = "子节点集合")
     @TableField(exist = false)
     private List<SysPermissionEntity> children = new ArrayList<>();
+
 
 }
