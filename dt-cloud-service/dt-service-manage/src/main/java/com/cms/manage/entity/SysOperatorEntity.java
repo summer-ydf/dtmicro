@@ -31,7 +31,7 @@ public class SysOperatorEntity extends BaseEntity implements Serializable {
     private static final long serialVersionUID = 3660353661543747205L;
 
     @ApiModelProperty(value = "主键")
-    @TableId(value = "id", type = IdType.INPUT)
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
     @ApiModelProperty(value = "账号")

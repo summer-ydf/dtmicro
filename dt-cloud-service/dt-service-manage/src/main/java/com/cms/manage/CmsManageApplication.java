@@ -2,6 +2,7 @@ package com.cms.manage;
 
 import com.alibaba.cloud.seata.feign.SeataFeignClientAutoConfiguration;
 import com.cms.common.utils.SysCmsUtils;
+import com.cms.modular.config.IdGeneratorConfig;
 import com.cms.modular.config.Swagger2Config;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -22,7 +23,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  */
 @SpringBootApplication(exclude = {SeataFeignClientAutoConfiguration.class, DataSourceAutoConfiguration.class})
 @EnableSwagger2
-@Import({Swagger2Config.class})
+@Import({Swagger2Config.class, IdGeneratorConfig.class})
 @EnableTransactionManagement
 @EnableDiscoveryClient
 @MapperScan(basePackages = {"com.cms.manage.mapper"})
@@ -40,4 +41,6 @@ public class CmsManageApplication {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+
 }

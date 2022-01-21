@@ -26,7 +26,7 @@ public class SysRolePermissionEntity implements Serializable {
     private static final long serialVersionUID = 7545367204249802832L;
 
     @ApiModelProperty(value = "主键")
-    @TableId(type = IdType.INPUT)
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
     @ApiModelProperty(value = "角色id")

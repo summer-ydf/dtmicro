@@ -54,7 +54,6 @@ public class SysOperatorServiceImpl extends ServiceImpl<SysOperatorMapper, SysOp
         if(!ObjectUtils.isEmpty(operator)) {
             return ResultUtil.error("账号已经存在！");
         }
-        request.setId(YitIdHelper.nextId());
         request.setPassword(passwordEncoder.encode(request.getPassword()));
         this.baseMapper.insert(request);
         // 添加操作员角色关联信息

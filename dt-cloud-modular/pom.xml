@@ -13,6 +13,7 @@
     <description>业务公共服务</description>
 
     <properties>
+        <yitter.version>1.0.6</yitter.version>
         <swagger2.version>2.9.2</swagger2.version>
         <swagger2.ui.version>1.9.3</swagger2.ui.version>
         <swagger2.models.version>1.5.21</swagger2.models.version>
@@ -52,6 +53,12 @@
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
             <version>${mybatis.plus.version}</version>
+        </dependency>
+        <!--雪花算法生成唯一ID-->
+        <dependency>
+            <groupId>com.github.yitter</groupId>
+            <artifactId>yitter-idgenerator</artifactId>
+            <version>${yitter.version}</version>
         </dependency>
 
         <!-- swagger文档api -->

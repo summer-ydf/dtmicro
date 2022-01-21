@@ -28,7 +28,7 @@ public class SysOperatorRoleEntity implements Serializable {
     private static final long serialVersionUID = 4184255325377155893L;
 
     @ApiModelProperty(value = "主键")
-    @TableId(type = IdType.INPUT)
+    @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
     @ApiModelProperty(value = "用户id")

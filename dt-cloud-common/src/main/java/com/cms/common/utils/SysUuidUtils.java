@@ -2,7 +2,6 @@ package com.cms.common.utils;
 
 import cn.hutool.core.lang.Snowflake;
 import cn.hutool.core.util.IdUtil;
-import com.github.yitter.idgen.YitIdHelper;
 
 /**
  * 全局UUID工具类
@@ -43,8 +42,4 @@ public class SysUuidUtils {
         return snowflake.nextId();
     }
 
-    public static void main(String[] args) {
-        long newId = YitIdHelper.nextId();
-        System.out.println(newId);
-    }
 }

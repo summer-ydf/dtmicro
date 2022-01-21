@@ -32,7 +32,7 @@ public class SysRoleEntity extends BaseEntity implements Serializable {
     private static final long serialVersionUID = -9168028949756773517L;
 
     @ApiModelProperty(value = "主键")
-    @TableId(type = IdType.INPUT)
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
     @ApiModelProperty(value = "角色名称")

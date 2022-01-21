@@ -32,7 +32,7 @@ public class SysPermissionEntity extends BaseEntity implements Serializable {
     private static final long serialVersionUID = 1481761112340736509L;
 
     @ApiModelProperty(value = "主键")
-    @TableId(type = IdType.INPUT)
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
     private Long id;
 
     @ApiModelProperty(value = "父节点ID (0为顶级菜单)")
