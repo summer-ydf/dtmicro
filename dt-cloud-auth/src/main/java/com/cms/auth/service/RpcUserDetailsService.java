@@ -3,6 +3,7 @@ package com.cms.auth.service;
 import com.api.manage.feign.OauthFeignClientService;
 import com.cms.auth.domain.SecurityClaimsParams;
 import com.cms.auth.domain.SecurityUser;
+import com.cms.auth.utils.CoreWebUtils;
 import com.cms.common.entity.SecurityClaimsUser;
 import com.cms.common.result.ResultUtil;
 import com.cms.common.utils.SysCmsUtils;
@@ -12,9 +13,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -27,13 +25,14 @@ public class RpcUserDetailsService implements UserDetailsService {
     @Autowired
     private OauthFeignClientService oauthFeignClientService;
 
+
     /**
      * 登陆验证时，通过username获取用户的所有权限信息
      * 并返回UserDetails放到spring的全局缓存SecurityContextHolder中，以供授权器使用
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        HttpServletRequest request = currentRequest();
+        HttpServletRequest request = CoreWebUtils.currentRequest();
         SecurityClaimsParams params = (SecurityClaimsParams) request.getAttribute(SecurityClaimsParams.class.getName());
         if(ObjectUtils.isEmpty(params)) {
             throw new UsernameNotFoundException("缺少登录附加参数");
@@ -45,10 +44,5 @@ public class RpcUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException(claimsUserResultUtil.getMessage());
         }
         return SecurityUser.from(claimsUserResultUtil.getData());
-    }
-
-    public static HttpServletRequest currentRequest() {
-        RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
-        return ((ServletRequestAttributes) requestAttributes).getRequest();
     }
 }

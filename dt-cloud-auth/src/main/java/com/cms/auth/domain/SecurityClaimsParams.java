@@ -20,6 +20,9 @@ public class SecurityClaimsParams implements Serializable {
     @ApiModelProperty(value = "授权范围")
     private String scope;
 
+    @ApiModelProperty(value = "登录账号")
+    private String username;
+
     @ApiModelProperty(value = "第三方平台ID")
     private String openid;
 }

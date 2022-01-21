@@ -85,12 +85,6 @@ public class OAuth2WebResponseExceptionTranslator implements WebResponseExceptio
     }
 
     private ResponseEntity<OAuth2Exception> otherOAuth2Exception(OAuth2Exception e) {
-        System.out.println("其他错误->>>");
-        System.out.println(e.getHttpErrorCode());
-        System.out.println(e.getMessage());
-        System.out.println(e.getOAuth2ErrorCode());
-        System.out.println(e.getAdditionalInformation());
-        System.out.println(e.getSummary());
         HttpHeaders headers = new HttpHeaders();
         headers.set("Cache-Control", "no-store");
         headers.set("Pragma", "no-cache");

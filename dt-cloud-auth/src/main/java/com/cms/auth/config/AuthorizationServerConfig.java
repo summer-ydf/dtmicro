@@ -6,6 +6,7 @@ import com.cms.auth.config.custom.CmsTokenStore;
 import com.cms.auth.config.exception.*;
 import com.cms.auth.config.filter.CmsCaptchaAuthenticationFilter;
 import com.cms.auth.config.filter.CmsClientCredentialsTokenEndpointFilter;
+import com.cms.auth.config.filter.CmsLockAuthenticationFilter;
 import com.cms.auth.config.handler.OAuth2AuthenticationFailureHandler;
 import com.cms.auth.config.handler.OAuth2AuthenticationSuccessHandler;
 import com.cms.auth.config.handler.RestExceptionHandler;
@@ -113,6 +114,14 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     }
 
     /**
+     * 登录账号锁定
+     */
+    @Bean
+    public CmsLockAuthenticationFilter cmslockAuthenticationFilter() {
+        return new CmsLockAuthenticationFilter();
+    }
+
+    /**
      * 验证码校验
      */
     @Bean
@@ -166,7 +175,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         endpointFilter.setAuthenticationEntryPoint(authenticationEntryPoint());
         // 客户端认证之前的过滤器
         oauthServer.addTokenEndpointAuthenticationFilter(endpointFilter);
-
+        oauthServer.addTokenEndpointAuthenticationFilter(cmslockAuthenticationFilter());
         // 自定义异常处理端口，访问oauth/token
         oauthServer.authenticationEntryPoint(restExceptionHandler::loginExceptionHandler);
         // 验证码校验
