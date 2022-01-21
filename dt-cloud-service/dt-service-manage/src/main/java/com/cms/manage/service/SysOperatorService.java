@@ -12,7 +12,7 @@ import com.cms.manage.vo.SysOperatorPage;
  */
 public interface SysOperatorService extends IService<SysOperatorEntity> {
 
-    ResultUtil<SecurityClaimsUser> loadUserByUsername(String username);
+    ResultUtil<SecurityClaimsUser> loadUserByUsername(String username, String scope);
 
     ResultUtil<IPage<SysOperatorEntity>> pageSearch(SysOperatorPage request);
 

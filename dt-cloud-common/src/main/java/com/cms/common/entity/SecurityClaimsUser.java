@@ -21,22 +21,47 @@ public class SecurityClaimsUser implements Serializable {
     /**
      * 授权范围
      */
-    String scope;
+    private String scope;
 
     /**
      * 登录用户账号
      */
-    String username;
+    private String username;
 
     /**
      * 登录用户密码
      */
-    String password;
+    private String password;
 
     /**
      * 登录用户ID
      */
-    String userid;
+    private Long userid;
+
+    /**
+     * 登录用户头像
+     */
+    private String avatar;
+
+    /**
+     * 帐户是否过期(1 未过期，0已过期)
+     */
+    private boolean isAccountNonExpired;
+
+    /**
+     * 帐户是否被锁定(1 未锁定，0已锁定)
+     */
+    private boolean isAccountNonLocked = true;
+
+    /**
+     * 密码是否过期(1 未过期，0已过期)
+     */
+    private boolean isCredentialsNonExpired = true;
+
+    /**
+     * 帐户是否可用(1 可用，0 删除用户)
+     */
+    private boolean isEnabled = true;
 
     /**
      * 登录token

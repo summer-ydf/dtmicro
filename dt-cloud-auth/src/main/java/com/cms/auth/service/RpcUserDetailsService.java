@@ -39,7 +39,7 @@ public class RpcUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("缺少登录附加参数");
         }
         SysCmsUtils.log.info("远程调用设置参数->>>" + params);
-        ResultUtil<SecurityClaimsUser> claimsUserResultUtil = oauthFeignClientService.loadUserByUsername(username);
+        ResultUtil<SecurityClaimsUser> claimsUserResultUtil = oauthFeignClientService.loadUserByUsername(username,params.getScope());
         SysCmsUtils.log.info("远程调用回调结果->>>" + claimsUserResultUtil);
         if (!claimsUserResultUtil.isSuccess()) {
             throw new UsernameNotFoundException(claimsUserResultUtil.getMessage());

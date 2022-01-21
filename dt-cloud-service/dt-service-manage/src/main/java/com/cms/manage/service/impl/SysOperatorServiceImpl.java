@@ -29,11 +29,20 @@ public class SysOperatorServiceImpl extends ServiceImpl<SysOperatorMapper, SysOp
 
     @Override
     @Transactional(readOnly = true)
-    public ResultUtil<SecurityClaimsUser> loadUserByUsername(String username) {
+    public ResultUtil<SecurityClaimsUser> loadUserByUsername(String username, String scope) {
         System.out.println("获取数据库账号密码->>>"+username);
-        SysOperatorEntity operator = this.baseMapper.selectOne(new QueryWrapper<SysOperatorEntity>().eq("username", username));
+        SysOperatorEntity operator = this.baseMapper.selectOne(new QueryWrapper<SysOperatorEntity>().eq("username", username).eq("scope",scope));
         if(!ObjectUtils.isEmpty(operator)) {
-            SecurityClaimsUser securityClaimsUser = SecurityClaimsUser.builder().username(username).password(operator.getPassword()).scope("web").build();
+            SecurityClaimsUser securityClaimsUser = SecurityClaimsUser.builder()
+                    .userid(operator.getId())
+                    .username(operator.getUsername())
+                    .password(operator.getPassword())
+                    .scope(operator.getScope())
+                    .isAccountNonExpired(operator.isAccountNonExpired())
+                    .isCredentialsNonExpired(operator.isCredentialsNonExpired())
+                    .isAccountNonLocked(operator.isAccountNonLocked())
+                    .isEnabled(operator.isEnabled())
+                    .build();
             return ResultUtil.success(securityClaimsUser);
         }
         return ResultUtil.error("登录失败,未找到登录用户");

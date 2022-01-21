@@ -23,7 +23,7 @@ public class OauthFeignClientFallback implements FeignFailFallback, FallbackFact
         LOGGER.info("调用接口请求出错：{}",throwable.getMessage());
         return new OauthFeignClientService() {
             @Override
-            public ResultUtil<SecurityClaimsUser> loadUserByUsername(String username) {
+            public ResultUtil<SecurityClaimsUser> loadUserByUsername(String username, String scope) {
                 return fail();
             }
         };

@@ -19,5 +19,5 @@ import static com.api.common.ApiConstants.APPLICATION_NAME_MANAGE;
 public interface OauthFeignClientService {
 
     @GetMapping(value = APPLICATION_MANAGE_API_AFFIX + "/loadUserByUsername")
-    ResultUtil<SecurityClaimsUser> loadUserByUsername(@RequestParam String username);
+    ResultUtil<SecurityClaimsUser> loadUserByUsername(@RequestParam String username, @RequestParam String scope);
 }

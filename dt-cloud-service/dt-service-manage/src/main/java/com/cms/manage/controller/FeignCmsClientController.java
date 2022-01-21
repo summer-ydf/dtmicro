@@ -19,8 +19,8 @@ public class FeignCmsClientController implements OauthFeignClientService {
     private SysOperatorService sysOperatorService;
 
     @Override
-    public ResultUtil<SecurityClaimsUser> loadUserByUsername(String username) {
-        return sysOperatorService.loadUserByUsername(username);
+    public ResultUtil<SecurityClaimsUser> loadUserByUsername(String username, String scope) {
+        return sysOperatorService.loadUserByUsername(username,scope);
     }
 
 }

@@ -14,6 +14,7 @@ public class TokenAuthenticationFailureHandler implements OAuth2AuthenticationFa
     public CmsOAuth2Exception onAuthenticationFailure(OAuth2Exception oAuth2Exception) {
         CmsOAuth2Exception ex = new CmsOAuth2Exception(oAuth2Exception.getMessage(), oAuth2Exception);
         SysCmsUtils.log.info("账号密码错误异常处理：====================");
+        SysCmsUtils.log.info(oAuth2Exception);
         ex.setOauth2ErrorCode("账号或者密码错误");
         // TODO 加入Redis匹配超时账号锁定校验
         return ex;
