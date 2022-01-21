@@ -1,6 +1,7 @@
 package com.cms.auth.config.exception;
 
 import com.cms.auth.config.handler.OAuth2AuthenticationFailureHandler;
+import com.cms.common.constant.ConstantCommonCode;
 import com.cms.common.utils.SysCmsUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
@@ -16,7 +17,6 @@ import org.springframework.security.oauth2.provider.error.WebResponseExceptionTr
 import org.springframework.security.web.util.ThrowableAnalyzer;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 
-import java.io.IOException;
 
 /**
  * OAuth2请求异常处理
@@ -40,6 +40,10 @@ public class OAuth2WebResponseExceptionTranslator implements WebResponseExceptio
         // 异常栈获取OAuth2Exception异常
         Exception ase = (OAuth2Exception) throwableAnalyzer.getFirstThrowableOfType(OAuth2Exception.class, causeChain);
         if (ase != null) {
+            if(ase.getMessage().equals(ConstantCommonCode.AccountNonExpired) || ase.getMessage().equals(ConstantCommonCode.Enabled)
+            || ase.getMessage().equals(ConstantCommonCode.AccountNonLocked) || ase.getMessage().equals(ConstantCommonCode.CredentialsNonExpired)) {
+                return otherOAuth2Exception((OAuth2Exception) ase);
+            }
             return handleOAuth2Exception((OAuth2Exception) ase);
         }
         ase = (AuthenticationException) throwableAnalyzer.getFirstThrowableOfType(AuthenticationException.class,
@@ -61,7 +65,7 @@ public class OAuth2WebResponseExceptionTranslator implements WebResponseExceptio
         return handleOAuth2Exception(new ServerErrorException(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(), e));
     }
 
-    private ResponseEntity<OAuth2Exception> handleOAuth2Exception(OAuth2Exception e) throws IOException {
+    private ResponseEntity<OAuth2Exception> handleOAuth2Exception(OAuth2Exception e) {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Cache-Control", "no-store");
         headers.set("Pragma", "no-cache");
@@ -77,6 +81,44 @@ public class OAuth2WebResponseExceptionTranslator implements WebResponseExceptio
             exception.setHttpErrorCode(e.getHttpErrorCode());
             exception.setOauth2ErrorCode(e.getOAuth2ErrorCode());
         }
+        return new ResponseEntity<>(exception, headers,HttpStatus.OK);
+    }
+
+    private ResponseEntity<OAuth2Exception> otherOAuth2Exception(OAuth2Exception e) {
+        System.out.println("其他错误->>>");
+        System.out.println(e.getHttpErrorCode());
+        System.out.println(e.getMessage());
+        System.out.println(e.getOAuth2ErrorCode());
+        System.out.println(e.getAdditionalInformation());
+        System.out.println(e.getSummary());
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Cache-Control", "no-store");
+        headers.set("Pragma", "no-cache");
+        if (e.getHttpErrorCode() == HttpStatus.UNAUTHORIZED.value() || (e instanceof InsufficientScopeException)) {
+            headers.set("WWW-Authenticate", String.format("%s %s", OAuth2AccessToken.BEARER_TYPE, e.getSummary()));
+        }
+        // 账号锁定验证失败处理
+        CmsOAuth2Exception exception = new CmsOAuth2Exception(e.getMessage(), e);
+        String oAuth2ErrorCode = null;
+        switch (e.getMessage()) {
+            case ConstantCommonCode.AccountNonLocked:
+                oAuth2ErrorCode = "账号已锁定";
+                break;
+            case ConstantCommonCode.AccountNonExpired:
+                oAuth2ErrorCode = "账号失效";
+                break;
+            case ConstantCommonCode.Enabled:
+                oAuth2ErrorCode = "账号被禁用";
+                break;
+            case ConstantCommonCode.CredentialsNonExpired:
+                oAuth2ErrorCode = "密码过期";
+                break;
+            default:
+                oAuth2ErrorCode = e.getOAuth2ErrorCode();
+                break;
+        }
+        exception.setHttpErrorCode(e.getHttpErrorCode());
+        exception.setOauth2ErrorCode(oAuth2ErrorCode);
         return new ResponseEntity<>(exception, headers,HttpStatus.OK);
     }
 

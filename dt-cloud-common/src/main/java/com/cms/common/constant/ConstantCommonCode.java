@@ -115,4 +115,8 @@ public class ConstantCommonCode {
     public static final String OAUTH_CLIENT_SECRET = "dt$pwd123";
     public static final String OAUTH_SCOPE = "web";
     public static final String OAUTH_GRANT_TYPE = "password,refresh_token";
+    public static final String AccountNonExpired = "User account has expired";
+    public static final String AccountNonLocked = "User account is locked";
+    public static final String Enabled = "User is disabled";
+    public static final String CredentialsNonExpired = "User credentials have expired";
 }
