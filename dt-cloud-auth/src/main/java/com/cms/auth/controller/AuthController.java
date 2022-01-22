@@ -1,5 +1,8 @@
 package com.cms.auth.controller;
 
+import com.cms.auth.utils.ApiCallUtils;
+import com.cms.common.entity.SecurityClaimsUser;
+import com.cms.common.result.ResultException;
 import com.cms.common.result.ResultUtil;
 import com.cms.common.utils.SysCmsUtils;
 import com.cms.common.utils.VerifyCodeUtils;
@@ -70,8 +73,14 @@ public class AuthController {
     }
 
     @GetMapping("/admin")
-    public String admin() {
+    public String admin(HttpServletRequest request) {
         System.out.println("获取资源===============");
+        try {
+            SecurityClaimsUser claimsUser = ApiCallUtils.securityClaimsUser(request);
+            System.out.println("获取携带参数==============="+claimsUser);
+        } catch (ResultException e) {
+            e.printStackTrace();
+        }
         return "admin!!!!";
     }
 }

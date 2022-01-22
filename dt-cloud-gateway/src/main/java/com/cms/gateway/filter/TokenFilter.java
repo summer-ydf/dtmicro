@@ -1,6 +1,7 @@
 package com.cms.gateway.filter;
 
 
+import com.cms.common.utils.EncryptUtils;
 import com.cms.common.utils.SysCmsUtils;
 import com.cms.gateway.GatewayConstant;
 import com.cms.gateway.config.IgnoreUrlsConfig;
@@ -24,6 +25,9 @@ import reactor.core.publisher.Mono;
 
 import java.util.List;
 import java.util.Map;
+
+import static com.cms.common.constant.ConstantCommonCode.TOKEN_CLAIMS_IVS;
+import static com.cms.common.constant.ConstantCommonCode.TOKEN_CLAIMS_PWD;
 
 /**
  * @author ydf Created by 2022/1/7 17:52
@@ -53,7 +57,6 @@ public class TokenFilter implements GlobalFilter, Ordered {
         String token = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
         if(StringUtils.isNotBlank(token)) {
             token = token.substring(7);
-            System.out.println("token->>>"+token);
         }else {
             return GatewayConstant.response(exchange, HttpStatus.UNAUTHORIZED, GatewayConstant.UNAUTHORIZED_TEXT, GatewayConstant.UNAUTHORIZED_JSON);
         }
@@ -63,10 +66,11 @@ public class TokenFilter implements GlobalFilter, Ordered {
             oAuth2AccessToken = tokenStore.readAccessToken(token);
             Map<String, Object> additionalInformation = oAuth2AccessToken.getAdditionalInformation();
             String claims = MapUtils.getString(additionalInformation,"claims");
+            System.out.println("token->>>"+token);
             System.out.println("claims->>>"+claims);
-            //String de_claims= EncryptUtils.decryptAES_CBC(claims,token_claims_password,token_claims_ivs, EncryptUtils.EncodeType.Base64);
-            String de_claims= "abc";
-            ServerHttpRequest request = exchange.getRequest().mutate().header("Icc-Gateway-Authorization", de_claims).build();
+            String deClaims = EncryptUtils.decryptAES_CBC(claims,TOKEN_CLAIMS_PWD,TOKEN_CLAIMS_IVS, EncryptUtils.EncodeType.Base64);
+            System.out.println("deClaims->>>"+deClaims);
+            ServerHttpRequest request = exchange.getRequest().mutate().header("Icc-Gateway-Authorization", deClaims).build();
             //将现在的request 变成 exchange对象
             return chain.filter(exchange.mutate().request(request).build());
         }catch (Exception e) {
