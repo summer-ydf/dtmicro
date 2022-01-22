@@ -119,4 +119,8 @@ public class ConstantCommonCode {
     public static final String AccountNonLocked = "User account is locked";
     public static final String Enabled = "User is disabled";
     public static final String CredentialsNonExpired = "User credentials have expired";
+
+    // 加密16位秘钥
+    public static String TOKEN_CLAIMS_PWD = "hJ6(vD2{hP1#fM2&";
+    public static String TOKEN_CLAIMS_IVS = "iC2!qD3#eX1;dT0&";
 }

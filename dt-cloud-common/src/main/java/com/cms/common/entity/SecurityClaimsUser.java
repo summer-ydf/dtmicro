@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author ydf Created by 2022/1/7 16:31
@@ -51,20 +53,36 @@ public class SecurityClaimsUser implements Serializable {
     /**
      * 帐户是否被锁定(1 未锁定，0已锁定)
      */
-    private boolean isAccountNonLocked = true;
+    private boolean isAccountNonLocked;
 
     /**
      * 密码是否过期(1 未过期，0已过期)
      */
-    private boolean isCredentialsNonExpired = true;
+    private boolean isCredentialsNonExpired;
 
     /**
      * 帐户是否可用(1 可用，0 删除用户)
      */
-    private boolean isEnabled = true;
+    private boolean isEnabled;
 
     /**
      * 登录token
      */
     String jti;
+
+    public Map<String,Object> jwtClaims() {
+        Map<String,Object> claims_json = new HashMap<>();
+        claims_json.put("scope",getScope());
+        claims_json.put("username",getUsername());
+        claims_json.put("userid",getUserid());
+        claims_json.put("avatar",getAvatar());
+        claims_json.put("jti",getJti());
+        return claims_json;
+    }
+
+    public Map<String,Object> jwtClaims(String jti) {
+        Map<String,Object> claims_json = jwtClaims();
+        claims_json.put("jti",jti);
+        return claims_json;
+    }
 }
