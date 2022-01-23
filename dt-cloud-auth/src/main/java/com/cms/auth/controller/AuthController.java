@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import static com.cms.common.constant.ConstantCommonCode.CACHE_CODE_KEY;
+import static com.cms.common.constant.ConstantCommonCode.GATEWAY_AUTHORIZATION;
 import static com.cms.common.constant.ConstantCommonCode.HEIGHT;
 import static com.cms.common.constant.ConstantCommonCode.IMG_JPG;
 import static com.cms.common.constant.ConstantCommonCode.WIDTH;
@@ -61,7 +62,7 @@ public class AuthController {
 
     @GetMapping("/security/logout")
     public Object test(HttpServletRequest request) {
-        String token = request.getHeader("Icc-Gateway-Authorization");
+        String token = request.getHeader(GATEWAY_AUTHORIZATION);
         SysCmsUtils.log.info("退出登录token->>>"+token);
         return ResultUtil.success();
     }

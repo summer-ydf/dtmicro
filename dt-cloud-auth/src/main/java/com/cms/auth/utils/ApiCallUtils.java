@@ -9,13 +9,15 @@ import org.apache.commons.lang.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 
+import static com.cms.common.constant.ConstantCommonCode.GATEWAY_AUTHORIZATION;
+
 /**
  * @author ydf Created by 2022/1/22 15:14
  */
 public class ApiCallUtils {
 
     public static SecurityClaimsUser securityClaimsUser(HttpServletRequest request) throws  ResultException {
-        String token = request.getHeader("Icc-Gateway-Authorization");
+        String token = request.getHeader(GATEWAY_AUTHORIZATION);
         if(StringUtils.isEmpty(token)) {
             throw new ResultException(ResultEnum.NO_AUTH);
         }

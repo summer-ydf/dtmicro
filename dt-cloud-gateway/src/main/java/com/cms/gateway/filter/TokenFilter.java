@@ -26,6 +26,7 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 import java.util.Map;
 
+import static com.cms.common.constant.ConstantCommonCode.GATEWAY_AUTHORIZATION;
 import static com.cms.common.constant.ConstantCommonCode.TOKEN_CLAIMS_IVS;
 import static com.cms.common.constant.ConstantCommonCode.TOKEN_CLAIMS_PWD;
 
@@ -70,7 +71,7 @@ public class TokenFilter implements GlobalFilter, Ordered {
             System.out.println("claims->>>"+claims);
             String deClaims = EncryptUtils.decryptAES_CBC(claims,TOKEN_CLAIMS_PWD,TOKEN_CLAIMS_IVS, EncryptUtils.EncodeType.Base64);
             System.out.println("deClaims->>>"+deClaims);
-            ServerHttpRequest request = exchange.getRequest().mutate().header("Icc-Gateway-Authorization", deClaims).build();
+            ServerHttpRequest request = exchange.getRequest().mutate().header(GATEWAY_AUTHORIZATION, deClaims).build();
             //将现在的request 变成 exchange对象
             return chain.filter(exchange.mutate().request(request).build());
         }catch (Exception e) {
