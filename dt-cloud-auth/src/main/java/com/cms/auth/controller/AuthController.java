@@ -52,7 +52,7 @@ public class AuthController {
         String randomNumber = VerifyCodeUtils.drawRandomText(image,WIDTH,HEIGHT);
         SysCmsUtils.log.info("获取登录验证码："+randomNumber);
         // 存入redis
-        stringRedisTemplate.opsForValue().set(CACHE_CODE_KEY, randomNumber, 5, TimeUnit.MINUTES);
+        stringRedisTemplate.opsForValue().set((CACHE_CODE_KEY + randomNumber).toLowerCase(),randomNumber,5, TimeUnit.MINUTES);
         ServletOutputStream out = response.getOutputStream();
         ImageIO.write(image, IMG_JPG, out);
         out.flush();
