@@ -33,8 +33,6 @@ spring:
     virtual-host: /
     publisher-confirm-type: correlated
     publisher-returns: true
-      #listener:
-      #simple:
-      #acknowledge-mode: manual # 设置消费端手动 ack
-    #retry:
-    #enabled: true   # 是否支持重试
+    listener:
+      simple:
+        acknowledge-mode: manual # 设置消费端手动ack
