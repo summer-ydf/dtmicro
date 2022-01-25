@@ -52,7 +52,11 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-pool2</artifactId>
         </dependency>
-
+        <!--RabbitMQ消息中间件-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.dt</groupId>
             <artifactId>dt-cloud-modular</artifactId>

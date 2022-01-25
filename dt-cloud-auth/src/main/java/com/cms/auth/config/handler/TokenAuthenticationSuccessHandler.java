@@ -1,7 +1,9 @@
 package com.cms.auth.config.handler;
 
+import com.cms.auth.service.OlapRabbitMqService;
 import com.cms.common.entity.SecurityClaimsUser;
 import com.cms.common.utils.SysCmsUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 
 import javax.servlet.ServletException;
@@ -15,15 +17,13 @@ import java.io.IOException;
  */
 public class TokenAuthenticationSuccessHandler implements OAuth2AuthenticationSuccessHandler {
 
-//    @Autowired
-//    private OlapKafkaProducer olapKafkaProducer;
+    @Autowired
+    private OlapRabbitMqService olapRabbitMqService;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, OAuth2Authentication authentication) throws IOException, ServletException {
         SecurityClaimsUser securityClaimsUser = (SecurityClaimsUser) authentication.getPrincipal();
-        SysCmsUtils.log.info("登录成功写入日志->>>" + securityClaimsUser);
-//        olapKafkaProducer.clickStreamLog(request,securityClaimsUser, "用户点击了[登录]按钮","btn-login");
-//        olapKafkaProducer.loginLog(request,securityClaimsUser, JSON.toJSONString(CoreWebUtils.requestMap(request)),false);
-//        System.out.println("登录成功写入日志->>>"+securityClaimsUser);
+        olapRabbitMqService.sendLoginLog(request,securityClaimsUser,true);
+        SysCmsUtils.log.info("登录成功推送日志信息->>>" + securityClaimsUser.getUsername());
     }
 }

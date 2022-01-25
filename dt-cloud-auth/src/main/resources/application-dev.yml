@@ -24,3 +24,11 @@ spring:
         max-idle: 16
         # 连接池中的最小空闲连接 默认 0
         min-idle: 16
+  # 配置RabbitMQ服务器
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    # 虚拟host 可以不设置,使用server默认host
+    #virtual-host: /
