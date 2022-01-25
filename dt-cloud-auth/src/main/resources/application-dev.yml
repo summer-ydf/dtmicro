@@ -30,5 +30,11 @@ spring:
     port: 5672
     username: guest
     password: guest
-    # 虚拟host 可以不设置,使用server默认host
-    #virtual-host: /
+    virtual-host: /
+    publisher-confirm-type: correlated
+    publisher-returns: true
+      #listener:
+      #simple:
+      #acknowledge-mode: manual # 设置消费端手动 ack
+    #retry:
+    #enabled: true   # 是否支持重试

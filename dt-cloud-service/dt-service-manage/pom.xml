@@ -60,6 +60,11 @@
             <artifactId>canal.client</artifactId>
             <version>${canal.version}</version>
         </dependency>
+        <!--RabbitMQ消息中间件-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
 
         <!--导入公共模块-->
         <dependency>

@@ -5,6 +5,13 @@ spring:
     password: Passw0rd!
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
+  # 配置RabbitMQ服务器
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
 # 分布式事务配置
 seata:
   tx-service-group: mall_tx_group

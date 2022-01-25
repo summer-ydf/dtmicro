@@ -124,4 +124,8 @@ public class ConstantCommonCode {
     public static String TOKEN_CLAIMS_PWD = "hJ6(vD2{hP1#fM2&";
     public static String TOKEN_CLAIMS_IVS = "iC2!qD3#eX1;dT0&";
     public static String GATEWAY_AUTHORIZATION = "Cms-Gateway-Authorization";
+
+    // RabbitMQ相关配置
+    public static String RABBITMQ_TOPIC_LOG = "topic.cms.log";
+    public static String RABBITMQ_EXCHANGE_LOG = "CmsLogTopicExchange";
 }
