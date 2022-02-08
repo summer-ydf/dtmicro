@@ -17,7 +17,6 @@
 ![输入图片说明](https://img.shields.io/badge/mybatisplus-3.4.6-brightgreen "在这里输入图片标题")
 ![输入图片说明](https://img.shields.io/badge/easyexcel-2.2.0beta2-brightgreen "在这里输入图片标题")
 ![输入图片说明](https://img.shields.io/badge/Vue-3.5.0-brightgreen "在这里输入图片标题")  
-![输入图片说明](https://img.shields.io/badge/kaptcha-2.3.2-brightgreen "在这里输入图片标题") 
  
 
 # 平台简介
