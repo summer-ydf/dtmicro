@@ -48,9 +48,4 @@ public class SysCmsUtils {
 
     public static final Log log = LogFactory.get("cms");
 
-    public static void main(String[] args) {
-        String keyId = generateKeyId();
-        System.out.println("主键ID->>>"+keyId);
-        System.out.println(STUDENT_INFORMATION_MAP.get("degree"));
-    }
 }

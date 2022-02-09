@@ -76,9 +76,4 @@ public enum NumberEnum {
         return result;
     }
 
-    public static void main(String[] args) {
-        // 输出前n个map
-        List<Map<String, String>> maps = calculationResultMap(2);
-        System.out.println(maps);
-    }
 }

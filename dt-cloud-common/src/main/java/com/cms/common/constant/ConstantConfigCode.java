@@ -42,8 +42,4 @@ public class ConstantConfigCode {
         return CONFIG_INFORMATION_LIST;
     }
 
-    public static void main(String[] args) {
-        List<Map<String, String>> configData = ConstantConfigCode.getInstance().getConfigData();
-        System.out.println(configData);
-    }
 }
