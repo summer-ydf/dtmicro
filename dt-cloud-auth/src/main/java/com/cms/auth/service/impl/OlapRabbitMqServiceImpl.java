@@ -39,7 +39,7 @@ public class OlapRabbitMqServiceImpl implements OlapRabbitMqService {
                 .browser("谷歌")
                 .message(null)
                 .build();
-        objectMap.put("info",buildObject);
+        objectMap.put("data",buildObject);
         // RabbitMQ消息推送
         rabbitTemplate.convertAndSend(RABBITMQ_EXCHANGE_LOG, RABBITMQ_TOPIC_LOG, objectMap);
     }
