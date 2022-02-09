@@ -108,7 +108,7 @@ public class ConstantCommonCode {
     // 登录token
     public static final String CACHE_LOGIN_TOKEN = CMS_KEY_PREX + "auth:login:token:";
     // 登录验证码
-    public static final String CACHE_CODE_KEY = CMS_KEY_PREX + "auth:login:code";
+    public static final String CACHE_CODE_KEY = CMS_KEY_PREX + "auth:login:code:";
 
     // OAuth2客户端初始化常量
     public static final String OAUTH_CLIENT_ID = "cms";
