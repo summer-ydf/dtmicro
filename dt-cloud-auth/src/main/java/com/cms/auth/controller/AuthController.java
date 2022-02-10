@@ -1,5 +1,6 @@
 package com.cms.auth.controller;
 
+import com.cms.auth.service.OlapRabbitMqService;
 import com.cms.auth.utils.ApiCallUtils;
 import com.cms.common.entity.SecurityClaimsUser;
 import com.cms.common.result.ResultException;
@@ -7,6 +8,7 @@ import com.cms.common.result.ResultUtil;
 import com.cms.common.utils.SysCmsUtils;
 import com.cms.common.utils.VerifyCodeUtils;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,6 +33,9 @@ import static com.cms.common.constant.ConstantCommonCode.WIDTH;
  */
 @RestController
 public class AuthController {
+
+    @Autowired
+    private OlapRabbitMqService olapRabbitMqService;
 
     private final StringRedisTemplate stringRedisTemplate;
 
@@ -64,6 +69,13 @@ public class AuthController {
     public Object test(HttpServletRequest request) {
         String token = request.getHeader(GATEWAY_AUTHORIZATION);
         SysCmsUtils.log.info("退出登录token->>>"+token);
+        SecurityClaimsUser securityClaimsUser = null;
+        try {
+            securityClaimsUser = ApiCallUtils.securityClaimsUser(request);
+            olapRabbitMqService.sendLoginLog(request,securityClaimsUser,false);
+        } catch (ResultException e) {
+            e.printStackTrace();
+        }
         return ResultUtil.success();
     }
 

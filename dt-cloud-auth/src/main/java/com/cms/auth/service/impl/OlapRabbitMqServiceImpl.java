@@ -46,7 +46,7 @@ public class OlapRabbitMqServiceImpl implements OlapRabbitMqService {
                 .title(message)
                 .operatingSystem(operatingSystem.getName())
                 .status(1)
-                .type(1)
+                .type(flag ? 1 : 2)
                 .browser(browser.getName())
                 .message(null)
                 .build();
