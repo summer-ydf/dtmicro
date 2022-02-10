@@ -36,10 +36,9 @@ public class LogReceiverListener {
             ObjectInputStream inputStream = new ObjectInputStream(new ByteArrayInputStream(body));
             Object object = inputStream.readObject();
             Map<String,Object> map = JSONObject.parseObject(JSON.toJSONString(object));
-            String data = map.get("data").toString();
-            //logService.saveLoginLog("login",msgMap.get("info"));
-            SysCmsUtils.log.info("添加日志信息记录成功->>>"+map);
-            SysCmsUtils.log.info("添加日志信息记录成功->>>"+data);
+            SysLoginLogEntity loginLogEntity = JSON.parseObject(map.get("data").toString(),SysLoginLogEntity.class);
+            logService.saveLoginLog(loginLogEntity);
+            SysCmsUtils.log.info("添加日志信息记录成功->>>"+loginLogEntity);
             // 第二个参数，手动确认可以被批处理，当该参数为 true 时，则可以一次性确认 delivery_tag 小于等于传入值的所有消息
             channel.basicAck(deliveryTag, true);
         } catch (Exception e) {

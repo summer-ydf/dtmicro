@@ -8,5 +8,5 @@ import com.cms.manage.entity.SysLoginLogEntity;
  */
 public interface SysLoginLogService extends IService<SysLoginLogEntity> {
 
-
+    void saveLoginLog(SysLoginLogEntity loginLogEntity);
 }

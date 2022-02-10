@@ -28,8 +28,8 @@ public class SysLoginLogEntity extends BaseEntity implements Serializable {
     private static final long serialVersionUID = -8336891240208854600L;
 
     @ApiModelProperty(value = "主键")
-    @TableId(type = IdType.ASSIGN_ID)
-    private String id;
+    @TableId(value = "id", type = IdType.ASSIGN_ID)
+    private Long id;
 
     @ApiModelProperty(value = "日志标题")
     private String title;
