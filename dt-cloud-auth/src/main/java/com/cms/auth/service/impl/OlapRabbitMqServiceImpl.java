@@ -3,6 +3,9 @@ package com.cms.auth.service.impl;
 import com.cms.auth.service.OlapRabbitMqService;
 import com.cms.common.entity.SecurityClaimsUser;
 import com.cms.common.entity.SysLoginLogVo;
+import eu.bitwalker.useragentutils.Browser;
+import eu.bitwalker.useragentutils.OperatingSystem;
+import eu.bitwalker.useragentutils.UserAgent;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,14 +32,22 @@ public class OlapRabbitMqServiceImpl implements OlapRabbitMqService {
     public void sendLoginLog(HttpServletRequest request, SecurityClaimsUser securityClaimsUser, boolean flag) {
         Map<String,Object> objectMap = new HashMap<>(2);
         String message =  securityClaimsUser.getUsername() + "在：" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + " 点击了登录";
+
+        String agent = request.getHeader("User-Agent");
+        // 解析agent字符串
+        UserAgent userAgent = UserAgent.parseUserAgentString(agent);
+        // 获取浏览器对象
+        Browser browser = userAgent.getBrowser();
+        // 获取操作系统对象
+        OperatingSystem operatingSystem = userAgent.getOperatingSystem();
         SysLoginLogVo buildObject = SysLoginLogVo.builder()
                 .loginIp("127.0.0.1")
                 .loginUserName(securityClaimsUser.getUsername())
                 .title(message)
-                .operatingSystem("windows10")
+                .operatingSystem(operatingSystem.getName())
                 .status(1)
                 .type(1)
-                .browser("谷歌")
+                .browser(browser.getName())
                 .message(null)
                 .build();
         objectMap.put("data",buildObject);

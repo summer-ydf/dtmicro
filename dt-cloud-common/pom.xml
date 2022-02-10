@@ -16,6 +16,7 @@
         <hutool.version>5.7.17</hutool.version>
         <commons.codec.version>1.10</commons.codec.version>
         <commons.collections.version>3.2.2</commons.collections.version>
+        <bitwalker.version>1.21</bitwalker.version>
     </properties>
 
     <dependencies>
@@ -41,6 +42,18 @@
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
             <version>${commons.collections.version}</version>
+        </dependency>
+        <!-- 解析客户端操作系统、浏览器等 -->
+        <dependency>
+            <groupId>eu.bitwalker</groupId>
+            <artifactId>UserAgentUtils</artifactId>
+            <version>${bitwalker.version}</version>
+        </dependency>
+        <!-- 解析操作系统 -->
+        <dependency>
+            <groupId>com.github.oshi</groupId>
+            <artifactId>oshi-core</artifactId>
+            <version>3.9.1</version>
         </dependency>
     </dependencies>
 
