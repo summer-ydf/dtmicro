@@ -18,9 +18,9 @@ public class CoreWebUtils {
     }
 
     public static String getIpAddress(HttpServletRequest request) {
-        String[] ips=getIpAddresses(request);
-        if(ips.length>0){
-            return  ips[0];
+        String[] ips = getIpAddresses(request);
+        if(ips.length > 0) {
+            return ips[0];
         }
         return null;
     }

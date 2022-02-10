@@ -1,6 +1,7 @@
 package com.cms.auth.service.impl;
 
 import com.cms.auth.service.OlapRabbitMqService;
+import com.cms.auth.utils.CoreWebUtils;
 import com.cms.common.entity.SecurityClaimsUser;
 import com.cms.common.entity.SysLoginLogVo;
 import eu.bitwalker.useragentutils.Browser;
@@ -31,8 +32,6 @@ public class OlapRabbitMqServiceImpl implements OlapRabbitMqService {
     @Override
     public void sendLoginLog(HttpServletRequest request, SecurityClaimsUser securityClaimsUser, boolean flag) {
         Map<String,Object> objectMap = new HashMap<>(2);
-        String message =  securityClaimsUser.getUsername() + "在：" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + " 点击了登录";
-
         String agent = request.getHeader("User-Agent");
         // 解析agent字符串
         UserAgent userAgent = UserAgent.parseUserAgentString(agent);
@@ -40,8 +39,9 @@ public class OlapRabbitMqServiceImpl implements OlapRabbitMqService {
         Browser browser = userAgent.getBrowser();
         // 获取操作系统对象
         OperatingSystem operatingSystem = userAgent.getOperatingSystem();
+        String message =  securityClaimsUser.getUsername() + "在：" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + " 点击了登录";
         SysLoginLogVo buildObject = SysLoginLogVo.builder()
-                .loginIp("127.0.0.1")
+                .loginIp(CoreWebUtils.getIpAddress(request))
                 .loginUserName(securityClaimsUser.getUsername())
                 .title(message)
                 .operatingSystem(operatingSystem.getName())
