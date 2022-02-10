@@ -34,13 +34,13 @@ import static com.cms.common.constant.ConstantCommonCode.WIDTH;
 @RestController
 public class AuthController {
 
-    @Autowired
-    private OlapRabbitMqService olapRabbitMqService;
+    private final OlapRabbitMqService olapRabbitMqService;
 
     private final StringRedisTemplate stringRedisTemplate;
 
-    public AuthController(StringRedisTemplate stringRedisTemplate) {
+    public AuthController(StringRedisTemplate stringRedisTemplate, OlapRabbitMqService olapRabbitMqService) {
         this.stringRedisTemplate = stringRedisTemplate;
+        this.olapRabbitMqService = olapRabbitMqService;
     }
 
     @GetMapping("/anonymous/valid_code")
