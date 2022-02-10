@@ -49,12 +49,6 @@
             <artifactId>UserAgentUtils</artifactId>
             <version>${bitwalker.version}</version>
         </dependency>
-        <!-- 解析操作系统 -->
-        <dependency>
-            <groupId>com.github.oshi</groupId>
-            <artifactId>oshi-core</artifactId>
-            <version>3.9.1</version>
-        </dependency>
     </dependencies>
 
 </project>
