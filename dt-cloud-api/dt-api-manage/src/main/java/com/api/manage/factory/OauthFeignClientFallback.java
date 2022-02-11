@@ -2,7 +2,7 @@ package com.api.manage.factory;
 
 import com.api.common.feign.FeignFailFallback;
 import com.api.manage.feign.OauthFeignClientService;
-import com.cms.common.tool.entity.SecurityClaimsUser;
+import com.cms.common.tool.domain.SecurityClaimsUserEntity;
 import com.cms.common.tool.result.ResultUtil;
 import feign.hystrix.FallbackFactory;
 import org.slf4j.Logger;
@@ -23,7 +23,7 @@ public class OauthFeignClientFallback implements FeignFailFallback, FallbackFact
         LOGGER.info("调用接口请求出错：{}",throwable.getMessage());
         return new OauthFeignClientService() {
             @Override
-            public ResultUtil<SecurityClaimsUser> loadUserByUsername(String username, String scope) {
+            public ResultUtil<SecurityClaimsUserEntity> loadUserByUsername(String username, String scope) {
                 return fail();
             }
         };

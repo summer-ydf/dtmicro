@@ -69,9 +69,10 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
         </dependency>
+        <!-- Cloud Common tool -->
         <dependency>
             <groupId>com.dt</groupId>
-            <artifactId>dt-cloud-common</artifactId>
+            <artifactId>dt-common-tool</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>

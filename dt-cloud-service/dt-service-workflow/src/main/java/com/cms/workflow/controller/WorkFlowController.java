@@ -1,6 +1,6 @@
 package com.cms.workflow.controller;
 
-import com.cms.common.result.ResultUtil;
+import com.cms.common.tool.result.ResultUtil;
 import com.cms.workflow.entity.FlowInstanceEntity;
 import com.cms.workflow.service.FlowInstanceService;
 import com.cms.workflow.service.WorkFlowService;

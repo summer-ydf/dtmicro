@@ -2,8 +2,8 @@ package com.cms.auth.service.impl;
 
 import com.cms.auth.service.OlapRabbitMqService;
 import com.cms.auth.utils.CoreWebUtils;
-import com.cms.common.tool.entity.SecurityClaimsUser;
-import com.cms.common.tool.entity.SysLoginLogVo;
+import com.cms.common.tool.domain.SecurityClaimsUserEntity;
+import com.cms.common.tool.domain.SysLoginLogVo;
 import eu.bitwalker.useragentutils.Browser;
 import eu.bitwalker.useragentutils.OperatingSystem;
 import eu.bitwalker.useragentutils.UserAgent;
@@ -30,7 +30,7 @@ public class OlapRabbitMqServiceImpl implements OlapRabbitMqService {
     private RabbitTemplate rabbitTemplate;
 
     @Override
-    public void sendLoginLog(HttpServletRequest request, SecurityClaimsUser securityClaimsUser, boolean flag) {
+    public void sendLoginLog(HttpServletRequest request, SecurityClaimsUserEntity securityClaimsUser, boolean flag) {
         Map<String,Object> objectMap = new HashMap<>(2);
         String agent = request.getHeader("User-Agent");
         // 解析agent字符串

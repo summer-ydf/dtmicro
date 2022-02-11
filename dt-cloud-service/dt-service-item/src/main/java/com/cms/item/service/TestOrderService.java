@@ -1,7 +1,7 @@
 package com.cms.item.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.cms.common.result.ResultUtil;
+import com.cms.common.tool.result.ResultUtil;
 import com.cms.item.entity.TestOrderEntity;
 
 /**

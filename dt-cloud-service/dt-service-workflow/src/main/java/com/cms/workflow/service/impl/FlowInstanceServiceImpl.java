@@ -1,7 +1,7 @@
 package com.cms.workflow.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cms.common.result.ResultUtil;
+import com.cms.common.tool.result.ResultUtil;
 import com.cms.workflow.entity.FlowInstanceEntity;
 import com.cms.workflow.mapper.FlowInstanceMapper;
 import com.cms.workflow.service.FlowInstanceService;

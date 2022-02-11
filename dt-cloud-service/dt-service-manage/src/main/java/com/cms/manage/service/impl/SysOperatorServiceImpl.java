@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cms.common.tool.entity.SecurityClaimsUser;
+import com.cms.common.tool.domain.SecurityClaimsUserEntity;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.entity.SysOperatorEntity;
 import com.cms.manage.entity.SysOperatorRoleEntity;
@@ -29,11 +29,11 @@ public class SysOperatorServiceImpl extends ServiceImpl<SysOperatorMapper, SysOp
 
     @Override
     @Transactional(readOnly = true)
-    public ResultUtil<SecurityClaimsUser> loadUserByUsername(String username, String scope) {
+    public ResultUtil<SecurityClaimsUserEntity> loadUserByUsername(String username, String scope) {
         System.out.println("获取数据库账号密码->>>"+username);
         SysOperatorEntity operator = this.baseMapper.selectOne(new QueryWrapper<SysOperatorEntity>().eq("username", username).eq("scope",scope));
         if(!ObjectUtils.isEmpty(operator)) {
-            SecurityClaimsUser securityClaimsUser = SecurityClaimsUser.builder()
+            SecurityClaimsUserEntity securityClaimsUser = SecurityClaimsUserEntity.builder()
                     .userid(operator.getId())
                     .username(operator.getUsername())
                     .password(operator.getPassword())

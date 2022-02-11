@@ -1,7 +1,7 @@
 package com.cms.auth.service;
 
 
-import com.cms.common.tool.entity.SecurityClaimsUser;
+import com.cms.common.tool.domain.SecurityClaimsUserEntity;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -10,5 +10,5 @@ import javax.servlet.http.HttpServletRequest;
  */
 public interface OlapRabbitMqService {
 
-    void sendLoginLog(HttpServletRequest request, SecurityClaimsUser securityClaimsUser, boolean flag);
+    void sendLoginLog(HttpServletRequest request, SecurityClaimsUserEntity securityClaimsUser, boolean flag);
 }

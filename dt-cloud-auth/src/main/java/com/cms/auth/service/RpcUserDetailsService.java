@@ -4,10 +4,9 @@ import com.api.manage.feign.OauthFeignClientService;
 import com.cms.auth.domain.SecurityClaimsParams;
 import com.cms.auth.domain.SecurityUser;
 import com.cms.auth.utils.CoreWebUtils;
-import com.cms.common.tool.entity.SecurityClaimsUser;
+import com.cms.common.tool.domain.SecurityClaimsUserEntity;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.common.tool.utils.SysCmsUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,9 +21,11 @@ import javax.servlet.http.HttpServletRequest;
 @Service
 public class RpcUserDetailsService implements UserDetailsService {
 
-    @Autowired
-    private OauthFeignClientService oauthFeignClientService;
+    private final OauthFeignClientService oauthFeignClientService;
 
+    public RpcUserDetailsService(OauthFeignClientService oauthFeignClientService) {
+        this.oauthFeignClientService = oauthFeignClientService;
+    }
 
     /**
      * 登陆验证时，通过username获取用户的所有权限信息
@@ -38,7 +39,7 @@ public class RpcUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("缺少登录附加参数");
         }
         SysCmsUtils.log.info("远程调用设置参数->>>" + params);
-        ResultUtil<SecurityClaimsUser> claimsUserResultUtil = oauthFeignClientService.loadUserByUsername(username,params.getScope());
+        ResultUtil<SecurityClaimsUserEntity> claimsUserResultUtil = oauthFeignClientService.loadUserByUsername(username,params.getScope());
         SysCmsUtils.log.info("远程调用回调结果->>>" + claimsUserResultUtil);
         if (!claimsUserResultUtil.isSuccess()) {
             throw new UsernameNotFoundException(claimsUserResultUtil.getMessage());

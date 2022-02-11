@@ -1,4 +1,4 @@
-package com.cms.common.tool.entity;
+package com.cms.common.tool.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,7 +16,7 @@ import java.util.Map;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class SecurityClaimsUser implements Serializable {
+public class SecurityClaimsUserEntity implements Serializable {
 
     private static final long serialVersionUID = -7487458381816891683L;
 

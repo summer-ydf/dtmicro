@@ -1,7 +1,6 @@
 package com.cms.auth.domain;
 
-import com.cms.common.tool.entity.SecurityClaimsUser;
-import io.swagger.annotations.ApiModelProperty;
+import com.cms.common.tool.domain.SecurityClaimsUserEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,11 +14,11 @@ import java.util.Collections;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SecurityUser extends SecurityClaimsUser implements UserDetails {
+public class SecurityUser extends SecurityClaimsUserEntity implements UserDetails {
 
     private static final long serialVersionUID = -4179028978487613398L;
 
-    public static SecurityUser from(SecurityClaimsUser user) {
+    public static SecurityUser from(SecurityClaimsUserEntity user) {
         SecurityUser securityUser = new SecurityUser();
         securityUser.setUserid(user.getUserid());
         securityUser.setJti(user.getJti());

@@ -2,7 +2,7 @@ package com.cms.item.canal.client;
 
 import com.alibaba.otter.canal.client.CanalConnector;
 import com.alibaba.otter.canal.client.CanalConnectors;
-import com.cms.common.utils.SysCmsUtils;
+import com.cms.common.tool.utils.SysCmsUtils;
 import com.cms.item.canal.CanalConstants;
 import com.cms.item.canal.ScanClassUtils;
 import com.cms.item.canal.annotation.Canal;

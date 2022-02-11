@@ -2,7 +2,7 @@ package com.api.workflow.factory;
 
 import com.api.common.feign.FeignFailFallback;
 import com.api.workflow.feign.WorkflowFeignService;
-import com.cms.common.result.ResultUtil;
+import com.cms.common.tool.result.ResultUtil;
 import feign.hystrix.FallbackFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

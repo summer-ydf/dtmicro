@@ -1,7 +1,7 @@
 package com.cms.auth;
 import com.cms.auth.config.handler.RestExceptionHandler;
 import com.cms.auth.service.OauthClientService;
-import com.cms.common.utils.SysCmsUtils;
+import com.cms.common.tool.utils.SysCmsUtils;
 import com.cms.modular.config.Swagger2Config;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;

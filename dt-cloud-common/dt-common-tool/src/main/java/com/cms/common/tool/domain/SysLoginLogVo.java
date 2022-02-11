@@ -1,4 +1,4 @@
-package com.cms.common.tool.entity;
+package com.cms.common.tool.domain;
 
 
 import lombok.AllArgsConstructor;

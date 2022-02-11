@@ -2,13 +2,12 @@ package com.cms.auth.controller;
 
 import com.cms.auth.service.OlapRabbitMqService;
 import com.cms.auth.utils.ApiCallUtils;
-import com.cms.common.tool.entity.SecurityClaimsUser;
+import com.cms.common.tool.domain.SecurityClaimsUserEntity;
 import com.cms.common.tool.result.ResultException;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.common.tool.utils.SysCmsUtils;
 import com.cms.common.tool.utils.VerifyCodeUtils;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +21,6 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import static com.cms.common.tool.constant.ConstantCommonCode.CACHE_CODE_KEY;
-import static com.cms.common.tool.constant.ConstantCommonCode.GATEWAY_AUTHORIZATION;
 import static com.cms.common.tool.constant.ConstantCommonCode.HEIGHT;
 import static com.cms.common.tool.constant.ConstantCommonCode.IMG_JPG;
 import static com.cms.common.tool.constant.ConstantCommonCode.WIDTH;
@@ -69,7 +67,7 @@ public class AuthController {
     public Object test(HttpServletRequest request) {
 //        String token = request.getHeader(GATEWAY_AUTHORIZATION);
 //        SysCmsUtils.log.info("退出登录token->>>"+token);
-        SecurityClaimsUser securityClaimsUser = null;
+        SecurityClaimsUserEntity securityClaimsUser = null;
         try {
             securityClaimsUser = ApiCallUtils.securityClaimsUser(request);
             olapRabbitMqService.sendLoginLog(request,securityClaimsUser,false);
@@ -89,7 +87,7 @@ public class AuthController {
     public String admin(HttpServletRequest request) {
         System.out.println("获取资源===============");
         try {
-            SecurityClaimsUser claimsUser = ApiCallUtils.securityClaimsUser(request);
+            SecurityClaimsUserEntity claimsUser = ApiCallUtils.securityClaimsUser(request);
             System.out.println("获取携带参数==============="+claimsUser);
         } catch (ResultException e) {
             e.printStackTrace();

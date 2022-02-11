@@ -1,7 +1,7 @@
 package com.cms.manage.controller;
 
 import com.api.manage.feign.OauthFeignClientService;
-import com.cms.common.tool.entity.SecurityClaimsUser;
+import com.cms.common.tool.domain.SecurityClaimsUserEntity;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.service.SysOperatorService;
 import io.swagger.annotations.Api;
@@ -15,11 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class FeignCmsClientController implements OauthFeignClientService {
 
-    @Autowired
-    private SysOperatorService sysOperatorService;
+    private final SysOperatorService sysOperatorService;
+
+    public FeignCmsClientController(SysOperatorService sysOperatorService) {
+        this.sysOperatorService = sysOperatorService;
+    }
 
     @Override
-    public ResultUtil<SecurityClaimsUser> loadUserByUsername(String username, String scope) {
+    public ResultUtil<SecurityClaimsUserEntity> loadUserByUsername(String username, String scope) {
         return sysOperatorService.loadUserByUsername(username,scope);
     }
 

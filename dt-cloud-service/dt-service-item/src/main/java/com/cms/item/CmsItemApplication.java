@@ -1,7 +1,7 @@
 package com.cms.item;
 
 import com.alibaba.cloud.seata.feign.SeataFeignClientAutoConfiguration;
-import com.cms.common.utils.SysCmsUtils;
+import com.cms.common.tool.utils.SysCmsUtils;
 import com.cms.item.canal.client.CanalClientInstance;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.DisposableBean;

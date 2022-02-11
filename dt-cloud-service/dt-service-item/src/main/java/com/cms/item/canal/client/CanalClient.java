@@ -2,7 +2,7 @@ package com.cms.item.canal.client;
 
 import com.alibaba.otter.canal.client.CanalConnector;
 import com.alibaba.otter.canal.protocol.Message;
-import com.cms.common.utils.SysCmsUtils;
+import com.cms.common.tool.utils.SysCmsUtils;
 import com.cms.item.canal.service.MessageConvert;
 import lombok.extern.apachecommons.CommonsLog;
 import org.springframework.util.Assert;

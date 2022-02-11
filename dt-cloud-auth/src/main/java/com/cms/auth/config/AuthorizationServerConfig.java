@@ -14,7 +14,7 @@ import com.cms.auth.config.handler.TokenAuthenticationFailureHandler;
 import com.cms.auth.config.handler.TokenAuthenticationSuccessHandler;
 import com.cms.auth.config.interceptor.AuthorizationInterceptor;
 import com.cms.auth.service.RpcUserDetailsService;
-import com.cms.common.tool.entity.SecurityClaimsUser;
+import com.cms.common.tool.domain.SecurityClaimsUserEntity;
 import com.cms.common.tool.result.ResultEnum;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.common.tool.utils.EncryptUtils;
@@ -54,8 +54,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.cms.common.constant.ConstantCommonCode.TOKEN_CLAIMS_IVS;
-import static com.cms.common.constant.ConstantCommonCode.TOKEN_CLAIMS_PWD;
+import static com.cms.common.tool.constant.ConstantCommonCode.TOKEN_CLAIMS_IVS;
+import static com.cms.common.tool.constant.ConstantCommonCode.TOKEN_CLAIMS_PWD;
 
 /**
  * OAuth2认证服务器配置
@@ -244,7 +244,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Bean
     public TokenEnhancer tokenEnhancer() {
         return (OAuth2AccessToken accessToken, OAuth2Authentication authentication)-> {
-            SecurityClaimsUser claimsUser = (SecurityClaimsUser) authentication.getPrincipal();
+            SecurityClaimsUserEntity claimsUser = (SecurityClaimsUserEntity) authentication.getPrincipal();
             String tokenId = accessToken.getValue();
             final Map<String, Object> additionalInfo = new HashMap<>(2);
             String claims = Base64.encodeBase64String(JSON.toJSONBytes(claimsUser.jwtClaims(tokenId)));

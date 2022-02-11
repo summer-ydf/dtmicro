@@ -1,7 +1,7 @@
 package com.cms.auth.utils;
 
 import com.alibaba.fastjson.JSON;
-import com.cms.common.tool.entity.SecurityClaimsUser;
+import com.cms.common.tool.domain.SecurityClaimsUserEntity;
 import com.cms.common.tool.result.ResultEnum;
 import com.cms.common.tool.result.ResultException;
 import org.apache.commons.codec.binary.Base64;
@@ -16,12 +16,12 @@ import static com.cms.common.tool.constant.ConstantCommonCode.GATEWAY_AUTHORIZAT
  */
 public class ApiCallUtils {
 
-    public static SecurityClaimsUser securityClaimsUser(HttpServletRequest request) throws ResultException {
+    public static SecurityClaimsUserEntity securityClaimsUser(HttpServletRequest request) throws ResultException {
         String token = request.getHeader(GATEWAY_AUTHORIZATION);
         if(StringUtils.isEmpty(token)) {
             throw new ResultException(ResultEnum.NO_AUTH);
         }
-        SecurityClaimsUser claims = JSON.parseObject(new String(Base64.decodeBase64(token)),SecurityClaimsUser.class);
+        SecurityClaimsUserEntity claims = JSON.parseObject(new String(Base64.decodeBase64(token)), SecurityClaimsUserEntity.class);
         if(claims == null) {
             throw new ResultException(ResultEnum.NO_AUTH);
         }

@@ -1,7 +1,7 @@
 package com.cms.auth.config.handler;
 
 import com.cms.auth.service.OlapRabbitMqService;
-import com.cms.common.tool.entity.SecurityClaimsUser;
+import com.cms.common.tool.domain.SecurityClaimsUserEntity;
 import com.cms.common.tool.utils.SysCmsUtils;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 
@@ -22,7 +22,7 @@ public class TokenAuthenticationSuccessHandler implements OAuth2AuthenticationSu
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, OAuth2Authentication authentication) throws IOException, ServletException {
-        SecurityClaimsUser securityClaimsUser = (SecurityClaimsUser) authentication.getPrincipal();
+        SecurityClaimsUserEntity securityClaimsUser = (SecurityClaimsUserEntity) authentication.getPrincipal();
         olapRabbitMqService.sendLoginLog(request,securityClaimsUser,true);
         SysCmsUtils.log.info("登录成功推送日志信息->>>" + securityClaimsUser.getUsername());
     }

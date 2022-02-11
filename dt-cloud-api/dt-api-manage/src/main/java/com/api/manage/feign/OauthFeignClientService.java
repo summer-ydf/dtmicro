@@ -1,7 +1,7 @@
 package com.api.manage.feign;
 
 import com.api.manage.factory.OauthFeignClientFallback;
-import com.cms.common.tool.entity.SecurityClaimsUser;
+import com.cms.common.tool.domain.SecurityClaimsUserEntity;
 import com.cms.common.tool.result.ResultUtil;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
@@ -19,5 +19,5 @@ import static com.api.common.ApiConstants.APPLICATION_NAME_MANAGE;
 public interface OauthFeignClientService {
 
     @GetMapping(value = APPLICATION_MANAGE_API_AFFIX + "/loadUserByUsername")
-    ResultUtil<SecurityClaimsUser> loadUserByUsername(@RequestParam String username, @RequestParam String scope);
+    ResultUtil<SecurityClaimsUserEntity> loadUserByUsername(@RequestParam String username, @RequestParam String scope);
 }
