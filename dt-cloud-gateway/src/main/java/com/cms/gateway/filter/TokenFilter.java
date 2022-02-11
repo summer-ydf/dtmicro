@@ -1,8 +1,8 @@
 package com.cms.gateway.filter;
 
 
-import com.cms.common.utils.EncryptUtils;
-import com.cms.common.utils.SysCmsUtils;
+import com.cms.common.tool.utils.EncryptUtils;
+import com.cms.common.tool.utils.SysCmsUtils;
 import com.cms.gateway.GatewayConstant;
 import com.cms.gateway.config.IgnoreUrlsConfig;
 import org.apache.commons.collections.MapUtils;
@@ -26,9 +26,9 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 import java.util.Map;
 
-import static com.cms.common.constant.ConstantCommonCode.GATEWAY_AUTHORIZATION;
-import static com.cms.common.constant.ConstantCommonCode.TOKEN_CLAIMS_IVS;
-import static com.cms.common.constant.ConstantCommonCode.TOKEN_CLAIMS_PWD;
+import static com.cms.common.tool.constant.ConstantCommonCode.GATEWAY_AUTHORIZATION;
+import static com.cms.common.tool.constant.ConstantCommonCode.TOKEN_CLAIMS_IVS;
+import static com.cms.common.tool.constant.ConstantCommonCode.TOKEN_CLAIMS_PWD;
 
 /**
  * @author ydf Created by 2022/1/7 17:52

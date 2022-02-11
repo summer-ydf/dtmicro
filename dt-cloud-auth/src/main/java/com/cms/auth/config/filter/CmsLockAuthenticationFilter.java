@@ -1,7 +1,7 @@
 package com.cms.auth.config.filter;
 
 import com.cms.auth.exception.ParameterAuthenticationException;
-import com.cms.common.constant.ConstantCommonCode;
+import com.cms.common.tool.constant.ConstantCommonCode;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;

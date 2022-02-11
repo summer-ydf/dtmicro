@@ -1,8 +1,8 @@
 package com.cms.auth.config.handler;
 
 import com.cms.auth.service.OlapRabbitMqService;
-import com.cms.common.entity.SecurityClaimsUser;
-import com.cms.common.utils.SysCmsUtils;
+import com.cms.common.tool.entity.SecurityClaimsUser;
+import com.cms.common.tool.utils.SysCmsUtils;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 
 import javax.annotation.Resource;

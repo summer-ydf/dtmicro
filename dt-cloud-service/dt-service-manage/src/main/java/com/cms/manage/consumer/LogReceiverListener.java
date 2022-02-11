@@ -2,7 +2,7 @@ package com.cms.manage.consumer;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.cms.common.utils.SysCmsUtils;
+import com.cms.common.tool.utils.SysCmsUtils;
 import com.cms.manage.entity.SysLoginLogEntity;
 import com.cms.manage.service.SysLoginLogService;
 import com.rabbitmq.client.Channel;

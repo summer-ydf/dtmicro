@@ -1,7 +1,7 @@
 package com.cms.manage.service.impl;
 
 import com.api.workflow.feign.WorkflowFeignService;
-import com.cms.common.result.ResultUtil;
+import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

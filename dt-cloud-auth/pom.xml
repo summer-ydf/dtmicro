@@ -57,14 +57,15 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-amqp</artifactId>
         </dependency>
+        <!-- Cloud Common tool -->
         <dependency>
             <groupId>com.dt</groupId>
-            <artifactId>dt-cloud-modular</artifactId>
+            <artifactId>dt-common-tool</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.dt</groupId>
-            <artifactId>dt-cloud-common</artifactId>
+            <artifactId>dt-cloud-modular</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>

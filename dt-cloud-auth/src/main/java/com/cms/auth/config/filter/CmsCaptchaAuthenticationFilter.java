@@ -11,7 +11,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import static com.cms.common.constant.ConstantCommonCode.CACHE_CODE_KEY;
+import static com.cms.common.tool.constant.ConstantCommonCode.CACHE_CODE_KEY;
 
 /**
  * 验证码校验

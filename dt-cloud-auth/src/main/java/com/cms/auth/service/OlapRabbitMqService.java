@@ -1,6 +1,7 @@
 package com.cms.auth.service;
 
-import com.cms.common.entity.SecurityClaimsUser;
+
+import com.cms.common.tool.entity.SecurityClaimsUser;
 
 import javax.servlet.http.HttpServletRequest;
 

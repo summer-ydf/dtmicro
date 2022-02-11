@@ -9,10 +9,10 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-import static com.cms.common.constant.ConstantCommonCode.OAUTH_CLIENT_ID;
-import static com.cms.common.constant.ConstantCommonCode.OAUTH_CLIENT_SECRET;
-import static com.cms.common.constant.ConstantCommonCode.OAUTH_GRANT_TYPE;
-import static com.cms.common.constant.ConstantCommonCode.OAUTH_SCOPE;
+import static com.cms.common.tool.constant.ConstantCommonCode.OAUTH_CLIENT_ID;
+import static com.cms.common.tool.constant.ConstantCommonCode.OAUTH_CLIENT_SECRET;
+import static com.cms.common.tool.constant.ConstantCommonCode.OAUTH_GRANT_TYPE;
+import static com.cms.common.tool.constant.ConstantCommonCode.OAUTH_SCOPE;
 
 /**
  * @author ydf Created by 2022/1/12 11:50

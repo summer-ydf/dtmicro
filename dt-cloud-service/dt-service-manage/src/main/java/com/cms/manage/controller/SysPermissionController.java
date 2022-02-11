@@ -1,7 +1,7 @@
 package com.cms.manage.controller;
 
 
-import com.cms.common.result.ResultUtil;
+import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.entity.SysPermissionEntity;
 import com.cms.manage.service.SysPermissionService;
 import io.swagger.annotations.Api;

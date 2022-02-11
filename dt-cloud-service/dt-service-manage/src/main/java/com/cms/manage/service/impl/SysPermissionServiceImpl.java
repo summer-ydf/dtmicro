@@ -2,7 +2,7 @@ package com.cms.manage.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cms.common.result.ResultUtil;
+import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.entity.SysPermissionEntity;
 import com.cms.manage.mapper.SysPermissionMapper;
 import com.cms.manage.service.SysPermissionService;

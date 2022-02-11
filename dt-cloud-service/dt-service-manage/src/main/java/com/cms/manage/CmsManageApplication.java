@@ -1,7 +1,7 @@
 package com.cms.manage;
 
 import com.alibaba.cloud.seata.feign.SeataFeignClientAutoConfiguration;
-import com.cms.common.utils.SysCmsUtils;
+import com.cms.common.tool.utils.SysCmsUtils;
 import com.cms.modular.config.IdGeneratorConfig;
 import com.cms.modular.config.PasswordEncoderConfig;
 import com.cms.modular.config.Swagger2Config;

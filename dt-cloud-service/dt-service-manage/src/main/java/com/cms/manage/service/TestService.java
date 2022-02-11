@@ -1,6 +1,7 @@
 package com.cms.manage.service;
 
-import com.cms.common.result.ResultUtil;
+
+import com.cms.common.tool.result.ResultUtil;
 
 /**
  * @author ydf Created by 2021/11/23 16:32

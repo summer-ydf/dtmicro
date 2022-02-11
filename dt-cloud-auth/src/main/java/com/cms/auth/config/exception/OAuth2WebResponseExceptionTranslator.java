@@ -1,8 +1,8 @@
 package com.cms.auth.config.exception;
 
 import com.cms.auth.config.handler.OAuth2AuthenticationFailureHandler;
-import com.cms.common.constant.ConstantCommonCode;
-import com.cms.common.utils.SysCmsUtils;
+import com.cms.common.tool.constant.ConstantCommonCode;
+import com.cms.common.tool.utils.SysCmsUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

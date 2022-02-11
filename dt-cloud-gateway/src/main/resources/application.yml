@@ -28,6 +28,5 @@ secure:  #配置白名单路径
     urls:
       - /auth/oauth/**
       - /auth/anonymous/**
-      - /auth/security/**
       - /auth/hello
       - /api/operator/page

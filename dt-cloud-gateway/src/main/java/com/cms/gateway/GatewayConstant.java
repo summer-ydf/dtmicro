@@ -1,8 +1,8 @@
 package com.cms.gateway;
 
 import com.alibaba.fastjson.JSON;
-import com.cms.common.result.ResultEnum;
-import com.cms.common.result.ResultUtil;
+import com.cms.common.tool.result.ResultEnum;
+import com.cms.common.tool.result.ResultUtil;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

@@ -2,8 +2,8 @@ package com.api.manage.factory;
 
 import com.api.common.feign.FeignFailFallback;
 import com.api.manage.feign.OauthFeignClientService;
-import com.cms.common.entity.SecurityClaimsUser;
-import com.cms.common.result.ResultUtil;
+import com.cms.common.tool.entity.SecurityClaimsUser;
+import com.cms.common.tool.result.ResultUtil;
 import feign.hystrix.FallbackFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

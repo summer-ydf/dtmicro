@@ -2,11 +2,11 @@ package com.cms.auth.controller;
 
 import com.cms.auth.service.OlapRabbitMqService;
 import com.cms.auth.utils.ApiCallUtils;
-import com.cms.common.entity.SecurityClaimsUser;
-import com.cms.common.result.ResultException;
-import com.cms.common.result.ResultUtil;
-import com.cms.common.utils.SysCmsUtils;
-import com.cms.common.utils.VerifyCodeUtils;
+import com.cms.common.tool.entity.SecurityClaimsUser;
+import com.cms.common.tool.result.ResultException;
+import com.cms.common.tool.result.ResultUtil;
+import com.cms.common.tool.utils.SysCmsUtils;
+import com.cms.common.tool.utils.VerifyCodeUtils;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -21,11 +21,11 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-import static com.cms.common.constant.ConstantCommonCode.CACHE_CODE_KEY;
-import static com.cms.common.constant.ConstantCommonCode.GATEWAY_AUTHORIZATION;
-import static com.cms.common.constant.ConstantCommonCode.HEIGHT;
-import static com.cms.common.constant.ConstantCommonCode.IMG_JPG;
-import static com.cms.common.constant.ConstantCommonCode.WIDTH;
+import static com.cms.common.tool.constant.ConstantCommonCode.CACHE_CODE_KEY;
+import static com.cms.common.tool.constant.ConstantCommonCode.GATEWAY_AUTHORIZATION;
+import static com.cms.common.tool.constant.ConstantCommonCode.HEIGHT;
+import static com.cms.common.tool.constant.ConstantCommonCode.IMG_JPG;
+import static com.cms.common.tool.constant.ConstantCommonCode.WIDTH;
 
 /**
  * // 第三方登录，参考：https://www.cnblogs.com/haoxianrui/
@@ -67,8 +67,8 @@ public class AuthController {
 
     @GetMapping("/security/logout")
     public Object test(HttpServletRequest request) {
-        String token = request.getHeader(GATEWAY_AUTHORIZATION);
-        SysCmsUtils.log.info("退出登录token->>>"+token);
+//        String token = request.getHeader(GATEWAY_AUTHORIZATION);
+//        SysCmsUtils.log.info("退出登录token->>>"+token);
         SecurityClaimsUser securityClaimsUser = null;
         try {
             securityClaimsUser = ApiCallUtils.securityClaimsUser(request);

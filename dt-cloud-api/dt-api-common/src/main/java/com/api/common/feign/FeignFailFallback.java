@@ -1,6 +1,6 @@
 package com.api.common.feign;
 
-import com.cms.common.result.ResultUtil;
+import com.cms.common.tool.result.ResultUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

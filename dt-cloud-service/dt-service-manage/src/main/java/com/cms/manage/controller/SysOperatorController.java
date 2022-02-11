@@ -1,7 +1,7 @@
 package com.cms.manage.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.cms.common.result.ResultUtil;
+import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.entity.SysOperatorEntity;
 import com.cms.manage.service.SysOperatorService;
 import com.cms.manage.vo.SysOperatorPage;
@@ -55,6 +55,7 @@ public class SysOperatorController {
         return sysOperatorService.updateOperatorById(request);
     }
 
+//    @Log(title = "删除操作员日志记录", businessType = LogTypeCode.DELETE)
     @ApiOperation(value = "删除操作员")
     @DeleteMapping("/delete/{id}")
     public ResultUtil<SysOperatorEntity> delete(@PathVariable Long id) {

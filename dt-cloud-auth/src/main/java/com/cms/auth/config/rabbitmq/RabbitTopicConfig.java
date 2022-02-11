@@ -1,6 +1,6 @@
 package com.cms.auth.config.rabbitmq;
 
-import com.cms.common.constant.ConstantCommonCode;
+import com.cms.common.tool.constant.ConstantCommonCode;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;

@@ -1,9 +1,9 @@
 package com.cms.auth.config.exception;
 
 import com.alibaba.fastjson.JSON;
-import com.cms.common.result.ResultEnum;
-import com.cms.common.result.ResultUtil;
-import com.cms.common.utils.SysCmsUtils;
+import com.cms.common.tool.result.ResultEnum;
+import com.cms.common.tool.result.ResultUtil;
+import com.cms.common.tool.utils.SysCmsUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;

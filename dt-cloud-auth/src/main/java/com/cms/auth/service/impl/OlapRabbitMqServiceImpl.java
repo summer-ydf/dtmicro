@@ -2,8 +2,8 @@ package com.cms.auth.service.impl;
 
 import com.cms.auth.service.OlapRabbitMqService;
 import com.cms.auth.utils.CoreWebUtils;
-import com.cms.common.entity.SecurityClaimsUser;
-import com.cms.common.entity.SysLoginLogVo;
+import com.cms.common.tool.entity.SecurityClaimsUser;
+import com.cms.common.tool.entity.SysLoginLogVo;
 import eu.bitwalker.useragentutils.Browser;
 import eu.bitwalker.useragentutils.OperatingSystem;
 import eu.bitwalker.useragentutils.UserAgent;
@@ -17,8 +17,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.cms.common.constant.ConstantCommonCode.RABBITMQ_EXCHANGE_LOG;
-import static com.cms.common.constant.ConstantCommonCode.RABBITMQ_TOPIC_LOG;
+import static com.cms.common.tool.constant.ConstantCommonCode.RABBITMQ_EXCHANGE_LOG;
+import static com.cms.common.tool.constant.ConstantCommonCode.RABBITMQ_TOPIC_LOG;
 
 /**
  * @author ydf Created by 2022/1/25 13:58

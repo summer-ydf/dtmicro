@@ -1,6 +1,6 @@
 package com.cms.auth.domain;
 
-import com.cms.common.entity.SecurityClaimsUser;
+import com.cms.common.tool.entity.SecurityClaimsUser;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

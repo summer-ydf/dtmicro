@@ -1,8 +1,8 @@
 package com.api.manage.feign;
 
 import com.api.manage.factory.OauthFeignClientFallback;
-import com.cms.common.entity.SecurityClaimsUser;
-import com.cms.common.result.ResultUtil;
+import com.cms.common.tool.entity.SecurityClaimsUser;
+import com.cms.common.tool.result.ResultUtil;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;

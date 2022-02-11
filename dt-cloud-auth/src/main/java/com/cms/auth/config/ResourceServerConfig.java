@@ -1,7 +1,7 @@
 package com.cms.auth.config;
 
 import com.cms.auth.config.exception.CmsTokenExpireAuthenticationEntryPoint;
-import com.cms.common.utils.SysCmsUtils;
+import com.cms.common.tool.utils.SysCmsUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

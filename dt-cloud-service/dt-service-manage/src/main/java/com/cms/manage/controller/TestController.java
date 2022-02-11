@@ -1,6 +1,6 @@
 package com.cms.manage.controller;
 
-import com.cms.common.result.ResultUtil;
+import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.service.TestProductService;
 import com.cms.manage.service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
