@@ -3,7 +3,7 @@ package com.cms.auth.service.impl;
 import com.cms.auth.service.OlapRabbitMqService;
 import com.cms.auth.utils.CoreWebUtils;
 import com.cms.common.tool.domain.SecurityClaimsUserEntity;
-import com.cms.common.tool.domain.SysLoginLogVo;
+import com.cms.common.tool.domain.SysLoginLogVoEntity;
 import eu.bitwalker.useragentutils.Browser;
 import eu.bitwalker.useragentutils.OperatingSystem;
 import eu.bitwalker.useragentutils.UserAgent;
@@ -40,7 +40,7 @@ public class OlapRabbitMqServiceImpl implements OlapRabbitMqService {
         // 获取操作系统对象
         OperatingSystem operatingSystem = userAgent.getOperatingSystem();
         String message =  securityClaimsUser.getUsername() + "在：" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + " 点击了登录";
-        SysLoginLogVo buildObject = SysLoginLogVo.builder()
+        SysLoginLogVoEntity buildObject = SysLoginLogVoEntity.builder()
                 .loginIp(CoreWebUtils.getIpAddress(request))
                 .loginUserName(securityClaimsUser.getUsername())
                 .title(message)

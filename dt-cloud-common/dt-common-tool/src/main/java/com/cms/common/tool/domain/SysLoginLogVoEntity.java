@@ -16,7 +16,7 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class SysLoginLogVo implements Serializable {
+public class SysLoginLogVoEntity implements Serializable {
 
     private static final long serialVersionUID = -8336891240208854600L;
 

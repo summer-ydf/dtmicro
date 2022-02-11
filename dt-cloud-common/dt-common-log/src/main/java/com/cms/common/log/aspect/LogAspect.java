@@ -3,6 +3,8 @@ package com.cms.common.log.aspect;
 import com.alibaba.fastjson.JSON;
 import com.cms.common.log.annotation.Log;
 import com.cms.common.log.service.AsyncLogService;
+import com.cms.common.tool.constant.ConstantCommonCode;
+import com.cms.common.tool.domain.SysOperatorLogVoEntity;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -77,55 +79,48 @@ public class LogAspect {
      * @param resultValue 响应返回值
      */
     protected void handleLogInfo(final JoinPoint joinPoint, final Exception e, Object resultValue) {
-        // 判断是否存在@Log注解，如果存在就获取注解信息
-        Log log = existLogAnnotation(joinPoint);
-        if(!ObjectUtils.isEmpty(log)) {
-            logger.info("有日志注解====================================");
-            logger.info(log.title());
-            logger.info(log.businessType().toString());
+        try {
+            // 记录操作日志
+            SysOperatorLogVoEntity sysLog = new SysOperatorLogVoEntity();
+            // 判断是否存在@Log注解，如果存在就获取注解信息
+            Log log = existLogAnnotation(joinPoint);
+            if(!ObjectUtils.isEmpty(log)) {
+                // 业务操作类型
+                sysLog.setBusinessType(String.valueOf(log.businessType()));
+                // 业务操作标题
+                sysLog.setTitle(log.title());
+                // 获取参数的信息。
+                getRequestParams(joinPoint, sysLog);
+                // 操作状态默认正常
+                sysLog.setStatus(ConstantCommonCode.INT_ONE);
+                // 请求地址
+                sysLog.setRequestUrl(getRequest().getRequestURI());
+                // 请求IP
+                //sysLog.setRequestIp(IpAddressUtils.getIpAddr(getRequest()));
+                // 响应返回参数
+                sysLog.setResponseParam(JSON.toJSONString(resultValue));
+                // 操作用户
+//                SysUserEntity sysUserEntity = (SysUserEntity) authenticationInfoService.getAuthentication();
+//                sysLog.setRequestUserName(sysUserEntity.getUsername());
+                // 请求方法完整名称
+                String className = joinPoint.getTarget().getClass().getName();
+                String methodName = joinPoint.getSignature().getName();
+                sysLog.setRequestMethodName(className + "." + methodName + "()");
+                // 请求方式
+                sysLog.setRequestMethodType(getRequest().getMethod());
+                if (!ObjectUtils.isEmpty(e)) {
+                    // 操作异常
+                    sysLog.setStatus(ConstantCommonCode.INT_TWO);
+                    sysLog.setErrorInfo(e.getMessage());
+                }
+                // 保存操作日志到数据库
+                asyncLogService.save(sysLog);
+                logger.info("===============日志备份写入完成:{}",sysLog.getTitle());
+            }
+        } catch (Exception exp) {
+            logger.error("===============系统操作日志异常信息:{}", exp.getMessage());
+            exp.printStackTrace();
         }
-//        try {
-//            // 记录操作日志
-//            SysOperatorLogEntity sysLog = new SysOperatorLogEntity();
-//            // 判断是否存在@Log注解，如果存在就获取注解信息
-//            Log log = existLogAnnotation(joinPoint);
-//            if(!ObjectUtils.isEmpty(log)) {
-//                // 业务操作类型
-//                sysLog.setBusinessType(log.businessType());
-//                // 业务操作标题
-//                sysLog.setTitle(log.title());
-//                // 获取参数的信息。
-//                getRequestParams(joinPoint, sysLog);
-//                // 操作状态默认正常
-//                sysLog.setStatus(ConstantCommonCode.INT_ONE);
-//                // 请求地址
-//                sysLog.setRequestUrl(getRequest().getRequestURI());
-//                // 请求IP
-//                //sysLog.setRequestIp(IpAddressUtils.getIpAddr(getRequest()));
-//                // 响应返回参数
-//                sysLog.setResponseParam(JSON.toJSONString(resultValue));
-//                // 操作用户
-////                SysUserEntity sysUserEntity = (SysUserEntity) authenticationInfoService.getAuthentication();
-////                sysLog.setRequestUserName(sysUserEntity.getUsername());
-//                // 请求方法完整名称
-//                String className = joinPoint.getTarget().getClass().getName();
-//                String methodName = joinPoint.getSignature().getName();
-//                sysLog.setRequestMethodName(className + "." + methodName + "()");
-//                // 请求方式
-//                sysLog.setRequestMethodType(getRequest().getMethod());
-//                if (!ObjectUtils.isEmpty(e)) {
-//                    // 操作异常
-//                    sysLog.setStatus(ConstantCommonCode.INT_TWO);
-//                    sysLog.setErrorInfo(e.getMessage());
-//                }
-//                // 保存操作日志到数据库
-//                sysOperatorLogService.saveOperatorLog(sysLog);
-//                logger.info("===============日志备份写入完成:{}",sysLog.getTitle());
-//            }
-//        } catch (Exception exp) {
-//            logger.error("===============系统操作日志异常信息:{}", exp.getMessage());
-//            exp.printStackTrace();
-//        }
     }
 
     /**
@@ -148,17 +143,17 @@ public class LogAspect {
      * @param joinPoint 切点对象
      * @param sysLog 操作日志对象
      */
-//    private void getRequestParams(JoinPoint joinPoint, SysOperatorLogEntity sysLog) {
-//        String requestMethodType = getRequest().getMethod();
-//        System.out.println();
-//        if (HttpMethod.PUT.name().equals(requestMethodType) || HttpMethod.POST.name().equals(requestMethodType)
-//                || HttpMethod.DELETE.name().equals(requestMethodType)) {
-//            sysLog.setRequestParam(argsArrayToString(joinPoint.getArgs()));
-//        } else {
-//            Map<?, ?> paramsMap = (Map<?, ?>) getRequest().getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
-//            sysLog.setRequestParam(paramsMap.toString());
-//        }
-//    }
+    private void getRequestParams(JoinPoint joinPoint, SysOperatorLogVoEntity sysLog) {
+        String requestMethodType = getRequest().getMethod();
+        System.out.println();
+        if (HttpMethod.PUT.name().equals(requestMethodType) || HttpMethod.POST.name().equals(requestMethodType)
+                || HttpMethod.DELETE.name().equals(requestMethodType)) {
+            sysLog.setRequestParam(argsArrayToString(joinPoint.getArgs()));
+        } else {
+            Map<?, ?> paramsMap = (Map<?, ?>) getRequest().getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
+            sysLog.setRequestParam(paramsMap.toString());
+        }
+    }
 
     /**
      * 参数拼装处理返回
