@@ -13,6 +13,7 @@
         <module>dt-common-core</module>
         <module>dt-common-log</module>
         <module>dt-common-tool</module>
+        <module>dt-common-jdbc</module>
     </modules>
 
     <artifactId>dt-cloud-common</artifactId>

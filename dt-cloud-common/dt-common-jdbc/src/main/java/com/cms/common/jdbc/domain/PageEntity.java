@@ -1,4 +1,4 @@
-package com.cms.modular.entity;
+package com.cms.common.jdbc.domain;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

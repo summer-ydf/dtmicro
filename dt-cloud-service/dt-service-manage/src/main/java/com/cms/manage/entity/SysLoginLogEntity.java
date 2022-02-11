@@ -3,7 +3,7 @@ package com.cms.manage.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.cms.modular.entity.BaseEntity;
+import com.cms.common.jdbc.domain.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;

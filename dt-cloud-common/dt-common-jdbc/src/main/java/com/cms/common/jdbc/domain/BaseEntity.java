@@ -1,4 +1,4 @@
-package com.cms.modular.entity;
+package com.cms.common.jdbc.domain;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;

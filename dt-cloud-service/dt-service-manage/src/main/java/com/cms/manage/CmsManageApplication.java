@@ -1,10 +1,8 @@
 package com.cms.manage;
 
 import com.alibaba.cloud.seata.feign.SeataFeignClientAutoConfiguration;
+import com.cms.common.jdbc.config.IdGeneratorConfig;
 import com.cms.common.tool.utils.SysCmsUtils;
-import com.cms.modular.config.IdGeneratorConfig;
-import com.cms.modular.config.PasswordEncoderConfig;
-import com.cms.modular.config.Swagger2Config;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -27,7 +25,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 @SpringBootApplication(exclude = {SeataFeignClientAutoConfiguration.class, DataSourceAutoConfiguration.class})
 @EnableAsync
 @EnableSwagger2
-@Import({Swagger2Config.class, IdGeneratorConfig.class, PasswordEncoderConfig.class})
+@Import({IdGeneratorConfig.class})
 @EnableTransactionManagement
 @EnableDiscoveryClient
 @MapperScan(basePackages = {"com.cms.manage.mapper"})

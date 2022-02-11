@@ -1,6 +1,6 @@
 package com.cms.manage.vo;
 
-import com.cms.modular.entity.PageEntity;
+import com.cms.common.jdbc.domain.PageEntity;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

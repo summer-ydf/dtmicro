@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.cms.common.jdbc.config.PasswordEncoderConfig,\
+  com.cms.common.jdbc.config.Swagger2Config

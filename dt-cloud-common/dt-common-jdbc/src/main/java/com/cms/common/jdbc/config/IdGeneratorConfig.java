@@ -1,10 +1,11 @@
-package com.cms.modular.config;
+package com.cms.common.jdbc.config;
 
 import com.baomidou.mybatisplus.core.incrementer.IdentifierGenerator;
 import com.github.yitter.contract.IdGeneratorOptions;
 import com.github.yitter.idgen.YitIdHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
 
@@ -12,6 +13,7 @@ import javax.annotation.PostConstruct;
  * 雪花算法主键生成策略配置
  * @author ydf Created by 2022/1/21 10:09
  */
+@Configuration
 public class IdGeneratorConfig implements IdentifierGenerator {
 
     private static final Logger logger = LoggerFactory.getLogger(IdGeneratorConfig.class);
