@@ -1,7 +1,7 @@
 package com.cms.auth.service.impl;
 
 import com.cms.auth.service.OlapRabbitMqService;
-import com.cms.auth.utils.CoreWebUtils;
+import com.cms.common.core.utils.CoreWebUtils;
 import com.cms.common.tool.domain.SecurityClaimsUserEntity;
 import com.cms.common.tool.domain.SysLoginLogVoEntity;
 import eu.bitwalker.useragentutils.Browser;

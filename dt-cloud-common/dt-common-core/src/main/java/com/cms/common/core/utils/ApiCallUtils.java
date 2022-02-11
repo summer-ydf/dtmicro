@@ -1,11 +1,11 @@
-package com.cms.auth.utils;
+package com.cms.common.core.utils;
 
 import com.alibaba.fastjson.JSON;
 import com.cms.common.tool.domain.SecurityClaimsUserEntity;
 import com.cms.common.tool.result.ResultEnum;
 import com.cms.common.tool.result.ResultException;
 import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 

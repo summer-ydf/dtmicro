@@ -1,9 +1,13 @@
 package com.cms.common.log.aspect;
 
 import com.alibaba.fastjson.JSON;
+import com.cms.common.core.utils.ApiCallUtils;
+import com.cms.common.core.utils.CoreWebUtils;
+import com.cms.common.core.utils.ServletUtils;
 import com.cms.common.log.annotation.Log;
 import com.cms.common.log.service.AsyncLogService;
 import com.cms.common.tool.constant.ConstantCommonCode;
+import com.cms.common.tool.domain.SecurityClaimsUserEntity;
 import com.cms.common.tool.domain.SysOperatorLogVoEntity;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
@@ -17,9 +21,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.HandlerMapping;
 
@@ -94,20 +95,20 @@ public class LogAspect {
                 // 操作状态默认正常
                 sysLog.setStatus(ConstantCommonCode.INT_ONE);
                 // 请求地址
-                sysLog.setRequestUrl(getRequest().getRequestURI());
+                sysLog.setRequestUrl(ServletUtils.getRequest().getRequestURI());
                 // 请求IP
-                //sysLog.setRequestIp(IpAddressUtils.getIpAddr(getRequest()));
+                sysLog.setRequestIp(CoreWebUtils.getIpAddress(ServletUtils.getRequest()));
                 // 响应返回参数
                 sysLog.setResponseParam(JSON.toJSONString(resultValue));
                 // 操作用户
-//                SysUserEntity sysUserEntity = (SysUserEntity) authenticationInfoService.getAuthentication();
-//                sysLog.setRequestUserName(sysUserEntity.getUsername());
+                SecurityClaimsUserEntity securityClaimsUserEntity = ApiCallUtils.securityClaimsUser(ServletUtils.getRequest());
+                sysLog.setRequestUserName(securityClaimsUserEntity.getUsername());
                 // 请求方法完整名称
                 String className = joinPoint.getTarget().getClass().getName();
                 String methodName = joinPoint.getSignature().getName();
                 sysLog.setRequestMethodName(className + "." + methodName + "()");
                 // 请求方式
-                sysLog.setRequestMethodType(getRequest().getMethod());
+                sysLog.setRequestMethodType(ServletUtils.getRequest().getMethod());
                 if (!ObjectUtils.isEmpty(e)) {
                     // 操作异常
                     sysLog.setStatus(ConstantCommonCode.INT_TWO);
@@ -144,13 +145,13 @@ public class LogAspect {
      * @param sysLog 操作日志对象
      */
     private void getRequestParams(JoinPoint joinPoint, SysOperatorLogVoEntity sysLog) {
-        String requestMethodType = getRequest().getMethod();
+        String requestMethodType = ServletUtils.getRequest().getMethod();
         System.out.println();
         if (HttpMethod.PUT.name().equals(requestMethodType) || HttpMethod.POST.name().equals(requestMethodType)
                 || HttpMethod.DELETE.name().equals(requestMethodType)) {
             sysLog.setRequestParam(argsArrayToString(joinPoint.getArgs()));
         } else {
-            Map<?, ?> paramsMap = (Map<?, ?>) getRequest().getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
+            Map<?, ?> paramsMap = (Map<?, ?>) ServletUtils.getRequest().getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
             sysLog.setRequestParam(paramsMap.toString());
         }
     }
@@ -180,18 +181,6 @@ public class LogAspect {
      */
     public boolean isFilterObject(final Object object) {
         return object instanceof MultipartFile || object instanceof HttpServletRequest || object instanceof HttpServletResponse;
-    }
-
-    /**
-     * 获取request
-     */
-    public static HttpServletRequest getRequest() {
-        return getRequestAttributes().getRequest();
-    }
-
-    public static ServletRequestAttributes getRequestAttributes() {
-        RequestAttributes attributes = RequestContextHolder.getRequestAttributes();
-        return (ServletRequestAttributes) attributes;
     }
 
 }

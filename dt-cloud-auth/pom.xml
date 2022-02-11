@@ -63,6 +63,12 @@
             <artifactId>dt-common-tool</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <!-- Cloud Common core -->
+        <dependency>
+            <groupId>com.dt</groupId>
+            <artifactId>dt-common-core</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
         <!-- Cloud Common jdbc -->
         <dependency>
             <groupId>com.dt</groupId>

@@ -3,7 +3,7 @@ package com.cms.auth.service;
 import com.api.manage.feign.OauthFeignClientService;
 import com.cms.auth.domain.SecurityClaimsParams;
 import com.cms.auth.domain.SecurityUser;
-import com.cms.auth.utils.CoreWebUtils;
+import com.cms.common.core.utils.CoreWebUtils;
 import com.cms.common.tool.domain.SecurityClaimsUserEntity;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.common.tool.utils.SysCmsUtils;

@@ -2,7 +2,7 @@ package com.cms.auth.config.handler;
 
 import com.cms.auth.config.exception.CmsOAuth2Exception;
 import com.cms.auth.domain.SecurityClaimsParams;
-import com.cms.auth.utils.CoreWebUtils;
+import com.cms.common.core.utils.CoreWebUtils;
 import com.cms.common.tool.constant.ConstantCommonCode;
 import com.cms.common.tool.utils.SysCmsUtils;
 import org.apache.commons.lang3.math.NumberUtils;

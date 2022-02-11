@@ -1,7 +1,7 @@
 package com.cms.auth.controller;
 
 import com.cms.auth.service.OlapRabbitMqService;
-import com.cms.auth.utils.ApiCallUtils;
+import com.cms.common.core.utils.ApiCallUtils;
 import com.cms.common.tool.domain.SecurityClaimsUserEntity;
 import com.cms.common.tool.result.ResultException;
 import com.cms.common.tool.result.ResultUtil;

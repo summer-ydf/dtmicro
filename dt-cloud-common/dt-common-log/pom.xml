@@ -17,29 +17,22 @@
     </properties>
 
     <dependencies>
-        <!-- Spring Web -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
-        </dependency>
-        <!-- Java Servlet -->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-        </dependency>
-        <!--Aop切面-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-aop</artifactId>
-        </dependency>
         <!-- Cloud Common tool -->
         <dependency>
             <groupId>com.dt</groupId>
             <artifactId>dt-common-tool</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <!-- Cloud Common tool -->
+        <dependency>
+            <groupId>com.dt</groupId>
+            <artifactId>dt-common-core</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <!-- Cloud api manage -->
+        <dependency>
+            <groupId>com.dt</groupId>
+            <artifactId>dt-api-manage</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
