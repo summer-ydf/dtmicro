@@ -50,5 +50,6 @@ public class SysRoleEntity extends BaseEntity implements Serializable {
     private Date endTime;
 
     @ApiModelProperty(value = "权限集合")
+    @TableField(exist = false)
     private List<SysPermissionEntity> children;
 }
