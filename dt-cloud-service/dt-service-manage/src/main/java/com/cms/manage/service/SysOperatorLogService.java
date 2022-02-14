@@ -2,6 +2,8 @@ package com.cms.manage.service;
 
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.cms.common.tool.domain.SysOperatorLogVoEntity;
+import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.entity.SysOperatorLogEntity;
 
 /**
@@ -9,5 +11,5 @@ import com.cms.manage.entity.SysOperatorLogEntity;
  */
 public interface SysOperatorLogService extends IService<SysOperatorLogEntity> {
 
-    void saveOperatorLog(SysOperatorLogEntity sysLog);
+    ResultUtil<SysOperatorLogVoEntity> saveOperatorLog(SysOperatorLogEntity sysOperatorLogEntity);
 }

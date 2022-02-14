@@ -2,6 +2,8 @@ package com.cms.manage.service.impl;
 
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.cms.common.tool.domain.SysOperatorLogVoEntity;
+import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.entity.SysOperatorLogEntity;
 import com.cms.manage.mapper.SysOperatorLogMapper;
 import com.cms.manage.service.SysOperatorLogService;
@@ -20,9 +22,9 @@ public class SysOperatorLogServiceImpl extends ServiceImpl<SysOperatorLogMapper,
 
     @Async("sysTaskExecutor")
     @Override
-    public void saveOperatorLog(SysOperatorLogEntity sysLog) {
-        this.baseMapper.insert(sysLog);
-        log.info("===============操作日志成功写入数据库===============");
+    public ResultUtil<SysOperatorLogVoEntity> saveOperatorLog(SysOperatorLogEntity sysOperatorLogEntity) {
+        int insert = this.baseMapper.insert(sysOperatorLogEntity);
+        return insert > 0 ? ResultUtil.success() : ResultUtil.error();
     }
 
 }

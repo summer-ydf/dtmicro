@@ -35,11 +35,8 @@ public class FeignCmsClientController implements OauthFeignClientService, LogFei
 
     @Override
     public ResultUtil<SysOperatorLogVoEntity> saveOprLog(SysOperatorLogVoEntity sysOperatorLogVoEntity) {
-        System.out.println("添加数据成功===============");
         SysOperatorLogEntity sysOperatorLogEntity = new SysOperatorLogEntity();
         BeanUtils.copyProperties(sysOperatorLogVoEntity,sysOperatorLogEntity);
-        System.out.println(sysOperatorLogEntity);
-//        return sysOperatorLogService.saveOperatorLog(sysOperatorLogVoEntity);
-        return ResultUtil.success();
+        return sysOperatorLogService.saveOperatorLog(sysOperatorLogEntity);
     }
 }

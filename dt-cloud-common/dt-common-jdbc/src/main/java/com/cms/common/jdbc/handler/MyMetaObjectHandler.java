@@ -1,4 +1,4 @@
-package com.cms.manage.config.mybatisplus.handler;
+package com.cms.common.jdbc.handler;
 
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import lombok.extern.apachecommons.CommonsLog;
@@ -9,8 +9,7 @@ import java.util.Date;
 
 /**
  * mybatis-plus 自动填充配置
- * @author DT
- * @date 2021/6/4 23:16
+ * @author ydf Created by 2022/2/14 10:07
  */
 @CommonsLog
 @Component

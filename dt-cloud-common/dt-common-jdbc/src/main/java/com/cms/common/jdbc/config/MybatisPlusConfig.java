@@ -1,21 +1,16 @@
-package com.cms.manage.config.mybatisplus.config;
-
+package com.cms.common.jdbc.config;
 
 import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.core.config.GlobalConfig;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
-import com.cms.manage.config.mybatisplus.handler.MyMetaObjectHandler;
+import com.cms.common.jdbc.handler.MyMetaObjectHandler;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * mybatis-plus 插件配置
- * @author DT
- * @date 2021/6/4 22:44
+ * @author ydf Created by 2022/2/14 10:06
  */
-@Configuration
-//@MapperScan("com.dt.app.api.*.mapper")
 public class MybatisPlusConfig {
 
     /**
@@ -38,5 +33,4 @@ public class MybatisPlusConfig {
         globalConfig.setMetaObjectHandler(myMetaObjectHandler);
         return globalConfig;
     }
-
 }

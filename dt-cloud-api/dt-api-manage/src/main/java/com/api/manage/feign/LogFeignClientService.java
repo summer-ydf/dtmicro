@@ -6,7 +6,7 @@ import com.cms.common.tool.result.ResultUtil;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import static com.api.common.ApiConstants.APPLICATION_MANAGE_API_AFFIX;
 import static com.api.common.ApiConstants.APPLICATION_NAME_MANAGE;
@@ -19,5 +19,5 @@ import static com.api.common.ApiConstants.APPLICATION_NAME_MANAGE;
 public interface LogFeignClientService {
 
     @PostMapping(value = APPLICATION_MANAGE_API_AFFIX + "/saveOprLog")
-    ResultUtil<SysOperatorLogVoEntity> saveOprLog(@RequestParam SysOperatorLogVoEntity sysOperatorLogVoEntity);
+    ResultUtil<SysOperatorLogVoEntity> saveOprLog(@RequestBody SysOperatorLogVoEntity sysOperatorLogVoEntity);
 }
