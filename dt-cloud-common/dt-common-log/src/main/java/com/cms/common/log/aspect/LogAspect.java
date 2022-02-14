@@ -9,6 +9,7 @@ import com.cms.common.log.service.AsyncLogService;
 import com.cms.common.tool.constant.ConstantCommonCode;
 import com.cms.common.tool.domain.SecurityClaimsUserEntity;
 import com.cms.common.tool.domain.SysOperatorLogVoEntity;
+import com.cms.common.tool.result.ResultException;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -101,8 +102,14 @@ public class LogAspect {
                 // 响应返回参数
                 sysLog.setResponseParam(JSON.toJSONString(resultValue));
                 // 操作用户
-                SecurityClaimsUserEntity securityClaimsUserEntity = ApiCallUtils.securityClaimsUser(ServletUtils.getRequest());
-                sysLog.setRequestUserName(securityClaimsUserEntity.getUsername());
+                SecurityClaimsUserEntity securityClaimsUserEntity = null;
+                try {
+                    securityClaimsUserEntity = ApiCallUtils.securityClaimsUser(ServletUtils.getRequest());
+                    sysLog.setRequestUserName(securityClaimsUserEntity.getUsername());
+                } catch (ResultException ex) {
+                    sysLog.setRequestUserName("未知用户");
+                    ex.printStackTrace();
+                }
                 // 请求方法完整名称
                 String className = joinPoint.getTarget().getClass().getName();
                 String methodName = joinPoint.getSignature().getName();
