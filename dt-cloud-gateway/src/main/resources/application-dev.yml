@@ -33,7 +33,14 @@ spring:
       globalcors:
         cors-configurations:
           '[/**]':
-            allowCredentials: true
-            allowedOriginPatterns: "*"
-            allowedMethods: "*"
-            allowedHeaders: "*"
+            allow-credentials: true
+            allowed-origins: "*"
+            allowed-headers: "*"
+            allowed-methods:
+              - POST
+              - GET
+              - PUT
+              - OPTIONS
+              - DELETE
+              - PATCH
+            max-age: 3600
