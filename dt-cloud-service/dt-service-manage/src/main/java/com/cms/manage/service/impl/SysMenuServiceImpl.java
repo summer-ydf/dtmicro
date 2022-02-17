@@ -1,17 +1,20 @@
 package com.cms.manage.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.entity.SysMenuEntity;
 import com.cms.manage.mapper.SysMenuMapper;
 import com.cms.manage.service.SysMenuService;
-import com.cms.manage.vo.SysMenuMetaVo;
-import com.cms.manage.vo.SysMenuVo;
-import org.apache.commons.lang.StringUtils;
+import lombok.SneakyThrows;
+import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
 
-import java.util.ArrayList;
+import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -20,27 +23,20 @@ import java.util.stream.Collectors;
 @Service
 public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity> implements SysMenuService {
 
+    @SneakyThrows
     @Override
-    public ResultUtil<List<SysMenuVo>> listOperatorMenu(String userId) {
-        List<SysMenuVo> menuVoList = new ArrayList<>();
+    public ResultUtil<Map<String,Object>> listOperatorMenu(String userId) {
+        Map<String,Object> objectMap = new HashMap<>(2);
         List<SysMenuEntity> sysOperatorMenuList = this.baseMapper.findOperatorMenuByUserId(userId);
         List<SysMenuEntity> buildTreeData = buildTree(sysOperatorMenuList, "0");
         List<SysMenuEntity> menuList = buildTreeData.stream().filter(u -> "menu".equals(u.getType())).collect(Collectors.toList());
-        System.out.println("过滤菜单数据->>>"+menuList);
-        if(!menuList.isEmpty()) {
-            menuList.forEach(d -> {
-                SysMenuVo menuVo = new SysMenuVo();
-                menuVo.setName(d.getName());
-                menuVo.setPath(d.getPath());
-                //menuVo.setChildren();
-                menuVo.setMeta(SysMenuMetaVo.builder().title(d.getTitle()).icon(d.getIcon()).type(d.getType()).build());
-                if(StringUtils.isNotBlank(d.getComponent())) {
-                    menuVo.setComponent(d.getComponent());
-                }
-                menuVoList.add(menuVo);
-            });
-        }
-        return ResultUtil.success(menuVoList);
+        // 获取菜单数据
+        objectMap.put("menu", menuList);
+        // 获取按钮权限数据
+        File permissionsJsonFile = ResourceUtils.getFile("classpath:permissions.json");
+        String permissionsJsonInfo = FileUtils.readFileToString(permissionsJsonFile);
+        objectMap.put("permissions",JSON.parseArray(permissionsJsonInfo));
+        return ResultUtil.success(objectMap);
     }
 
     public static List<SysMenuEntity> buildTree(List<SysMenuEntity> list, String pid) {
