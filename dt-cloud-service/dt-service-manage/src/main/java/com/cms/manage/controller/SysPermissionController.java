@@ -1,11 +1,14 @@
 package com.cms.manage.controller;
 
 
+import com.alibaba.fastjson.JSON;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.entity.SysPermissionEntity;
 import com.cms.manage.service.SysPermissionService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.io.FileUtils;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,7 +18,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -24,7 +31,7 @@ import java.util.List;
  */
 @Api(tags = "菜单权限管理API")
 @RestController
-@RequestMapping("/permission")
+@RequestMapping("/api/permission")
 public class SysPermissionController {
 
     private final SysPermissionService sysPermissionService;
@@ -67,5 +74,34 @@ public class SysPermissionController {
     @DeleteMapping("delete/{id}")
     public ResultUtil<SysPermissionEntity> delete(@PathVariable Long id) {
         return sysPermissionService.deletePermissionById(id);
+    }
+
+    @ApiOperation(value = "登录测试")
+    @PostMapping("/login")
+    public ResultUtil<?> login() {
+        Map<String,Object> objectMap = new HashMap<>(2);
+        objectMap.put("token","SCUI.Administrator.Auth");
+        Map<String,Object> map = new HashMap<>(2);
+        map.put("dashboard",0);
+        map.put("userId","1");
+        map.put("userName","Admin");
+        map.put("role",new String[] {"SA", "admin", "Auditor"});
+        objectMap.put("userInfo",map);
+        return ResultUtil.success(objectMap);
+    }
+
+    @ApiOperation(value = "根据操作员ID获取菜单以及按钮权限信息")
+    @GetMapping("/menu/{userId}")
+    public ResultUtil<?> getSystemMenu(@PathVariable String userId) throws IOException {
+        Map<String,Object> objectMap = new HashMap<>(2);
+        // 获取菜单数据
+        File menuJsonFile = ResourceUtils.getFile("classpath:menu.json");
+        String menuJsonInfo = FileUtils.readFileToString(menuJsonFile);
+        objectMap.put("menu",JSON.parseArray(menuJsonInfo));
+        // 获取按钮权限数据
+        File permissionsJsonFile = ResourceUtils.getFile("classpath:permissions.json");
+        String permissionsJsonInfo = FileUtils.readFileToString(permissionsJsonFile);
+        objectMap.put("permissions",JSON.parseArray(permissionsJsonInfo));
+        return ResultUtil.success(objectMap);
     }
 }

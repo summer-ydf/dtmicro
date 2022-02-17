@@ -1,0 +1,113 @@
+[
+  {
+    "name": "home",
+    "path": "/home",
+    "meta": {
+      "title": "首页",
+      "icon": "el-icon-eleme-filled",
+      "type": "menu"
+    },
+    "children": [
+      {
+        "name": "dashboard",
+        "path": "/dashboard",
+        "meta": {
+          "title": "控制台",
+          "icon": "el-icon-menu",
+          "affix": true
+        },
+        "component": "home"
+      },
+      {
+        "name": "userCenter",
+        "path": "/usercenter",
+        "meta": {
+          "title": "个人信息",
+          "icon": "el-icon-user"
+        },
+        "component": "userCenter"
+      }
+    ]
+  },
+  {
+    "name": "setting",
+    "path": "/setting",
+    "meta": {
+      "title": "配置",
+      "icon": "el-icon-setting",
+      "type": "menu"
+    },
+    "children": [
+      {
+        "path": "/setting/system",
+        "name": "system",
+        "meta": {
+          "title": "系统设置",
+          "icon": "el-icon-tools",
+          "type": "menu"
+        },
+        "component": "setting/system"
+      },
+      {
+        "path": "/setting/user",
+        "name": "user",
+        "meta": {
+          "title": "用户管理",
+          "icon": "el-icon-user-filled",
+          "type": "menu"
+        },
+        "component": "setting/user"
+      },
+      {
+        "path": "/setting/role",
+        "name": "role",
+        "meta": {
+          "title": "角色管理",
+          "icon": "el-icon-notebook",
+          "type": "menu"
+        },
+        "component": "setting/role"
+      },
+      {
+        "path": "/setting/dic",
+        "name": "dic",
+        "meta": {
+          "title": "字典管理",
+          "icon": "el-icon-document",
+          "type": "menu"
+        },
+        "component": "setting/dic"
+      },
+      {
+        "path": "/setting/menu",
+        "name": "settingMenu",
+        "meta": {
+          "title": "菜单管理",
+          "icon": "el-icon-fold",
+          "type": "menu"
+        },
+        "component": "setting/menu"
+      },
+      {
+        "path": "/setting/data",
+        "name": "data",
+        "meta": {
+          "title": "一级菜单",
+          "icon": "el-icon-histogram",
+          "type": "menu"
+        },
+        "children": [
+          {
+            "path": "/setting/other/A",
+            "name": "A",
+            "meta": {
+              "title": "二级菜单",
+              "type": "menu"
+            },
+            "component": "setting/other/A"
+          }
+        ]
+      }
+    ]
+  }
+]

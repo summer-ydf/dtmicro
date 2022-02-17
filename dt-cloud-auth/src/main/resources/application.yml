@@ -48,4 +48,6 @@ secure:
       - /anonymous/valid_code/**
       - /rsa/publicKey
       - /hello
+      - /login.html
+      - /favicon.ico
 
