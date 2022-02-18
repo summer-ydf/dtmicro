@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.cms.common.jdbc.domain.BaseEntity;
+import com.cms.manage.vo.SysMenuMeta;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -62,6 +63,10 @@ public class SysMenuEntity extends BaseEntity implements Serializable {
 
     @ApiModelProperty(value = "菜单类型：菜单->>>menu 按钮->>>button")
     private String type;
+
+    @ApiModelProperty(value = "菜单元数据")
+    @TableField(exist = false)
+    private SysMenuMeta meta;
 
     @ApiModelProperty(value = "子节点集合")
     @TableField(exist = false)

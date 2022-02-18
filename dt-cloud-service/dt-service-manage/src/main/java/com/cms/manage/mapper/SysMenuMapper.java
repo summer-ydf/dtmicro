@@ -10,5 +10,5 @@ import java.util.List;
  */
 public interface SysMenuMapper extends BaseMapper<SysMenuEntity> {
 
-    List<SysMenuEntity> findOperatorMenuByUserId(String userId);
+    List<SysMenuEntity> findOperatorMenuByUserId(String userId,Boolean flag);
 }

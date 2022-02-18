@@ -51,8 +51,8 @@ public class ConstantCommonCode {
     /**
      * 验证码宽高常量
      */
-    public static final Integer WIDTH = 200;
-    public static final Integer HEIGHT = 55;
+    public static final Integer WIDTH = 180;
+    public static final Integer HEIGHT = 45;
 
     /**
      * 图片后缀名称
