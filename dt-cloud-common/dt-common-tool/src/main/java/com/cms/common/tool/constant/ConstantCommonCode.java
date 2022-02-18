@@ -121,8 +121,8 @@ public class ConstantCommonCode {
     public static final String CredentialsNonExpired = "User credentials have expired";
 
     // 加密16位秘钥
-    public static final String TOKEN_CLAIMS_PWD = "hJ6(vD2{hP1#fM2&";
-    public static final String TOKEN_CLAIMS_IVS = "iC2!qD3#eX1;dT0&";
+    public static final String TOKEN_CLAIMS_PWD = "CMDDTYDF&WY196KJ";
+    public static final String TOKEN_CLAIMS_IVS = "CMDDTYDF&WY196KJ";
     public static final String GATEWAY_AUTHORIZATION = "Cms-Gateway-Authorization";
 
     // RabbitMQ相关配置

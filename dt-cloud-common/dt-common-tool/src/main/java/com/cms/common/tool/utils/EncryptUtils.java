@@ -1,22 +1,18 @@
 package com.cms.common.tool.utils;
 
-import com.alibaba.fastjson.JSON;
 import org.apache.commons.codec.binary.Base64;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
+import static com.cms.common.tool.constant.ConstantCommonCode.TOKEN_CLAIMS_IVS;
+import static com.cms.common.tool.constant.ConstantCommonCode.TOKEN_CLAIMS_PWD;
+
 /**
  * @author ydf Created by 2022/1/22 11:19
  */
 public final class EncryptUtils {
-
-    /**
-     * 使用AES-128-CBC加密模式，key需要为16位,key和iv可以相同，也可以不同!
-     */
-    private static final String KEY = "CMDDTYDF&WY196KJ";
-    private static final String IV = "CMDDTYDF&WY196KJ";
 
     /**
      * 算法/模式/补码方式
@@ -40,8 +36,8 @@ public final class EncryptUtils {
             }
             byte[] plaintext = new byte[plaintextLength];
             System.arraycopy(dataBytes, 0, plaintext, 0, dataBytes.length);
-            SecretKeySpec keySpec = new SecretKeySpec(KEY.getBytes(), AES_ENC);
-            IvParameterSpec ivSpec = new IvParameterSpec(IV.getBytes());
+            SecretKeySpec keySpec = new SecretKeySpec(TOKEN_CLAIMS_PWD.getBytes(), AES_ENC);
+            IvParameterSpec ivSpec = new IvParameterSpec(TOKEN_CLAIMS_IVS.getBytes());
             cipher.init(Cipher.ENCRYPT_MODE, keySpec, ivSpec);
             byte[] encrypted = cipher.doFinal(plaintext);
             return new Base64().encodeToString(encrypted);
@@ -60,8 +56,8 @@ public final class EncryptUtils {
         try {
             byte[] encrypted1 = new Base64().decode(data);
             Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM_CBC);
-            SecretKeySpec keySpec = new SecretKeySpec(KEY.getBytes(), AES_ENC);
-            IvParameterSpec ivSpec = new IvParameterSpec(IV.getBytes());
+            SecretKeySpec keySpec = new SecretKeySpec(TOKEN_CLAIMS_PWD.getBytes(), AES_ENC);
+            IvParameterSpec ivSpec = new IvParameterSpec(TOKEN_CLAIMS_IVS.getBytes());
             cipher.init(Cipher.DECRYPT_MODE, keySpec, ivSpec);
             byte[] original = cipher.doFinal(encrypted1);
             return new String(original).trim();
