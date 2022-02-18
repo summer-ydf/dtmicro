@@ -69,8 +69,8 @@ public class TokenFilter implements GlobalFilter, Ordered {
             String claims = MapUtils.getString(additionalInformation,"claims");
             System.out.println("token->>>"+token);
             System.out.println("claims->>>"+claims);
-            String deClaims = EncryptUtils.decryptAES_CBC(claims,TOKEN_CLAIMS_PWD,TOKEN_CLAIMS_IVS, EncryptUtils.EncodeType.Base64);
-            System.out.println("deClaims->>>"+deClaims);
+            String deClaims = EncryptUtils.desEncrypt(claims);
+            System.out.println("解密deClaims->>>"+deClaims);
             ServerHttpRequest request = exchange.getRequest().mutate().header(GATEWAY_AUTHORIZATION, deClaims).build();
             //将现在的request 变成 exchange对象
             return chain.filter(exchange.mutate().request(request).build());

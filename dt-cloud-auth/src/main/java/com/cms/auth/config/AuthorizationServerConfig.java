@@ -18,7 +18,6 @@ import com.cms.common.tool.domain.SecurityClaimsUserEntity;
 import com.cms.common.tool.result.ResultEnum;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.common.tool.utils.EncryptUtils;
-import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -53,9 +52,6 @@ import java.security.KeyPair;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.cms.common.tool.constant.ConstantCommonCode.TOKEN_CLAIMS_IVS;
-import static com.cms.common.tool.constant.ConstantCommonCode.TOKEN_CLAIMS_PWD;
 
 /**
  * OAuth2认证服务器配置
@@ -247,8 +243,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
             SecurityClaimsUserEntity claimsUser = (SecurityClaimsUserEntity) authentication.getPrincipal();
             String tokenId = accessToken.getValue();
             final Map<String, Object> additionalInfo = new HashMap<>(2);
-            String claims = Base64.encodeBase64String(JSON.toJSONBytes(claimsUser.jwtClaims(tokenId)));
-            additionalInfo.put("claims", EncryptUtils.encryptAES_CBC(claims,TOKEN_CLAIMS_PWD,TOKEN_CLAIMS_IVS, EncryptUtils.EncodeType.Base64));
+            Map<String, Object> objectMap = claimsUser.jwtClaims(tokenId);
+            additionalInfo.put("claims", EncryptUtils.encrypt(String.valueOf(objectMap)));
             // 注意添加的额外信息，最好不要和已有的json对象中的key重名，容易出现错误
             //additionalInfo.put("authorities", user.getAuthorities());
             ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);

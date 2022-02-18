@@ -1,104 +1,70 @@
 package com.cms.common.tool.utils;
 
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.codec.binary.Base64;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+
+import static com.cms.common.tool.constant.ConstantCommonCode.TOKEN_CLAIMS_IVS;
+import static com.cms.common.tool.constant.ConstantCommonCode.TOKEN_CLAIMS_PWD;
 
 /**
  * @author ydf Created by 2022/1/22 11:19
  */
 public final class EncryptUtils {
 
-    public enum EncodeType {
-        Base64,Hex
-    }
-
-    private final static String AES = "AES";
-    private final static String AES_Padding = "AES/CBC/PKCS5Padding";
-
-    public static byte[] hex2byte(String strhex) {
-        if (strhex == null) {
-            return null;
-        }
-        int l = strhex.length();
-        if (l % 2 == 1) {
-            return null;
-        }
-        byte[] b = new byte[l / 2];
-        for (int i = 0; i != l / 2; i++) {
-            b[i] = (byte) Integer.parseInt(strhex.substring(i * 2, i * 2 + 2), 16);
-        }
-        return b;
-    }
-
-    public static String byte2hex(byte[] b) {
-        String hs = "";
-        String stmp = "";
-        for (int n = 0; n < b.length; n++) {
-            stmp = (Integer.toHexString(b[n] & 0XFF));
-            if (stmp.length() == 1) {
-                hs = hs + "0" + stmp;
-            } else {
-                hs = hs + stmp;
-            }
-        }
-        return hs.toUpperCase();
-    }
+    /**
+     * 算法/模式/补码方式
+     */
+    private static final String CIPHER_ALGORITHM_CBC = "AES/CBC/NoPadding";
+    private static final String AES_ENC = "AES";
 
     /**
-     * AES CBC加密
-     *
+     * 加密方法
+     * @param data 要加密的数据
+     * @return     加密的结果
      */
-    public static String encryptAES_CBC(String content, String password,String ivs,EncodeType encodeType) {
-        byte[] raw = ArrayUtils.subarray(password.getBytes(),0,16);
-        byte[] ivs_aa = ArrayUtils.subarray(ivs.getBytes(),0,16);
-        SecretKeySpec skeySpec = new SecretKeySpec(raw, AES);
-        Cipher cipher = null;
+    public static String encrypt(String data){
         try {
-            cipher = Cipher.getInstance(AES_Padding);
-            IvParameterSpec iv = new IvParameterSpec(ivs_aa);
-            cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
-            if(encodeType== EncodeType.Base64){
-                return org.apache.commons.codec.binary.Base64.encodeBase64String(cipher.doFinal(content.getBytes("UTF-8")));
-            }else if(encodeType== EncodeType.Hex){
-                return byte2hex(cipher.doFinal(content.getBytes()));
+            Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM_CBC);
+            int blockSize = cipher.getBlockSize();
+            byte[] dataBytes = data.getBytes();
+            int plaintextLength = dataBytes.length;
+            if (plaintextLength % blockSize != 0) {
+                plaintextLength = plaintextLength + (blockSize - (plaintextLength % blockSize));
             }
-            return byte2hex(cipher.doFinal(content.getBytes()));
+            byte[] plaintext = new byte[plaintextLength];
+            System.arraycopy(dataBytes, 0, plaintext, 0, dataBytes.length);
+            SecretKeySpec keySpec = new SecretKeySpec(TOKEN_CLAIMS_PWD.getBytes(), AES_ENC);
+            IvParameterSpec ivSpec = new IvParameterSpec(TOKEN_CLAIMS_IVS.getBytes());
+            cipher.init(Cipher.ENCRYPT_MODE, keySpec, ivSpec);
+            byte[] encrypted = cipher.doFinal(plaintext);
+            return new Base64().encodeToString(encrypted);
         } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
-        return null;
     }
 
     /**
-     *  AES CBC解密
-     *
+     * 解密方法
+     * @param data 解密的数据
+     * @return     解密的结果
      */
-    public static String decryptAES_CBC(String content, String password,String ivs,EncodeType encodeType) {
-        if(StringUtils.isEmpty(content)){
-            return null;
-        }
+    public static String desEncrypt(String data) {
         try {
-            byte[] raw = ArrayUtils.subarray(password.getBytes(),0,16);
-            byte[] ivs_aa = ArrayUtils.subarray(ivs.getBytes(),0,16);
-            SecretKeySpec skeySpec = new SecretKeySpec(raw, AES);
-            Cipher cipher = Cipher.getInstance(AES_Padding);
-            IvParameterSpec iv = new IvParameterSpec(ivs_aa);
-            cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
-            byte[] encrypted1=null;
-            if(encodeType== EncodeType.Base64){
-                encrypted1 = org.apache.commons.codec.binary.Base64.decodeBase64(content);
-            }else if(encodeType== EncodeType.Hex){
-                encrypted1 = hex2byte(content);
-            }
+            byte[] encrypted1 = new Base64().decode(data);
+            Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM_CBC);
+            SecretKeySpec keySpec = new SecretKeySpec(TOKEN_CLAIMS_PWD.getBytes(), AES_ENC);
+            IvParameterSpec ivSpec = new IvParameterSpec(TOKEN_CLAIMS_IVS.getBytes());
+            cipher.init(Cipher.DECRYPT_MODE, keySpec, ivSpec);
             byte[] original = cipher.doFinal(encrypted1);
-            return new String(original, "UTF-8");
+            return new String(original).trim();
         } catch (Exception e) {
-            SysCmsUtils.log.info("解密错误",e);
+            e.printStackTrace();
+            return null;
         }
-        return null;
     }
 
 }
