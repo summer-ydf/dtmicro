@@ -17,4 +17,8 @@
         ORDER BY m.sort ASC
     </select>
 
+    <select id="listMenu" resultType="com.cms.manage.entity.SysMenuEntity">
+        SELECT DISTINCT m.* FROM sys_menu m ORDER BY m.sort ASC
+    </select>
+
 </mapper>

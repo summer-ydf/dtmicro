@@ -8,6 +8,7 @@ import com.cms.manage.service.SysMenuService;
 import com.cms.manage.vo.SysMenuMeta;
 import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,8 +22,18 @@ import java.util.stream.Collectors;
 @Service
 public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity> implements SysMenuService {
 
+    @Override
+    @Transactional(readOnly = true)
+    public ResultUtil<List<SysMenuEntity>> listMenu() {
+        // 获取菜单数据
+        List<SysMenuEntity> sysMenuEntityList = this.baseMapper.listMenu();
+        List<SysMenuEntity> buildTreeData = buildTree(sysMenuEntityList, "0");
+        return ResultUtil.success(buildTreeData);
+    }
+
     @SneakyThrows
     @Override
+    @Transactional(readOnly = true)
     public ResultUtil<Map<String,Object>> listOperatorMenu(String userId) {
         Map<String,Object> objectMap = new HashMap<>(2);
         // 获取菜单数据
