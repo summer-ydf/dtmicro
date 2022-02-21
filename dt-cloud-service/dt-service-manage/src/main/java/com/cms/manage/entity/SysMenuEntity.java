@@ -64,6 +64,9 @@ public class SysMenuEntity extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "菜单类型：菜单->>>menu 按钮->>>button")
     private String type;
 
+    @ApiModelProperty(value = "菜单排序")
+    private Integer sort;
+
     @ApiModelProperty(value = "菜单元数据")
     @TableField(exist = false)
     private SysMenuMeta meta;

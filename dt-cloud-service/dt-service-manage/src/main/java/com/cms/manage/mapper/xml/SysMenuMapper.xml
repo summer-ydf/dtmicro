@@ -14,7 +14,7 @@
         <if test='flag == true'>
             AND m.type = "menu"
         </if>
-        ORDER BY m.order_num ASC
+        ORDER BY m.sort ASC
     </select>
 
 </mapper>
