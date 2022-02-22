@@ -30,6 +30,4 @@ public class SysMenuMeta implements Serializable {
     @ApiModelProperty(value = "隐藏面包屑")
     private Boolean hiddenBreadcrumb = false;
 
-    @ApiModelProperty(value = "颜色")
-    private String color;
 }

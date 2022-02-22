@@ -25,4 +25,11 @@
         SELECT MAX(sort) FROM sys_menu
     </select>
 
+    <delete id="deleteBath" parameterType="java.util.Map">
+        DELETE FROM sys_menu WHERE id IN
+        <foreach collection="ids" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
 </mapper>

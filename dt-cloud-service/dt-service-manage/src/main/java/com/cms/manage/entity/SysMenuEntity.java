@@ -37,9 +37,6 @@ public class SysMenuEntity extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "父节点ID (0为顶级菜单)")
     private String parentId;
 
-    @ApiModelProperty(value = "父节点名称")
-    private String parentName;
-
     @ApiModelProperty(value = "路由地址（以/开头）")
     private String path;
 
@@ -75,9 +72,6 @@ public class SysMenuEntity extends BaseEntity implements Serializable {
 
     @ApiModelProperty(value = "隐藏面包屑")
     private Boolean hiddenBreadcrumb = false;
-
-    @ApiModelProperty(value = "颜色")
-    private String color;
 
     @ApiModelProperty(value = "菜单元数据")
     @TableField(exist = false)

@@ -1,5 +1,6 @@
 package com.cms.manage.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.entity.SysMenuEntity;
@@ -7,6 +8,8 @@ import com.cms.manage.mapper.SysMenuMapper;
 import com.cms.manage.service.SysMenuService;
 import com.cms.manage.vo.SysMenuMeta;
 import lombok.SneakyThrows;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +24,9 @@ import java.util.stream.Collectors;
  */
 @Service
 public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity> implements SysMenuService {
+
+    @Autowired
+    private SysMenuService sysMenuService;
 
     @Override
     @Transactional(readOnly = true)
@@ -48,13 +54,39 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ResultUtil<SysMenuEntity> saveMenu(SysMenuEntity sysMenuEntity) {
+        sysMenuEntity.setTitle(sysMenuEntity.getMeta().getTitle());
+        sysMenuEntity.setIcon(sysMenuEntity.getMeta().getIcon());
+        sysMenuEntity.setType(sysMenuEntity.getMeta().getType());
+        sysMenuEntity.setHidden(sysMenuEntity.getMeta().getHidden());
+        sysMenuEntity.setHiddenBreadcrumb(sysMenuEntity.getMeta().getHiddenBreadcrumb());
+        Long count = this.baseMapper.selectCount(new QueryWrapper<SysMenuEntity>().eq("id", sysMenuEntity.getId()));
+        if(count > 0) {
+            // 修改
+            this.baseMapper.updateById(sysMenuEntity);
+        }
+        Integer maxSort = sysMenuService.maxSort();
+        maxSort = maxSort + 1;
+        sysMenuEntity.setSort(maxSort);
+        if(StringUtils.isBlank(sysMenuEntity.getParentId())) {
+            sysMenuEntity.setParentId("0");
+        }
+        this.baseMapper.insert(sysMenuEntity);
         return ResultUtil.success(sysMenuEntity);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Integer maxSort() {
         return this.baseMapper.maxSort();
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResultUtil<Boolean> deleteBath(Map<String, String> map) {
+        this.baseMapper.deleteBath(map);
+        return ResultUtil.success(true);
     }
 
     public static List<SysMenuEntity> buildTree(List<SysMenuEntity> list, String pid) {
@@ -67,7 +99,6 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
                         .title(x.getTitle())
                         .icon(x.getIcon())
                         .type(x.getType())
-                        .color(x.getColor())
                         .hidden(x.getHidden())
                         .hiddenBreadcrumb(x.getHiddenBreadcrumb())
                         .build();
