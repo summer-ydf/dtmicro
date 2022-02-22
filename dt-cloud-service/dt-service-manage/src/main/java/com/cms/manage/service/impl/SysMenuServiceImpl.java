@@ -47,13 +47,31 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
         return ResultUtil.success(objectMap);
     }
 
+    @Override
+    public ResultUtil<SysMenuEntity> saveMenu(SysMenuEntity sysMenuEntity) {
+        return ResultUtil.success(sysMenuEntity);
+    }
+
+    @Override
+    public Integer maxSort() {
+        return this.baseMapper.maxSort();
+    }
+
     public static List<SysMenuEntity> buildTree(List<SysMenuEntity> list, String pid) {
         List<SysMenuEntity> children = list.stream().filter(x -> x.getChildren() != null && x.getParentId().equals(pid)).collect(Collectors.toList());
         List<SysMenuEntity> subclass = list.stream().filter(x -> x.getChildren() != null && !x.getParentId().equals(pid)).collect(Collectors.toList());
         if(children.size() > 0) {
             children.forEach(x -> {
                 // 构造菜单元数据
-                x.setMeta(SysMenuMeta.builder().title(x.getTitle()).icon(x.getIcon()).type(x.getType()).build());
+                SysMenuMeta sysMenuMeta = SysMenuMeta.builder()
+                        .title(x.getTitle())
+                        .icon(x.getIcon())
+                        .type(x.getType())
+                        .color(x.getColor())
+                        .hidden(x.getHidden())
+                        .hiddenBreadcrumb(x.getHiddenBreadcrumb())
+                        .build();
+                x.setMeta(sysMenuMeta);
                 if(subclass.size() > 0) {
                     buildTree(subclass,x.getId()).forEach(
                             y -> x.getChildren().add(y)

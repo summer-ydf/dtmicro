@@ -67,6 +67,18 @@ public class SysMenuEntity extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "菜单排序")
     private Integer sort;
 
+    @ApiModelProperty(value = "重定向地址")
+    private String redirect;
+
+    @ApiModelProperty(value = "隐藏菜单")
+    private Boolean hidden = false;
+
+    @ApiModelProperty(value = "隐藏面包屑")
+    private Boolean hiddenBreadcrumb = false;
+
+    @ApiModelProperty(value = "颜色")
+    private String color;
+
     @ApiModelProperty(value = "菜单元数据")
     @TableField(exist = false)
     private SysMenuMeta meta;

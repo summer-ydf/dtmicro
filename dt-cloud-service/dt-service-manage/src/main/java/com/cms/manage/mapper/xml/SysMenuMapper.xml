@@ -21,4 +21,8 @@
         SELECT DISTINCT m.* FROM sys_menu m ORDER BY m.sort ASC
     </select>
 
+    <select id="maxSort" resultType="java.lang.Integer">
+        SELECT MAX(sort) FROM sys_menu
+    </select>
+
 </mapper>

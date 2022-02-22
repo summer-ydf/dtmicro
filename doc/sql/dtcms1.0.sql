@@ -11,7 +11,7 @@
  Target Server Version : 50734
  File Encoding         : 65001
 
- Date: 18/02/2022 16:21:09
+ Date: 22/02/2022 11:41:40
 */
 
 SET NAMES utf8mb4;
@@ -157,6 +157,11 @@ INSERT INTO `sys_login_log` VALUES ('255726480654405', 'admin在：2022-02-11 16
 INSERT INTO `sys_login_log` VALUES ('255732245528645', 'admin在：2022-02-11 17:17:12 点击了登录', 'admin', '127.0.0.1', 'Unknown', 'Unknown', 1, 1, NULL, '2022-02-11 17:17:12', '2022-02-11 17:17:12');
 INSERT INTO `sys_login_log` VALUES ('255736898158661', 'admin在：2022-02-11 17:36:08 点击了登录', 'admin', '127.0.0.1', 'Unknown', 'Unknown', 1, 1, NULL, '2022-02-11 17:36:08', '2022-02-11 17:36:08');
 INSERT INTO `sys_login_log` VALUES ('255741519315013', 'admin在：2022-02-11 17:54:56 点击了登录', 'admin', '127.0.0.1', 'Unknown', 'Unknown', 1, 1, NULL, '2022-02-11 17:54:56', '2022-02-11 17:54:56');
+INSERT INTO `sys_login_log` VALUES ('259205637263429', 'admin在：2022-02-21 12:50:28 点击了登录', 'admin', '192.168.200.248', 'Chrome 9', 'Windows 10', 1, 1, NULL, '2022-02-21 12:50:28', '2022-02-21 12:50:28');
+INSERT INTO `sys_login_log` VALUES ('259206696972357', 'admin在：2022-02-21 12:54:46 点击了登录', 'admin', '192.168.200.248', 'Chrome 9', 'Windows 10', 1, 1, NULL, '2022-02-21 12:54:47', '2022-02-21 12:54:47');
+INSERT INTO `sys_login_log` VALUES ('259207166926917', 'admin在：2022-02-21 12:56:41 点击了登录', 'admin', '192.168.200.248', 'Chrome 9', 'Windows 10', 1, 1, NULL, '2022-02-21 12:56:42', '2022-02-21 12:56:42');
+INSERT INTO `sys_login_log` VALUES ('259209907118149', 'admin在：2022-02-21 13:07:50 点击了登录', 'admin', '192.168.200.248', 'Chrome 9', 'Windows 10', 1, 1, NULL, '2022-02-21 13:07:51', '2022-02-21 13:07:51');
+INSERT INTO `sys_login_log` VALUES ('259210841428037', 'admin在：2022-02-21 13:11:38 点击了登录', 'admin', '192.168.200.248', 'Chrome 9', 'Windows 10', 1, 1, NULL, '2022-02-21 13:11:39', '2022-02-21 13:11:39');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -173,7 +178,12 @@ CREATE TABLE `sys_menu`  (
   `icon` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `order_num` int(11) NULL DEFAULT 1,
+  `sort` int(8) NULL DEFAULT NULL,
   `code` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `color` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `redirect` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `hidden` tinyint(1) NULL DEFAULT 0,
+  `hidden_breadcrumb` tinyint(1) NULL DEFAULT 0,
   `create_time` datetime NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   `update_time` datetime NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
@@ -182,12 +192,13 @@ CREATE TABLE `sys_menu`  (
 -- ----------------------------
 -- Records of sys_menu
 -- ----------------------------
-INSERT INTO `sys_menu` VALUES ('111', '0', '系统管理', '/setting', 'setting', NULL, '系统管理', 'el-icon-setting', 'menu', 1, NULL, '2022-02-17 15:47:00', '2022-02-17 15:47:02');
-INSERT INTO `sys_menu` VALUES ('112', '111', '系统管理', '/setting/user', 'user', 'setting/user', '用户管理', 'el-icon-user-filled', 'menu', 2, 'user.list', '2022-02-17 15:48:44', '2022-02-17 15:48:46');
-INSERT INTO `sys_menu` VALUES ('113', '112', '用户管理', NULL, NULL, NULL, '添加', NULL, 'button', 3, 'user.add', '2022-02-17 15:49:43', '2022-02-17 15:49:45');
-INSERT INTO `sys_menu` VALUES ('114', '0', '首页', '/home', 'home', NULL, '首页', 'el-icon-eleme-filled', 'menu', 1, NULL, '2022-02-18 11:55:21', '2022-02-18 11:55:24');
-INSERT INTO `sys_menu` VALUES ('115', '114', '首页', '/dashboard', 'dashboard', 'home', '控制台', 'el-icon-menu', 'menu', 2, NULL, '2022-02-18 12:38:42', '2022-02-18 12:38:48');
-INSERT INTO `sys_menu` VALUES ('116', '114', '首页', '/usercenter', 'usercenter', 'userCenter', '个人信息', 'el-icon-user', 'menu', 3, NULL, '2022-02-18 12:39:12', '2022-02-18 12:39:10');
+INSERT INTO `sys_menu` VALUES ('111', '0', '系统管理', '/setting', 'setting', NULL, '系统管理', 'el-icon-setting', 'menu', 1, 4, NULL, NULL, NULL, 0, 0, '2022-02-22 11:27:20', '2022-02-22 11:27:20');
+INSERT INTO `sys_menu` VALUES ('112', '111', '系统管理', '/setting/user', 'user', 'setting/user', '用户管理', 'el-icon-user-filled', 'menu', 2, 5, 'user.list', NULL, NULL, 0, 0, '2022-02-22 11:27:19', '2022-02-22 11:27:19');
+INSERT INTO `sys_menu` VALUES ('113', '112', '用户管理', NULL, NULL, NULL, '添加', NULL, 'button', 3, 6, 'user.add', NULL, NULL, 0, 0, '2022-02-22 11:27:18', '2022-02-22 11:27:18');
+INSERT INTO `sys_menu` VALUES ('114', '0', '首页', '/home', 'home', NULL, '首页', 'el-icon-data-line', 'menu', 1, 1, NULL, NULL, NULL, 0, 0, '2022-02-22 11:27:17', '2022-02-22 11:27:17');
+INSERT INTO `sys_menu` VALUES ('115', '114', '首页', '/dashboard', 'dashboard', 'home', '控制台', 'el-icon-menu', 'menu', 2, 2, NULL, NULL, NULL, 0, 0, '2022-02-22 11:27:16', '2022-02-22 11:27:16');
+INSERT INTO `sys_menu` VALUES ('116', '114', '首页', '/usercenter', 'usercenter', 'userCenter', '个人信息', 'el-icon-user', 'menu', 3, 3, NULL, NULL, NULL, 0, 0, '2022-02-22 11:27:15', '2022-02-22 11:27:15');
+INSERT INTO `sys_menu` VALUES ('117', '111', '系统管理', '/setting/menu', 'settingMenu', 'setting/menu', '菜单管理', 'el-icon-fold', 'menu', 1, 7, NULL, '#981515', 'https://www.baidu.com', 0, 0, '2022-02-22 11:34:18', '2022-02-22 11:34:18');
 
 -- ----------------------------
 -- Table structure for sys_operator
@@ -410,6 +421,7 @@ INSERT INTO `sys_role_menu` VALUES ('257838321094725', '248204504629317', '113')
 INSERT INTO `sys_role_menu` VALUES ('258142502264901', '248204504629317', '114');
 INSERT INTO `sys_role_menu` VALUES ('258142598918213', '248204504629317', '115');
 INSERT INTO `sys_role_menu` VALUES ('258143150133317', '248204504629317', '116');
+INSERT INTO `sys_role_menu` VALUES ('258143150133318', '248204504629317', '117');
 
 -- ----------------------------
 -- Table structure for sys_role_permission

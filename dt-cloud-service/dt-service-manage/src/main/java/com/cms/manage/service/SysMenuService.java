@@ -15,4 +15,8 @@ public interface SysMenuService extends IService<SysMenuEntity> {
     ResultUtil<List<SysMenuEntity>> listMenu();
 
     ResultUtil<Map<String,Object>> listOperatorMenu(String userId);
+
+    ResultUtil<SysMenuEntity> saveMenu(SysMenuEntity sysMenuEntity);
+
+    Integer maxSort();
 }
