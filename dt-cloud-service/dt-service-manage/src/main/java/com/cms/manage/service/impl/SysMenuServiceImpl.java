@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -84,9 +85,19 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public ResultUtil<Boolean> deleteBath(List<String> ids) {
-        this.baseMapper.deleteBath(ids);
-        return ResultUtil.success(true);
+    public ResultUtil<?> deleteBath(List<String> ids) {
+        List<String> delIds = new ArrayList<>();
+        for (String id : ids) {
+            Integer count = this.baseMapper.countRoleMenuByMenuId(id);
+            if (count > 0) {
+                return ResultUtil.error("【"+id+"】其它角色使用中，无法删除");
+            }
+            delIds.add(id);
+        }
+        if(!delIds.isEmpty()) {
+            this.baseMapper.deleteBath(ids);
+        }
+        return ResultUtil.success("删除成功");
     }
 
     public static List<SysMenuEntity> buildTree(List<SysMenuEntity> list, String pid) {

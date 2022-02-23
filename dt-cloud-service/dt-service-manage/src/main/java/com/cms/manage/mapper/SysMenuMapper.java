@@ -18,4 +18,6 @@ public interface SysMenuMapper extends BaseMapper<SysMenuEntity> {
     Integer maxSort();
 
     void deleteBath(@Param("ids") List<String> ids);
+
+    Integer countRoleMenuByMenuId(String id);
 }

@@ -25,6 +25,10 @@
         SELECT MAX(sort) FROM sys_menu
     </select>
 
+    <select id="countRoleMenuByMenuId" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM sys_role_menu WHERE menu_id = #{id}
+    </select>
+
     <delete id="deleteBath" parameterType="java.util.List">
         DELETE FROM sys_menu WHERE id IN
         <foreach collection="ids" item="item" open="(" separator="," close=")">
