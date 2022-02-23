@@ -66,6 +66,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
         if(count > 0) {
             // 修改
             this.baseMapper.updateById(sysMenuEntity);
+            return ResultUtil.success(sysMenuEntity);
         }
         Integer maxSort = sysMenuService.maxSort();
         maxSort = maxSort + 1;
