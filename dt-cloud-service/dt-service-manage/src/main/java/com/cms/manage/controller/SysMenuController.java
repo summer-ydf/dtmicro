@@ -8,6 +8,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -53,7 +54,11 @@ public class SysMenuController {
 
     @ApiOperation(value = "批量删除菜单")
     @DeleteMapping("/deleteBath")
-    public ResultUtil<Boolean> deleteBath(@RequestBody Map<String,String> map){
-        return sysMenuService.deleteBath(map);
+    public ResultUtil<Boolean> deleteBath(@RequestBody Map<String,Object> map) {
+        // 接收List
+        List<String> ids = (List<String>) map.get("ids");
+        Map<String, String> stringMap = new HashMap<>(2);
+        ids.forEach(id -> stringMap.put("ids", id));
+        return sysMenuService.deleteBath(ids);
     }
 }

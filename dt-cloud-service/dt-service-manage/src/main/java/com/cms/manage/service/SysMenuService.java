@@ -20,5 +20,5 @@ public interface SysMenuService extends IService<SysMenuEntity> {
 
     Integer maxSort();
 
-    ResultUtil<Boolean> deleteBath(Map<String, String> map);
+    ResultUtil<Boolean> deleteBath(List<String> ids);
 }

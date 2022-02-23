@@ -84,8 +84,8 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public ResultUtil<Boolean> deleteBath(Map<String, String> map) {
-        this.baseMapper.deleteBath(map);
+    public ResultUtil<Boolean> deleteBath(List<String> ids) {
+        this.baseMapper.deleteBath(ids);
         return ResultUtil.success(true);
     }
 

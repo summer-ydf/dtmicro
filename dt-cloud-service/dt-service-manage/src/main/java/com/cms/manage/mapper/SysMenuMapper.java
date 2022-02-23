@@ -5,7 +5,6 @@ import com.cms.manage.entity.SysMenuEntity;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author ydf Created by 2022/2/17 15:51
@@ -18,5 +17,5 @@ public interface SysMenuMapper extends BaseMapper<SysMenuEntity> {
 
     Integer maxSort();
 
-    void deleteBath(@Param("ids") Map<String, String> map);
+    void deleteBath(@Param("ids") List<String> ids);
 }
