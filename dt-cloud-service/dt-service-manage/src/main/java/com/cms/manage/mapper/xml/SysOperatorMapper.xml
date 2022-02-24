@@ -4,7 +4,12 @@
 
     <!--分页查询操作员-->
     <select id="pageSearch" resultType="com.cms.manage.entity.SysOperatorEntity">
-        SELECT su.* FROM sys_operator AS su ORDER BY su.create_time DESC
+        SELECT so.id,so.avatar,so.username,so.avatar,so.scope,so.is_enabled,so.create_time ,sr.`name` AS roleName
+        FROM sys_operator AS so
+        LEFT JOIN sys_operator_role AS sor ON so.id = sor.user_id
+        LEFT JOIN sys_role AS sr ON sr.id = sor.role_id
+        ORDER BY
+            so.create_time DESC
     </select>
 
     <!--添加操作员角色关联信息-->

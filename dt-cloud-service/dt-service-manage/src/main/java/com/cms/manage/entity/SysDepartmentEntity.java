@@ -1,6 +1,7 @@
 package com.cms.manage.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.cms.common.jdbc.domain.BaseEntity;
@@ -12,6 +13,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 系统：部门机构实体
@@ -33,14 +36,15 @@ public class SysDepartmentEntity extends BaseEntity implements Serializable {
     private String id;
 
     @ApiModelProperty(value = "上级部门id")
-    private String pid;
+    private String parentId;
 
     @ApiModelProperty(value = "部门名称")
-    private String name;
-
-    @ApiModelProperty(value = "上级部门名称")
-    private String parentName;
+    private String label;
 
     @ApiModelProperty(value = "序号")
-    private Integer orderNum;
+    private Integer sort;
+
+    @ApiModelProperty(value = "子节点集合")
+    @TableField(exist = false)
+    private List<SysDepartmentEntity> children = new ArrayList<>();
 }

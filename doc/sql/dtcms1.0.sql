@@ -11,7 +11,7 @@
  Target Server Version : 50734
  File Encoding         : 65001
 
- Date: 22/02/2022 11:41:40
+ Date: 24/02/2022 13:49:46
 */
 
 SET NAMES utf8mb4;
@@ -75,10 +75,9 @@ INSERT INTO `oauth_client_details` VALUES ('cms', NULL, '$2a$10$bMNULS2JtrK.kEOI
 DROP TABLE IF EXISTS `sys_department`;
 CREATE TABLE `sys_department`  (
   `id` varchar(56) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL COMMENT '部门id',
-  `pid` varchar(56) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '上级部门id',
-  `parent_name` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '上级部门名称',
-  `name` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '部门名称',
-  `order_num` int(11) NULL DEFAULT NULL COMMENT '序号',
+  `parent_id` varchar(56) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '上级部门id',
+  `label` varchar(128) CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NULL DEFAULT NULL COMMENT '部门名称',
+  `sort` int(11) NULL DEFAULT NULL COMMENT '序号',
   `create_time` datetime NULL DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime NULL DEFAULT NULL COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
@@ -87,31 +86,31 @@ CREATE TABLE `sys_department`  (
 -- ----------------------------
 -- Records of sys_department
 -- ----------------------------
-INSERT INTO `sys_department` VALUES ('1000000130649867', '1000000874136172', '后端开发', 'PHP开发部', 2, '2021-06-20 21:55:35', '2021-06-20 21:55:35');
-INSERT INTO `sys_department` VALUES ('1000000174227147', '1000001620535597', '客服部', '市场部门', 1, '2021-06-17 21:33:41', '2021-06-17 21:34:03');
-INSERT INTO `sys_department` VALUES ('1000000187669045', '1000000874136172', '后端开发', 'Python开发部', 0, '2021-06-20 21:58:41', '2021-06-20 21:58:41');
-INSERT INTO `sys_department` VALUES ('1000000204663981', '1000001200689941', '技术部', '前端部门', 3, '2021-06-17 21:27:59', '2021-06-17 21:28:22');
-INSERT INTO `sys_department` VALUES ('1000000354532983', '0', '根节点', 'DT设计科技有限公司', 2, '2021-06-20 21:53:26', '2021-06-20 21:53:26');
-INSERT INTO `sys_department` VALUES ('1000000622591924', '1000001620535597', '客服部', '设计部', 1, '2021-06-20 21:53:49', '2021-06-20 21:57:45');
-INSERT INTO `sys_department` VALUES ('1000000819493000', '1000000874136172', '后端开发', 'C语言开发部', 3, '2021-06-20 21:55:49', '2021-06-20 21:55:49');
-INSERT INTO `sys_department` VALUES ('1000000874136172', '1000002112552988', '研发部', '后端开发', 1, '2021-06-20 21:55:09', '2021-06-20 21:55:09');
-INSERT INTO `sys_department` VALUES ('1000000952846438', '1000001251633881', '财务部', '财务部门', 1, '2021-06-17 21:29:00', '2021-10-03 16:50:39');
-INSERT INTO `sys_department` VALUES ('1000001186458564', '1000001637526739', '服务部门', '服务二部', 2, '2021-06-20 21:56:29', '2021-06-20 21:56:29');
-INSERT INTO `sys_department` VALUES ('1000001200689941', '1000001776185099', 'DT编程科技有限公司', '技术部', 1, '2021-06-13 19:15:04', '2021-06-17 21:25:31');
-INSERT INTO `sys_department` VALUES ('1000001218109551', '1000000874136172', '后端开发', 'JAVA开发部', 1, '2021-06-20 21:55:24', '2021-06-20 21:55:24');
-INSERT INTO `sys_department` VALUES ('1000001251633881', '1000001776185099', 'DT编程科技有限公司', '财务部', 2, '2021-06-13 14:35:36', '2021-06-17 21:29:25');
-INSERT INTO `sys_department` VALUES ('1000001258096779', '1000001200689941', '技术部', 'UI设计部门', 4, '2021-06-17 21:28:10', '2021-06-17 21:31:41');
-INSERT INTO `sys_department` VALUES ('1000001341234088', '1000001776185099', 'DT编程科技有限公司', '行政部', 3, '2021-06-13 14:35:38', '2021-06-17 21:26:17');
-INSERT INTO `sys_department` VALUES ('1000001620535597', '1000001776185099', 'DT编程科技有限公司', '客服部', 4, '2021-06-13 14:35:40', '2021-06-17 21:29:39');
-INSERT INTO `sys_department` VALUES ('1000001625392933', '1000001341234088', '行政部', '法律部门', 1, '2021-06-17 21:33:05', '2021-06-17 21:33:05');
-INSERT INTO `sys_department` VALUES ('1000001637526739', '1000001620535597', '客服部', '服务部门', 2, '2021-06-17 21:33:55', '2021-06-17 21:33:55');
-INSERT INTO `sys_department` VALUES ('1000001728835022', '1000001637526739', '服务部门', '服务一部', 1, '2021-06-20 21:56:19', '2021-06-20 21:56:19');
-INSERT INTO `sys_department` VALUES ('1000001776185099', '0', '顶级部门', 'DT编程科技有限公司', 1, '2021-06-13 14:35:42', '2021-11-14 11:22:51');
-INSERT INTO `sys_department` VALUES ('1000001779686042', '1000001200689941', '技术部', '后端部门', 1, '2021-06-17 21:27:48', '2021-06-17 21:27:48');
-INSERT INTO `sys_department` VALUES ('1000001854756787', '1000000622591924', '设计部', '设计组一', 1, '2021-06-20 21:54:18', '2021-06-20 21:54:18');
-INSERT INTO `sys_department` VALUES ('1000001934748021', '1000000622591924', '设计部', '设计组二', 2, '2021-06-20 21:54:27', '2021-06-20 21:54:27');
-INSERT INTO `sys_department` VALUES ('1000001975876013', '1000000622591924', '设计部', '设计组三', 3, '2021-06-20 21:54:48', '2021-06-20 21:54:48');
-INSERT INTO `sys_department` VALUES ('1000002112552988', '1000000354532983', 'DT设计科技有限公司', '研发部', 1, '2021-06-20 21:54:57', '2021-06-20 21:54:57');
+INSERT INTO `sys_department` VALUES ('1000000130649867', '1000000874136172', 'PHP开发部', 2, '2021-06-20 21:55:35', '2021-06-20 21:55:35');
+INSERT INTO `sys_department` VALUES ('1000000174227147', '1000001620535597', '市场部门', 1, '2021-06-17 21:33:41', '2021-06-17 21:34:03');
+INSERT INTO `sys_department` VALUES ('1000000187669045', '1000000874136172', 'Python开发部', 0, '2021-06-20 21:58:41', '2021-06-20 21:58:41');
+INSERT INTO `sys_department` VALUES ('1000000204663981', '1000001200689941', '前端部门', 3, '2021-06-17 21:27:59', '2021-06-17 21:28:22');
+INSERT INTO `sys_department` VALUES ('1000000354532983', '0', 'DT设计科技有限公司', 2, '2021-06-20 21:53:26', '2021-06-20 21:53:26');
+INSERT INTO `sys_department` VALUES ('1000000622591924', '1000001620535597', '设计部', 1, '2021-06-20 21:53:49', '2021-06-20 21:57:45');
+INSERT INTO `sys_department` VALUES ('1000000819493000', '1000000874136172', 'C语言开发部', 3, '2021-06-20 21:55:49', '2021-06-20 21:55:49');
+INSERT INTO `sys_department` VALUES ('1000000874136172', '1000002112552988', '后端开发', 1, '2021-06-20 21:55:09', '2021-06-20 21:55:09');
+INSERT INTO `sys_department` VALUES ('1000000952846438', '1000001251633881', '财务部门', 1, '2021-06-17 21:29:00', '2021-10-03 16:50:39');
+INSERT INTO `sys_department` VALUES ('1000001186458564', '1000001637526739', '服务二部', 2, '2021-06-20 21:56:29', '2021-06-20 21:56:29');
+INSERT INTO `sys_department` VALUES ('1000001200689941', '1000001776185099', '技术部', 1, '2021-06-13 19:15:04', '2021-06-17 21:25:31');
+INSERT INTO `sys_department` VALUES ('1000001218109551', '1000000874136172', 'JAVA开发部', 1, '2021-06-20 21:55:24', '2021-06-20 21:55:24');
+INSERT INTO `sys_department` VALUES ('1000001251633881', '1000001776185099', '财务部', 2, '2021-06-13 14:35:36', '2021-06-17 21:29:25');
+INSERT INTO `sys_department` VALUES ('1000001258096779', '1000001200689941', 'UI设计部门', 4, '2021-06-17 21:28:10', '2021-06-17 21:31:41');
+INSERT INTO `sys_department` VALUES ('1000001341234088', '1000001776185099', '行政部', 3, '2021-06-13 14:35:38', '2021-06-17 21:26:17');
+INSERT INTO `sys_department` VALUES ('1000001620535597', '1000001776185099', '客服部', 4, '2021-06-13 14:35:40', '2021-06-17 21:29:39');
+INSERT INTO `sys_department` VALUES ('1000001625392933', '1000001341234088', '法律部门', 1, '2021-06-17 21:33:05', '2021-06-17 21:33:05');
+INSERT INTO `sys_department` VALUES ('1000001637526739', '1000001620535597', '服务部门', 2, '2021-06-17 21:33:55', '2021-06-17 21:33:55');
+INSERT INTO `sys_department` VALUES ('1000001728835022', '1000001637526739', '服务一部', 1, '2021-06-20 21:56:19', '2021-06-20 21:56:19');
+INSERT INTO `sys_department` VALUES ('1000001776185099', '0', 'DT编程科技有限公司', 1, '2021-06-13 14:35:42', '2021-11-14 11:22:51');
+INSERT INTO `sys_department` VALUES ('1000001779686042', '1000001200689941', '后端部门', 1, '2021-06-17 21:27:48', '2021-06-17 21:27:48');
+INSERT INTO `sys_department` VALUES ('1000001854756787', '1000000622591924', '设计组一', 1, '2021-06-20 21:54:18', '2021-06-20 21:54:18');
+INSERT INTO `sys_department` VALUES ('1000001934748021', '1000000622591924', '设计组二', 2, '2021-06-20 21:54:27', '2021-06-20 21:54:27');
+INSERT INTO `sys_department` VALUES ('1000001975876013', '1000000622591924', '设计组三', 3, '2021-06-20 21:54:48', '2021-06-20 21:54:48');
+INSERT INTO `sys_department` VALUES ('1000002112552988', '1000000354532983', '研发部', 1, '2021-06-20 21:54:57', '2021-06-20 21:54:57');
 
 -- ----------------------------
 -- Table structure for sys_login_log
@@ -162,6 +161,7 @@ INSERT INTO `sys_login_log` VALUES ('259206696972357', 'admin在：2022-02-21 12
 INSERT INTO `sys_login_log` VALUES ('259207166926917', 'admin在：2022-02-21 12:56:41 点击了登录', 'admin', '192.168.200.248', 'Chrome 9', 'Windows 10', 1, 1, NULL, '2022-02-21 12:56:42', '2022-02-21 12:56:42');
 INSERT INTO `sys_login_log` VALUES ('259209907118149', 'admin在：2022-02-21 13:07:50 点击了登录', 'admin', '192.168.200.248', 'Chrome 9', 'Windows 10', 1, 1, NULL, '2022-02-21 13:07:51', '2022-02-21 13:07:51');
 INSERT INTO `sys_login_log` VALUES ('259210841428037', 'admin在：2022-02-21 13:11:38 点击了登录', 'admin', '192.168.200.248', 'Chrome 9', 'Windows 10', 1, 1, NULL, '2022-02-21 13:11:39', '2022-02-21 13:11:39');
+INSERT INTO `sys_login_log` VALUES ('260222647853125', 'admin在：2022-02-24 09:48:41 点击了登录', 'admin', '192.168.200.248', 'Chrome 9', 'Windows 10', 1, 1, NULL, '2022-02-24 09:48:42', '2022-02-24 09:48:42');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -198,7 +198,9 @@ INSERT INTO `sys_menu` VALUES ('113', '112', '用户管理', NULL, NULL, NULL, '
 INSERT INTO `sys_menu` VALUES ('114', '0', '首页', '/home', 'home', NULL, '首页', 'el-icon-data-line', 'menu', 1, 1, NULL, NULL, NULL, 0, 0, '2022-02-22 11:27:17', '2022-02-22 11:27:17');
 INSERT INTO `sys_menu` VALUES ('115', '114', '首页', '/dashboard', 'dashboard', 'home', '控制台', 'el-icon-menu', 'menu', 2, 2, NULL, NULL, NULL, 0, 0, '2022-02-22 11:27:16', '2022-02-22 11:27:16');
 INSERT INTO `sys_menu` VALUES ('116', '114', '首页', '/usercenter', 'usercenter', 'userCenter', '个人信息', 'el-icon-user', 'menu', 3, 3, NULL, NULL, NULL, 0, 0, '2022-02-22 11:27:15', '2022-02-22 11:27:15');
-INSERT INTO `sys_menu` VALUES ('117', '111', '系统管理', '/setting/menu', 'settingMenu', 'setting/menu', '菜单管理', 'el-icon-fold', 'menu', 1, 7, NULL, '#981515', 'https://www.baidu.com', 0, 0, '2022-02-22 11:34:18', '2022-02-22 11:34:18');
+INSERT INTO `sys_menu` VALUES ('117', '111', '系统管理', '/setting/menu', 'settingMenu', 'setting/menu', '菜单管理', 'el-icon-fold', 'menu', 1, 7, NULL, '#981515', '', 0, 0, '2022-02-22 13:58:56', '2022-02-22 13:58:56');
+INSERT INTO `sys_menu` VALUES ('259910065872965', '0', NULL, '', '未命名1', '', '未命名1', NULL, 'menu', 1, 8, NULL, NULL, NULL, 0, 0, '2022-02-23 12:36:50', '2022-02-23 12:36:50');
+INSERT INTO `sys_menu` VALUES ('259910082940997', '259910065872965', NULL, '', '未命名2', '', '未命名2', NULL, 'button', 1, 9, NULL, NULL, NULL, 0, 0, '2022-02-23 12:36:54', '2022-02-23 17:46:29');
 
 -- ----------------------------
 -- Table structure for sys_operator
@@ -223,15 +225,15 @@ CREATE TABLE `sys_operator`  (
 -- ----------------------------
 -- Records of sys_operator
 -- ----------------------------
-INSERT INTO `sys_operator` VALUES (248204704247877, 'admin', '$2a$10$Ty9JjBK2n/lGPjqsHYC8ve5Wd8esEhbK7aF0ryxFVa/5ymnDvmmYu', 'web', 1, 1, 1, 1, NULL, '2022-01-21 10:47:34', '2022-01-21 10:47:34');
-INSERT INTO `sys_operator` VALUES (256689773064261, 'admin1', '$2a$10$v3a5.2KtUAQHKWZ5sGhH9.uqDmMFTTGVtoYxAMuicXkzSo6aoQZrm', NULL, 1, 1, 1, 1, NULL, '2022-02-14 10:13:24', '2022-02-14 10:13:24');
-INSERT INTO `sys_operator` VALUES (256689985814597, 'admin2', '$2a$10$.PeZou3E0.ACogK9Dq0FDO0gsum0Xm9p/zpherySSbajJ.HsAf0LG', NULL, 1, 1, 1, 1, NULL, '2022-02-14 10:14:16', '2022-02-14 10:14:16');
-INSERT INTO `sys_operator` VALUES (256689998258245, 'admin3', '$2a$10$tsqIqYYDl.6X/LxWoeKe6ebVoBrkR4J21VzSxvyy91Di3MBK1J/iK', NULL, 1, 1, 1, 1, NULL, '2022-02-14 10:14:19', '2022-02-14 10:14:19');
-INSERT INTO `sys_operator` VALUES (256690010067013, 'admin4', '$2a$10$HdPGnx46BvoNt/tE50L24uOZDSYp1QjwJr3ZcNmPy4ZmvOCD9NvqW', NULL, 1, 1, 1, 1, NULL, '2022-02-14 10:14:21', '2022-02-14 10:14:21');
-INSERT INTO `sys_operator` VALUES (256690022285381, 'admin5', '$2a$10$ko/1lDBwqFqVnjjr6OKFAeAoyrBxyGUvTZpFjjvUWon4QOJj6YTuq', NULL, 1, 1, 1, 1, NULL, '2022-02-14 10:14:24', '2022-02-14 10:14:24');
-INSERT INTO `sys_operator` VALUES (256690034090053, 'admin6', '$2a$10$cURKOzekEAde1p9vSMgVBezeYBCECBdJK97mZMLzKmf6kTOERHuOK', NULL, 1, 1, 1, 1, NULL, '2022-02-14 10:14:27', '2022-02-14 10:14:27');
-INSERT INTO `sys_operator` VALUES (256690045460549, 'admin7', '$2a$10$NUe/bK2Lhx0yqx4rTCUdZedmM2jofW6eGL1/.TIZB6lpZbRC8ydhS', NULL, 1, 1, 1, 1, NULL, '2022-02-14 10:14:30', '2022-02-14 10:14:30');
-INSERT INTO `sys_operator` VALUES (256690056187973, 'admin8', '$2a$10$k749DHsKf5j.jBBIIM2NpOvp3Y50Unk121qH7yJpbj1Hz3NGZc1Z.', NULL, 1, 1, 1, 1, NULL, '2022-02-14 10:14:33', '2022-02-14 10:14:33');
+INSERT INTO `sys_operator` VALUES (248204704247877, 'admin', '$2a$10$Ty9JjBK2n/lGPjqsHYC8ve5Wd8esEhbK7aF0ryxFVa/5ymnDvmmYu', 'web', 1, 1, 1, 1, 'img/avatar.jpg', '2022-01-21 10:47:34', '2022-01-21 10:47:34');
+INSERT INTO `sys_operator` VALUES (256689773064261, 'admin1', '$2a$10$v3a5.2KtUAQHKWZ5sGhH9.uqDmMFTTGVtoYxAMuicXkzSo6aoQZrm', 'app', 1, 1, 1, 1, 'img/avatar.jpg', '2022-02-14 10:13:24', '2022-02-14 10:13:24');
+INSERT INTO `sys_operator` VALUES (256689985814597, 'admin2', '$2a$10$.PeZou3E0.ACogK9Dq0FDO0gsum0Xm9p/zpherySSbajJ.HsAf0LG', 'ios', 1, 1, 1, 1, 'img/avatar.jpg', '2022-02-14 10:14:16', '2022-02-14 10:14:16');
+INSERT INTO `sys_operator` VALUES (256689998258245, 'admin3', '$2a$10$tsqIqYYDl.6X/LxWoeKe6ebVoBrkR4J21VzSxvyy91Di3MBK1J/iK', 'app', 1, 1, 1, 1, 'img/avatar.jpg', '2022-02-14 10:14:19', '2022-02-14 10:14:19');
+INSERT INTO `sys_operator` VALUES (256690010067013, 'admin4', '$2a$10$HdPGnx46BvoNt/tE50L24uOZDSYp1QjwJr3ZcNmPy4ZmvOCD9NvqW', 'app', 1, 1, 1, 1, 'img/avatar.jpg', '2022-02-14 10:14:21', '2022-02-14 10:14:21');
+INSERT INTO `sys_operator` VALUES (256690022285381, 'admin5', '$2a$10$ko/1lDBwqFqVnjjr6OKFAeAoyrBxyGUvTZpFjjvUWon4QOJj6YTuq', 'app', 1, 1, 1, 1, 'img/avatar.jpg', '2022-02-14 10:14:24', '2022-02-14 10:14:24');
+INSERT INTO `sys_operator` VALUES (256690034090053, 'admin6', '$2a$10$cURKOzekEAde1p9vSMgVBezeYBCECBdJK97mZMLzKmf6kTOERHuOK', 'app', 1, 1, 1, 1, 'img/avatar.jpg', '2022-02-14 10:14:27', '2022-02-14 10:14:27');
+INSERT INTO `sys_operator` VALUES (256690045460549, 'admin7', '$2a$10$NUe/bK2Lhx0yqx4rTCUdZedmM2jofW6eGL1/.TIZB6lpZbRC8ydhS', 'app', 1, 1, 1, 1, 'img/avatar.jpg', '2022-02-14 10:14:30', '2022-02-14 10:14:30');
+INSERT INTO `sys_operator` VALUES (256690056187973, 'admin8', '$2a$10$k749DHsKf5j.jBBIIM2NpOvp3Y50Unk121qH7yJpbj1Hz3NGZc1Z.', 'app', 1, 1, 1, 0, 'img/avatar.jpg', '2022-02-14 10:14:33', '2022-02-14 10:14:33');
 
 -- ----------------------------
 -- Table structure for sys_operator_log

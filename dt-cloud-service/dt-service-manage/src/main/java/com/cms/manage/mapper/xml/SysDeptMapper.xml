@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cms.manage.mapper.SysDeptMapper">
+
+    <select id="queryList" resultType="com.cms.manage.entity.SysDepartmentEntity" parameterType="com.cms.manage.vo.SysDeptRequest">
+        SELECT sd.id, sd.parent_id, sd.label, sd.sort, sd.create_time, sd.update_time
+        FROM sys_department AS sd
+        <where>
+            <if test="request.label != null and request.label != ''">
+                AND sd.label LIKE CONCAT('%',#{request.label},'%')
+            </if>
+            <if test="request.parentId != null and request.parentId != ''">
+                AND sd.parent_id = #{request.parentId}
+            </if>
+            <if test="request.startTime != null">
+                AND sd.create_time <![CDATA[>=]]> DATE_FORMAT(#{request.startTime}, '%Y-%m-%d')
+            </if>
+            <if test="request.endTime != null">
+                AND DATE_FORMAT(sd.create_time, '%Y-%m-%d') <![CDATA[<=]]> DATE_FORMAT(#{request.endTime}, '%Y-%m-%d')
+            </if>
+        </where>
+        ORDER BY sd.sort ASC
+    </select>
+
+</mapper>

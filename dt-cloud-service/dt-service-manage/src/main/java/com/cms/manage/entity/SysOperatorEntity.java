@@ -66,6 +66,10 @@ public class SysOperatorEntity extends BaseEntity implements Serializable {
     @TableField(exist = false)
     private Long roleId;
 
+    @ApiModelProperty(value = "角色名称")
+    @TableField(exist = false)
+    private String roleName;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
