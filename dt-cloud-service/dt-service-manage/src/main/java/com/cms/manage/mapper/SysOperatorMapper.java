@@ -6,6 +6,9 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cms.manage.entity.SysOperatorEntity;
 import com.cms.manage.entity.SysOperatorRoleEntity;
 import com.cms.manage.vo.SysOperatorPage;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * @author ydf Created by 2022/1/7 17:23
@@ -16,7 +19,11 @@ public interface SysOperatorMapper extends BaseMapper<SysOperatorEntity> {
 
     void saveOperatorRole(SysOperatorRoleEntity request);
 
-    void deleteOperatorRoleByUserId(Long userId);
+    void deleteOperatorRoleByUserId(String userId);
 
     void updateOperatorRoleByUserId(Long userId, Long roleId);
+
+    void deleteBath(@Param("ids") List<String> ids);
+
+    void deleteBathOperatorRole(@Param("ids") List<String> ids);
 }

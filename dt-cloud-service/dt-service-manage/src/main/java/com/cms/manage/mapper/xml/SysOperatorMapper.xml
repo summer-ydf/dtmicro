@@ -22,6 +22,22 @@
         DELETE FROM sys_operator_role WHERE user_id = #{userId}
     </delete>
 
+    <!--批量操作员角色关联-->
+    <delete id="deleteBathOperatorRole" parameterType="java.util.List">
+        DELETE FROM sys_operator_role WHERE user_id IN
+        <foreach collection="ids" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <!--批量删除操作员-->
+    <delete id="deleteBath" parameterType="java.util.List">
+        DELETE FROM sys_operator WHERE id IN
+        <foreach collection="ids" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
     <!--修改操作员角色关联信息-->
     <update id="updateOperatorRoleByUserId">
         UPDATE sys_operator_role SET role_id = #{roleId} WHERE user_id = #{userId}

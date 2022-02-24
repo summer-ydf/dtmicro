@@ -7,6 +7,8 @@ import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.entity.SysOperatorEntity;
 import com.cms.manage.vo.SysOperatorPage;
 
+import java.util.List;
+
 /**
  * @author ydf Created by 2022/1/7 17:22
  */
@@ -18,7 +20,9 @@ public interface SysOperatorService extends IService<SysOperatorEntity> {
 
     ResultUtil<SysOperatorEntity> saveOperator(SysOperatorEntity request);
 
-    ResultUtil<SysOperatorEntity> deleteOperatorById(Long id);
+    ResultUtil<SysOperatorEntity> deleteOperatorById(String id);
 
     ResultUtil<SysOperatorEntity> updateOperatorById(SysOperatorEntity request);
+
+    ResultUtil<?> deleteBath(List<String> ids);
 }
