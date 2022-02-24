@@ -18,8 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
-import java.util.List;
-
 /**
  * @author ydf Created by 2022/1/7 17:22
  */
@@ -90,9 +88,10 @@ public class SysOperatorServiceImpl extends ServiceImpl<SysOperatorMapper, SysOp
     }
 
     @Override
-    public ResultUtil<?> deleteBath(List<String> ids) {
+    @Transactional(rollbackFor = Exception.class)
+    public ResultUtil<?> deleteBath(long[] ids) {
         this.baseMapper.deleteBath(ids);
         this.baseMapper.deleteBathOperatorRole(ids);
-        return ResultUtil.success("删除成功");
+        return ResultUtil.success("批量删除成功");
     }
 }

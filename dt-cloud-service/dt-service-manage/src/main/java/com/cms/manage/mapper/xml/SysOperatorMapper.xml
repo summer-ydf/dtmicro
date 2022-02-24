@@ -23,18 +23,18 @@
     </delete>
 
     <!--批量操作员角色关联-->
-    <delete id="deleteBathOperatorRole" parameterType="java.util.List">
+    <delete id="deleteBathOperatorRole" parameterType="java.util.Arrays">
         DELETE FROM sys_operator_role WHERE user_id IN
-        <foreach collection="ids" item="item" open="(" separator="," close=")">
-            #{item}
+        <foreach collection="array" item="ids" open="(" separator="," close=")">
+            #{ids}
         </foreach>
     </delete>
 
     <!--批量删除操作员-->
-    <delete id="deleteBath" parameterType="java.util.List">
+    <delete id="deleteBath" parameterType="java.util.Arrays">
         DELETE FROM sys_operator WHERE id IN
-        <foreach collection="ids" item="item" open="(" separator="," close=")">
-            #{item}
+        <foreach collection="array" item="ids" open="(" separator="," close=")">
+            #{ids}
         </foreach>
     </delete>
 

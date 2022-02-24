@@ -18,10 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 /**
  * @author ydf Created by 2022/1/12 15:59
  */
@@ -70,11 +66,7 @@ public class SysOperatorController {
 
     @ApiOperation(value = "批量删除操作员")
     @DeleteMapping("/deleteBath")
-    public ResultUtil<?> deleteBath(@RequestBody Map<String,Object> map) {
-        // 接收List
-        List<String> ids = (List<String>) map.get("ids");
-        Map<String, String> stringMap = new HashMap<>(2);
-        ids.forEach(id -> stringMap.put("ids", id));
+    public ResultUtil<?> deleteBath(@RequestBody long[] ids) {
         return sysOperatorService.deleteBath(ids);
     }
 }
