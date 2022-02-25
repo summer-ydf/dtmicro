@@ -17,4 +17,7 @@ public class SysOperatorPage extends PageEntity {
 
     @ApiModelProperty(value = "账号")
     private String username;
+
+    @ApiModelProperty(value = "部门ID")
+    private String deptId;
 }

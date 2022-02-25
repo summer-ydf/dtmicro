@@ -8,6 +8,14 @@
         FROM sys_operator AS so
         LEFT JOIN sys_operator_role AS sor ON so.id = sor.user_id
         LEFT JOIN sys_role AS sr ON sr.id = sor.role_id
+        <where>
+            <if test="request.username != null and request.username != ''">
+                AND so.username LIKE CONCAT('%',#{request.username},'%')
+            </if>
+            <if test="request.deptId != null and request.deptId != ''">
+                AND (so.dept_id = #{request.deptId} OR so.dept_id IN (SELECT t.id FROM sys_department t WHERE find_in_set(#{request.deptId}, pid)))
+            </if>
+        </where>
         ORDER BY
             so.create_time DESC
     </select>
