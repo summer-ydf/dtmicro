@@ -60,10 +60,13 @@ public class SysOperatorServiceImpl extends ServiceImpl<SysOperatorMapper, SysOp
         records.forEach(sysOperatorEntity -> {
 //            sysOperatorEntity.getId(),
             // SELECT GROUP_CONCAT(b.role_id) roleIds FROM sys_operator_role b WHERE b.user_id = 261749792505925
-            // SELECT t.username,GROUP_CONCAT(c.role_id)
-            //FROM sys_operator AS t
-            // LEFT JOIN sys_operator_role AS c
-            // ON t.id=c.user_id GROUP BY t.username
+
+//            SELECT t.username, GROUP_CONCAT(c.role_id) AS roleIds,GROUP_CONCAT(d.name) AS roleNames
+//            FROM sys_operator AS t
+//            LEFT JOIN sys_operator_role AS c ON t.id=c.user_id
+//            LEFT JOIN sys_role AS d ON c.role_id=d.id
+//            GROUP BY t.username
+
             List<Long> ids = new ArrayList<>();
             ids.add(1L);
             ids.add(2L);
