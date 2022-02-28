@@ -64,7 +64,7 @@ public class SysOperatorEntity extends BaseEntity implements Serializable {
 
     @ApiModelProperty(value = "角色ID")
     @TableField(exist = false)
-    private Long roleId;
+    private List<Long> roleIds;
 
     @ApiModelProperty(value = "角色名称")
     @TableField(exist = false)

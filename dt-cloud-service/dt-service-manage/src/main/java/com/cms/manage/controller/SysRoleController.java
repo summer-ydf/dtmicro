@@ -65,7 +65,7 @@ public class SysRoleController {
     }
 
     @ApiOperation(value = "查询所有角色")
-    @GetMapping("findAll")
+    @GetMapping("/findAll")
     public ResultUtil<List<SysRoleEntity>> findAll(){
         return sysRoleService.findAll();
     }

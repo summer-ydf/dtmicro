@@ -18,6 +18,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author ydf Created by 2022/1/7 17:22
  */
@@ -53,6 +56,15 @@ public class SysOperatorServiceImpl extends ServiceImpl<SysOperatorMapper, SysOp
     public ResultUtil<IPage<SysOperatorEntity>> pageSearch(SysOperatorPage request) {
         Page<SysOperatorEntity> page = new Page<>(request.getCurrent(),request.getSize());
         IPage<SysOperatorEntity> list = this.baseMapper.pageSearch(page,request);
+        List<SysOperatorEntity> records = list.getRecords();
+        records.forEach(sysOperatorEntity -> {
+//            sysOperatorEntity.getId(),
+            // SELECT GROUP_CONCAT(b.role_id) roleIds FROM sys_operator_role b WHERE b.user_id = 261749792505925
+            List<Long> ids = new ArrayList<>();
+            ids.add(1L);
+            ids.add(2L);
+            sysOperatorEntity.setRoleIds(ids);
+        });
         return ResultUtil.success(list);
     }
 
@@ -66,8 +78,10 @@ public class SysOperatorServiceImpl extends ServiceImpl<SysOperatorMapper, SysOp
         request.setPassword(passwordEncoder.encode(request.getPassword()));
         this.baseMapper.insert(request);
         // 添加操作员角色关联信息
-        this.baseMapper.saveOperatorRole(SysOperatorRoleEntity.builder()
-                .id(YitIdHelper.nextId()).roleId(request.getRoleId()).userId(request.getId()).build());
+        for (Long roleId : request.getRoleIds()) {
+            this.baseMapper.saveOperatorRole(SysOperatorRoleEntity.builder()
+                    .id(YitIdHelper.nextId()).roleId(roleId).userId(request.getId()).build());
+        }
         return ResultUtil.success(request);
     }
 
@@ -82,8 +96,8 @@ public class SysOperatorServiceImpl extends ServiceImpl<SysOperatorMapper, SysOp
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ResultUtil<SysOperatorEntity> updateOperatorById(SysOperatorEntity request) {
-        this.baseMapper.updateOperatorRoleByUserId(request.getId(),request.getRoleId());
-        this.baseMapper.updateById(request);
+//        this.baseMapper.updateOperatorRoleByUserId(request.getId(),request.getRoleId());
+//        this.baseMapper.updateById(request);
         return ResultUtil.success();
     }
 
