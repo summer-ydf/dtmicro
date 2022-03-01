@@ -71,6 +71,11 @@ public class SysOperatorServiceImpl extends ServiceImpl<SysOperatorMapper, SysOp
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ResultUtil<SysOperatorEntity> saveOperator(SysOperatorEntity request) {
+        if(null != request.getId()) {
+            SysOperatorEntity operator = this.baseMapper.selectOperatorRoleById(request.getId());
+            String roleIds = operator.getRoleIds();
+
+        }
         SysOperatorEntity operator = this.baseMapper.selectOne(new QueryWrapper<SysOperatorEntity>().eq("username",request.getUsername()));
         if(!ObjectUtils.isEmpty(operator)) {
             return ResultUtil.error("账号已经存在！");

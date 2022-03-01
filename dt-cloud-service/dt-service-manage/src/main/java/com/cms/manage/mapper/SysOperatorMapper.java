@@ -8,6 +8,8 @@ import com.cms.manage.entity.SysOperatorRoleEntity;
 import com.cms.manage.vo.SysOperatorPage;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 
 /**
  * @author ydf Created by 2022/1/7 17:23
@@ -25,4 +27,6 @@ public interface SysOperatorMapper extends BaseMapper<SysOperatorEntity> {
     void deleteBath(@Param("array") long[] ids);
 
     void deleteBathOperatorRole(@Param("array") long[] ids);
+
+    SysOperatorEntity selectOperatorRoleById(Long id);
 }

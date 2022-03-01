@@ -30,6 +30,18 @@
             t.create_time DESC
     </select>
 
+    <!--根据操作员id查询拥有的角色-->
+    <select id="selectOperatorRoleById" resultType="com.cms.manage.entity.SysOperatorEntity">
+        SELECT
+            t.id,
+            GROUP_CONCAT( c.role_id ) AS roleIds
+        FROM
+            sys_operator AS t
+            LEFT JOIN sys_operator_role AS c ON t.id = c.user_id
+        WHERE
+            t.id = #{id}
+    </select>
+
     <!--添加操作员角色关联信息-->
     <insert id="saveOperatorRole">
        INSERT INTO sys_operator_role(id, user_id, role_id) VALUES (#{id},#{userId},#{roleId})
