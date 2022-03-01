@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -56,21 +57,13 @@ public class SysOperatorServiceImpl extends ServiceImpl<SysOperatorMapper, SysOp
     public ResultUtil<IPage<SysOperatorEntity>> pageSearch(SysOperatorPage request) {
         Page<SysOperatorEntity> page = new Page<>(request.getCurrent(),request.getSize());
         IPage<SysOperatorEntity> list = this.baseMapper.pageSearch(page,request);
-        List<SysOperatorEntity> records = list.getRecords();
-        records.forEach(sysOperatorEntity -> {
-//            sysOperatorEntity.getId(),
-            // SELECT GROUP_CONCAT(b.role_id) roleIds FROM sys_operator_role b WHERE b.user_id = 261749792505925
-
-//            SELECT t.username, GROUP_CONCAT(c.role_id) AS roleIds,GROUP_CONCAT(d.name) AS roleNames
-//            FROM sys_operator AS t
-//            LEFT JOIN sys_operator_role AS c ON t.id=c.user_id
-//            LEFT JOIN sys_role AS d ON c.role_id=d.id
-//            GROUP BY t.username
-
-            List<Long> ids = new ArrayList<>();
-            ids.add(1L);
-            ids.add(2L);
-            sysOperatorEntity.setRoleIds(ids);
+        list.getRecords().forEach(operator -> {
+            // 角色名称
+            String roleNames = operator.getRoleNames();
+            String[] roleNameArr = roleNames.split(",");
+            List<String> roleNameList = new ArrayList<>(Arrays.asList(roleNameArr));
+            // 设置值
+            operator.setRoleNameList(roleNameList);
         });
         return ResultUtil.success(list);
     }
@@ -85,9 +78,10 @@ public class SysOperatorServiceImpl extends ServiceImpl<SysOperatorMapper, SysOp
         request.setPassword(passwordEncoder.encode(request.getPassword()));
         this.baseMapper.insert(request);
         // 添加操作员角色关联信息
-        for (Long roleId : request.getRoleIds()) {
+        String[] roleIds = request.getRoleIds().split(",");
+        for (String roleId : roleIds) {
             this.baseMapper.saveOperatorRole(SysOperatorRoleEntity.builder()
-                    .id(YitIdHelper.nextId()).roleId(roleId).userId(request.getId()).build());
+                    .id(YitIdHelper.nextId()).roleId(Long.valueOf(roleId)).userId(request.getId()).build());
         }
         return ResultUtil.success(request);
     }

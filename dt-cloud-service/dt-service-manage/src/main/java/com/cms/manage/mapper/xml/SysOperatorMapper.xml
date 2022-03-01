@@ -4,18 +4,30 @@
 
     <!--分页查询操作员-->
     <select id="pageSearch" resultType="com.cms.manage.entity.SysOperatorEntity">
-        SELECT so.id,so.avatar,so.username,so.avatar,so.scope,so.is_enabled,so.create_time
-        FROM sys_operator AS so
+        SELECT
+            t.id,
+            t.username,
+            t.avatar,
+            t.scope,
+            t.is_enabled,
+            t.create_time,
+            GROUP_CONCAT( c.role_id ) AS roleIds,
+            GROUP_CONCAT( d.NAME ) AS roleNames
+        FROM
+        sys_operator AS t
+        LEFT JOIN sys_operator_role AS c ON t.id = c.user_id
+        LEFT JOIN sys_role AS d ON c.role_id = d.id
+        GROUP BY t.username
         <where>
             <if test="request.username != null and request.username != ''">
-                AND so.username LIKE CONCAT('%',#{request.username},'%')
+                AND t.username LIKE CONCAT('%',#{request.username},'%')
             </if>
             <if test="request.deptId != null and request.deptId != ''">
-                AND (so.dept_id = #{request.deptId} OR so.dept_id IN (SELECT t.id FROM sys_department t WHERE find_in_set(#{request.deptId}, pid)))
+                AND (t.dept_id = #{request.deptId} OR t.dept_id IN (SELECT m.id FROM sys_department m WHERE find_in_set(#{request.deptId}, pid)))
             </if>
         </where>
         ORDER BY
-            so.create_time DESC
+            t.create_time DESC
     </select>
 
     <!--添加操作员角色关联信息-->

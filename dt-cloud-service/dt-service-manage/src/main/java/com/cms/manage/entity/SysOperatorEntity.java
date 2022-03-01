@@ -62,13 +62,17 @@ public class SysOperatorEntity extends BaseEntity implements Serializable {
     @TableField(exist = false)
     private List<SysPermissionEntity> permissionList;
 
-    @ApiModelProperty(value = "角色ID")
+    @ApiModelProperty(value = "查询返回：角色名称集合")
     @TableField(exist = false)
-    private List<Long> roleIds;
+    private List<String> roleNameList;
 
-    @ApiModelProperty(value = "角色名称")
+    @ApiModelProperty(value = "SQL变量：角色ID")
     @TableField(exist = false)
-    private String roleName;
+    private String roleIds;
+
+    @ApiModelProperty(value = "SQL变量：角色名称")
+    @TableField(exist = false)
+    private String roleNames;
 
     @Override
     public boolean equals(Object o) {
