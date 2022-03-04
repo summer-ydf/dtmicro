@@ -208,9 +208,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
         tokenEnhancerChain.setTokenEnhancers(Arrays.asList(tokenEnhancer(),jwtAccessTokenConverter()));
         service.setTokenEnhancer(tokenEnhancerChain);
-        // token有效期设置12小时
-        service.setAccessTokenValiditySeconds(100);
-        // 刷新令牌设置有效期30天
+        // token有效期设置2小时
+        service.setAccessTokenValiditySeconds(60 * 60 * 2);
+        // 刷新令牌设置有效期7天
         service.setRefreshTokenValiditySeconds(60 * 60 * 24 * 7);
         return service;
     }

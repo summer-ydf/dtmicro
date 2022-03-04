@@ -20,6 +20,8 @@ public class GatewayConstant {
 
     public static final byte[] UNAUTHORIZED_TEXT = ResultEnum.GATEWAY_TIMEOUT_ERROR.getMessage().getBytes(StandardCharsets.UTF_8);
 
+    public static final byte[] RESOURCE_OAUTH_EXP_TEXT = ResultEnum.RESOURCE_OAUTH_EXP.getMessage().getBytes(StandardCharsets.UTF_8);
+
     public static final byte[] UNAVAILABLE_JSON = JSON.toJSONBytes(ResultUtil.error(ResultEnum.SERVICE_UNAVAILABLE_ERROR.getCode(),ResultEnum.SERVICE_UNAVAILABLE_ERROR.getMessage()));
 
     public static final byte[] UNAVAILABLE_TEXT = ResultEnum.SERVICE_UNAVAILABLE_ERROR.getMessage().getBytes(StandardCharsets.UTF_8);

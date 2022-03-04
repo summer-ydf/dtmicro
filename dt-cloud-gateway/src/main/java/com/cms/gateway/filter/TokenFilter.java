@@ -65,13 +65,9 @@ public class TokenFilter implements GlobalFilter, Ordered {
         OAuth2AccessToken oAuth2AccessToken = null;
         try{
             oAuth2AccessToken = tokenStore.readAccessToken(token);
-            System.out.println("oAuth2AccessToken:");
-            System.out.println(oAuth2AccessToken.getExpiration());
-            System.out.println(oAuth2AccessToken.getExpiresIn());
-            System.out.println(oAuth2AccessToken.isExpired());
             if(oAuth2AccessToken.isExpired()) {
                 //token令牌过期失效
-                System.out.println("令牌过期失效=====================");
+                return GatewayConstant.response(exchange, HttpStatus.UNAUTHORIZED, GatewayConstant.RESOURCE_OAUTH_EXP_TEXT, GatewayConstant.UNAUTHORIZED_JSON);
             }
             Map<String, Object> additionalInformation = oAuth2AccessToken.getAdditionalInformation();
             String claims = MapUtils.getString(additionalInformation,"claims");
