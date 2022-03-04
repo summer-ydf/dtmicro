@@ -175,7 +175,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
         // 检测令牌
-        oauthServer.tokenKeyAccess("isAuthenticated()").checkTokenAccess("isAuthenticated()");
+        oauthServer.tokenKeyAccess("isAuthenticated()").checkTokenAccess("permitAll()");
         // oauthServer.allowFormAuthenticationForClients();
 
         // 自定义client_id异常处理

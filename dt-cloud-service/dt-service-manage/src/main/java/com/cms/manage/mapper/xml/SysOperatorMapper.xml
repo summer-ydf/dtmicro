@@ -17,7 +17,6 @@
         sys_operator AS t
         LEFT JOIN sys_operator_role AS c ON t.id = c.user_id
         LEFT JOIN sys_role AS d ON c.role_id = d.id
-        GROUP BY t.username
         <where>
             <if test="request.username != null and request.username != ''">
                 AND t.username LIKE CONCAT('%',#{request.username},'%')
@@ -26,6 +25,7 @@
                 AND (t.dept_id = #{request.deptId} OR t.dept_id IN (SELECT m.id FROM sys_department m WHERE find_in_set(#{request.deptId}, pid)))
             </if>
         </where>
+        GROUP BY t.username
         ORDER BY
             t.create_time DESC
     </select>
