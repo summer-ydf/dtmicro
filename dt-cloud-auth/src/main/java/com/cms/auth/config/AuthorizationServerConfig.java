@@ -28,6 +28,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -138,8 +140,13 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      */
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        // 从jdbc查出数据来存储
-        clients.withClientDetails(clientDetails());
+        // TODO 从jdbc查出数据来存储，会导致设置的令牌过期时间不生效
+        //clients.withClientDetails(clientDetails());
+        clients.inMemory()
+                .withClient("cms")
+                .secret(new BCryptPasswordEncoder().encode("dt$pwd123"))
+                .scopes("web")
+                .authorizedGrantTypes("password", "refresh_token");
     }
 
     /**
@@ -202,7 +209,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         tokenEnhancerChain.setTokenEnhancers(Arrays.asList(tokenEnhancer(),jwtAccessTokenConverter()));
         service.setTokenEnhancer(tokenEnhancerChain);
         // token有效期设置12小时
-        service.setAccessTokenValiditySeconds(60 * 60 * 4);
+        service.setAccessTokenValiditySeconds(100);
         // 刷新令牌设置有效期30天
         service.setRefreshTokenValiditySeconds(60 * 60 * 24 * 7);
         return service;
