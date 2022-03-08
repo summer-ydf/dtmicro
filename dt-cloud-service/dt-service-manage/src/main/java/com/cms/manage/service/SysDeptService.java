@@ -20,4 +20,5 @@ public interface SysDeptService extends IService<SysDepartmentEntity> {
 
     ResultUtil<SysDepartmentEntity> deleteDept(String id);
 
+    ResultUtil<SysDepartmentEntity> saveDept(SysDepartmentEntity sysDepartmentEntity);
 }

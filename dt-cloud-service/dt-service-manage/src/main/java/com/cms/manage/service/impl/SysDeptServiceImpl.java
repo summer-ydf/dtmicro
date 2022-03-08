@@ -2,6 +2,7 @@ package com.cms.manage.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.cms.common.tool.result.ResultEnum;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.entity.SysDepartmentEntity;
 import com.cms.manage.entity.SysOperatorEntity;
@@ -65,6 +66,25 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDepartment
         }
         int delete = this.baseMapper.deleteById(id);
         return delete > 0 ? ResultUtil.success() : ResultUtil.error();
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResultUtil<SysDepartmentEntity> saveDept(SysDepartmentEntity sysDepartmentEntity) {
+        Long count = this.baseMapper.selectCount(new QueryWrapper<SysDepartmentEntity>().eq("id", sysDepartmentEntity.getId()));
+        if(count > 0) {
+            // 修改
+            this.baseMapper.updateById(sysDepartmentEntity);
+            return ResultUtil.success(sysDepartmentEntity);
+        }
+        Long countParentId = this.baseMapper.selectCount(new QueryWrapper<SysDepartmentEntity>().eq("id", sysDepartmentEntity.getParentId()));
+        if(countParentId > 0) {
+            this.baseMapper.insert(sysDepartmentEntity);
+            return ResultUtil.success(sysDepartmentEntity);
+        }else {
+            // 上级部门不存在
+            return ResultUtil.error(ResultEnum.ERROR.getCode(),"请先保存上级部门");
+        }
     }
 
     public static List<SysDepartmentEntity> buildTree(List<SysDepartmentEntity> list, String pid){
