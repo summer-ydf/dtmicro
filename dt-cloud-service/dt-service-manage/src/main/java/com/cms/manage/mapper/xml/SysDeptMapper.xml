@@ -22,4 +22,11 @@
         ORDER BY sd.sort ASC
     </select>
 
+    <delete id="deleteBath" parameterType="java.util.Arrays">
+        DELETE FROM sys_department WHERE id IN
+        <foreach collection="array" item="ids" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </delete>
+
 </mapper>

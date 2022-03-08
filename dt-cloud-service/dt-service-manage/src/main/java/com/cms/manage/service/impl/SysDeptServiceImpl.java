@@ -87,6 +87,19 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDepartment
         }
     }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResultUtil<?> deleteBath(long[] ids) {
+        for (long id : ids) {
+            long count = sysOperatorService.count(new QueryWrapper<SysOperatorEntity>().eq("dept_id", id));
+            if(count > 0) {
+                return ResultUtil.error("【"+id+"】其它用户使用中，无法删除");
+            }
+        }
+        this.baseMapper.deleteBath(ids);
+        return ResultUtil.success();
+    }
+
     public static List<SysDepartmentEntity> buildTree(List<SysDepartmentEntity> list, String pid){
         List<SysDepartmentEntity> children = list.stream().filter(x -> x.getParentId().equals(pid)).collect(Collectors.toList());
         List<SysDepartmentEntity> subclass = list.stream().filter(x -> !x.getParentId().equals(pid)).collect(Collectors.toList());

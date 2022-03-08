@@ -16,4 +16,5 @@ public interface SysDeptMapper extends BaseMapper<SysDepartmentEntity> {
 
     List<SysDepartmentEntity> queryList(@Param("request") SysDeptRequest request);
 
+    void deleteBath(@Param("array") long[] ids);
 }

@@ -43,6 +43,12 @@ public class SysDeptController {
         return sysDeptService.saveDept(sysDepartmentEntity);
     }
 
+    @ApiOperation(value = "批量删除部门")
+    @DeleteMapping("/deleteBath")
+    public ResultUtil<?> deleteBath(@RequestBody long[] ids) {
+        return sysDeptService.deleteBath(ids);
+    }
+
     @GetMapping("/getById/{id}")
     @ApiOperation(value = "根据id查询部门")
     public ResultUtil<SysDepartmentEntity> getById(@PathVariable String id){
