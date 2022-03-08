@@ -1,6 +1,7 @@
 package com.cms.auth;
 import com.cms.auth.config.handler.RestExceptionHandler;
 import com.cms.auth.service.OauthClientService;
+import com.cms.common.jdbc.config.IdGeneratorConfig;
 import com.cms.common.tool.utils.SysCmsUtils;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -21,7 +22,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableAuthorizationServer
 @EnableDiscoveryClient
 @EnableSwagger2
-@Import({RestExceptionHandler.class})
+@Import({RestExceptionHandler.class,IdGeneratorConfig.class})
 @MapperScan(basePackages = {"com.cms.auth.mapper"})
 @EnableFeignClients(basePackages ={"com.api.manage.feign"})
 public class CmsAuthApplication {

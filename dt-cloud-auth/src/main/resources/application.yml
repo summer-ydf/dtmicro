@@ -49,6 +49,7 @@ secure:
       - /oauth/**
       - /security/logout/**
       - /anonymous/valid_code/**
+      - /anonymous/generate_id/**
       - /rsa/publicKey
       - /hello
       - /login.html

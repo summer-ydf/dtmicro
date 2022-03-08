@@ -2,6 +2,7 @@ package com.cms.auth.controller;
 
 import com.cms.auth.service.OlapRabbitMqService;
 import com.cms.common.core.utils.ApiCallUtils;
+import com.cms.common.jdbc.config.IdGeneratorConfig;
 import com.cms.common.tool.domain.SecurityClaimsUserEntity;
 import com.cms.common.tool.result.ResultException;
 import com.cms.common.tool.result.ResultUtil;
@@ -32,13 +33,14 @@ import static com.cms.common.tool.constant.ConstantCommonCode.WIDTH;
 @RestController
 public class AuthController {
 
+    private final IdGeneratorConfig idGeneratorConfig;
     private final OlapRabbitMqService olapRabbitMqService;
-
     private final StringRedisTemplate stringRedisTemplate;
 
-    public AuthController(StringRedisTemplate stringRedisTemplate, OlapRabbitMqService olapRabbitMqService) {
+    public AuthController(StringRedisTemplate stringRedisTemplate, OlapRabbitMqService olapRabbitMqService, IdGeneratorConfig idGeneratorConfig) {
         this.stringRedisTemplate = stringRedisTemplate;
         this.olapRabbitMqService = olapRabbitMqService;
+        this.idGeneratorConfig = idGeneratorConfig;
     }
 
     @GetMapping("/anonymous/valid_code")
@@ -61,6 +63,12 @@ public class AuthController {
         ImageIO.write(image, IMG_JPG, out);
         out.flush();
         out.close();
+    }
+
+    @GetMapping("/anonymous/generate_id")
+    @ApiOperation(value = "生成分布式唯一ID")
+    public ResultUtil<Long> generateId() {
+        return ResultUtil.success(idGeneratorConfig.nextId(Object.class));
     }
 
     @GetMapping("/security/logout")
