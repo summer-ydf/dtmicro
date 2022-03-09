@@ -57,14 +57,6 @@ public class SysOperatorServiceImpl extends ServiceImpl<SysOperatorMapper, SysOp
     public ResultUtil<IPage<SysOperatorEntity>> pageSearch(SysOperatorPage request) {
         Page<SysOperatorEntity> page = new Page<>(request.getCurrent(),request.getSize());
         IPage<SysOperatorEntity> list = this.baseMapper.pageSearch(page,request);
-        list.getRecords().forEach(operator -> {
-            // 角色名称
-            String roleNames = operator.getRoleNames();
-            String[] roleNameArr = roleNames.split(",");
-            List<String> roleNameList = new ArrayList<>(Arrays.asList(roleNameArr));
-            // 设置值
-            operator.setRoleNameList(roleNameList);
-        });
         return ResultUtil.success(list);
     }
 
