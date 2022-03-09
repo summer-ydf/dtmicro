@@ -2,6 +2,7 @@ package com.cms.manage.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.cms.common.tool.result.ResultEnum;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.entity.SysMenuEntity;
 import com.cms.manage.mapper.SysMenuMapper;
@@ -68,14 +69,20 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
             this.baseMapper.updateById(sysMenuEntity);
             return ResultUtil.success(sysMenuEntity);
         }
-        Integer maxSort = sysMenuService.maxSort();
-        maxSort = maxSort + 1;
-        sysMenuEntity.setSort(maxSort);
-        if(StringUtils.isBlank(sysMenuEntity.getParentId())) {
-            sysMenuEntity.setParentId("0");
+        Long countParentId = this.baseMapper.selectCount(new QueryWrapper<SysMenuEntity>().eq("id", sysMenuEntity.getParentId()));
+        if(countParentId > 0) {
+            Integer maxSort = sysMenuService.maxSort();
+            maxSort = maxSort + 1;
+            sysMenuEntity.setSort(maxSort);
+            if(StringUtils.isBlank(sysMenuEntity.getParentId())) {
+                sysMenuEntity.setParentId("0");
+            }
+            this.baseMapper.insert(sysMenuEntity);
+            return ResultUtil.success(sysMenuEntity);
+        }else {
+            // 上级部门不存在
+            return ResultUtil.error(ResultEnum.ERROR.getCode(),"请先保存上级菜单");
         }
-        this.baseMapper.insert(sysMenuEntity);
-        return ResultUtil.success(sysMenuEntity);
     }
 
     @Override
