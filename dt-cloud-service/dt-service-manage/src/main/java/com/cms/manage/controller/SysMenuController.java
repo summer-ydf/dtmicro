@@ -32,7 +32,7 @@ public class SysMenuController {
     }
 
     @ApiOperation(value = "根据操作员ID获取菜单以及按钮权限信息")
-    @GetMapping("/getOperatorMenu/{userId}")
+    @GetMapping("/get_operator_menu/{userId}")
     public ResultUtil<Map<String,Object>> getOperatorMenu(@PathVariable String userId) {
         return sysMenuService.listOperatorMenu(userId);
     }

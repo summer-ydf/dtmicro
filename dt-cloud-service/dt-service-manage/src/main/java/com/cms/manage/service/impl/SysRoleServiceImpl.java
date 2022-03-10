@@ -3,7 +3,7 @@ package com.cms.manage.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cms.common.tool.result.ResultUtil;
-import com.cms.manage.entity.SysPermissionEntity;
+import com.cms.manage.entity.SysMenuEntity;
 import com.cms.manage.entity.SysRoleEntity;
 import com.cms.manage.mapper.SysRoleMapper;
 import com.cms.manage.service.SysRoleService;
@@ -41,8 +41,8 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRoleEntity
         if(!roleEntityList.isEmpty()) {
             roleEntityList.forEach(it -> {
                 // 根据角色ID查询角色权限信息
-                List<SysPermissionEntity> permissionEntityList = this.baseMapper.getPermissionListByRoleId(it.getId());
-                List<SysPermissionEntity> childrenList = buildTree(permissionEntityList, 0L);
+                List<SysMenuEntity> menuEntityList = this.baseMapper.getMenuListByRoleId(it.getId());
+                List<SysMenuEntity> childrenList = buildTree(menuEntityList, "0");
                 it.setChildren(childrenList);
                 responseList.add(it);
             });
@@ -50,9 +50,9 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRoleEntity
         return ResultUtil.success(responseList);
     }
 
-    public static List<SysPermissionEntity> buildTree(List<SysPermissionEntity> list, Long pid){
-        List<SysPermissionEntity> children = list.stream().filter(x -> x.getChildren() != null && x.getParentId().equals(pid)).collect(Collectors.toList());
-        List<SysPermissionEntity> subclass = list.stream().filter(x -> x.getChildren() != null && !x.getParentId().equals(pid)).collect(Collectors.toList());
+    public static List<SysMenuEntity> buildTree(List<SysMenuEntity> list, String pid){
+        List<SysMenuEntity> children = list.stream().filter(x -> x.getChildren() != null && x.getParentId().equals(pid)).collect(Collectors.toList());
+        List<SysMenuEntity> subclass = list.stream().filter(x -> x.getChildren() != null && !x.getParentId().equals(pid)).collect(Collectors.toList());
         if(children.size() > 0) {
             children.forEach(x -> {
                 if(subclass.size() > 0) {

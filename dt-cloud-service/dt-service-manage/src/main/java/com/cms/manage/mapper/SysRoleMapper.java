@@ -1,6 +1,7 @@
 package com.cms.manage.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.cms.manage.entity.SysMenuEntity;
 import com.cms.manage.entity.SysPermissionEntity;
 import com.cms.manage.entity.SysRoleEntity;
 
@@ -13,7 +14,7 @@ import java.util.List;
  */
 public interface SysRoleMapper extends BaseMapper<SysRoleEntity> {
 
-    List<SysPermissionEntity> getPermissionListByRoleId(Long id);
+    List<SysMenuEntity> getMenuListByRoleId(Long id);
 
     List<Long> listRolePermissionByRoleId(Long id);
 

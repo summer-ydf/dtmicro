@@ -51,5 +51,5 @@ public class SysRoleEntity extends BaseEntity implements Serializable {
 
     @ApiModelProperty(value = "权限集合")
     @TableField(exist = false)
-    private List<SysPermissionEntity> children;
+    private List<SysMenuEntity> children;
 }
