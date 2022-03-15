@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.cms.common.tool.domain.SecurityClaimsUserEntity;
 import com.cms.common.tool.result.ResultEnum;
 import com.cms.common.tool.result.ResultException;
+import com.cms.common.tool.utils.EncryptUtils;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
 
@@ -21,7 +22,7 @@ public class ApiCallUtils {
         if(StringUtils.isEmpty(token)) {
             throw new ResultException(ResultEnum.NO_AUTH);
         }
-        SecurityClaimsUserEntity claims = JSON.parseObject(new String(Base64.decodeBase64(token)), SecurityClaimsUserEntity.class);
+        SecurityClaimsUserEntity claims = JSON.parseObject(EncryptUtils.desEncrypt(token), SecurityClaimsUserEntity.class);
         if(claims == null) {
             throw new ResultException(ResultEnum.NO_AUTH);
         }

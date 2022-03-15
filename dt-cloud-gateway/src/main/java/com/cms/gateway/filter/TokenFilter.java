@@ -75,7 +75,7 @@ public class TokenFilter implements GlobalFilter, Ordered {
             System.out.println("claims->>>"+claims);
             String deClaims = EncryptUtils.desEncrypt(claims);
             System.out.println("解密deClaims->>>"+deClaims);
-            ServerHttpRequest request = exchange.getRequest().mutate().header(GATEWAY_AUTHORIZATION, deClaims).build();
+            ServerHttpRequest request = exchange.getRequest().mutate().header(GATEWAY_AUTHORIZATION, claims).build();
             //将现在的request 变成 exchange对象
             return chain.filter(exchange.mutate().request(request).build());
         }catch (Exception e) {
