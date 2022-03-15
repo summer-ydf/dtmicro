@@ -46,6 +46,9 @@ public class SysOperatorEntity extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "头像")
     private String avatar;
 
+    @ApiModelProperty(value = "所属部门ID")
+    private String deptId;
+
     @ApiModelProperty(value = "帐户是否过期(1 未过期，0已过期)")
     private boolean isAccountNonExpired = true;
 
@@ -69,6 +72,10 @@ public class SysOperatorEntity extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "SQL变量：角色名称")
     @TableField(exist = false)
     private String roleNames;
+
+    @ApiModelProperty(value = "SQL变量：部门名称")
+    @TableField(exist = false)
+    private String deptName;
 
     @Override
     public boolean equals(Object o) {

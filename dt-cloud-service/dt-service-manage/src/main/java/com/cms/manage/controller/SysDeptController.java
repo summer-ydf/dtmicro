@@ -44,7 +44,7 @@ public class SysDeptController {
     }
 
     @ApiOperation(value = "批量删除部门")
-    @DeleteMapping("/deleteBath")
+    @DeleteMapping("/bath_delete")
     public ResultUtil<?> deleteBath(@RequestBody long[] ids) {
         return sysDeptService.deleteBath(ids);
     }
