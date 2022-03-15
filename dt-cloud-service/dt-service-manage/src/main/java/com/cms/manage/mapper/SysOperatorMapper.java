@@ -28,5 +28,5 @@ public interface SysOperatorMapper extends BaseMapper<SysOperatorEntity> {
 
     void deleteBathOperatorRole(@Param("array") long[] ids);
 
-    SysOperatorEntity selectOperatorRoleById(Long id);
+    void removeOperatorRoleByUserId(Long id);
 }

@@ -12,6 +12,7 @@ import com.cms.manage.mapper.SysOperatorMapper;
 import com.cms.manage.service.SysOperatorService;
 import com.cms.manage.vo.SysOperatorPage;
 import com.github.yitter.idgen.YitIdHelper;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -57,6 +58,19 @@ public class SysOperatorServiceImpl extends ServiceImpl<SysOperatorMapper, SysOp
     public ResultUtil<IPage<SysOperatorEntity>> pageSearch(SysOperatorPage request) {
         Page<SysOperatorEntity> page = new Page<>(request.getCurrent(),request.getSize());
         IPage<SysOperatorEntity> list = this.baseMapper.pageSearch(page,request);
+        if(!list.getRecords().isEmpty()) {
+            for (SysOperatorEntity operator : list.getRecords()) {
+                if(StringUtils.isNotBlank(operator.getStrRoleIds())) {
+                    String strRoleIds = operator.getStrRoleIds();
+                    String[] strings = strRoleIds.split(",");
+                    List<Long> roleIds = new ArrayList<>();
+                    for (String s : strings) {
+                        roleIds.add(Long.valueOf(s));
+                    }
+                    operator.setRoleIds(roleIds);
+                }
+            }
+        }
         return ResultUtil.success(list);
     }
 
@@ -64,9 +78,11 @@ public class SysOperatorServiceImpl extends ServiceImpl<SysOperatorMapper, SysOp
     @Transactional(rollbackFor = Exception.class)
     public ResultUtil<SysOperatorEntity> saveOperator(SysOperatorEntity request) {
         if(null != request.getId()) {
-            SysOperatorEntity operator = this.baseMapper.selectOperatorRoleById(request.getId());
-            String roleIds = operator.getRoleIds();
-
+            // 删除旧数据
+            this.baseMapper.removeOperatorRoleByUserId(request.getId());
+            // 添加操作员角色关联信息
+            this.insertOperatorRole(request);
+            return ResultUtil.success();
         }
         SysOperatorEntity operator = this.baseMapper.selectOne(new QueryWrapper<SysOperatorEntity>().eq("username",request.getUsername()));
         if(!ObjectUtils.isEmpty(operator)) {
@@ -75,12 +91,15 @@ public class SysOperatorServiceImpl extends ServiceImpl<SysOperatorMapper, SysOp
         request.setPassword(passwordEncoder.encode(request.getPassword()));
         this.baseMapper.insert(request);
         // 添加操作员角色关联信息
-        String[] roleIds = request.getRoleIds().split(",");
-        for (String roleId : roleIds) {
-            this.baseMapper.saveOperatorRole(SysOperatorRoleEntity.builder()
-                    .id(YitIdHelper.nextId()).roleId(Long.valueOf(roleId)).userId(request.getId()).build());
-        }
+        this.insertOperatorRole(request);
         return ResultUtil.success(request);
+    }
+
+    private void insertOperatorRole(SysOperatorEntity request) {
+        List<Long> roleIds = request.getRoleIds();
+        for (Long roleId : roleIds) {
+            this.baseMapper.saveOperatorRole(SysOperatorRoleEntity.builder().id(YitIdHelper.nextId()).roleId(roleId).userId(request.getId()).build());
+        }
     }
 
     @Override
