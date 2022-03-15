@@ -11,7 +11,7 @@
  Target Server Version : 50734
  File Encoding         : 65001
 
- Date: 24/02/2022 13:49:46
+ Date: 15/03/2022 17:52:34
 */
 
 SET NAMES utf8mb4;
@@ -67,7 +67,7 @@ CREATE TABLE `oauth_client_details`  (
 -- ----------------------------
 -- Records of oauth_client_details
 -- ----------------------------
-INSERT INTO `oauth_client_details` VALUES ('cms', NULL, '$2a$10$bMNULS2JtrK.kEOIZw4MrOXgJ/B3XK3bnjkO58JHe2.t9kIBnScpe', 'web', 'password,refresh_token', NULL, NULL, NULL, NULL, NULL, 'true');
+INSERT INTO `oauth_client_details` VALUES ('cms', NULL, '$2a$10$bMNULS2JtrK.kEOIZw4MrOXgJ/B3XK3bnjkO58JHe2.t9kIBnScpe', 'web', 'password,refresh_token', NULL, NULL, 100, NULL, NULL, 'true');
 
 -- ----------------------------
 -- Table structure for sys_department
@@ -111,6 +111,15 @@ INSERT INTO `sys_department` VALUES ('1000001854756787', '1000000622591924', '�
 INSERT INTO `sys_department` VALUES ('1000001934748021', '1000000622591924', '设计组二', 2, '2021-06-20 21:54:27', '2021-06-20 21:54:27');
 INSERT INTO `sys_department` VALUES ('1000001975876013', '1000000622591924', '设计组三', 3, '2021-06-20 21:54:48', '2021-06-20 21:54:48');
 INSERT INTO `sys_department` VALUES ('1000002112552988', '1000000354532983', '研发部', 1, '2021-06-20 21:54:57', '2021-06-20 21:54:57');
+INSERT INTO `sys_department` VALUES ('264578974974021', '0', '未命名11111', NULL, '2022-03-08 17:14:40', '2022-03-08 17:14:58');
+INSERT INTO `sys_department` VALUES ('264580983754821', '264580978536517', '未命名2', NULL, '2022-03-08 17:22:50', '2022-03-08 17:22:50');
+INSERT INTO `sys_department` VALUES ('264581199548485', '264578974974021', '未命名1', NULL, '2022-03-08 17:23:45', '2022-03-08 17:23:45');
+INSERT INTO `sys_department` VALUES ('264581234606149', '264581199548485', '未命名1', NULL, '2022-03-08 17:23:52', '2022-03-08 17:23:52');
+INSERT INTO `sys_department` VALUES ('264581276459077', '264581234606149', '未命名1', NULL, '2022-03-08 17:24:05', '2022-03-08 17:24:05');
+INSERT INTO `sys_department` VALUES ('264582936608837', '0', '未命名1', NULL, '2022-03-08 17:30:56', '2022-03-08 17:30:56');
+INSERT INTO `sys_department` VALUES ('264583838924869', '264582936608837', '未命名1', NULL, '2022-03-08 17:34:31', '2022-03-08 17:34:31');
+INSERT INTO `sys_department` VALUES ('264583843057733', '264583838924869', '未命名2', NULL, '2022-03-08 17:34:34', '2022-03-08 17:34:34');
+INSERT INTO `sys_department` VALUES ('264583899041861', '264583843057733', '未命名1', NULL, '2022-03-08 17:34:41', '2022-03-08 17:34:41');
 
 -- ----------------------------
 -- Table structure for sys_login_log
@@ -143,6 +152,12 @@ INSERT INTO `sys_login_log` VALUES ('1000000789815459', '账号被锁', 'root', 
 INSERT INTO `sys_login_log` VALUES ('1000000956147914', '账号被锁', 'test', '127.0.0.1', 'Chrome', 'Windows 10 or Windows Server 2016', 2, 1, '账号被锁定15分钟', '2021-11-20 23:03:50', '2021-11-20 23:03:50');
 INSERT INTO `sys_login_log` VALUES ('1000002019704519', '登录系统', 'admin', '127.0.0.1', 'Chrome', 'Windows 10 or Windows Server 2016', 1, 1, '登录成功', '2021-11-20 22:58:26', '2021-11-20 22:58:26');
 INSERT INTO `sys_login_log` VALUES ('1000002079599789', '登录系统', 'admin', '127.0.0.1', 'Chrome', 'Windows 10 or Windows Server 2016', 1, 1, '登录成功', '2021-11-20 23:01:25', '2021-11-20 23:01:25');
+INSERT INTO `sys_login_log` VALUES ('1501443463713976321', 'admin在：2022-03-09 14:23:11 点击了登录', 'admin', '192.168.200.248', 'Chrome 9', 'Windows 10', 1, 1, NULL, '2022-03-09 14:23:12', '2022-03-09 14:23:12');
+INSERT INTO `sys_login_log` VALUES ('1501444013427847169', 'admin在：2022-03-09 14:25:22 点击了登录', 'admin', '192.168.200.248', 'Chrome 9', 'Windows 10', 1, 1, NULL, '2022-03-09 14:25:23', '2022-03-09 14:25:23');
+INSERT INTO `sys_login_log` VALUES ('1501444415946813441', 'admin在：2022-03-09 14:26:58 点击了登录', 'admin', '192.168.200.248', 'Chrome 9', 'Windows 10', 1, 1, NULL, '2022-03-09 14:26:59', '2022-03-09 14:26:59');
+INSERT INTO `sys_login_log` VALUES ('1503565453677588482', 'admin在：2022-03-15 10:55:13 点击了登录', 'admin', '192.168.200.248', 'Chrome 9', 'Windows 10', 1, 1, NULL, '2022-03-15 10:55:14', '2022-03-15 10:55:14');
+INSERT INTO `sys_login_log` VALUES ('1503609231025197057', 'admin在：2022-03-15 13:49:10 点击了登录', 'admin', '192.168.200.248', 'Chrome 9', 'Windows 10', 1, 1, NULL, '2022-03-15 13:49:11', '2022-03-15 13:49:11');
+INSERT INTO `sys_login_log` VALUES ('1503640528632279041', 'admin在：2022-03-15 15:53:32 点击了登录', 'admin', '192.168.200.248', 'Chrome 9', 'Windows 10', 1, 1, NULL, '2022-03-15 15:53:33', '2022-03-15 15:53:33');
 INSERT INTO `sys_login_log` VALUES ('255277142253637', 'admin在：2022-02-10 10:25:22 点击了登录', 'admin', '127.0.0.1', '谷歌', 'windows10', 1, 1, NULL, '2022-02-10 10:25:23', '2022-02-10 10:25:23');
 INSERT INTO `sys_login_log` VALUES ('255277633196101', 'admin在：2022-02-10 10:27:22 点击了登录', 'admin', '127.0.0.1', '谷歌', 'windows10', 1, 1, NULL, '2022-02-10 10:27:23', '2022-02-10 10:27:23');
 INSERT INTO `sys_login_log` VALUES ('255278541254725', 'admin在：2022-02-10 10:31:04 点击了登录', 'admin', '127.0.0.1', '谷歌', 'windows10', 1, 1, NULL, '2022-02-10 10:31:05', '2022-02-10 10:31:05');
@@ -162,6 +177,24 @@ INSERT INTO `sys_login_log` VALUES ('259207166926917', 'admin在：2022-02-21 12
 INSERT INTO `sys_login_log` VALUES ('259209907118149', 'admin在：2022-02-21 13:07:50 点击了登录', 'admin', '192.168.200.248', 'Chrome 9', 'Windows 10', 1, 1, NULL, '2022-02-21 13:07:51', '2022-02-21 13:07:51');
 INSERT INTO `sys_login_log` VALUES ('259210841428037', 'admin在：2022-02-21 13:11:38 点击了登录', 'admin', '192.168.200.248', 'Chrome 9', 'Windows 10', 1, 1, NULL, '2022-02-21 13:11:39', '2022-02-21 13:11:39');
 INSERT INTO `sys_login_log` VALUES ('260222647853125', 'admin在：2022-02-24 09:48:41 点击了登录', 'admin', '192.168.200.248', 'Chrome 9', 'Windows 10', 1, 1, NULL, '2022-02-24 09:48:42', '2022-02-24 09:48:42');
+INSERT INTO `sys_login_log` VALUES ('261736429576261', 'admin在：2022-02-28 16:28:17 点击了登录', 'admin', '192.168.200.248', 'Chrome 9', 'Windows 10', 1, 1, NULL, '2022-02-28 16:28:18', '2022-02-28 16:28:18');
+INSERT INTO `sys_login_log` VALUES ('261737626673221', 'admin在：2022-02-28 16:33:09 点击了登录', 'admin', '192.168.200.248', 'Chrome 9', 'Windows 10', 1, 1, NULL, '2022-02-28 16:33:10', '2022-02-28 16:33:10');
+INSERT INTO `sys_login_log` VALUES ('261737945567301', 'admin在：2022-02-28 16:34:27 点击了登录', 'admin', '192.168.200.248', 'Chrome 9', 'Windows 10', 1, 1, NULL, '2022-02-28 16:34:28', '2022-02-28 16:34:28');
+INSERT INTO `sys_login_log` VALUES ('261738342195269', 'admin在：2022-02-28 16:36:04 点击了登录', 'admin', '192.168.200.248', 'Chrome 9', 'Windows 10', 1, 1, NULL, '2022-02-28 16:36:04', '2022-02-28 16:36:04');
+INSERT INTO `sys_login_log` VALUES ('261738913595461', 'admin在：2022-02-28 16:38:23 点击了登录', 'admin', '192.168.200.248', 'Chrome 9', 'Windows 10', 1, 1, NULL, '2022-02-28 16:38:24', '2022-02-28 16:38:24');
+INSERT INTO `sys_login_log` VALUES ('261742258597957', 'admin在：2022-02-28 16:52:00 点击了登录', 'admin', '192.168.200.248', 'Chrome 9', 'Windows 10', 1, 1, NULL, '2022-02-28 16:52:01', '2022-02-28 16:52:01');
+INSERT INTO `sys_login_log` VALUES ('263054740762693', 'admin在：2022-03-04 09:52:30 点击了登录', 'admin', '127.0.0.1', 'Unknown', 'Unknown', 1, 1, NULL, '2022-03-04 09:52:31', '2022-03-04 09:52:31');
+INSERT INTO `sys_login_log` VALUES ('263057688637509', 'admin在：2022-03-04 10:04:30 点击了登录', 'admin', '127.0.0.1', 'Unknown', 'Unknown', 1, 1, NULL, '2022-03-04 10:04:31', '2022-03-04 10:04:31');
+INSERT INTO `sys_login_log` VALUES ('263064179191877', 'admin在：2022-03-04 10:30:55 点击了登录', 'admin', '127.0.0.1', 'Unknown', 'Unknown', 1, 1, NULL, '2022-03-04 10:30:55', '2022-03-04 10:30:55');
+INSERT INTO `sys_login_log` VALUES ('263083890049093', 'admin在：2022-03-04 11:51:07 点击了登录', 'admin', '192.168.200.248', 'Chrome 9', 'Windows 10', 1, 1, NULL, '2022-03-04 11:51:07', '2022-03-04 11:51:07');
+INSERT INTO `sys_login_log` VALUES ('263086408880197', 'admin在：2022-03-04 12:01:22 点击了登录', 'admin', '127.0.0.1', 'Unknown', 'Unknown', 1, 1, NULL, '2022-03-04 12:01:22', '2022-03-04 12:01:22');
+INSERT INTO `sys_login_log` VALUES ('263110754185285', 'admin在：2022-03-04 13:40:25 点击了登录', 'admin', '127.0.0.1', 'Unknown', 'Unknown', 1, 1, NULL, '2022-03-04 13:40:26', '2022-03-04 13:40:26');
+INSERT INTO `sys_login_log` VALUES ('263111396520005', 'admin在：2022-03-04 13:43:02 点击了登录', 'admin', '192.168.200.248', 'Chrome 9', 'Windows 10', 1, 1, NULL, '2022-03-04 13:43:03', '2022-03-04 13:43:03');
+INSERT INTO `sys_login_log` VALUES ('263114356039749', 'admin在：2022-03-04 13:55:05 点击了登录', 'admin', '192.168.200.248', 'Chrome 9', 'Windows 10', 1, 1, NULL, '2022-03-04 13:55:05', '2022-03-04 13:55:05');
+INSERT INTO `sys_login_log` VALUES ('263115140071493', 'admin在：2022-03-04 13:58:16 点击了登录', 'admin', '192.168.200.248', 'Chrome 9', 'Windows 10', 1, 1, NULL, '2022-03-04 13:58:17', '2022-03-04 13:58:17');
+INSERT INTO `sys_login_log` VALUES ('264551548874821', 'admin在：2022-03-08 15:23:02 点击了登录', 'admin', '192.168.200.248', 'Chrome 9', 'Windows 10', 1, 1, NULL, '2022-03-08 15:23:02', '2022-03-08 15:23:02');
+INSERT INTO `sys_login_log` VALUES ('264556394025029', 'admin在：2022-03-08 15:42:45 点击了登录', 'admin', '192.168.200.248', 'Chrome 9', 'Windows 10', 1, 1, NULL, '2022-03-08 15:42:45', '2022-03-08 15:42:45');
+INSERT INTO `sys_login_log` VALUES ('264556863184965', 'admin在：2022-03-08 15:44:39 点击了登录', 'admin', '192.168.200.248', 'Chrome 9', 'Windows 10', 1, 1, NULL, '2022-03-08 15:44:40', '2022-03-08 15:44:40');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -192,15 +225,15 @@ CREATE TABLE `sys_menu`  (
 -- ----------------------------
 -- Records of sys_menu
 -- ----------------------------
-INSERT INTO `sys_menu` VALUES ('111', '0', '系统管理', '/setting', 'setting', NULL, '系统管理', 'el-icon-setting', 'menu', 1, 4, NULL, NULL, NULL, 0, 0, '2022-02-22 11:27:20', '2022-02-22 11:27:20');
-INSERT INTO `sys_menu` VALUES ('112', '111', '系统管理', '/setting/user', 'user', 'setting/user', '用户管理', 'el-icon-user-filled', 'menu', 2, 5, 'user.list', NULL, NULL, 0, 0, '2022-02-22 11:27:19', '2022-02-22 11:27:19');
+INSERT INTO `sys_menu` VALUES ('111', '0', '系统管理', '/setting', 'setting', NULL, '系统', 'el-icon-setting', 'menu', 1, 4, NULL, NULL, NULL, 0, 0, '2022-02-22 11:27:20', '2022-03-09 14:25:12');
+INSERT INTO `sys_menu` VALUES ('112', '111', '系统管理', '/setting/user', 'user', 'setting/user', '用户管理', 'sc-icon-user', 'menu', 2, 5, 'user.list', NULL, NULL, 0, 0, '2022-02-22 11:27:19', '2022-03-09 14:25:03');
 INSERT INTO `sys_menu` VALUES ('113', '112', '用户管理', NULL, NULL, NULL, '添加', NULL, 'button', 3, 6, 'user.add', NULL, NULL, 0, 0, '2022-02-22 11:27:18', '2022-02-22 11:27:18');
 INSERT INTO `sys_menu` VALUES ('114', '0', '首页', '/home', 'home', NULL, '首页', 'el-icon-data-line', 'menu', 1, 1, NULL, NULL, NULL, 0, 0, '2022-02-22 11:27:17', '2022-02-22 11:27:17');
 INSERT INTO `sys_menu` VALUES ('115', '114', '首页', '/dashboard', 'dashboard', 'home', '控制台', 'el-icon-menu', 'menu', 2, 2, NULL, NULL, NULL, 0, 0, '2022-02-22 11:27:16', '2022-02-22 11:27:16');
 INSERT INTO `sys_menu` VALUES ('116', '114', '首页', '/usercenter', 'usercenter', 'userCenter', '个人信息', 'el-icon-user', 'menu', 3, 3, NULL, NULL, NULL, 0, 0, '2022-02-22 11:27:15', '2022-02-22 11:27:15');
-INSERT INTO `sys_menu` VALUES ('117', '111', '系统管理', '/setting/menu', 'settingMenu', 'setting/menu', '菜单管理', 'el-icon-fold', 'menu', 1, 7, NULL, '#981515', '', 0, 0, '2022-02-22 13:58:56', '2022-02-22 13:58:56');
-INSERT INTO `sys_menu` VALUES ('259910065872965', '0', NULL, '', '未命名1', '', '未命名1', NULL, 'menu', 1, 8, NULL, NULL, NULL, 0, 0, '2022-02-23 12:36:50', '2022-02-23 12:36:50');
-INSERT INTO `sys_menu` VALUES ('259910082940997', '259910065872965', NULL, '', '未命名2', '', '未命名2', NULL, 'button', 1, 9, NULL, NULL, NULL, 0, 0, '2022-02-23 12:36:54', '2022-02-23 17:46:29');
+INSERT INTO `sys_menu` VALUES ('117', '111', '系统管理', '/setting/menu', 'settingMenu', 'setting/menu', '菜单管理', 'sc-icon-menu', 'menu', 1, 7, NULL, '#981515', '', 0, 0, '2022-02-22 13:58:56', '2022-03-09 14:24:56');
+INSERT INTO `sys_menu` VALUES ('118', '111', NULL, '/setting/dept', 'settingDept', 'setting/dept', '部门管理', 'sc-icon-dept', 'menu', 1, 8, NULL, NULL, NULL, 0, 0, '2022-02-28 16:45:31', '2022-03-08 15:44:32');
+INSERT INTO `sys_menu` VALUES ('119', '111', NULL, '/setting/role', 'role', 'setting/role', '角色管理', 'sc-icon-role', 'menu', 1, 9, NULL, NULL, NULL, 0, 0, '2022-03-09 14:26:01', '2022-03-09 14:26:01');
 
 -- ----------------------------
 -- Table structure for sys_operator
@@ -211,6 +244,7 @@ CREATE TABLE `sys_operator`  (
   `username` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '系统登录名',
   `password` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '密码，加密存储, admin/1234',
   `scope` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '使用范围（web PC端， app 手机端）',
+  `dept_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '所属部门ID',
   `is_account_non_expired` int(11) NOT NULL DEFAULT 1 COMMENT '帐户是否过期(1 未过期，0已过期)',
   `is_account_non_locked` int(11) NOT NULL DEFAULT 1 COMMENT '帐户是否被锁定(1 未过期，0已过期)',
   `is_credentials_non_expired` int(11) NOT NULL DEFAULT 1 COMMENT '密码是否过期(1 未过期，0已过期)',
@@ -225,15 +259,12 @@ CREATE TABLE `sys_operator`  (
 -- ----------------------------
 -- Records of sys_operator
 -- ----------------------------
-INSERT INTO `sys_operator` VALUES (248204704247877, 'admin', '$2a$10$Ty9JjBK2n/lGPjqsHYC8ve5Wd8esEhbK7aF0ryxFVa/5ymnDvmmYu', 'web', 1, 1, 1, 1, 'img/avatar.jpg', '2022-01-21 10:47:34', '2022-01-21 10:47:34');
-INSERT INTO `sys_operator` VALUES (256689773064261, 'admin1', '$2a$10$v3a5.2KtUAQHKWZ5sGhH9.uqDmMFTTGVtoYxAMuicXkzSo6aoQZrm', 'app', 1, 1, 1, 1, 'img/avatar.jpg', '2022-02-14 10:13:24', '2022-02-14 10:13:24');
-INSERT INTO `sys_operator` VALUES (256689985814597, 'admin2', '$2a$10$.PeZou3E0.ACogK9Dq0FDO0gsum0Xm9p/zpherySSbajJ.HsAf0LG', 'ios', 1, 1, 1, 1, 'img/avatar.jpg', '2022-02-14 10:14:16', '2022-02-14 10:14:16');
-INSERT INTO `sys_operator` VALUES (256689998258245, 'admin3', '$2a$10$tsqIqYYDl.6X/LxWoeKe6ebVoBrkR4J21VzSxvyy91Di3MBK1J/iK', 'app', 1, 1, 1, 1, 'img/avatar.jpg', '2022-02-14 10:14:19', '2022-02-14 10:14:19');
-INSERT INTO `sys_operator` VALUES (256690010067013, 'admin4', '$2a$10$HdPGnx46BvoNt/tE50L24uOZDSYp1QjwJr3ZcNmPy4ZmvOCD9NvqW', 'app', 1, 1, 1, 1, 'img/avatar.jpg', '2022-02-14 10:14:21', '2022-02-14 10:14:21');
-INSERT INTO `sys_operator` VALUES (256690022285381, 'admin5', '$2a$10$ko/1lDBwqFqVnjjr6OKFAeAoyrBxyGUvTZpFjjvUWon4QOJj6YTuq', 'app', 1, 1, 1, 1, 'img/avatar.jpg', '2022-02-14 10:14:24', '2022-02-14 10:14:24');
-INSERT INTO `sys_operator` VALUES (256690034090053, 'admin6', '$2a$10$cURKOzekEAde1p9vSMgVBezeYBCECBdJK97mZMLzKmf6kTOERHuOK', 'app', 1, 1, 1, 1, 'img/avatar.jpg', '2022-02-14 10:14:27', '2022-02-14 10:14:27');
-INSERT INTO `sys_operator` VALUES (256690045460549, 'admin7', '$2a$10$NUe/bK2Lhx0yqx4rTCUdZedmM2jofW6eGL1/.TIZB6lpZbRC8ydhS', 'app', 1, 1, 1, 1, 'img/avatar.jpg', '2022-02-14 10:14:30', '2022-02-14 10:14:30');
-INSERT INTO `sys_operator` VALUES (256690056187973, 'admin8', '$2a$10$k749DHsKf5j.jBBIIM2NpOvp3Y50Unk121qH7yJpbj1Hz3NGZc1Z.', 'app', 1, 1, 1, 0, 'img/avatar.jpg', '2022-02-14 10:14:33', '2022-02-14 10:14:33');
+INSERT INTO `sys_operator` VALUES (248204704247877, 'admin', '$2a$10$Ty9JjBK2n/lGPjqsHYC8ve5Wd8esEhbK7aF0ryxFVa/5ymnDvmmYu', 'web', NULL, 1, 1, 1, 1, 'img/avatar.jpg', '2022-01-21 10:47:34', '2022-01-21 10:47:34');
+INSERT INTO `sys_operator` VALUES (248204704247878, 'root', '$2a$10$Ty9JjBK2n/lGPjqsHYC8ve5Wd8esEhbK7aF0ryxFVa/5ymnDvmmYu', 'app', NULL, 1, 1, 1, 1, 'img/avatar.jpg', '2022-02-28 16:47:03', '2022-02-28 16:47:03');
+INSERT INTO `sys_operator` VALUES (261749792505925, 'test', '$2a$10$r4MyPPzvIp5OiKCbX8eEme7Zf/99KFcYdnm1cyLRTA4ageRqn.WHe', 'web', NULL, 1, 1, 1, 1, '', '2022-02-28 17:22:40', '2022-02-28 17:22:40');
+INSERT INTO `sys_operator` VALUES (263086138699845, '1', '$2a$10$fG29bgkzDGJ.CcCgwF32kuzGIg6DZnBdMmCmXCg7qc92qr1x9RM.W', 'web', NULL, 1, 1, 1, 1, '', '2022-03-04 12:00:16', '2022-03-04 12:00:16');
+INSERT INTO `sys_operator` VALUES (1503614791426621441, 'aa', '$2a$10$XzrAn87zzRNTLMZYkr6xsucdYeoGSDKKdcM5ZNbHtgftWWqr.Wpvu', 'web', '1000001625392933', 1, 1, 1, 1, '', '2022-03-15 14:11:17', '2022-03-15 14:11:17');
+INSERT INTO `sys_operator` VALUES (1503631750683803649, '12', '$2a$10$bQJH7Msle0nYDe0z1pgwaeFnZ7wzPs1YH284IJhVTG.5SKfAjeI5u', 'web', '1000000952846438', 1, 1, 1, 1, '', '2022-03-15 15:18:40', '2022-03-15 15:18:40');
 
 -- ----------------------------
 -- Table structure for sys_operator_log
@@ -287,6 +318,13 @@ CREATE TABLE `sys_operator_role`  (
 -- Records of sys_operator_role
 -- ----------------------------
 INSERT INTO `sys_operator_role` VALUES (248204704260165, 248204704247877, 248204504629317);
+INSERT INTO `sys_operator_role` VALUES (248204704260166, 248204704247877, 256693602365509);
+INSERT INTO `sys_operator_role` VALUES (248204704260167, 248204704247878, 256693602365509);
+INSERT INTO `sys_operator_role` VALUES (261749792542789, 261749792505925, 248204504629317);
+INSERT INTO `sys_operator_role` VALUES (261749792546885, 261749792505925, 256693602365509);
+INSERT INTO `sys_operator_role` VALUES (263086138716229, 263086138699845, 248204504629317);
+INSERT INTO `sys_operator_role` VALUES (263086138724421, 263086138699845, 256693602365509);
+INSERT INTO `sys_operator_role` VALUES (267011175546949, 1503614791426621441, 248204504629317);
 
 -- ----------------------------
 -- Table structure for sys_order
@@ -424,6 +462,8 @@ INSERT INTO `sys_role_menu` VALUES ('258142502264901', '248204504629317', '114')
 INSERT INTO `sys_role_menu` VALUES ('258142598918213', '248204504629317', '115');
 INSERT INTO `sys_role_menu` VALUES ('258143150133317', '248204504629317', '116');
 INSERT INTO `sys_role_menu` VALUES ('258143150133318', '248204504629317', '117');
+INSERT INTO `sys_role_menu` VALUES ('258143150133319', '256693602365509', '118');
+INSERT INTO `sys_role_menu` VALUES ('258143150133320', '256693602365509', '119');
 
 -- ----------------------------
 -- Table structure for sys_role_permission
