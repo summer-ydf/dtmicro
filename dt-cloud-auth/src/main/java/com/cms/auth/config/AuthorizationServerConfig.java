@@ -17,7 +17,6 @@ import com.cms.auth.service.RpcUserDetailsService;
 import com.cms.common.tool.domain.SecurityClaimsUserEntity;
 import com.cms.common.tool.result.ResultEnum;
 import com.cms.common.tool.result.ResultUtil;
-import com.cms.common.tool.utils.EncryptUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,7 +28,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
@@ -248,10 +246,9 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     public TokenEnhancer tokenEnhancer() {
         return (OAuth2AccessToken accessToken, OAuth2Authentication authentication)-> {
             SecurityClaimsUserEntity claimsUser = (SecurityClaimsUserEntity) authentication.getPrincipal();
-            String tokenId = accessToken.getValue();
             final Map<String, Object> additionalInfo = new HashMap<>(2);
-            Map<String, Object> objectMap = claimsUser.jwtClaims(tokenId);
-            additionalInfo.put("claims", EncryptUtils.encrypt(String.valueOf(objectMap)));
+            additionalInfo.put("userid", claimsUser.getUserid());
+            additionalInfo.put("username", claimsUser.getUsername());
             // 注意添加的额外信息，最好不要和已有的json对象中的key重名，容易出现错误
             //additionalInfo.put("authorities", user.getAuthorities());
             ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);

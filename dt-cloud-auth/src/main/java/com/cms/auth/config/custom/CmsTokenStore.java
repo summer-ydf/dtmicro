@@ -27,10 +27,10 @@ public class CmsTokenStore extends JwtTokenStore {
     @Override
     public void storeAccessToken(OAuth2AccessToken token, OAuth2Authentication authentication) {
         String jti = MapUtils.getString(token.getAdditionalInformation(),"jti");
-        String claims = MapUtils.getString(token.getAdditionalInformation(),"claims");
+        String userid = MapUtils.getString(token.getAdditionalInformation(),"userid");
         System.out.println("jti->>>"+jti);
-        System.out.println("claims->>>"+claims);
-        stringRedisTemplate.opsForValue().set(CACHE_LOGIN_TOKEN + jti,claims,token.getExpiresIn(), TimeUnit.SECONDS);
+        System.out.println("userid->>>"+userid);
+        stringRedisTemplate.opsForValue().set(CACHE_LOGIN_TOKEN + jti,userid,token.getExpiresIn(), TimeUnit.SECONDS);
         SecurityOAuth2AuthenticationHolder.setAuthentication(authentication);
     }
 

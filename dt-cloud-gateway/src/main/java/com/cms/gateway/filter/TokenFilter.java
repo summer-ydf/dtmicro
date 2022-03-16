@@ -1,7 +1,8 @@
 package com.cms.gateway.filter;
 
 
-import com.cms.common.tool.utils.EncryptUtils;
+import com.alibaba.fastjson.JSON;
+import com.cms.common.tool.domain.SecurityClaimsUserEntity;
 import com.cms.common.tool.utils.SysCmsUtils;
 import com.cms.gateway.GatewayConstant;
 import com.cms.gateway.config.IgnoreUrlsConfig;
@@ -27,8 +28,6 @@ import java.util.List;
 import java.util.Map;
 
 import static com.cms.common.tool.constant.ConstantCommonCode.GATEWAY_AUTHORIZATION;
-import static com.cms.common.tool.constant.ConstantCommonCode.TOKEN_CLAIMS_IVS;
-import static com.cms.common.tool.constant.ConstantCommonCode.TOKEN_CLAIMS_PWD;
 
 /**
  * @author ydf Created by 2022/1/7 17:52
@@ -70,12 +69,14 @@ public class TokenFilter implements GlobalFilter, Ordered {
                 return GatewayConstant.response(exchange, HttpStatus.UNAUTHORIZED, GatewayConstant.RESOURCE_OAUTH_EXP_TEXT, GatewayConstant.UNAUTHORIZED_JSON);
             }
             Map<String, Object> additionalInformation = oAuth2AccessToken.getAdditionalInformation();
-            String claims = MapUtils.getString(additionalInformation,"claims");
-            System.out.println("token->>>"+token);
-            System.out.println("claims->>>"+claims);
-            String deClaims = EncryptUtils.desEncrypt(claims);
-            System.out.println("解密deClaims->>>"+deClaims);
-            ServerHttpRequest request = exchange.getRequest().mutate().header(GATEWAY_AUTHORIZATION, claims).build();
+            String userid = MapUtils.getString(additionalInformation,"userid");
+            String username = MapUtils.getString(additionalInformation,"username");
+            String jti = MapUtils.getString(additionalInformation,"jti");
+            SecurityClaimsUserEntity claimsUser = new SecurityClaimsUserEntity();
+            claimsUser.setUserid(Long.valueOf(userid));
+            claimsUser.setUsername(username);
+            claimsUser.setJti(jti);
+            ServerHttpRequest request = exchange.getRequest().mutate().header(GATEWAY_AUTHORIZATION, JSON.toJSONString(claimsUser)).build();
             //将现在的request 变成 exchange对象
             return chain.filter(exchange.mutate().request(request).build());
         }catch (Exception e) {
