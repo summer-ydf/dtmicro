@@ -1,13 +1,12 @@
 package com.cms.common.jdbc.config;
 
 import com.baomidou.mybatisplus.core.incrementer.IdentifierGenerator;
-import com.github.yitter.contract.IdGeneratorOptions;
-import com.github.yitter.idgen.YitIdHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
+
 
 /**
  * 雪花算法主键生成策略配置
@@ -18,16 +17,14 @@ public class IdGeneratorConfig implements IdentifierGenerator {
 
     private static final Logger logger = LoggerFactory.getLogger(IdGeneratorConfig.class);
 
-    public final IdGeneratorOptions options = new IdGeneratorOptions((short) 1);
-
     @PostConstruct
     public void init() {
         logger.info("初始化分布式主键生成策略============================");
-        YitIdHelper.setIdGenerator(options);
+        IdGenerator.initDefaultInstance(1);
     }
 
     @Override
     public Long nextId(Object entity) {
-        return YitIdHelper.nextId();
+        return IdGenerator.generateId();
     }
 }

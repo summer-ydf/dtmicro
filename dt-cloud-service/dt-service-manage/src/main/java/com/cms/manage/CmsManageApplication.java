@@ -1,6 +1,7 @@
 package com.cms.manage;
 
 import com.alibaba.cloud.seata.feign.SeataFeignClientAutoConfiguration;
+import com.cms.common.jdbc.config.IdGeneratorConfig;
 import com.cms.common.tool.utils.SysCmsUtils;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -9,6 +10,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Import;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -25,6 +27,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 @EnableSwagger2
 @EnableTransactionManagement
 @EnableDiscoveryClient
+@Import({IdGeneratorConfig.class})
 @MapperScan(basePackages = {"com.cms.manage.mapper"})
 @EnableFeignClients(basePackages ={"com.api.*.feign"})
 public class CmsManageApplication {
