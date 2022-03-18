@@ -1,8 +1,5 @@
 package com.cms.common.jdbc.config;
 
-import java.util.Date;
-import java.util.UUID;
-
 /**
  * 雪花算法主键生成策略配置
  * @author ydf Created by 2022/1/21 10:09
