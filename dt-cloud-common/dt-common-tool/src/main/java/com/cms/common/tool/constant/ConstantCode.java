@@ -4,7 +4,7 @@ package com.cms.common.tool.constant;
  * 公共常量代码
  * @author ydf Created by 2021/11/25 11:13
  */
-public class ConstantCommonCode {
+public class ConstantCode {
 
     /**
      * 资源白名单

@@ -5,10 +5,10 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.cms.common.tool.constant.ConstantCommonCode.BASE_CONFIG_INDEX_TYPE;
-import static com.cms.common.tool.constant.ConstantCommonCode.BASE_CONFIG_LOGIN_TYPE;
-import static com.cms.common.tool.constant.ConstantCommonCode.BASE_CONFIG_MSG_TYPE;
-import static com.cms.common.tool.constant.ConstantCommonCode.BASE_CONFIG_THEME_TYPE;
+import static com.cms.common.tool.constant.ConstantCode.BASE_CONFIG_INDEX_TYPE;
+import static com.cms.common.tool.constant.ConstantCode.BASE_CONFIG_LOGIN_TYPE;
+import static com.cms.common.tool.constant.ConstantCode.BASE_CONFIG_MSG_TYPE;
+import static com.cms.common.tool.constant.ConstantCode.BASE_CONFIG_THEME_TYPE;
 
 /**
  * 系统配置常量代码

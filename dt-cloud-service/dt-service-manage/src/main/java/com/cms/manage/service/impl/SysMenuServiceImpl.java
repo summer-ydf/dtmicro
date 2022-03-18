@@ -2,7 +2,7 @@ package com.cms.manage.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cms.common.tool.constant.ConstantCommonCode;
+import com.cms.common.tool.constant.ConstantCode;
 import com.cms.common.tool.result.ResultEnum;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.entity.SysMenuEntity;
@@ -70,7 +70,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
             this.baseMapper.updateById(sysMenuEntity);
             return ResultUtil.success(sysMenuEntity);
         }
-        if(!StringUtils.equals(sysMenuEntity.getParentId(), ConstantCommonCode.STR_ZERO)) {
+        if(!StringUtils.equals(sysMenuEntity.getParentId(), ConstantCode.STR_ZERO)) {
             Long countParentId = this.baseMapper.selectCount(new QueryWrapper<SysMenuEntity>().eq("id", sysMenuEntity.getParentId()));
             if (countParentId <= 0) {
                 // 上级菜单不存在

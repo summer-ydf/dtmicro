@@ -1,6 +1,6 @@
 package com.cms.auth.config.rabbitmq;
 
-import com.cms.common.tool.constant.ConstantCommonCode;
+import com.cms.common.tool.constant.ConstantCode;
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
@@ -16,17 +16,17 @@ public class RabbitTopicConfig {
 
     @Bean
     public Queue firstQueue() {
-        return new Queue(ConstantCommonCode.RABBITMQ_TOPIC_LOG);
+        return new Queue(ConstantCode.RABBITMQ_TOPIC_LOG);
     }
 
     @Bean
     TopicExchange exchange() {
-        return new TopicExchange(ConstantCommonCode.RABBITMQ_EXCHANGE_LOG);
+        return new TopicExchange(ConstantCode.RABBITMQ_EXCHANGE_LOG);
     }
 
     @Bean
     Binding bindingExchange() {
-        return BindingBuilder.bind(firstQueue()).to(exchange()).with(ConstantCommonCode.RABBITMQ_TOPIC_LOG);
+        return BindingBuilder.bind(firstQueue()).to(exchange()).with(ConstantCode.RABBITMQ_TOPIC_LOG);
     }
 
 }

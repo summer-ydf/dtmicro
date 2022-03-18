@@ -17,8 +17,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.cms.common.tool.constant.ConstantCommonCode.RABBITMQ_EXCHANGE_LOG;
-import static com.cms.common.tool.constant.ConstantCommonCode.RABBITMQ_TOPIC_LOG;
+import static com.cms.common.tool.constant.ConstantCode.RABBITMQ_EXCHANGE_LOG;
+import static com.cms.common.tool.constant.ConstantCode.RABBITMQ_TOPIC_LOG;
 
 /**
  * @author ydf Created by 2022/1/25 13:58

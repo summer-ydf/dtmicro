@@ -3,7 +3,7 @@ package com.cms.auth.config.handler;
 import com.cms.auth.config.exception.CmsOAuth2Exception;
 import com.cms.auth.domain.SecurityClaimsParams;
 import com.cms.common.core.utils.CoreWebUtils;
-import com.cms.common.tool.constant.ConstantCommonCode;
+import com.cms.common.tool.constant.ConstantCode;
 import com.cms.common.tool.utils.SysCmsUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.lang3.time.DateUtils;
@@ -33,14 +33,14 @@ public class TokenAuthenticationFailureHandler implements OAuth2AuthenticationFa
             SecurityClaimsParams params = (SecurityClaimsParams) request.getAttribute(SecurityClaimsParams.class.getName());
             String username = params.getUsername();
             // 密码超过5次错误，用户冻结15分钟
-            String loginCountStr = stringRedisTemplate.opsForValue().get(ConstantCommonCode.CACHE_LOGIN_LOCK + username);
+            String loginCountStr = stringRedisTemplate.opsForValue().get(ConstantCode.CACHE_LOGIN_LOCK + username);
             int lockCount = NumberUtils.toInt(loginCountStr,0) + 1;
-            if(lockCount >= ConstantCommonCode.LOCK_TIME) {
-                Date expDate = DateUtils.addMinutes(new Date(), ConstantCommonCode.LOCK_MINUTE);
-                stringRedisTemplate.opsForValue().set(ConstantCommonCode.CACHE_LOGIN_LOCK + username, String.valueOf(expDate.getTime()),ConstantCommonCode.LOCK_MINUTE, TimeUnit.MINUTES);
+            if(lockCount >= ConstantCode.LOCK_TIME) {
+                Date expDate = DateUtils.addMinutes(new Date(), ConstantCode.LOCK_MINUTE);
+                stringRedisTemplate.opsForValue().set(ConstantCode.CACHE_LOGIN_LOCK + username, String.valueOf(expDate.getTime()), ConstantCode.LOCK_MINUTE, TimeUnit.MINUTES);
                 ex.setOauth2ErrorCode("您的账号已被冻结15分钟");
             }else {
-                stringRedisTemplate.opsForValue().set(ConstantCommonCode.CACHE_LOGIN_LOCK + username, String.valueOf(lockCount), ConstantCommonCode.LOCK_MINUTE, TimeUnit.MINUTES);
+                stringRedisTemplate.opsForValue().set(ConstantCode.CACHE_LOGIN_LOCK + username, String.valueOf(lockCount), ConstantCode.LOCK_MINUTE, TimeUnit.MINUTES);
                 ex.setOauth2ErrorCode("用户密码校验错误，再输错"+(5 - lockCount)+"次该用户将被锁定15分钟");
             }
         }catch (Exception exception){

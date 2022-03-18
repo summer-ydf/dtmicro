@@ -1,7 +1,7 @@
 package com.cms.auth.config.exception;
 
 import com.cms.auth.config.handler.OAuth2AuthenticationFailureHandler;
-import com.cms.common.tool.constant.ConstantCommonCode;
+import com.cms.common.tool.constant.ConstantCode;
 import com.cms.common.tool.utils.SysCmsUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
@@ -40,8 +40,8 @@ public class OAuth2WebResponseExceptionTranslator implements WebResponseExceptio
         // 异常栈获取OAuth2Exception异常
         Exception ase = (OAuth2Exception) throwableAnalyzer.getFirstThrowableOfType(OAuth2Exception.class, causeChain);
         if (ase != null) {
-            if(ase.getMessage().equals(ConstantCommonCode.AccountNonExpired) || ase.getMessage().equals(ConstantCommonCode.Enabled)
-            || ase.getMessage().equals(ConstantCommonCode.AccountNonLocked) || ase.getMessage().equals(ConstantCommonCode.CredentialsNonExpired)) {
+            if(ase.getMessage().equals(ConstantCode.AccountNonExpired) || ase.getMessage().equals(ConstantCode.Enabled)
+            || ase.getMessage().equals(ConstantCode.AccountNonLocked) || ase.getMessage().equals(ConstantCode.CredentialsNonExpired)) {
                 return otherOAuth2Exception((OAuth2Exception) ase);
             }
             return handleOAuth2Exception((OAuth2Exception) ase);
@@ -95,16 +95,16 @@ public class OAuth2WebResponseExceptionTranslator implements WebResponseExceptio
         CmsOAuth2Exception exception = new CmsOAuth2Exception(e.getMessage(), e);
         String oAuth2ErrorCode = null;
         switch (e.getMessage()) {
-            case ConstantCommonCode.AccountNonLocked:
+            case ConstantCode.AccountNonLocked:
                 oAuth2ErrorCode = "账号已锁定";
                 break;
-            case ConstantCommonCode.AccountNonExpired:
+            case ConstantCode.AccountNonExpired:
                 oAuth2ErrorCode = "账号失效";
                 break;
-            case ConstantCommonCode.Enabled:
+            case ConstantCode.Enabled:
                 oAuth2ErrorCode = "账号被禁用";
                 break;
-            case ConstantCommonCode.CredentialsNonExpired:
+            case ConstantCode.CredentialsNonExpired:
                 oAuth2ErrorCode = "密码过期";
                 break;
             default:

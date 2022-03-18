@@ -9,7 +9,7 @@ import org.springframework.util.ObjectUtils;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static com.cms.common.tool.constant.ConstantCommonCode.GATEWAY_AUTHORIZATION;
+import static com.cms.common.tool.constant.ConstantCode.GATEWAY_AUTHORIZATION;
 
 /**
  * @author ydf Created by 2022/1/22 15:14

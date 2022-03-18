@@ -21,10 +21,10 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-import static com.cms.common.tool.constant.ConstantCommonCode.CACHE_CODE_KEY;
-import static com.cms.common.tool.constant.ConstantCommonCode.HEIGHT;
-import static com.cms.common.tool.constant.ConstantCommonCode.IMG_JPG;
-import static com.cms.common.tool.constant.ConstantCommonCode.WIDTH;
+import static com.cms.common.tool.constant.ConstantCode.CACHE_CODE_KEY;
+import static com.cms.common.tool.constant.ConstantCode.HEIGHT;
+import static com.cms.common.tool.constant.ConstantCode.IMG_JPG;
+import static com.cms.common.tool.constant.ConstantCode.WIDTH;
 
 /**
  * // 第三方登录，参考：https://www.cnblogs.com/haoxianrui/

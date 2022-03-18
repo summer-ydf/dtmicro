@@ -2,7 +2,7 @@ package com.cms.manage.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cms.common.tool.constant.ConstantCommonCode;
+import com.cms.common.tool.constant.ConstantCode;
 import com.cms.common.tool.result.ResultEnum;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.entity.SysDepartmentEntity;
@@ -78,7 +78,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDepartment
             this.baseMapper.updateById(sysDepartmentEntity);
             return ResultUtil.success(sysDepartmentEntity);
         }
-        if(!StringUtils.equals(sysDepartmentEntity.getParentId(), ConstantCommonCode.STR_ZERO)) {
+        if(!StringUtils.equals(sysDepartmentEntity.getParentId(), ConstantCode.STR_ZERO)) {
             Long countParentId = this.baseMapper.selectCount(new QueryWrapper<SysDepartmentEntity>().eq("id", sysDepartmentEntity.getParentId()));
             if (countParentId <= 0) {
                 // 上级部门不存在

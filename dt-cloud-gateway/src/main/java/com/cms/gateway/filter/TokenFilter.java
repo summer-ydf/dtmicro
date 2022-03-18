@@ -27,7 +27,7 @@ import reactor.core.publisher.Mono;
 import java.util.List;
 import java.util.Map;
 
-import static com.cms.common.tool.constant.ConstantCommonCode.GATEWAY_AUTHORIZATION;
+import static com.cms.common.tool.constant.ConstantCode.GATEWAY_AUTHORIZATION;
 
 /**
  * @author ydf Created by 2022/1/7 17:52

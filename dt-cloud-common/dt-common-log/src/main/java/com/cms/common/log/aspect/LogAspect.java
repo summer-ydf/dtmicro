@@ -6,7 +6,7 @@ import com.cms.common.core.utils.CoreWebUtils;
 import com.cms.common.core.utils.ServletUtils;
 import com.cms.common.log.annotation.Log;
 import com.cms.common.log.service.AsyncLogService;
-import com.cms.common.tool.constant.ConstantCommonCode;
+import com.cms.common.tool.constant.ConstantCode;
 import com.cms.common.tool.domain.SecurityClaimsUserEntity;
 import com.cms.common.tool.domain.SysOperatorLogVoEntity;
 import com.cms.common.tool.result.ResultException;
@@ -94,7 +94,7 @@ public class LogAspect {
                 // 获取参数的信息。
                 getRequestParams(joinPoint, sysLog);
                 // 操作状态默认正常
-                sysLog.setStatus(ConstantCommonCode.INT_ONE);
+                sysLog.setStatus(ConstantCode.INT_ONE);
                 // 请求地址
                 sysLog.setRequestUrl(ServletUtils.getRequest().getRequestURI());
                 // 请求IP
@@ -118,7 +118,7 @@ public class LogAspect {
                 sysLog.setRequestMethodType(ServletUtils.getRequest().getMethod());
                 if (!ObjectUtils.isEmpty(e)) {
                     // 操作异常
-                    sysLog.setStatus(ConstantCommonCode.INT_TWO);
+                    sysLog.setStatus(ConstantCode.INT_TWO);
                     sysLog.setErrorInfo(e.getMessage());
                 }
                 // 保存操作日志到数据库
