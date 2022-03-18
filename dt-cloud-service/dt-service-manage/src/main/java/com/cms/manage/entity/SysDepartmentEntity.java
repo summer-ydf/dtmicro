@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang.StringUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public class SysDepartmentEntity extends BaseEntity implements Serializable {
     @TableId(type = IdType.INPUT)
     private String id;
 
-    @ApiModelProperty(value = "上级部门id")
+    @ApiModelProperty(value = "上级部门id (默认0为顶级)")
     private String parentId;
 
     @ApiModelProperty(value = "部门名称")
@@ -47,4 +48,11 @@ public class SysDepartmentEntity extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "子节点集合")
     @TableField(exist = false)
     private List<SysDepartmentEntity> children = new ArrayList<>();
+
+    public void setParentId(String parentId) {
+        if(StringUtils.isBlank(parentId)) {
+            parentId = "0";
+        }
+        this.parentId = parentId;
+    }
 }

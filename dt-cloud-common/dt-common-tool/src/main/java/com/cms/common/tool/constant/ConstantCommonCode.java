@@ -38,6 +38,9 @@ public class ConstantCommonCode {
     /**
      * 数字常量
      */
+    public static final Integer INT_ZERO = 0;
+    public static final String STR_ZERO = "0";
+    public static final Long LONG_ZERO = 0L;
     public static final Integer INT_ONE = 1;
     public static final String STR_ONE = "1";
     public static final Long LONG_ONE = 1L;

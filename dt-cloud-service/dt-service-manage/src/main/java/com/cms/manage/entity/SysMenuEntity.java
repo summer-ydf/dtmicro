@@ -12,6 +12,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang.StringUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -34,7 +35,7 @@ public class SysMenuEntity extends BaseEntity implements Serializable {
     @TableId(value = "id", type = IdType.ASSIGN_ID)
     private String id;
 
-    @ApiModelProperty(value = "父节点ID (0为顶级菜单)")
+    @ApiModelProperty(value = "父节点ID (默认0为顶级菜单)")
     private String parentId;
 
     @ApiModelProperty(value = "路由地址（以/开头）")
@@ -80,4 +81,11 @@ public class SysMenuEntity extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "子节点集合")
     @TableField(exist = false)
     private List<SysMenuEntity> children = new ArrayList<>();
+
+    public void setParentId(String parentId) {
+        if(StringUtils.isBlank(parentId)) {
+            parentId = "0";
+        }
+        this.parentId = parentId;
+    }
 }
