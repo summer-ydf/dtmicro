@@ -51,12 +51,6 @@ public class SysOperatorController {
         return ResultUtil.success(operator);
     }
 
-    @ApiOperation(value = "修改操作员")
-    @PutMapping("/update")
-    public ResultUtil<SysOperatorEntity> update(@RequestBody SysOperatorEntity request) {
-        return sysOperatorService.updateOperatorById(request);
-    }
-
     @Log(title = "删除操作员日志记录", businessType = BusinessType.DELETE)
     @ApiOperation(value = "删除操作员")
     @DeleteMapping("/delete/{id}")

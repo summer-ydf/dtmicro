@@ -20,7 +20,5 @@ public interface SysOperatorService extends IService<SysOperatorEntity> {
 
     ResultUtil<SysOperatorEntity> deleteOperatorById(String id);
 
-    ResultUtil<SysOperatorEntity> updateOperatorById(SysOperatorEntity request);
-
     ResultUtil<?> deleteBath(long[] ids);
 }

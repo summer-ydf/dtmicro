@@ -115,14 +115,6 @@ public class SysOperatorServiceImpl extends ServiceImpl<SysOperatorMapper, SysOp
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public ResultUtil<SysOperatorEntity> updateOperatorById(SysOperatorEntity request) {
-//        this.baseMapper.updateOperatorRoleByUserId(request.getId(),request.getRoleId());
-//        this.baseMapper.updateById(request);
-        return ResultUtil.success();
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
     public ResultUtil<?> deleteBath(long[] ids) {
         this.baseMapper.deleteBath(ids);
         this.baseMapper.deleteBathOperatorRole(ids);
