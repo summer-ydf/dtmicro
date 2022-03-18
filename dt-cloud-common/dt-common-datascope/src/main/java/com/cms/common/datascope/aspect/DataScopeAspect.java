@@ -1,6 +1,10 @@
 package com.cms.common.datascope.aspect;
 
+import com.cms.common.core.utils.ApiCallUtils;
+import com.cms.common.core.utils.ServletUtils;
 import com.cms.common.datascope.annotation.DataScope;
+import com.cms.common.tool.domain.SecurityClaimsUserEntity;
+import com.cms.common.tool.result.ResultException;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -56,7 +60,13 @@ public class DataScopeAspect {
 
     protected void handleDataScope(final JoinPoint joinPoint, DataScope controllerDataScope) {
         // 获取当前的用户
-        LoginUser loginUser = SecurityUtils.getLoginUser();
+        //LoginUser loginUser = SecurityUtils.getLoginUser();
+        SecurityClaimsUserEntity securityClaimsUserEntity = null;
+        try {
+            securityClaimsUserEntity = ApiCallUtils.securityClaimsUser(ServletUtils.getRequest());
+        } catch (ResultException ex) {
+            ex.printStackTrace();
+        }
         if (StringUtils.isNotNull(loginUser)) {
             SysUser currentUser = loginUser.getSysUser();
             // 如果是超级管理员，则不过滤数据
