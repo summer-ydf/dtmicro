@@ -8,11 +8,12 @@ import com.cms.common.tool.domain.SecurityClaimsUserEntity;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.entity.SysOperatorEntity;
 import com.cms.manage.entity.SysOperatorRoleEntity;
+import com.cms.manage.entity.SysRoleEntity;
 import com.cms.manage.mapper.SysOperatorMapper;
 import com.cms.manage.service.SysOperatorService;
+import com.cms.manage.service.SysRoleService;
 import com.cms.manage.vo.SysOperatorPage;
 import com.github.yitter.idgen.YitIdHelper;
-import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -31,6 +31,8 @@ public class SysOperatorServiceImpl extends ServiceImpl<SysOperatorMapper, SysOp
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private SysRoleService sysRoleService;
 
     @Override
     @Transactional(readOnly = true)
@@ -60,15 +62,16 @@ public class SysOperatorServiceImpl extends ServiceImpl<SysOperatorMapper, SysOp
         IPage<SysOperatorEntity> list = this.baseMapper.pageSearch(page,request);
         if(!list.getRecords().isEmpty()) {
             for (SysOperatorEntity operator : list.getRecords()) {
-                if(StringUtils.isNotBlank(operator.getStrRoleIds())) {
-                    String strRoleIds = operator.getStrRoleIds();
-                    String[] strings = strRoleIds.split(",");
-                    List<Long> roleIds = new ArrayList<>();
-                    for (String s : strings) {
-                        roleIds.add(Long.valueOf(s));
-                    }
-                    operator.setRoleIds(roleIds);
+                List<Long> roleIds =  this.baseMapper.selectOperatorAndRoleById(operator.getId());
+                if (!roleIds.isEmpty()) {
+                    List<String> resultList = new ArrayList<>();
+                    roleIds.forEach(id -> {
+                        SysRoleEntity serviceOne = sysRoleService.getOne(new QueryWrapper<SysRoleEntity>().eq("id", id));
+                        resultList.add(serviceOne.getName());
+                    });
+                    operator.setRoleNames(resultList);
                 }
+                operator.setRoleIds(roleIds);
             }
         }
         return ResultUtil.success(list);

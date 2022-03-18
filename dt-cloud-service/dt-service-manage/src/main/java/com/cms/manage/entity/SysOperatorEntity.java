@@ -69,10 +69,6 @@ public class SysOperatorEntity extends BaseEntity implements Serializable {
     @TableField(exist = false)
     private String strRoleIds;
 
-    @ApiModelProperty(value = "SQL变量：角色名称")
-    @TableField(exist = false)
-    private String roleNames;
-
     @ApiModelProperty(value = "SQL变量：部门名称")
     @TableField(exist = false)
     private String deptName;
@@ -80,6 +76,10 @@ public class SysOperatorEntity extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "返回前端：角色ID")
     @TableField(exist = false)
     private List<Long> roleIds;
+
+    @ApiModelProperty(value = "返回前端：角色名称")
+    @TableField(exist = false)
+    private List<String> roleNames;
 
     @Override
     public boolean equals(Object o) {

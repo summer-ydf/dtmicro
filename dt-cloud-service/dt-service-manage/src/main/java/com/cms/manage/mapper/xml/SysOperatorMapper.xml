@@ -26,6 +26,11 @@
         ORDER BY t.create_time DESC
     </select>
 
+    <!--查询操作员关联角色信息-->
+    <select id="selectOperatorAndRoleById" resultType="java.lang.Long">
+        SELECT role_id FROM sys_operator_role WHERE user_id = #{id}
+    </select>
+
     <!--添加操作员角色关联信息-->
     <insert id="saveOperatorRole">
        INSERT INTO sys_operator_role(id, user_id, role_id) VALUES (#{id},#{userId},#{roleId})
