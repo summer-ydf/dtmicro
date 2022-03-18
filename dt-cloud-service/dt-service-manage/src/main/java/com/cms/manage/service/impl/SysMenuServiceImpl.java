@@ -69,20 +69,21 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
             this.baseMapper.updateById(sysMenuEntity);
             return ResultUtil.success(sysMenuEntity);
         }
-        Long countParentId = this.baseMapper.selectCount(new QueryWrapper<SysMenuEntity>().eq("id", sysMenuEntity.getParentId()));
-        if(countParentId > 0) {
-            Integer maxSort = sysMenuService.maxSort();
-            maxSort = maxSort + 1;
-            sysMenuEntity.setSort(maxSort);
-            if(StringUtils.isBlank(sysMenuEntity.getParentId())) {
-                sysMenuEntity.setParentId("0");
+        if(StringUtils.isNotBlank(sysMenuEntity.getParentId())) {
+            Long countParentId = this.baseMapper.selectCount(new QueryWrapper<SysMenuEntity>().eq("id", sysMenuEntity.getParentId()));
+            if (countParentId <= 0) {
+                // 上级菜单不存在
+                return ResultUtil.error(ResultEnum.ERROR.getCode(),"请先保存上级菜单");
             }
-            this.baseMapper.insert(sysMenuEntity);
-            return ResultUtil.success(sysMenuEntity);
-        }else {
-            // 上级部门不存在
-            return ResultUtil.error(ResultEnum.ERROR.getCode(),"请先保存上级菜单");
         }
+        Integer maxSort = sysMenuService.maxSort();
+        maxSort = maxSort + 1;
+        sysMenuEntity.setSort(maxSort);
+        if(StringUtils.isBlank(sysMenuEntity.getParentId())) {
+            sysMenuEntity.setParentId("0");
+        }
+        this.baseMapper.insert(sysMenuEntity);
+        return ResultUtil.success(sysMenuEntity);
     }
 
     @Override
