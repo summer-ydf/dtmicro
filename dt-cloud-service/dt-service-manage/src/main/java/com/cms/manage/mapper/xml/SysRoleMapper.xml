@@ -10,12 +10,33 @@
         WHERE rp.role_id = #{roleId}
     </select>
 
-    <select id="listRolePermissionByRoleId" resultType="java.lang.Long">
-        SELECT * FROM sys_role_permission WHERE role_id = #{id}
+    <select id="listRoleMenuByRoleId" resultType="java.lang.Long">
+        SELECT * FROM sys_role_menu WHERE role_id = #{id}
     </select>
 
-    <delete id="deleteRolePermissionByIds">
-        DELETE FROM sys_role_permission WHERE id IN (#{ids})
+    <select id="pageSearch" resultType="com.cms.manage.entity.SysRoleEntity">
+        SELECT r.* FROM sys_role r
+        <where>
+            <if test="request.keyword != null and request.keyword != ''">
+                AND r.name LIKE CONCAT('%',#{request.keyword},'%')
+            </if>
+        </where>
+        ORDER BY r.create_time DESC
+    </select>
+
+    <select id="selectOperotarRoleByRoleId" resultType="java.lang.Long">
+        SELECT COUNT(*) FROM sys_operator_role WHERE role_id = #{id}
+    </select>
+
+    <delete id="deleteRoleMenuByIds">
+        DELETE FROM sys_role_menu WHERE id IN (#{ids})
+    </delete>
+
+    <delete id="deleteBath" parameterType="java.util.List">
+        DELETE FROM sys_role WHERE id IN
+        <foreach collection="ids" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
     </delete>
 
 </mapper>

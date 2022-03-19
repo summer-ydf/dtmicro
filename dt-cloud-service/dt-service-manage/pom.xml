@@ -85,6 +85,12 @@
             <artifactId>dt-common-log</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <!-- Cloud Common datascope -->
+        <dependency>
+            <groupId>com.dt</groupId>
+            <artifactId>dt-common-datascope</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
         <dependency>
             <groupId>com.dt</groupId>
             <artifactId>dt-api-workflow</artifactId>

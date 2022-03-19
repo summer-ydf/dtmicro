@@ -1,19 +1,15 @@
 package com.cms.manage.controller;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.cms.common.core.domain.search.SysSearchPage;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.entity.SysRoleEntity;
 import com.cms.manage.service.SysRoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 /**
@@ -29,6 +25,12 @@ public class SysRoleController {
 
     public SysRoleController(SysRoleService sysRoleService) {
         this.sysRoleService = sysRoleService;
+    }
+
+    @ApiOperation(value = "分页查询角色列表")
+    @GetMapping("/page")
+    public ResultUtil<IPage<SysRoleEntity>> page(SysSearchPage request) {
+        return sysRoleService.pageSearch(request);
     }
 
     @ApiOperation(value = "查询角色权限列表")
@@ -50,18 +52,17 @@ public class SysRoleController {
         return sysRoleService.getRoleById(id);
     }
 
-    //@Log(title = "更新平台系统角色", businessType = LogTypeCode.UPDATE)
-    @ApiOperation(value = "修改系统角色")
-    @PutMapping("/update")
-    public ResultUtil<SysRoleEntity> update(@RequestBody SysRoleEntity request) {
-        return sysRoleService.updateRoleById(request);
-    }
-
     //@Log(title = "删除平台系统角色", businessType = LogTypeCode.DELETE)
     @ApiOperation(value = "删除系统角色")
     @DeleteMapping("/delete/{id}")
     public ResultUtil<SysRoleEntity> delete(@PathVariable Long id){
         return sysRoleService.deleteRoleById(id);
+    }
+
+    @ApiOperation(value = "批量删除角色")
+    @DeleteMapping("/delete_bath")
+    public ResultUtil<?> deleteBath(@RequestBody long[] ids) {
+        return sysRoleService.deleteBath(ids);
     }
 
     @ApiOperation(value = "查询所有角色")

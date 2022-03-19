@@ -3,9 +3,9 @@ package com.cms.manage.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.cms.common.core.domain.search.SysOperatorPage;
 import com.cms.manage.entity.SysOperatorEntity;
 import com.cms.manage.entity.SysOperatorRoleEntity;
-import com.cms.manage.vo.SysOperatorPage;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

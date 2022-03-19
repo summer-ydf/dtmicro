@@ -1,8 +1,10 @@
 package com.cms.manage.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.cms.common.core.domain.search.SysSearchPage;
 import com.cms.manage.entity.SysMenuEntity;
-import com.cms.manage.entity.SysPermissionEntity;
 import com.cms.manage.entity.SysRoleEntity;
 
 import java.util.List;
@@ -16,7 +18,13 @@ public interface SysRoleMapper extends BaseMapper<SysRoleEntity> {
 
     List<SysMenuEntity> getMenuListByRoleId(Long id);
 
-    List<Long> listRolePermissionByRoleId(Long id);
+    List<Long> listRoleMenuByRoleId(Long id);
 
-    void deleteRolePermissionByIds(List<Long> ids);
+    void deleteRoleMenuByIds(List<Long> ids);
+
+    IPage<SysRoleEntity> pageSearch(Page<SysRoleEntity> page, SysSearchPage request);
+
+    Long selectOperotarRoleByRoleId(long id);
+
+    void deleteBath(List<Long> ids);
 }

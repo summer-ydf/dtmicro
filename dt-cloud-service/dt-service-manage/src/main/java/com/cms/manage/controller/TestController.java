@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+
+import static com.cms.common.tool.constant.ConstantCode.GATEWAY_AUTHORIZATION;
+
 /**
  * 调用方式：第一种就是我们这里介绍的，Feign和生产者的RequestMapping保持一致
  * 调用方式：第二种方式就是让我们的Controller直接实现Feign接口，不再需要写RequestMapping
@@ -42,8 +46,10 @@ public class TestController {
         return testService.save();
     }
 
-    @PostMapping(value = "/test")
-    public ResultUtil<?> test() {
-        return ResultUtil.success("返回数据");
+    @GetMapping(value = "/test")
+    public ResultUtil<?> test(HttpServletRequest request) {
+        String header = request.getHeader(GATEWAY_AUTHORIZATION);
+        System.out.println(header);
+        return ResultUtil.success("返回数据:"+header);
     }
 }

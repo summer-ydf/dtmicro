@@ -41,6 +41,11 @@ public class SecurityClaimsUserEntity implements Serializable {
     private Long userid;
 
     /**
+     * 登录用户所在部门
+     */
+    private Long deptId;
+
+    /**
      * 登录用户头像
      */
     private String avatar;

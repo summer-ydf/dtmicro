@@ -71,11 +71,14 @@ public class TokenFilter implements GlobalFilter, Ordered {
             Map<String, Object> additionalInformation = oAuth2AccessToken.getAdditionalInformation();
             String userid = MapUtils.getString(additionalInformation,"userid");
             String username = MapUtils.getString(additionalInformation,"username");
+            String deptId = MapUtils.getString(additionalInformation,"deptId");
             String jti = MapUtils.getString(additionalInformation,"jti");
+            // 添加请求头数据
             SecurityClaimsUserEntity claimsUser = new SecurityClaimsUserEntity();
             claimsUser.setUserid(Long.valueOf(userid));
             claimsUser.setUsername(username);
             claimsUser.setJti(jti);
+            claimsUser.setDeptId(Long.valueOf(deptId));
             ServerHttpRequest request = exchange.getRequest().mutate().header(GATEWAY_AUTHORIZATION, JSON.toJSONString(claimsUser)).build();
             //将现在的request 变成 exchange对象
             return chain.filter(exchange.mutate().request(request).build());

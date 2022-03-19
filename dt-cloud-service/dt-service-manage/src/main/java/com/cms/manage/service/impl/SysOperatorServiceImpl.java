@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.cms.common.core.domain.search.SysOperatorPage;
 import com.cms.common.tool.domain.SecurityClaimsUserEntity;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.entity.SysOperatorEntity;
@@ -12,7 +13,6 @@ import com.cms.manage.entity.SysRoleEntity;
 import com.cms.manage.mapper.SysOperatorMapper;
 import com.cms.manage.service.SysOperatorService;
 import com.cms.manage.service.SysRoleService;
-import com.cms.manage.vo.SysOperatorPage;
 import com.github.yitter.idgen.YitIdHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -45,6 +45,7 @@ public class SysOperatorServiceImpl extends ServiceImpl<SysOperatorMapper, SysOp
                     .username(operator.getUsername())
                     .password(operator.getPassword())
                     .scope(operator.getScope())
+                    .deptId(operator.getDeptId())
                     .isAccountNonExpired(operator.isAccountNonExpired())
                     .isCredentialsNonExpired(operator.isCredentialsNonExpired())
                     .isAccountNonLocked(operator.isAccountNonLocked())
@@ -56,6 +57,7 @@ public class SysOperatorServiceImpl extends ServiceImpl<SysOperatorMapper, SysOp
     }
 
     @Override
+    //@DataScope(deptAlias = "t")
     @Transactional(readOnly = true)
     public ResultUtil<IPage<SysOperatorEntity>> pageSearch(SysOperatorPage request) {
         Page<SysOperatorEntity> page = new Page<>(request.getCurrent(),request.getSize());
@@ -85,6 +87,8 @@ public class SysOperatorServiceImpl extends ServiceImpl<SysOperatorMapper, SysOp
             this.baseMapper.removeOperatorRoleByUserId(request.getId());
             // 添加操作员角色关联信息
             this.insertOperatorRole(request);
+            // 更新操作员
+            this.baseMapper.updateById(request);
             return ResultUtil.success();
         }
         SysOperatorEntity operator = this.baseMapper.selectOne(new QueryWrapper<SysOperatorEntity>().eq("username",request.getUsername()));
@@ -92,6 +96,7 @@ public class SysOperatorServiceImpl extends ServiceImpl<SysOperatorMapper, SysOp
             return ResultUtil.error("账号已经存在！");
         }
         request.setPassword(passwordEncoder.encode(request.getPassword()));
+        // 添加操作员
         this.baseMapper.insert(request);
         // 添加操作员角色关联信息
         this.insertOperatorRole(request);

@@ -25,6 +25,7 @@ public class SecurityUser extends SecurityClaimsUserEntity implements UserDetail
         securityUser.setUsername(user.getUsername());
         securityUser.setPassword(user.getPassword());
         securityUser.setScope(user.getScope());
+        securityUser.setDeptId(user.getDeptId());
         securityUser.setAccountNonExpired(user.isAccountNonExpired());
         securityUser.setAccountNonLocked(user.isAccountNonLocked());
         securityUser.setCredentialsNonExpired(user.isCredentialsNonExpired());

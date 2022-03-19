@@ -47,7 +47,7 @@ public class SysOperatorEntity extends BaseEntity implements Serializable {
     private String avatar;
 
     @ApiModelProperty(value = "所属部门ID")
-    private String deptId;
+    private Long deptId;
 
     @ApiModelProperty(value = "帐户是否过期(1 未过期，0已过期)")
     private boolean isAccountNonExpired = true;

@@ -1,7 +1,10 @@
 package com.cms.manage.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.cms.common.core.domain.search.SysSearchPage;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.entity.SysMenuEntity;
 import com.cms.manage.entity.SysRoleEntity;
@@ -23,6 +26,13 @@ import java.util.stream.Collectors;
  */
 @Service
 public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRoleEntity> implements SysRoleService {
+
+    @Override
+    public ResultUtil<IPage<SysRoleEntity>> pageSearch(SysSearchPage request) {
+        Page<SysRoleEntity> page = new Page<>(request.getCurrent(),request.getSize());
+        IPage<SysRoleEntity> list = this.baseMapper.pageSearch(page,request);
+        return ResultUtil.success(list);
+    }
 
     @Override
     @Transactional(readOnly = true)
@@ -66,8 +76,12 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRoleEntity
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ResultUtil<SysRoleEntity> saveRole(SysRoleEntity request) {
-        int insert = this.baseMapper.insert(request);
-        return insert > 0 ? ResultUtil.success() : ResultUtil.error();
+        if (null != request.getId()) {
+            this.baseMapper.updateById(request);
+            return ResultUtil.success();
+        }
+        this.baseMapper.insert(request);
+        return ResultUtil.success();
     }
 
     @Override
@@ -79,18 +93,11 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRoleEntity
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public ResultUtil<SysRoleEntity> updateRoleById(SysRoleEntity request) {
-        int update = this.baseMapper.updateById(request);
-        return update > 0 ? ResultUtil.success() : ResultUtil.error();
-    }
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
     public ResultUtil<SysRoleEntity> deleteRoleById(Long id) {
         // 删除角色权限中间表
-        List<Long> ids = this.baseMapper.listRolePermissionByRoleId(id);
+        List<Long> ids = this.baseMapper.listRoleMenuByRoleId(id);
         if(!ids.isEmpty()) {
-            this.baseMapper.deleteRolePermissionByIds(ids);
+            this.baseMapper.deleteRoleMenuByIds(ids);
         }
         int delete = this.baseMapper.deleteById(id);
         return delete > 0 ? ResultUtil.success() : ResultUtil.error();
@@ -101,5 +108,30 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRoleEntity
     public ResultUtil<List<SysRoleEntity>> findAll() {
         List<SysRoleEntity> entityList = this.baseMapper.selectList(null);
         return ResultUtil.success(entityList);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResultUtil<?> deleteBath(long[] ids) {
+        // 查询当前是否有操作员
+        List<Long> resultIds = new ArrayList<>();
+        for (long id : ids) {
+            Long count = this.baseMapper.selectOperotarRoleByRoleId(id);
+            if(count <= 0) {
+                resultIds.add(id);
+            }
+        }
+        if(!resultIds.isEmpty()) {
+            for (Long id : resultIds) {
+                // 删除角色权限中间表
+                List<Long> collectIds = this.baseMapper.listRoleMenuByRoleId(id);
+                if(!collectIds.isEmpty()) {
+                    this.baseMapper.deleteRoleMenuByIds(collectIds);
+                }
+            }
+        }
+        // 批量删除角色
+        this.baseMapper.deleteBath(resultIds);
+        return ResultUtil.success();
     }
 }

@@ -21,6 +21,7 @@ public abstract class CmsAbstractBasicAuthenticationFilter extends OncePerReques
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        System.out.println("拦截器===============");
         // 校验是否密码模式
         if (!StringUtils.equals(request.getRequestURI(),"/oauth/token") || !StringUtils.equals("password",request.getParameter("grant_type"))) {
             filterChain.doFilter(request, response);

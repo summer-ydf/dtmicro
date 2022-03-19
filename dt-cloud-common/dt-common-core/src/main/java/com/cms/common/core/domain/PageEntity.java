@@ -1,7 +1,5 @@
-package com.cms.common.jdbc.domain;
+package com.cms.common.core.domain;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,15 +14,18 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ApiModel(value="分页实体对象")
 public class PageEntity implements Serializable {
 
     private static final long serialVersionUID = 7143289007025794445L;
 
-    @ApiModelProperty(value = "当前页")
+    /**
+     * 当前页
+     */
     private Integer current = 1;
 
-    @ApiModelProperty(value = "每页容量")
+    /**
+     * 每页容量
+     */
     private Integer size = 10;
 
 }

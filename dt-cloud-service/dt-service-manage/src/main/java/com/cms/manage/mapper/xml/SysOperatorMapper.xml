@@ -19,9 +19,10 @@
             <if test="request.username != null and request.username != ''">
                 AND t.username LIKE CONCAT('%',#{request.username},'%')
             </if>
-            <if test="request.deptId != null and request.deptId != ''">
-                AND (t.dept_id = #{request.deptId} OR t.dept_id IN (SELECT m.id FROM sys_department m WHERE find_in_set(#{request.deptId}, pid)))
-            </if>
+<!--            <if test="request.deptId != null and request.deptId != ''">-->
+<!--                AND (t.dept_id = #{request.deptId} OR t.dept_id IN (SELECT m.id FROM sys_department m WHERE find_in_set(#{request.deptId}, pid)))-->
+<!--            </if>-->
+            <!-- 数据范围过滤${request.params.dataScope} -->
         </where>
         ORDER BY t.create_time DESC
     </select>
