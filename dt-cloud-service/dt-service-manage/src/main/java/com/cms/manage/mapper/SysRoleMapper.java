@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cms.common.core.domain.search.SysSearchPage;
 import com.cms.manage.entity.SysMenuEntity;
 import com.cms.manage.entity.SysRoleEntity;
+import com.cms.manage.entity.SysRoleMenuEntity;
 
 import java.util.List;
 
@@ -27,4 +28,10 @@ public interface SysRoleMapper extends BaseMapper<SysRoleEntity> {
     Long selectOperotarRoleByRoleId(long id);
 
     void deleteBath(List<Long> ids);
+
+    List<SysRoleMenuEntity> selectRoleMenuList(Long roleId);
+
+    void deleteBathRoleMenu(List<Long> ids);
+
+    void insertRoleMenu(SysRoleMenuEntity roleMenuEntity);
 }

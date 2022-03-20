@@ -6,6 +6,7 @@ import com.cms.common.core.domain.search.SysSearchPage;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.entity.SysRoleEntity;
 import com.cms.manage.service.SysRoleService;
+import com.cms.manage.vo.SysRoleMenuData;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
@@ -69,5 +70,17 @@ public class SysRoleController {
     @GetMapping("/findAll")
     public ResultUtil<List<SysRoleEntity>> findAll(){
         return sysRoleService.findAll();
+    }
+
+    @ApiOperation(value = "根据角色ID获取角色菜单权限信息")
+    @GetMapping("/getTreeRoleMenuById/{id}")
+    public ResultUtil<SysRoleEntity> getTreeRoleMenuById(@PathVariable Long id) {
+        return sysRoleService.getTreeRoleMenuById(id);
+    }
+
+    @ApiOperation(value = "添加角色菜单权限")
+    @PostMapping("/saveRoleMenu")
+    public ResultUtil<?> saveRoleMenu(@RequestBody SysRoleMenuData sysRoleMenuData) {
+        return sysRoleService.saveRoleMenu(sysRoleMenuData);
     }
 }

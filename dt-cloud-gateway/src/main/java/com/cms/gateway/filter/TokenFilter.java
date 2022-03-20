@@ -78,7 +78,7 @@ public class TokenFilter implements GlobalFilter, Ordered {
             claimsUser.setUserid(Long.valueOf(userid));
             claimsUser.setUsername(username);
             claimsUser.setJti(jti);
-            claimsUser.setDeptId(Long.valueOf(deptId));
+            claimsUser.setDeptId(deptId != null ? Long.valueOf(deptId) : null);
             ServerHttpRequest request = exchange.getRequest().mutate().header(GATEWAY_AUTHORIZATION, JSON.toJSONString(claimsUser)).build();
             //将现在的request 变成 exchange对象
             return chain.filter(exchange.mutate().request(request).build());

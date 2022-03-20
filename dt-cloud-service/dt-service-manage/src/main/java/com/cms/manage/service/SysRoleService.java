@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import com.cms.common.core.domain.search.SysSearchPage;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.entity.SysRoleEntity;
+import com.cms.manage.vo.SysRoleMenuData;
 
 import java.util.List;
 
@@ -28,4 +29,8 @@ public interface SysRoleService extends IService<SysRoleEntity> {
     ResultUtil<List<SysRoleEntity>> findAll();
 
     ResultUtil<?> deleteBath(long[] ids);
+
+    ResultUtil<SysRoleEntity> getTreeRoleMenuById(Long id);
+
+    ResultUtil<?> saveRoleMenu(SysRoleMenuData sysRoleMenuData);
 }

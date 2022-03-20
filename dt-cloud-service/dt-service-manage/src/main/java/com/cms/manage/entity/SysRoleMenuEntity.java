@@ -25,10 +25,10 @@ public class SysRoleMenuEntity implements Serializable {
 
     @ApiModelProperty(value = "主键")
     @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private String id;
+    private Long id;
 
     @ApiModelProperty(value = "角色id")
-    private String roleId;
+    private Long roleId;
 
     @ApiModelProperty(value = "菜单权限id")
     private String menuId;

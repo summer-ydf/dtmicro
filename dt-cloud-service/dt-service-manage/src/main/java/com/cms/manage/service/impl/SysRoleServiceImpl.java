@@ -5,11 +5,14 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cms.common.core.domain.search.SysSearchPage;
+import com.cms.common.jdbc.config.IdGenerator;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.entity.SysMenuEntity;
 import com.cms.manage.entity.SysRoleEntity;
+import com.cms.manage.entity.SysRoleMenuEntity;
 import com.cms.manage.mapper.SysRoleMapper;
 import com.cms.manage.service.SysRoleService;
+import com.cms.manage.vo.SysRoleMenuData;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.stereotype.Service;
@@ -132,6 +135,37 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRoleEntity
         }
         // 批量删除角色
         this.baseMapper.deleteBath(resultIds);
+        return ResultUtil.success();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ResultUtil<SysRoleEntity> getTreeRoleMenuById(Long id) {
+        SysRoleEntity sysRoleEntity = this.baseMapper.selectById(id);
+        // 根据角色ID查询角色权限信息
+        List<SysMenuEntity> menuEntityList = this.baseMapper.getMenuListByRoleId(id);
+        List<SysMenuEntity> childrenList = buildTree(menuEntityList, "0");
+        sysRoleEntity.setChildren(childrenList);
+        return ResultUtil.success(sysRoleEntity);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResultUtil<?> saveRoleMenu(SysRoleMenuData sysRoleMenuData) {
+        List<SysRoleMenuEntity> sysRoleMenuEntityList = this.baseMapper.selectRoleMenuList(sysRoleMenuData.getRoleId());
+        if(!sysRoleMenuEntityList.isEmpty()) {
+            // 删除旧数据
+            List<Long> ids = sysRoleMenuEntityList.stream().map(SysRoleMenuEntity::getId).collect(Collectors.toList());
+            this.baseMapper.deleteBathRoleMenu(ids);
+        }
+        // 新增角色权限信息
+        sysRoleMenuData.getMenuIds().forEach(id -> {
+            SysRoleMenuEntity roleMenuEntity = new SysRoleMenuEntity();
+            roleMenuEntity.setId(IdGenerator.generateId());
+            roleMenuEntity.setRoleId(sysRoleMenuData.getRoleId());
+            roleMenuEntity.setMenuId(id);
+            this.baseMapper.insertRoleMenu(roleMenuEntity);
+        });
         return ResultUtil.success();
     }
 }

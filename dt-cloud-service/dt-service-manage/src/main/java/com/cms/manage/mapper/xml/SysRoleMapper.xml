@@ -28,6 +28,10 @@
         SELECT COUNT(*) FROM sys_operator_role WHERE role_id = #{id}
     </select>
 
+    <select id="selectRoleMenuList" resultType="com.cms.manage.entity.SysRoleMenuEntity">
+        SELECT * FROM sys_role_menu WHERE role_id = #{roleId}
+    </select>
+
     <delete id="deleteRoleMenuByIds">
         DELETE FROM sys_role_menu WHERE id IN (#{ids})
     </delete>
@@ -38,5 +42,16 @@
             #{item}
         </foreach>
     </delete>
+
+    <delete id="deleteBathRoleMenu">
+        DELETE FROM sys_role_menu WHERE id IN
+        <foreach collection="ids" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
+    <insert id="insertRoleMenu">
+        INSERT INTO sys_role_menu(id,role_id, menu_id) VALUES (#{id},#{roleId},#{menuId})
+    </insert>
 
 </mapper>
