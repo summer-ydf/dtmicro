@@ -4,8 +4,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cms.common.core.domain.search.SysOperatorPage;
+import com.cms.common.core.domain.SysRoleDataScope;
+import com.cms.common.core.domain.search.SysSearchPage;
+import com.cms.common.datascope.annotation.DataScope;
 import com.cms.common.tool.domain.SecurityClaimsUserEntity;
+import com.cms.common.tool.domain.SysDataScopeVoEntity;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.entity.SysOperatorEntity;
 import com.cms.manage.entity.SysOperatorRoleEntity;
@@ -40,6 +43,15 @@ public class SysOperatorServiceImpl extends ServiceImpl<SysOperatorMapper, SysOp
         System.out.println("获取数据库账号密码->>>"+username);
         SysOperatorEntity operator = this.baseMapper.selectOne(new QueryWrapper<SysOperatorEntity>().eq("username", username).eq("scope",scope));
         if(!ObjectUtils.isEmpty(operator)) {
+            // 查询操作员角色数据权限
+            List<SysRoleDataScope> roleDataScopes = this.baseMapper.selectRoleDataScopeByUserId(operator.getId());
+            System.out.println("查询操作员角色数据权限->>>"+roleDataScopes);
+            List<SysDataScopeVoEntity> roles = new ArrayList<>();
+            if (!roleDataScopes.isEmpty()) {
+                for (SysRoleDataScope data : roleDataScopes) {
+                    roles.add(SysDataScopeVoEntity.builder().roleId(data.getRoleId()).dataScope(data.getDataScope()).build());
+                }
+            }
             SecurityClaimsUserEntity securityClaimsUser = SecurityClaimsUserEntity.builder()
                     .userid(operator.getId())
                     .username(operator.getUsername())
@@ -50,6 +62,8 @@ public class SysOperatorServiceImpl extends ServiceImpl<SysOperatorMapper, SysOp
                     .isCredentialsNonExpired(operator.isCredentialsNonExpired())
                     .isAccountNonLocked(operator.isAccountNonLocked())
                     .isEnabled(operator.isEnabled())
+                    .isAdmin(operator.isAdmin())
+                    .roles(roles)
                     .build();
             return ResultUtil.success(securityClaimsUser);
         }
@@ -57,9 +71,9 @@ public class SysOperatorServiceImpl extends ServiceImpl<SysOperatorMapper, SysOp
     }
 
     @Override
-    //@DataScope(deptAlias = "t")
+    @DataScope(deptAlias = "t")
     @Transactional(readOnly = true)
-    public ResultUtil<IPage<SysOperatorEntity>> pageSearch(SysOperatorPage request) {
+    public ResultUtil<IPage<SysOperatorEntity>> pageSearch(SysSearchPage request) {
         Page<SysOperatorEntity> page = new Page<>(request.getCurrent(),request.getSize());
         IPage<SysOperatorEntity> list = this.baseMapper.pageSearch(page,request);
         if(!list.getRecords().isEmpty()) {

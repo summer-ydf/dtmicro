@@ -1,6 +1,7 @@
 package com.cms.common.datascope.aspect;
 
 import com.cms.common.core.domain.search.SysOperatorPage;
+import com.cms.common.core.domain.search.SysSearchPage;
 import com.cms.common.core.utils.ApiCallUtils;
 import com.cms.common.core.utils.ServletUtils;
 import com.cms.common.datascope.annotation.DataScope;
@@ -55,29 +56,22 @@ public class DataScopeAspect {
 
     @Before("@annotation(controllerDataScope)")
     public void doBefore(JoinPoint point, DataScope controllerDataScope) throws Throwable {
-        //clearDataScope(point);
+        clearDataScope(point);
         handleDataScope(point, controllerDataScope);
     }
 
     protected void handleDataScope(final JoinPoint joinPoint, DataScope controllerDataScope) {
-        // 获取当前的用户
-        //LoginUser loginUser = SecurityUtils.getLoginUser();
+        // 获取当前登录的用户
         SecurityClaimsUserEntity currentUser = null;
         try {
             currentUser = ApiCallUtils.securityClaimsUser(ServletUtils.getRequest());
         } catch (ResultException ex) {
             ex.printStackTrace();
         }
-//        if (StringUtils.isNotNull(loginUser)) {
-//            SysUser currentUser = loginUser.getSysUser();
-//            // 如果是超级管理员，则不过滤数据
-//            if (StringUtils.isNotNull(currentUser) && !currentUser.isAdmin()) {
-//                dataScopeFilter(joinPoint, currentUser, controllerDataScope.deptAlias(),
-//                        controllerDataScope.userAlias());
-//            }
-//        }
-        dataScopeFilter(joinPoint, currentUser, controllerDataScope.deptAlias(),
-                controllerDataScope.userAlias());
+        if (StringUtils.isNotNull(currentUser) && !currentUser.isAdmin()) {
+            // 如果是超级管理员，则不过滤数据
+            dataScopeFilter(joinPoint, currentUser, controllerDataScope.deptAlias(), controllerDataScope.userAlias());
+        }
     }
 
     /**
@@ -127,8 +121,8 @@ public class DataScopeAspect {
             // 获取查询的参数
             Object params = joinPoint.getArgs()[0];
             System.out.println("获取查询的参数>>>>>"+params);
-            if (StringUtils.isNotNull(params) && params instanceof SysOperatorPage) {
-                SysOperatorPage baseEntity = (SysOperatorPage) params;
+            if (StringUtils.isNotNull(params) && params instanceof SysSearchPage) {
+                SysSearchPage baseEntity = (SysSearchPage) params;
                 baseEntity.getParams().put(DATA_SCOPE, " AND (" + sqlString.substring(4) + ")");
                 System.out.println("sql拼接查询为："+baseEntity);
             }
@@ -138,11 +132,11 @@ public class DataScopeAspect {
     /**
      * 拼接权限sql前先清空params.dataScope参数防止注入
      */
-//    private void clearDataScope(final JoinPoint joinPoint) {
-//        Object params = joinPoint.getArgs()[0];
-//        if (StringUtils.isNotNull(params) && params instanceof BaseEntity) {
-//            BaseEntity baseEntity = (BaseEntity) params;
-//            baseEntity.getParams().put(DATA_SCOPE, "");
-//        }
-//    }
+    private void clearDataScope(final JoinPoint joinPoint) {
+        Object params = joinPoint.getArgs()[0];
+        if (StringUtils.isNotNull(params) && params instanceof SysSearchPage) {
+            SysSearchPage baseEntity = (SysSearchPage) params;
+            baseEntity.getParams().put(DATA_SCOPE, "");
+        }
+    }
 }

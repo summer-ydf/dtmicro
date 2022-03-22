@@ -2,7 +2,7 @@ package com.cms.manage.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.cms.common.core.domain.search.SysOperatorPage;
+import com.cms.common.core.domain.search.SysSearchPage;
 import com.cms.common.tool.domain.SecurityClaimsUserEntity;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.entity.SysOperatorEntity;
@@ -14,7 +14,7 @@ public interface SysOperatorService extends IService<SysOperatorEntity> {
 
     ResultUtil<SecurityClaimsUserEntity> loadUserByUsername(String username, String scope);
 
-    ResultUtil<IPage<SysOperatorEntity>> pageSearch(SysOperatorPage request);
+    ResultUtil<IPage<SysOperatorEntity>> pageSearch(SysSearchPage request);
 
     ResultUtil<SysOperatorEntity> saveOperator(SysOperatorEntity request);
 

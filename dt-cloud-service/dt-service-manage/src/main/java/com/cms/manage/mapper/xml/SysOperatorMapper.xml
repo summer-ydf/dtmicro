@@ -16,13 +16,14 @@
         FROM sys_operator AS t
         LEFT JOIN sys_department p on t.dept_id = p.id
         <where>
-            <if test="request.username != null and request.username != ''">
-                AND t.username LIKE CONCAT('%',#{request.username},'%')
+            <if test="request.keyword != null and request.keyword != ''">
+                AND t.username LIKE CONCAT('%',#{request.keyword},'%')
             </if>
 <!--            <if test="request.deptId != null and request.deptId != ''">-->
 <!--                AND (t.dept_id = #{request.deptId} OR t.dept_id IN (SELECT m.id FROM sys_department m WHERE find_in_set(#{request.deptId}, pid)))-->
 <!--            </if>-->
-            <!-- 数据范围过滤${request.params.dataScope} -->
+            <!-- 数据范围过滤 -->
+            ${request.params.dataScope}
         </where>
         ORDER BY t.create_time DESC
     </select>
@@ -30,6 +31,16 @@
     <!--查询操作员关联角色信息-->
     <select id="selectOperatorAndRoleById" resultType="java.lang.Long">
         SELECT role_id FROM sys_operator_role WHERE user_id = #{id}
+    </select>
+
+    <!--查询操作员关联角色数据权限信息-->
+    <select id="selectRoleDataScopeByUserId" resultType="com.cms.common.core.domain.SysRoleDataScope">
+        SELECT
+            sor.role_id,
+            sr.data_scope
+        FROM sys_operator_role AS sor
+        LEFT JOIN sys_role AS sr ON sor.role_id = sr.id
+        WHERE user_id = #{id}
     </select>
 
     <!--添加操作员角色关联信息-->

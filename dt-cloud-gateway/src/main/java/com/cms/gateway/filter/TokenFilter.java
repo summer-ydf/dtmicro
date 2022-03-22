@@ -72,6 +72,7 @@ public class TokenFilter implements GlobalFilter, Ordered {
             String userid = MapUtils.getString(additionalInformation,"userid");
             String username = MapUtils.getString(additionalInformation,"username");
             String deptId = MapUtils.getString(additionalInformation,"deptId");
+            String isAdmin = MapUtils.getString(additionalInformation,"isAdmin");
             String jti = MapUtils.getString(additionalInformation,"jti");
             // 添加请求头数据
             SecurityClaimsUserEntity claimsUser = new SecurityClaimsUserEntity();
@@ -79,6 +80,7 @@ public class TokenFilter implements GlobalFilter, Ordered {
             claimsUser.setUsername(username);
             claimsUser.setJti(jti);
             claimsUser.setDeptId(deptId != null ? Long.valueOf(deptId) : null);
+            claimsUser.setAdmin(Boolean.parseBoolean(isAdmin));
             ServerHttpRequest request = exchange.getRequest().mutate().header(GATEWAY_AUTHORIZATION, JSON.toJSONString(claimsUser)).build();
             //将现在的request 变成 exchange对象
             return chain.filter(exchange.mutate().request(request).build());

@@ -30,6 +30,8 @@ public class SecurityUser extends SecurityClaimsUserEntity implements UserDetail
         securityUser.setAccountNonLocked(user.isAccountNonLocked());
         securityUser.setCredentialsNonExpired(user.isCredentialsNonExpired());
         securityUser.setEnabled(user.isEnabled());
+        securityUser.setAdmin(user.isAdmin());
+        securityUser.setRoles(user.getRoles());
         return securityUser;
     }
 

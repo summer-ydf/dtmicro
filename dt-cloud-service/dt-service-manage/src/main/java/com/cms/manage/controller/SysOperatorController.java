@@ -1,7 +1,7 @@
 package com.cms.manage.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.cms.common.core.domain.search.SysOperatorPage;
+import com.cms.common.core.domain.search.SysSearchPage;
 import com.cms.common.log.annotation.Log;
 import com.cms.common.log.enums.BusinessType;
 import com.cms.common.tool.result.ResultUtil;
@@ -37,7 +37,7 @@ public class SysOperatorController {
 
     @ApiOperation(value = "分页查询用户列表")
     @GetMapping("/page")
-    public ResultUtil<IPage<SysOperatorEntity>> page(SysOperatorPage request, HttpServletRequest servletRequest) {
+    public ResultUtil<IPage<SysOperatorEntity>> page(SysSearchPage request, HttpServletRequest servletRequest) {
         String token = servletRequest.getHeader(GATEWAY_AUTHORIZATION);
         System.out.println(token);
         return sysOperatorService.pageSearch(request);

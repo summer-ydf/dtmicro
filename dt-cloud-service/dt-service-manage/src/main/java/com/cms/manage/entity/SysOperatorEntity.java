@@ -49,6 +49,9 @@ public class SysOperatorEntity extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "所属部门ID")
     private Long deptId;
 
+    @ApiModelProperty(value = "是否超级管理员")
+    private boolean isAdmin;
+
     @ApiModelProperty(value = "帐户是否过期(1 未过期，0已过期)")
     private boolean isAccountNonExpired = true;
 

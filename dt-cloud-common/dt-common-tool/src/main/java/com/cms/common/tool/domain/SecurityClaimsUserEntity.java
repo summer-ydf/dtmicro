@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -44,6 +45,16 @@ public class SecurityClaimsUserEntity implements Serializable {
      * 登录用户所在部门
      */
     private Long deptId;
+
+    /**
+     * 登录用户是否超级管理员
+     */
+    private boolean isAdmin;
+
+    /**
+     * 登录用户角色数据权限
+     */
+    private List<SysDataScopeVoEntity> roles;
 
     /**
      * 登录用户头像
