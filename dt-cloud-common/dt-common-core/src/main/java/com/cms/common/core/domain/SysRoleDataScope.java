@@ -21,5 +21,5 @@ public class SysRoleDataScope implements Serializable {
     /**
      * 数据权限范围
      */
-    private String dataScope;
+    private Long dataScope;
 }

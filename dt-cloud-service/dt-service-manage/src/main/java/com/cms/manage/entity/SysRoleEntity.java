@@ -39,7 +39,7 @@ public class SysRoleEntity extends BaseEntity implements Serializable {
     private String name;
 
     @ApiModelProperty(value = "角色数据权限")
-    private String dataScope;
+    private Long dataScope;
 
     @ApiModelProperty(value = "角色别名")
     private String alias;

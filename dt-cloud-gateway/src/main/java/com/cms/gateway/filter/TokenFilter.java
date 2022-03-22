@@ -3,6 +3,8 @@ package com.cms.gateway.filter;
 
 import com.alibaba.fastjson.JSON;
 import com.cms.common.tool.domain.SecurityClaimsUserEntity;
+import com.cms.common.tool.domain.SysDataScopeVoEntity;
+import com.cms.common.tool.utils.DataScopeUtils;
 import com.cms.common.tool.utils.SysCmsUtils;
 import com.cms.gateway.GatewayConstant;
 import com.cms.gateway.config.IgnoreUrlsConfig;
@@ -73,6 +75,8 @@ public class TokenFilter implements GlobalFilter, Ordered {
             String username = MapUtils.getString(additionalInformation,"username");
             String deptId = MapUtils.getString(additionalInformation,"deptId");
             String isAdmin = MapUtils.getString(additionalInformation,"isAdmin");
+            String roles = MapUtils.getString(additionalInformation,"roles");
+            List<SysDataScopeVoEntity> sysDataScopeVoEntities = DataScopeUtils.mapToList(roles);
             String jti = MapUtils.getString(additionalInformation,"jti");
             // 添加请求头数据
             SecurityClaimsUserEntity claimsUser = new SecurityClaimsUserEntity();
@@ -81,6 +85,7 @@ public class TokenFilter implements GlobalFilter, Ordered {
             claimsUser.setJti(jti);
             claimsUser.setDeptId(deptId != null ? Long.valueOf(deptId) : null);
             claimsUser.setAdmin(Boolean.parseBoolean(isAdmin));
+            claimsUser.setRoles(sysDataScopeVoEntities);
             ServerHttpRequest request = exchange.getRequest().mutate().header(GATEWAY_AUTHORIZATION, JSON.toJSONString(claimsUser)).build();
             //将现在的request 变成 exchange对象
             return chain.filter(exchange.mutate().request(request).build());

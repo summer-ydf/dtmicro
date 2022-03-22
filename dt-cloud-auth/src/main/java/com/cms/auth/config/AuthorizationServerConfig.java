@@ -15,6 +15,7 @@ import com.cms.auth.config.handler.TokenAuthenticationSuccessHandler;
 import com.cms.auth.config.interceptor.AuthorizationInterceptor;
 import com.cms.auth.service.RpcUserDetailsService;
 import com.cms.common.tool.domain.SecurityClaimsUserEntity;
+import com.cms.common.tool.domain.SysDataScopeVoEntity;
 import com.cms.common.tool.result.ResultEnum;
 import com.cms.common.tool.result.ResultUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,9 +50,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.security.KeyPair;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * OAuth2认证服务器配置
@@ -251,7 +250,18 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
             additionalInfo.put("username", claimsUser.getUsername());
             additionalInfo.put("deptId", claimsUser.getDeptId());
             additionalInfo.put("isAdmin",claimsUser.isAdmin());
-            additionalInfo.put("roles",claimsUser.getRoles());
+            // 角色数据权限
+            List<SysDataScopeVoEntity> roles = claimsUser.getRoles();
+            List<Map<String,Object>> resultRoles = new ArrayList<>();
+            if(!roles.isEmpty()){
+                for (SysDataScopeVoEntity role : roles) {
+                    Map<String,Object> map = new HashMap<>(2);
+                    map.put("roleId",role.getRoleId());
+                    map.put("dataScope",role.getDataScope());
+                    resultRoles.add(map);
+                }
+            }
+            additionalInfo.put("roles",resultRoles);
             // 注意添加的额外信息，最好不要和已有的json对象中的key重名，容易出现错误
             //additionalInfo.put("authorities", user.getAuthorities());
             ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);

@@ -2,9 +2,11 @@ package com.cms.common.tool.utils;
 
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
+import com.cms.common.tool.domain.SysDataScopeVoEntity;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -39,5 +41,27 @@ public class SysCmsUtils {
     }
 
     public static final Log log = LogFactory.get("cms");
+
+    public static void main(String[] args) {
+        String roles = "[{roleId:248204504629317, dataScope:3}, {roleId:256693602365509, dataScope:4}]";
+        List<SysDataScopeVoEntity> sysDataScopeVoEntities = DataScopeUtils.mapToList(roles);
+        System.out.println(sysDataScopeVoEntities);
+//        String json = JSONObject.toJSONString(roles);
+//        System.out.println(json);
+//        Object parse1 = JSON.parse(json);
+//        System.out.println(parse1);
+//        String s = parse1.toString();
+//        System.out.println(s);
+//        JSONArray jsArr = JSONObject.parseArray(s);
+//        System.out.println(jsArr);
+//        //List<SysDataScopeVoEntity> scopeVoEntities = JSONArray.parseArray(s, SysDataScopeVoEntity.class);
+//        //System.out.println(scopeVoEntities);
+//        for (int i = 0; i < jsArr.size(); i++) {
+//            JSONObject jsonObject = jsArr.getJSONObject(i);
+//            System.out.println(jsonObject.get("roleId"));
+//            System.out.println(jsonObject.get("dataScope"));
+//        }
+    }
+
 
 }
