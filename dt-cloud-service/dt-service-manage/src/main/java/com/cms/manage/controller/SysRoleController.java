@@ -2,7 +2,7 @@ package com.cms.manage.controller;
 
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.cms.common.core.domain.search.SysSearchPage;
+import com.cms.common.core.domain.SysSearchPage;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.entity.SysRoleEntity;
 import com.cms.manage.service.SysRoleService;

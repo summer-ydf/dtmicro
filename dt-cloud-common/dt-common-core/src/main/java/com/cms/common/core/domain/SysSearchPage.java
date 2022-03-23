@@ -1,6 +1,5 @@
-package com.cms.common.core.domain.search;
+package com.cms.common.core.domain;
 
-import com.cms.common.core.domain.PageEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -24,6 +23,11 @@ public class SysSearchPage extends PageEntity {
      * 名称
      */
     private String name;
+
+    /**
+     * 部门ID
+     */
+    private String deptId;
 
     /**
      * 数据权限参数

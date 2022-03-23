@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.cms.common.core.domain.SysRoleDataScope;
-import com.cms.common.core.domain.search.SysSearchPage;
+import com.cms.common.core.domain.SysSearchPage;
 import com.cms.manage.entity.SysOperatorEntity;
 import com.cms.manage.entity.SysOperatorRoleEntity;
 import org.apache.ibatis.annotations.Param;

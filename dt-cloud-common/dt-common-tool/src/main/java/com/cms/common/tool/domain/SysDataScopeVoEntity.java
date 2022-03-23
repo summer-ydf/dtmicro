@@ -1,13 +1,17 @@
 package com.cms.common.tool.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author ydf Created by 2022/3/22 17:53
  */
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class SysDataScopeVoEntity {
 
     /**

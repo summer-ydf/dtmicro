@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cms.common.core.domain.SysRoleDataScope;
-import com.cms.common.core.domain.search.SysSearchPage;
+import com.cms.common.core.domain.SysSearchPage;
 import com.cms.common.datascope.annotation.DataScope;
 import com.cms.common.tool.domain.SecurityClaimsUserEntity;
 import com.cms.common.tool.domain.SysDataScopeVoEntity;
@@ -71,7 +71,7 @@ public class SysOperatorServiceImpl extends ServiceImpl<SysOperatorMapper, SysOp
     }
 
     @Override
-    @DataScope(deptAlias = "t")
+    @DataScope(deptAlias = "p",userAlias = "t")
     @Transactional(readOnly = true)
     public ResultUtil<IPage<SysOperatorEntity>> pageSearch(SysSearchPage request) {
         Page<SysOperatorEntity> page = new Page<>(request.getCurrent(),request.getSize());

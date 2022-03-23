@@ -1,20 +1,17 @@
 package com.cms.common.datascope.aspect;
 
-import com.cms.common.core.domain.search.SysOperatorPage;
-import com.cms.common.core.domain.search.SysSearchPage;
+import com.cms.common.core.domain.SysSearchPage;
 import com.cms.common.core.utils.ApiCallUtils;
 import com.cms.common.core.utils.ServletUtils;
 import com.cms.common.datascope.annotation.DataScope;
 import com.cms.common.tool.domain.SecurityClaimsUserEntity;
+import com.cms.common.tool.domain.SysDataScopeVoEntity;
 import com.cms.common.tool.result.ResultException;
 import com.cms.common.tool.utils.StringUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * 角色数据权限过滤
@@ -27,27 +24,27 @@ public class DataScopeAspect {
     /**
      * 全部数据权限
      */
-    public static final String DATA_SCOPE_ALL = "1";
+    public static final Long DATA_SCOPE_ALL = 1L;
 
     /**
      * 自定数据权限
      */
-    public static final String DATA_SCOPE_CUSTOM = "2";
+    public static final Long DATA_SCOPE_CUSTOM = 2L;
 
     /**
      * 部门数据权限
      */
-    public static final String DATA_SCOPE_DEPT = "3";
+    public static final Long DATA_SCOPE_DEPT = 3L;
 
     /**
      * 部门及以下数据权限
      */
-    public static final String DATA_SCOPE_DEPT_AND_CHILD = "4";
+    public static final Long DATA_SCOPE_DEPT_AND_CHILD = 4L;
 
     /**
      * 仅本人数据权限
      */
-    public static final String DATA_SCOPE_SELF = "5";
+    public static final Long DATA_SCOPE_SELF = 5L;
 
     /**
      * 数据权限过滤关键字
@@ -76,47 +73,46 @@ public class DataScopeAspect {
 
     /**
      * 数据范围过滤
-     *
      * @param joinPoint 切点
      * @param user 用户
-     * @param deptAlias 部门别名
-     * @param userAlias 用户别名
+     * @param deptAlias 部门表别名
+     * @param userAlias 用户表别名
      */
     public static void dataScopeFilter(JoinPoint joinPoint, SecurityClaimsUserEntity user, String deptAlias, String userAlias) {
         StringBuilder sqlString = new StringBuilder();
-
-//        for (SysRole role : user.getRoles()) {
-//            String dataScope = role.getDataScope();
-//            if (DATA_SCOPE_ALL.equals(dataScope)) {
-//                sqlString = new StringBuilder();
-//                break;
-//            }
-//            else if (DATA_SCOPE_CUSTOM.equals(dataScope)) {
-//                sqlString.append(StringUtils.format(
-//                        " OR {}.dept_id IN ( SELECT dept_id FROM sys_role_dept WHERE role_id = {} ) ", deptAlias,
-//                        role.getRoleId()));
-//            }
-//            else if (DATA_SCOPE_DEPT.equals(dataScope)) {
-//                sqlString.append(StringUtils.format(" OR {}.dept_id = {} ", deptAlias, user.getDeptId()));
-//            }
-//            else if (DATA_SCOPE_DEPT_AND_CHILD.equals(dataScope)) {
-//                sqlString.append(StringUtils.format(
-//                        " OR {}.dept_id IN ( SELECT dept_id FROM sys_dept WHERE dept_id = {} or find_in_set( {} , ancestors ) )",
-//                        deptAlias, user.getDeptId(), user.getDeptId()));
-//            }
-//            else if (DATA_SCOPE_SELF.equals(dataScope)) {
-//                if (StringUtils.isNotBlank(userAlias)) {
-//                    sqlString.append(StringUtils.format(" OR {}.user_id = {} ", userAlias, user.getUserId()));
-//                }
-//                else {
-//                    // 数据权限为仅本人且没有userAlias别名不查询任何数据
-//                    sqlString.append(" OR 1=0 ");
-//                }
-//            }
-//        }
-
-        sqlString.append(StringUtils.format(" OR {}.dept_id = {} ", deptAlias, user.getDeptId()));
-
+        for (SysDataScopeVoEntity role : user.getRoles()) {
+            Long dataScope = role.getDataScope();
+            if (DATA_SCOPE_ALL.equals(dataScope)) {
+                sqlString = new StringBuilder();
+                break;
+            }
+            else if (DATA_SCOPE_CUSTOM.equals(dataScope)) {
+                System.out.println("自定义数据权限->>>");
+                sqlString.append(StringUtils.format(
+                        " OR {}.id IN ( SELECT dept_id FROM sys_role_dept WHERE role_id = {} ) ", deptAlias,
+                        role.getRoleId()));
+            }
+            else if (DATA_SCOPE_DEPT.equals(dataScope)) {
+                System.out.println("部门数据权限->>>");
+                sqlString.append(StringUtils.format(" OR {}.id = {} ", deptAlias, user.getDeptId()));
+            }
+            else if (DATA_SCOPE_DEPT_AND_CHILD.equals(dataScope)) {
+                System.out.println("部门及以下数据权限->>>");
+                sqlString.append(StringUtils.format(
+                        " OR {}.id IN ( SELECT id FROM sys_department WHERE id = {} or find_in_set( {} , parent_id ) )",
+                        deptAlias, user.getDeptId(), user.getDeptId()));
+            }
+            else if (DATA_SCOPE_SELF.equals(dataScope)) {
+                if (StringUtils.isNotBlank(userAlias)) {
+                    System.out.println("仅本人数据权限->>>");
+                    sqlString.append(StringUtils.format(" OR {}.id = {} ", userAlias, user.getUserid()));
+                }
+                else {
+                    // 数据权限为仅本人且没有userAlias别名不查询任何数据
+                    sqlString.append(" OR 1=0 ");
+                }
+            }
+        }
         if (StringUtils.isNotBlank(sqlString.toString())) {
             // 获取查询的参数
             Object params = joinPoint.getArgs()[0];

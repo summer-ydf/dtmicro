@@ -3,7 +3,7 @@ package com.cms.manage.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.cms.common.core.domain.search.SysSearchPage;
+import com.cms.common.core.domain.SysSearchPage;
 import com.cms.manage.entity.SysMenuEntity;
 import com.cms.manage.entity.SysRoleEntity;
 import com.cms.manage.entity.SysRoleMenuEntity;
