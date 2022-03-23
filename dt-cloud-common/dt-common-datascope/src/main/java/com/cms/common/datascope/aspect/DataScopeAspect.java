@@ -13,6 +13,13 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
 
+import static com.cms.common.tool.constant.ConstantCode.DATA_SCOPE;
+import static com.cms.common.tool.constant.ConstantCode.DATA_SCOPE_ALL;
+import static com.cms.common.tool.constant.ConstantCode.DATA_SCOPE_CUSTOM;
+import static com.cms.common.tool.constant.ConstantCode.DATA_SCOPE_DEPT;
+import static com.cms.common.tool.constant.ConstantCode.DATA_SCOPE_DEPT_AND_CHILD;
+import static com.cms.common.tool.constant.ConstantCode.DATA_SCOPE_SELF;
+
 /**
  * 角色数据权限过滤
  * @author ydf Created by 2022/3/18 17:27
@@ -20,36 +27,6 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class DataScopeAspect {
-
-    /**
-     * 全部数据权限
-     */
-    public static final Long DATA_SCOPE_ALL = 1L;
-
-    /**
-     * 自定数据权限
-     */
-    public static final Long DATA_SCOPE_CUSTOM = 2L;
-
-    /**
-     * 部门数据权限
-     */
-    public static final Long DATA_SCOPE_DEPT = 3L;
-
-    /**
-     * 部门及以下数据权限
-     */
-    public static final Long DATA_SCOPE_DEPT_AND_CHILD = 4L;
-
-    /**
-     * 仅本人数据权限
-     */
-    public static final Long DATA_SCOPE_SELF = 5L;
-
-    /**
-     * 数据权限过滤关键字
-     */
-    public static final String DATA_SCOPE = "dataScope";
 
     @Before("@annotation(controllerDataScope)")
     public void doBefore(JoinPoint point, DataScope controllerDataScope) throws Throwable {

@@ -6,6 +6,7 @@ import com.cms.common.core.domain.SysSearchPage;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.entity.SysRoleEntity;
 import com.cms.manage.service.SysRoleService;
+import com.cms.manage.vo.SysRoleScope;
 import com.cms.manage.vo.SysRoleMenuData;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -82,5 +83,14 @@ public class SysRoleController {
     @PostMapping("/saveRoleMenu")
     public ResultUtil<?> saveRoleMenu(@RequestBody SysRoleMenuData sysRoleMenuData) {
         return sysRoleService.saveRoleMenu(sysRoleMenuData);
+    }
+
+    @ApiOperation(value = "添加角色数据权限")
+    @PostMapping("/saveRoleDataScope")
+    public ResultUtil<?> saveRoleDataScope(@RequestBody SysRoleScope sysRoleScope) {
+        System.out.println("获取角色数据权限->>>");
+        System.out.println(sysRoleScope);
+        //return sysRoleService.saveRoleDataScope(sysRoleScope);
+        return ResultUtil.success();
     }
 }

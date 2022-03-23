@@ -58,4 +58,8 @@ public class SysRoleEntity extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "权限集合")
     @TableField(exist = false)
     private List<SysMenuEntity> children;
+
+    @ApiModelProperty(value = "返回前端：部门ID")
+    @TableField(exist = false)
+    private List<Long> deptIds;
 }

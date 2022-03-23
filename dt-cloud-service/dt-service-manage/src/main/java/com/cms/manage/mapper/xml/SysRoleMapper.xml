@@ -32,6 +32,14 @@
         SELECT * FROM sys_role_menu WHERE role_id = #{roleId}
     </select>
 
+    <select id="selectRoleDataScopeList" resultType="java.lang.Long">
+         SELECT id FROM sys_role_dept WHERE role_id = #{roleId}
+    </select>
+
+    <select id="selectRoleDeptList" resultType="java.lang.Long">
+        SELECT dept_id FROM sys_role_dept WHERE role_id = #{roleId}
+    </select>
+
     <delete id="deleteRoleMenuByIds">
         DELETE FROM sys_role_menu WHERE id IN (#{ids})
     </delete>
@@ -50,8 +58,19 @@
         </foreach>
     </delete>
 
+    <delete id="deleteRoleDataScopeByIds">
+        DELETE FROM sys_role_dept WHERE id IN
+        <foreach collection="ids" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </delete>
+
     <insert id="insertRoleMenu">
         INSERT INTO sys_role_menu(id,role_id, menu_id) VALUES (#{id},#{roleId},#{menuId})
+    </insert>
+
+    <insert id="insertRoleDept">
+        INSERT INTO sys_role_dept(id,role_id, dept_id) VALUES (#{id},#{roleId},#{deptId})
     </insert>
 
 </mapper>

@@ -6,6 +6,7 @@ import com.cms.common.core.domain.SysSearchPage;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.entity.SysRoleEntity;
 import com.cms.manage.vo.SysRoleMenuData;
+import com.cms.manage.vo.SysRoleScope;
 
 import java.util.List;
 
@@ -33,4 +34,6 @@ public interface SysRoleService extends IService<SysRoleEntity> {
     ResultUtil<SysRoleEntity> getTreeRoleMenuById(Long id);
 
     ResultUtil<?> saveRoleMenu(SysRoleMenuData sysRoleMenuData);
+
+    ResultUtil<?> saveRoleDataScope(SysRoleScope sysRoleScope);
 }

@@ -131,4 +131,34 @@ public class ConstantCode {
     // RabbitMQ相关配置
     public static final String RABBITMQ_TOPIC_LOG = "topic.cms.log";
     public static final String RABBITMQ_EXCHANGE_LOG = "CmsLogTopicExchange";
+
+    /**
+     * 全部数据权限
+     */
+    public static final Long DATA_SCOPE_ALL = 1L;
+
+    /**
+     * 自定数据权限
+     */
+    public static final Long DATA_SCOPE_CUSTOM = 2L;
+
+    /**
+     * 部门数据权限
+     */
+    public static final Long DATA_SCOPE_DEPT = 3L;
+
+    /**
+     * 部门及以下数据权限
+     */
+    public static final Long DATA_SCOPE_DEPT_AND_CHILD = 4L;
+
+    /**
+     * 仅本人数据权限
+     */
+    public static final Long DATA_SCOPE_SELF = 5L;
+
+    /**
+     * 数据权限过滤关键字
+     */
+    public static final String DATA_SCOPE = "dataScope";
 }

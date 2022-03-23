@@ -8,11 +8,13 @@ import com.cms.common.core.domain.SysSearchPage;
 import com.cms.common.jdbc.config.IdGenerator;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.entity.SysMenuEntity;
+import com.cms.manage.entity.SysRoleDeptEntity;
 import com.cms.manage.entity.SysRoleEntity;
 import com.cms.manage.entity.SysRoleMenuEntity;
 import com.cms.manage.mapper.SysRoleMapper;
 import com.cms.manage.service.SysRoleService;
 import com.cms.manage.vo.SysRoleMenuData;
+import com.cms.manage.vo.SysRoleScope;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.cms.common.tool.constant.ConstantCode.DATA_SCOPE_CUSTOM;
 
 /**
  * 系统角色服务实现类
@@ -34,6 +38,12 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRoleEntity
     public ResultUtil<IPage<SysRoleEntity>> pageSearch(SysSearchPage request) {
         Page<SysRoleEntity> page = new Page<>(request.getCurrent(),request.getSize());
         IPage<SysRoleEntity> list = this.baseMapper.pageSearch(page,request);
+        if(!list.getRecords().isEmpty()) {
+            list.getRecords().forEach(role -> {
+                List<Long> longs = this.baseMapper.selectRoleDeptList(role.getId());
+                role.setDeptIds(longs);
+            });
+        }
         return ResultUtil.success(list);
     }
 
@@ -166,6 +176,30 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRoleEntity
             roleMenuEntity.setMenuId(id);
             this.baseMapper.insertRoleMenu(roleMenuEntity);
         });
+        return ResultUtil.success();
+    }
+
+    @Override
+    public ResultUtil<?> saveRoleDataScope(SysRoleScope sysRoleScope) {
+        // 删除旧数据
+        List<Long> ids = this.baseMapper.selectRoleDataScopeList(sysRoleScope.getRoleId());
+        if(!ids.isEmpty()) {
+            this.baseMapper.deleteRoleDataScopeByIds(ids);
+        }
+        // 添加角色的数据权限
+        if (!sysRoleScope.getDeptIds().isEmpty() && sysRoleScope.getDataScope().equals(DATA_SCOPE_CUSTOM)) {
+            sysRoleScope.getDeptIds().forEach(deptId -> {
+                SysRoleDeptEntity roleDeptEntity = new SysRoleDeptEntity();
+                roleDeptEntity.setId(IdGenerator.generateId());
+                roleDeptEntity.setRoleId(sysRoleScope.getRoleId());
+                roleDeptEntity.setDeptId(Long.valueOf(deptId));
+                this.baseMapper.insertRoleDept(roleDeptEntity);
+            });
+        }
+        // 更新角色信息
+        SysRoleEntity sysRoleEntity = this.baseMapper.selectById(sysRoleScope.getRoleId());
+        sysRoleEntity.setDataScope(sysRoleScope.getDataScope());
+        this.baseMapper.updateById(sysRoleEntity);
         return ResultUtil.success();
     }
 }
