@@ -124,11 +124,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRoleEntity
     @Override
     @Transactional(rollbackFor = Exception.class)
     public ResultUtil<SysRoleEntity> deleteRoleById(Long id) {
-        // 删除角色权限中间表
-        List<Long> ids = this.baseMapper.listRoleMenuByRoleId(id);
-        if(!ids.isEmpty()) {
-            this.baseMapper.deleteRoleMenuByIds(ids);
-        }
+        this.deleteRoleRelevantTable(id);
         int delete = this.baseMapper.deleteById(id);
         return delete > 0 ? ResultUtil.success() : ResultUtil.error();
     }
@@ -153,16 +149,29 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRoleEntity
         }
         if(!resultIds.isEmpty()) {
             for (Long id : resultIds) {
-                // 删除角色权限中间表
-                List<Long> collectIds = this.baseMapper.listRoleMenuByRoleId(id);
-                if(!collectIds.isEmpty()) {
-                    this.baseMapper.deleteRoleMenuByIds(collectIds);
-                }
+                this.deleteRoleRelevantTable(id);
             }
         }
         // 批量删除角色
         this.baseMapper.deleteBath(resultIds);
         return ResultUtil.success();
+    }
+
+    /**
+     * 删除角色相关数据表
+     * @param id 角色ID
+     */
+    private void deleteRoleRelevantTable(Long id) {
+        // 删除角色权限中间表
+        List<Long> collectIds = this.baseMapper.listRoleMenuByRoleId(id);
+        if(!collectIds.isEmpty()) {
+            this.baseMapper.deleteRoleMenuByIds(collectIds);
+        }
+        // 删除角色数据权限中间表
+        List<Long> longs = this.baseMapper.selectRoleDataScopeList(id);
+        if(!longs.isEmpty()) {
+            this.baseMapper.deleteRoleDataScopeByIds(longs);
+        }
     }
 
     @Override
@@ -197,6 +206,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRoleEntity
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public ResultUtil<?> saveRoleDataScope(SysRoleScope sysRoleScope) {
         // 删除旧数据
         List<Long> ids = this.baseMapper.selectRoleDataScopeList(sysRoleScope.getRoleId());

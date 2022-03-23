@@ -88,9 +88,6 @@ public class SysRoleController {
     @ApiOperation(value = "添加角色数据权限")
     @PostMapping("/saveRoleDataScope")
     public ResultUtil<?> saveRoleDataScope(@RequestBody SysRoleScope sysRoleScope) {
-        System.out.println("获取角色数据权限->>>");
-        System.out.println(sysRoleScope);
-        //return sysRoleService.saveRoleDataScope(sysRoleScope);
-        return ResultUtil.success();
+        return sysRoleService.saveRoleDataScope(sysRoleScope);
     }
 }
