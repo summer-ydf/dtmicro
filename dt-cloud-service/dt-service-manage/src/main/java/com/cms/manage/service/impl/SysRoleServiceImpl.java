@@ -7,16 +7,19 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cms.common.core.domain.SysSearchPage;
 import com.cms.common.jdbc.config.IdGenerator;
 import com.cms.common.tool.result.ResultUtil;
+import com.cms.manage.entity.SysDepartmentEntity;
 import com.cms.manage.entity.SysMenuEntity;
 import com.cms.manage.entity.SysRoleDeptEntity;
 import com.cms.manage.entity.SysRoleEntity;
 import com.cms.manage.entity.SysRoleMenuEntity;
 import com.cms.manage.mapper.SysRoleMapper;
+import com.cms.manage.service.SysDeptService;
 import com.cms.manage.service.SysRoleService;
 import com.cms.manage.vo.SysRoleMenuData;
 import com.cms.manage.vo.SysRoleScope;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,6 +37,9 @@ import static com.cms.common.tool.constant.ConstantCode.DATA_SCOPE_CUSTOM;
 @Service
 public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRoleEntity> implements SysRoleService {
 
+    @Autowired
+    private SysDeptService sysDeptService;
+
     @Override
     public ResultUtil<IPage<SysRoleEntity>> pageSearch(SysSearchPage request) {
         Page<SysRoleEntity> page = new Page<>(request.getCurrent(),request.getSize());
@@ -41,7 +47,18 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRoleEntity
         if(!list.getRecords().isEmpty()) {
             list.getRecords().forEach(role -> {
                 List<Long> longs = this.baseMapper.selectRoleDeptList(role.getId());
-                role.setDeptIds(longs);
+                List<Long> deptIds = new ArrayList<>();
+                if(!longs.isEmpty()) {
+                    // 过滤父节点id,前端显示需要
+                    for (Long id : longs) {
+                        // 子节点，加入集合
+                        long count = sysDeptService.count(new QueryWrapper<SysDepartmentEntity>().eq("parent_id", id));
+                        if (count == 0L) {
+                            deptIds.add(id);
+                        }
+                    }
+                }
+                role.setDeptIds(deptIds);
             });
         }
         return ResultUtil.success(list);
