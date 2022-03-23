@@ -11,7 +11,7 @@
     </select>
 
     <select id="listRoleMenuByRoleId" resultType="java.lang.Long">
-        SELECT * FROM sys_role_menu WHERE role_id = #{id}
+        SELECT id FROM sys_role_menu WHERE role_id = #{id}
     </select>
 
     <select id="pageSearch" resultType="com.cms.manage.entity.SysRoleEntity">
