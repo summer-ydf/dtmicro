@@ -1,6 +1,6 @@
 package com.sku.api.feign;
 
-import com.cms.common.result.ResultUtil;
+import com.cms.common.tool.result.ResultUtil;
 import com.sku.api.factory.MallSkuFeignClientFallback;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Service;

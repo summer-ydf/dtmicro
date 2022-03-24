@@ -3,8 +3,8 @@ package com.cms.manage.consumer;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.cms.common.tool.utils.SysCmsUtils;
-import com.cms.manage.entity.SysLoginLogEntity;
-import com.cms.manage.service.SysLoginLogService;
+import com.cms.manage.entity.SysLogLoginEntity;
+import com.cms.manage.service.SysLogLoginService;
 import com.rabbitmq.client.Channel;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
@@ -24,7 +24,7 @@ import java.util.Map;
 public class LogReceiverListener {
 
     @Autowired
-    private SysLoginLogService logService;
+    private SysLogLoginService logService;
 
     @RabbitHandler
     @RabbitListener(queues = "topic.cms.log")
@@ -36,7 +36,7 @@ public class LogReceiverListener {
             ObjectInputStream inputStream = new ObjectInputStream(new ByteArrayInputStream(body));
             Object object = inputStream.readObject();
             Map<String,Object> map = JSONObject.parseObject(JSON.toJSONString(object));
-            SysLoginLogEntity loginLogEntity = JSON.parseObject(map.get("data").toString(),SysLoginLogEntity.class);
+            SysLogLoginEntity loginLogEntity = JSON.parseObject(map.get("data").toString(), SysLogLoginEntity.class);
             logService.saveLoginLog(loginLogEntity);
             SysCmsUtils.log.info("添加日志信息记录成功->>>"+loginLogEntity);
             // 第二个参数，手动确认可以被批处理，当该参数为 true 时，则可以一次性确认 delivery_tag 小于等于传入值的所有消息

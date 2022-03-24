@@ -5,12 +5,11 @@ import com.api.manage.feign.OauthFeignClientService;
 import com.cms.common.tool.domain.SecurityClaimsUserEntity;
 import com.cms.common.tool.domain.SysOperatorLogVoEntity;
 import com.cms.common.tool.result.ResultUtil;
-import com.cms.manage.entity.SysOperatorLogEntity;
-import com.cms.manage.service.SysOperatorLogService;
+import com.cms.manage.entity.SysLogOperatorEntity;
+import com.cms.manage.service.SysLogOperatorService;
 import com.cms.manage.service.SysOperatorService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -20,10 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class FeignCmsClientController implements OauthFeignClientService, LogFeignClientService {
 
-    private final SysOperatorLogService sysOperatorLogService;
+    private final SysLogOperatorService sysOperatorLogService;
     private final SysOperatorService sysOperatorService;
 
-    public FeignCmsClientController(SysOperatorService sysOperatorService, SysOperatorLogService sysOperatorLogService) {
+    public FeignCmsClientController(SysOperatorService sysOperatorService, SysLogOperatorService sysOperatorLogService) {
         this.sysOperatorService = sysOperatorService;
         this.sysOperatorLogService = sysOperatorLogService;
     }
@@ -35,7 +34,7 @@ public class FeignCmsClientController implements OauthFeignClientService, LogFei
 
     @Override
     public ResultUtil<SysOperatorLogVoEntity> saveOprLog(SysOperatorLogVoEntity sysOperatorLogVoEntity) {
-        SysOperatorLogEntity sysOperatorLogEntity = new SysOperatorLogEntity();
+        SysLogOperatorEntity sysOperatorLogEntity = new SysLogOperatorEntity();
         BeanUtils.copyProperties(sysOperatorLogVoEntity,sysOperatorLogEntity);
         return sysOperatorLogService.saveOperatorLog(sysOperatorLogEntity);
     }

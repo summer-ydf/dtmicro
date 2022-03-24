@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cms.manage.mapper.SysLogOperatorMapper">
+
+    <select id="pageSearch" resultType="com.cms.manage.entity.SysLogOperatorEntity">
+        SELECT id, title, business_type, request_method_name,
+               request_method_type, request_user_name, request_url,
+               request_ip, request_param, response_param, status, error_info,
+               create_time, update_time
+        FROM sys_log_operator ORDER BY create_time DESC
+    </select>
+
+</mapper>

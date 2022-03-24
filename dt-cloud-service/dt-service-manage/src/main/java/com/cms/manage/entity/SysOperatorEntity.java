@@ -64,10 +64,6 @@ public class SysOperatorEntity extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "帐户是否可用(1 可用，0 删除用户)")
     private boolean isEnabled = true;
 
-    @ApiModelProperty(value = "权限列表")
-    @TableField(exist = false)
-    private List<SysPermissionEntity> permissionList;
-
     @ApiModelProperty(value = "SQL变量：角色ID")
     @TableField(exist = false)
     private String strRoleIds;

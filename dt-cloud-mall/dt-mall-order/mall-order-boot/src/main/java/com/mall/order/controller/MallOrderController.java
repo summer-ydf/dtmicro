@@ -1,6 +1,6 @@
 package com.mall.order.controller;
 
-import com.cms.common.result.ResultUtil;
+import com.cms.common.tool.result.ResultUtil;
 import com.mall.order.service.MallOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;

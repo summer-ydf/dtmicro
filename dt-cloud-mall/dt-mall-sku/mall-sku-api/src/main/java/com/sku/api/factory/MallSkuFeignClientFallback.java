@@ -1,6 +1,6 @@
 package com.sku.api.factory;
 
-import com.cms.common.result.ResultUtil;
+import com.cms.common.tool.result.ResultUtil;
 import com.sku.api.feign.MallSkuFeignService;
 import feign.hystrix.FallbackFactory;
 import io.seata.core.context.RootContext;

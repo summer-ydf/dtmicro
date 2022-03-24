@@ -20,10 +20,10 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("sys_operator_log")
+@TableName("sys_log_operator")
 @ApiModel(value="数据操作日志对象")
 @EqualsAndHashCode(callSuper = true)
-public class SysOperatorLogEntity extends BaseEntity implements Serializable {
+public class SysLogOperatorEntity extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 5244924931370321033L;
 

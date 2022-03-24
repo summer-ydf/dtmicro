@@ -1,7 +1,7 @@
 package com.mall.sku.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cms.common.result.ResultUtil;
+import com.cms.common.tool.result.ResultUtil;
 import com.mall.sku.entity.MallSku;
 import com.mall.sku.mapper.MallSkuMapper;
 import com.mall.sku.service.MallSkuService;

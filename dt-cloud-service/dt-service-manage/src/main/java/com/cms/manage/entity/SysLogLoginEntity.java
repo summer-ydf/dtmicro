@@ -20,10 +20,10 @@ import java.io.Serializable;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@TableName("sys_login_log")
+@TableName("sys_log_login")
 @ApiModel(value="登录日志对象")
 @EqualsAndHashCode(callSuper = true)
-public class SysLoginLogEntity extends BaseEntity implements Serializable {
+public class SysLogLoginEntity extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = -8336891240208854600L;
 
