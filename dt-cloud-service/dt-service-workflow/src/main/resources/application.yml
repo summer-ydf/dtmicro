@@ -6,7 +6,7 @@ spring:
   datasource:
     url: jdbc:mysql://127.0.0.1:3306/dtworkflow?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSL=false&nullCatalogMeansCurrent=true
     username: root
-    password: 123456
+    password: Passw0rd!
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
   cloud:
@@ -21,7 +21,7 @@ flowable:
     # 关闭定时JOB
     async-executor-activate: false
     # 自动生成flowable相关表 第一次生成后建议关闭提高运行速度
-    database-schema-update: true
+    database-schema-update: false
     # 流程文件存放目录
     process-definition-location-prefix: classpath*:/flow/
     # 保存历史数据级别设置为full最高级别，便于历史数据的追溯
