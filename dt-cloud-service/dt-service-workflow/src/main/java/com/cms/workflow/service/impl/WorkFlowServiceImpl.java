@@ -1,5 +1,6 @@
 package com.cms.workflow.service.impl;
 
+import com.cms.common.tool.result.ResultUtil;
 import com.cms.workflow.service.WorkFlowService;
 import lombok.extern.apachecommons.CommonsLog;
 import org.flowable.bpmn.model.BpmnModel;
@@ -63,6 +64,23 @@ public class WorkFlowServiceImpl implements WorkFlowService {
                 e.printStackTrace();
             }
         }
+    }
+
+    /**
+     * 删除流程定义
+     * @param deploymentId 部署流程ID
+     * @return 返回
+     */
+    @Override
+    public ResultUtil<?> deleteDeployment(String deploymentId) {
+        //设置true 级联删除流程定义，即使该流程有流程实例启动也可以删除，设置为false非级别删除方式,如果该流程定义已有流程实例启动则删除时出错
+        try {
+            repositoryService.deleteDeployment(deploymentId, false);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResultUtil.error("该流程定义已有流程实例启动");
+        }
+        return ResultUtil.success();
     }
 
     /**

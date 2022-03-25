@@ -1,5 +1,7 @@
 package com.cms.workflow.service;
 
+import com.cms.common.tool.result.ResultUtil;
+
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -13,4 +15,6 @@ public interface WorkFlowService {
      * @param processId 实例ID
      */
     void genProcessDiagram(HttpServletResponse httpServletResponse, String processId);
+
+    ResultUtil<?> deleteDeployment(String deploymentId);
 }

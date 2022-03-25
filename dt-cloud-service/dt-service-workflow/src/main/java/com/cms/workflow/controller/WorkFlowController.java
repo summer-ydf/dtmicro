@@ -2,25 +2,31 @@ package com.cms.workflow.controller;
 
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.workflow.entity.FlowInstanceEntity;
+import com.cms.workflow.entity.FlowProcessEntity;
 import com.cms.workflow.service.FlowInstanceService;
 import com.cms.workflow.service.WorkFlowService;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.flowable.bpmn.converter.BpmnXMLConverter;
 import org.flowable.bpmn.model.BpmnModel;
+import org.flowable.dmn.engine.impl.deployer.ParsedDeployment;
 import org.flowable.engine.RepositoryService;
 import org.flowable.engine.repository.Deployment;
 import org.flowable.engine.repository.Model;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
+import java.io.IOException;
 import java.io.StringReader;
 import java.util.List;
 
@@ -28,6 +34,7 @@ import java.util.List;
  * @author ydf Created by 2021/11/23 16:21
  */
 @RestController
+@CrossOrigin
 @RequestMapping(value = "/flow")
 public class WorkFlowController {
 
@@ -68,89 +75,34 @@ public class WorkFlowController {
     private XMLInputFactory factory = XMLInputFactory.newInstance();
     private BpmnXMLConverter bpmnXMLConverter;
 
-    @PostMapping(value = "/deployment")
-    public ResultUtil<?> deployment() {
-        String str = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
-                "<definitions xmlns=\"http://www.omg.org/spec/BPMN/20100524/MODEL\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:bpmndi=\"http://www.omg.org/spec/BPMN/20100524/DI\" xmlns:omgdc=\"http://www.omg.org/spec/DD/20100524/DC\" xmlns:bioc=\"http://bpmn.io/schema/bpmn/biocolor/1.0\" xmlns:flowable=\"http://flowable.org/bpmn\" xmlns:di=\"http://www.omg.org/spec/DD/20100524/DI\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" targetNamespace=\"http://www.flowable.org/processdef\">\n" +
-                "  <process id=\"process_sgcyjwze\" name=\"name_26gnn4i8\">\n" +
-                "    <startEvent id=\"startNode1\" name=\"开始\">\n" +
-                "      <outgoing>Flow_0bwug55</outgoing>\n" +
-                "    </startEvent>\n" +
-                "    <sequenceFlow id=\"Flow_0bwug55\" sourceRef=\"startNode1\" targetRef=\"Activity_0icoeyt\" />\n" +
-                "    <userTask id=\"Activity_0icoeyt\" flowable:assignee=\"1\">\n" +
-                "      <incoming>Flow_0bwug55</incoming>\n" +
-                "      <outgoing>Flow_19baw3d</outgoing>\n" +
-                "    </userTask>\n" +
-                "    <endEvent id=\"Event_1hznzo3\">\n" +
-                "      <incoming>Flow_19baw3d</incoming>\n" +
-                "    </endEvent>\n" +
-                "    <sequenceFlow id=\"Flow_19baw3d\" sourceRef=\"Activity_0icoeyt\" targetRef=\"Event_1hznzo3\" />\n" +
-                "  </process>\n" +
-                "  <bpmndi:BPMNDiagram id=\"BPMNDiagram_flow\">\n" +
-                "    <bpmndi:BPMNPlane id=\"BPMNPlane_flow\" bpmnElement=\"process_sgcyjwze\">\n" +
-                "      <bpmndi:BPMNEdge id=\"Flow_0bwug55_di\" bpmnElement=\"Flow_0bwug55\">\n" +
-                "        <di:waypoint x=\"-75\" y=\"230\" />\n" +
-                "        <di:waypoint x=\"-20\" y=\"230\" />\n" +
-                "      </bpmndi:BPMNEdge>\n" +
-                "      <bpmndi:BPMNEdge id=\"Flow_19baw3d_di\" bpmnElement=\"Flow_19baw3d\">\n" +
-                "        <di:waypoint x=\"80\" y=\"230\" />\n" +
-                "        <di:waypoint x=\"142\" y=\"230\" />\n" +
-                "      </bpmndi:BPMNEdge>\n" +
-                "      <bpmndi:BPMNShape id=\"BPMNShape_startNode1\" bpmnElement=\"startNode1\" bioc:stroke=\"\">\n" +
-                "        <omgdc:Bounds x=\"-105\" y=\"215\" width=\"30\" height=\"30\" />\n" +
-                "        <bpmndi:BPMNLabel>\n" +
-                "          <omgdc:Bounds x=\"-102\" y=\"252\" width=\"22\" height=\"14\" />\n" +
-                "        </bpmndi:BPMNLabel>\n" +
-                "      </bpmndi:BPMNShape>\n" +
-                "      <bpmndi:BPMNShape id=\"Activity_1hotllm_di\" bpmnElement=\"Activity_0icoeyt\">\n" +
-                "        <omgdc:Bounds x=\"-20\" y=\"190\" width=\"100\" height=\"80\" />\n" +
-                "      </bpmndi:BPMNShape>\n" +
-                "      <bpmndi:BPMNShape id=\"Event_1hznzo3_di\" bpmnElement=\"Event_1hznzo3\">\n" +
-                "        <omgdc:Bounds x=\"142\" y=\"212\" width=\"36\" height=\"36\" />\n" +
-                "      </bpmndi:BPMNShape>\n" +
-                "    </bpmndi:BPMNPlane>\n" +
-                "  </bpmndi:BPMNDiagram>\n" +
-                "</definitions>\n";
-        XMLStreamReader streamReader = null;
-        try {
-            streamReader = factory.createXMLStreamReader(new StringReader(str));
-        } catch (XMLStreamException e) {
-            System.out.println("XML解析异常");
-            e.printStackTrace();
+    @PostMapping(value = "/save_deployment")
+    public ResultUtil<?> saveDeployment(@RequestParam("file") MultipartFile multipartFile, String id, String name, String category) throws IOException {
+        FlowProcessEntity flowProcess = new FlowProcessEntity();
+        flowProcess.setId(id);
+        flowProcess.setName(name);
+        flowProcess.setCategory(category);
+        String resourceName = multipartFile.getOriginalFilename();
+        // 后缀名不能写错，否则会出现ACT_RE_PROCDEF表无内容插入，当部署流程的时候，调用deploy()方法，源码里面有!this.isBpmnResource(resource.getName())判断，资源后缀不含.bpmn20.xml时，就不插入ACT_RE_PROCDEF表内容
+        if (null != resourceName && !resourceName.endsWith(".bpmn20.xml")){
+            resourceName = resourceName + ".bpmn20.xml";
         }
-        System.out.println(streamReader);
-        BpmnModel bpmnModel = bpmnXMLConverter.convertToBpmnModel(streamReader);
-        String id = bpmnModel.getMainProcess().getId();
-        String name = bpmnModel.getMainProcess().getName();
-        System.out.println(id);
-        System.out.println(name);
-//        Model model = repositoryService.newModel();
-//        model.setKey("123456");
-//        model.setName("请假流程模型");
-//        model.setVersion(1);
-//        model.setMetaInfo("{\"name\":\"工资扣款项目审核V2\",\"revision\":1,\"description\":\"工资扣款项目审核V2\"}");
-//        model.setTenantId("ABC");
-//        model.setCategory("A");
-//        repositoryService.saveModel(model);
+        System.out.println("resourceName->>>"+resourceName);
+        // 部署流程，涉及以下三张表的数据添加，删除流程定义时，也会删除以下三张关联表
+        // 部署表：ACT_RE_DEPLOYMENT
+        // 流程定义表：ACT_RE_PROCDEF
+        // 流程定义和流程资源表：ACT_GE_BYTEARRAY
+        // 注意：二次部署的时候，已部署的流程定义，当流程标识key相同时，会在ACT_RE_PROCDEF表进行版本叠加。
+        Deployment deployStream = repositoryService.createDeployment()
+                .name(name)
+                .category(category)
+                .addInputStream(resourceName, multipartFile.getInputStream())
+                .deploy();
+        return ResultUtil.success(deployStream);
+    }
 
-//        Model modelData = modelService.getModel(modelId);
-//        byte[] bytes = modelService.getBpmnXML(modelData);
-//        if(bytes==null){
-//            res.put("error","模型数据为空，请先设计流程并成功保存，再进行发布。");
-//            return res;
-//        }
-//        BpmnModel model = modelService.getBpmnModel(modelData);
-//        if(model.getProcesses().size()==0){
-//            res.put("error","数据模型不符要求，请至少设计一条主线流程。");
-//            return res;
-//        }
-//        byte[] bpmnBytes = new BpmnXMLConverter().convertToXML(model);
-//        String processName = modelData.getName()+".bpmn20.xml";
-//        Deployment deployment = repositoryService.createDeployment()
-//                .name(modelData.getName())
-//                .addBytes(processName,bpmnBytes)
-//                .deploy();
-        return ResultUtil.success();
+    @PostMapping(value = "delete_deployment/{deploymentId}")
+    public ResultUtil<?> deleteDeployment(@PathVariable String deploymentId) {
+        return workFlowService.deleteDeployment(deploymentId);
     }
 
     @GetMapping(value = "/listFlowModel")
