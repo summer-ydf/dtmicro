@@ -15,4 +15,6 @@ import com.cms.manage.entity.SysLogOperatorEntity;
 public interface SysLogOperatorMapper extends BaseMapper<SysLogOperatorEntity> {
 
     IPage<SysLogOperatorEntity> pageSearch(Page<SysLogOperatorEntity> page, SysSearchPage request);
+
+    void deleteBathOperator(long[] ids);
 }

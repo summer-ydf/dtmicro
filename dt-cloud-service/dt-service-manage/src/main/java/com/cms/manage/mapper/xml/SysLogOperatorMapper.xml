@@ -2,6 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cms.manage.mapper.SysLogOperatorMapper">
 
+    <delete id="deleteBathOperator" parameterType="java.util.Arrays">
+        DELETE FROM sys_log_operator WHERE id IN
+        <foreach collection="array" item="ids" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </delete>
+
     <select id="pageSearch" resultType="com.cms.manage.entity.SysLogOperatorEntity">
         SELECT id, title, business_type, request_method_name,
                request_method_type, request_user_name, request_url,

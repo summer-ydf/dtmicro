@@ -35,4 +35,11 @@ public class SysLogLoginServiceImpl extends ServiceImpl<SysLogLoginMapper, SysLo
         IPage<SysLogLoginEntity> list = this.baseMapper.pageSearch(page,request);
         return ResultUtil.success(list);
     }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResultUtil<?> deleteBathLogin(long[] ids) {
+        this.baseMapper.deleteBathLogin(ids);
+        return ResultUtil.success();
+    }
 }

@@ -17,4 +17,6 @@ public interface SysLogOperatorService extends IService<SysLogOperatorEntity> {
     ResultUtil<SysOperatorLogVoEntity> saveOperatorLog(SysLogOperatorEntity sysOperatorLogEntity);
 
     ResultUtil<IPage<SysLogOperatorEntity>> pageSearch(SysSearchPage request);
+
+    ResultUtil<?> deleteBathOperator(long[] ids);
 }

@@ -2,6 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cms.manage.mapper.SysLogLoginMapper">
 
+    <delete id="deleteBathLogin" parameterType="java.util.Arrays">
+        DELETE FROM sys_log_login WHERE id IN
+        <foreach collection="array" item="ids" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+    </delete>
+
     <select id="pageSearch" resultType="com.cms.manage.entity.SysLogLoginEntity">
         SELECT id, title, login_user_name, login_ip, browser,
                operating_system, status, type, message,

@@ -15,4 +15,6 @@ import com.cms.manage.entity.SysLogLoginEntity;
 public interface SysLogLoginMapper extends BaseMapper<SysLogLoginEntity> {
 
     IPage<SysLogLoginEntity> pageSearch(Page<SysLogLoginEntity> page, SysSearchPage request);
+
+    void deleteBathLogin(long[] ids);
 }

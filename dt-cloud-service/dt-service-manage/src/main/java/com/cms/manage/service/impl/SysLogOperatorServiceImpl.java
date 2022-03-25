@@ -39,4 +39,11 @@ public class SysLogOperatorServiceImpl extends ServiceImpl<SysLogOperatorMapper,
         return ResultUtil.success(list);
     }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResultUtil<?> deleteBathOperator(long[] ids) {
+        this.baseMapper.deleteBathOperator(ids);
+        return ResultUtil.success();
+    }
+
 }

@@ -14,4 +14,6 @@ public interface SysLogLoginService extends IService<SysLogLoginEntity> {
     void saveLoginLog(SysLogLoginEntity loginLogEntity);
 
     ResultUtil<IPage<SysLogLoginEntity>> pageSearch(SysSearchPage request);
+
+    ResultUtil<?> deleteBathLogin(long[] ids);
 }
