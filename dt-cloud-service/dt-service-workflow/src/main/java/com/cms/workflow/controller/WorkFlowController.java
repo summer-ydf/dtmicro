@@ -6,6 +6,7 @@ import com.cms.workflow.entity.FlowProcessEntity;
 import com.cms.workflow.service.FlowInstanceService;
 import com.cms.workflow.service.WorkFlowService;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import io.swagger.annotations.ApiOperation;
 import org.flowable.bpmn.converter.BpmnXMLConverter;
 import org.flowable.bpmn.model.BpmnModel;
 import org.flowable.dmn.engine.impl.deployer.ParsedDeployment;
@@ -67,14 +68,13 @@ public class WorkFlowController {
         return flowInstanceService.createDeployment();
     }
 
-    @GetMapping(value = "/genProcessDiagram")
-    public void genProcessDiagram(HttpServletResponse httpServletResponse, String processId) {
-        workFlowService.genProcessDiagram(httpServletResponse,processId);
+    @ApiOperation(value = "获取流程运行实例")
+    @GetMapping(value = "/get_process_diagram")
+    public void getProcessDiagram(HttpServletResponse httpServletResponse, String procInstId) {
+        workFlowService.getProcessDiagram(httpServletResponse,procInstId);
     }
 
-    private XMLInputFactory factory = XMLInputFactory.newInstance();
-    private BpmnXMLConverter bpmnXMLConverter;
-
+    @ApiOperation(value = "部署流程定义")
     @PostMapping(value = "/save_deployment")
     public ResultUtil<?> saveDeployment(@RequestParam("file") MultipartFile multipartFile, String id, String name, String category) throws IOException {
         FlowProcessEntity flowProcess = new FlowProcessEntity();
@@ -100,9 +100,16 @@ public class WorkFlowController {
         return ResultUtil.success(deployStream);
     }
 
+    @ApiOperation(value = "删除流程定义")
     @PostMapping(value = "delete_deployment/{deploymentId}")
     public ResultUtil<?> deleteDeployment(@PathVariable String deploymentId) {
         return workFlowService.deleteDeployment(deploymentId);
+    }
+
+    @ApiOperation(value = "启动流程")
+    @PostMapping(value = "start_process/{deploymentId}")
+    public ResultUtil<?> startProcess(@PathVariable String deploymentId) {
+        return workFlowService.startProcess(deploymentId);
     }
 
     @GetMapping(value = "/listFlowModel")

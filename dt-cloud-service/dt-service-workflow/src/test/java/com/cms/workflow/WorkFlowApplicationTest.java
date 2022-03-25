@@ -82,7 +82,7 @@ public class WorkFlowApplicationTest {
     void findMyTask() {
         TaskService taskService = processEngine.getTaskService();
         List<Task> tasks = taskService.createTaskQuery()
-                .taskAssignee("李四")
+                .taskCandidateOrAssigned("1")
                 .orderByTaskCreateTime().asc()
                 .list();
         log.info("个人任务："+tasks.size());

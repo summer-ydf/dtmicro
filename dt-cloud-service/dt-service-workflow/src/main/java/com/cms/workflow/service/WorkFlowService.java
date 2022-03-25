@@ -9,12 +9,9 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface WorkFlowService {
 
-    /**
-     * 获取流程图
-     * @param httpServletResponse 返回响应
-     * @param processId 实例ID
-     */
-    void genProcessDiagram(HttpServletResponse httpServletResponse, String processId);
+    void getProcessDiagram(HttpServletResponse httpServletResponse, String procInstId);
 
     ResultUtil<?> deleteDeployment(String deploymentId);
+
+    ResultUtil<?> startProcess(String deploymentId);
 }

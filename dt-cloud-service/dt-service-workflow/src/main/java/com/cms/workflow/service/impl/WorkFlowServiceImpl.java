@@ -12,10 +12,12 @@ import org.flowable.engine.RuntimeService;
 import org.flowable.engine.TaskService;
 import org.flowable.engine.history.HistoricActivityInstance;
 import org.flowable.engine.history.HistoricProcessInstance;
+import org.flowable.engine.repository.ProcessDefinition;
 import org.flowable.engine.runtime.ProcessInstance;
 import org.flowable.image.ProcessDiagramGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -43,8 +45,8 @@ public class WorkFlowServiceImpl implements WorkFlowService {
     private ProcessEngine processEngine;
 
     @Override
-    public void genProcessDiagram(HttpServletResponse response, String processId) {
-        InputStream inputStream = createImgInputStream(processId);
+    public void getProcessDiagram(HttpServletResponse response, String procInstId) {
+        InputStream inputStream = createImgInputStream(procInstId);
         OutputStream outputStream = null;
         byte[] buf = new byte[1024];
         int length = 0;
@@ -84,17 +86,28 @@ public class WorkFlowServiceImpl implements WorkFlowService {
     }
 
     /**
-     * 判断流程实例是否已经结束
-     * @param processInstanceId 流程实例ID
-     * @return 返回true/false
+     * 启动流程
+     * @param deploymentId 部署流程ID
+     * @return 返回
      */
-    public boolean isFinished(String processInstanceId) {
-        return historyService.createHistoricProcessInstanceQuery().finished().processInstanceId(processInstanceId).count() > 0;
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResultUtil<?> startProcess(String deploymentId) {
+        // 启动流程实例，根据ACT_RE_PROCDEF表中流程定义的ID或者KEY
+        ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery().deploymentId(deploymentId).singleResult();
+        //ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(processDefinition.getKey());
+        ProcessInstance processInstance = runtimeService.startProcessInstanceById(processDefinition.getId());
+        log.info("流程实例ID："+processInstance.getId());
+        log.info("流程定义ID："+processInstance.getProcessDefinitionId());
+        // 流程实例ID：0fc68490-abf8-11ec-8d5e-005056c00008
+        // 流程定义ID：process_test:1:b2a9b229-abf7-11ec-9750-005056c00008
+        return ResultUtil.success(processInstance.getId());
     }
+
 
     /**
      * 生成流程图片流
-     * @param processInstanceId 流程实例
+     * @param processInstanceId 流程实例ID
      * @return 返回输入流
      */
     public InputStream createImgInputStream(String processInstanceId) {
@@ -127,5 +140,15 @@ public class WorkFlowServiceImpl implements WorkFlowService {
                 engineConfiguration.getAnnotationFontName(),
                 engineConfiguration.getClassLoader(), 1.0, true);
     }
+
+    /**
+     * 判断流程实例是否已经结束
+     * @param processInstanceId 流程实例ID
+     * @return 返回true/false
+     */
+    public boolean isFinished(String processInstanceId) {
+        return historyService.createHistoricProcessInstanceQuery().finished().processInstanceId(processInstanceId).count() > 0;
+    }
+
 
 }
