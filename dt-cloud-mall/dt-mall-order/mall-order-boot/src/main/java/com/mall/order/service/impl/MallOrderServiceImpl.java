@@ -31,18 +31,14 @@ public class MallOrderServiceImpl extends ServiceImpl<MallOrderMapper, MallOrder
     @Override
     @GlobalTransactional(rollbackFor = Exception.class)
     public ResultUtil<?> updateOrderStatus(Integer id, Integer userId) {
-
         MallOrder mallOrder = this.baseMapper.selectById(id);
-
-
-        log.info("2、修改用户余额");
+        log.info("1、修改用户余额");
         mallUserFeignService.reduceMoney(mallOrder.getUserId());
-
-        log.info("1、扣减库存->>>");
+        log.info("2、扣减库存->>>");
         ResultUtil<?> reduceStock = mallSkuFeignService.reduceStock(mallOrder.getGoodId());
         if(reduceStock.isSuccess()) {
             // 服务调用成功
-            log.info("2、修改订单状态->>>");
+            log.info("3、修改订单状态->>>");
             boolean result = this.update(new LambdaUpdateWrapper<MallOrder>().eq(MallOrder::getId, id).eq(MallOrder::getUserId,userId).set(MallOrder::getStatus, 1));
             if(result) {
                 return ResultUtil.success("下单成功");

@@ -11,7 +11,7 @@
 
     <artifactId>dt-cloud-mall</artifactId>
     <packaging>pom</packaging>
-    <description>商城核心业务测试模块</description>
+    <description>分布式事务测试模块</description>
     <modules>
         <module>dt-mall-common</module>
         <module>dt-mall-order</module>
