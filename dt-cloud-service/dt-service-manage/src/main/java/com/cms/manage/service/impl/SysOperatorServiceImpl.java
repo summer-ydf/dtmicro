@@ -139,4 +139,13 @@ public class SysOperatorServiceImpl extends ServiceImpl<SysOperatorMapper, SysOp
         this.baseMapper.deleteBathOperatorRole(ids);
         return ResultUtil.success("批量删除成功");
     }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public ResultUtil<?> updateEnabled(Long id, Boolean enabled) {
+        SysOperatorEntity operator = this.baseMapper.selectById(id);
+        operator.setEnabled(enabled);
+        this.baseMapper.updateById(operator);
+        return ResultUtil.success();
+    }
 }

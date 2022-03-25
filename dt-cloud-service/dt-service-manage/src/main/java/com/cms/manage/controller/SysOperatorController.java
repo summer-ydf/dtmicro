@@ -68,4 +68,11 @@ public class SysOperatorController {
     public ResultUtil<?> deleteBath(@RequestBody long[] ids) {
         return sysOperatorService.deleteBath(ids);
     }
+
+    @ApiOperation(value = "禁用/启用操作员状态")
+    @DeleteMapping("/update_enable/{id}/{enabled}")
+    public ResultUtil<?> updateEnabled(@PathVariable Long id, @PathVariable Boolean enabled) {
+        return sysOperatorService.updateEnabled(id,enabled);
+    }
+
 }
