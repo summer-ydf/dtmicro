@@ -3,6 +3,8 @@ package com.cms.manage.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.cms.common.core.domain.SysSearchPage;
+import com.cms.common.log.annotation.Log;
+import com.cms.common.log.enums.BusinessType;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.entity.SysRoleEntity;
 import com.cms.manage.service.SysRoleService;
@@ -41,7 +43,7 @@ public class SysRoleController {
         return sysRoleService.queryList(request);
     }
 
-    //@Log(title = "新增平台系统角色", businessType = LogTypeCode.INSERT)
+    @Log(title = "编辑系统角色日志记录", businessType = BusinessType.UPDATE)
     @ApiOperation(value = "添加系统角色")
     @PostMapping("/save")
     public ResultUtil<SysRoleEntity> save(@RequestBody SysRoleEntity request) {
@@ -54,13 +56,14 @@ public class SysRoleController {
         return sysRoleService.getRoleById(id);
     }
 
-    //@Log(title = "删除平台系统角色", businessType = LogTypeCode.DELETE)
+    @Log(title = "删除系统角色日志记录", businessType = BusinessType.DELETE)
     @ApiOperation(value = "删除系统角色")
     @DeleteMapping("/delete/{id}")
     public ResultUtil<SysRoleEntity> delete(@PathVariable Long id){
         return sysRoleService.deleteRoleById(id);
     }
 
+    @Log(title = "批量删除系统角色日志记录", businessType = BusinessType.DELETE)
     @ApiOperation(value = "批量删除角色")
     @DeleteMapping("/delete_bath")
     public ResultUtil<?> deleteBath(@RequestBody long[] ids) {
@@ -79,12 +82,14 @@ public class SysRoleController {
         return sysRoleService.getTreeRoleMenuById(id);
     }
 
+    @Log(title = "添加角色菜单权限日志记录", businessType = BusinessType.INSERT)
     @ApiOperation(value = "添加角色菜单权限")
     @PostMapping("/saveRoleMenu")
     public ResultUtil<?> saveRoleMenu(@RequestBody SysRoleMenuData sysRoleMenuData) {
         return sysRoleService.saveRoleMenu(sysRoleMenuData);
     }
 
+    @Log(title = "添加角色数据权限日志记录", businessType = BusinessType.INSERT)
     @ApiOperation(value = "添加角色数据权限")
     @PostMapping("/saveRoleDataScope")
     public ResultUtil<?> saveRoleDataScope(@RequestBody SysRoleScope sysRoleScope) {

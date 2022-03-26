@@ -10,10 +10,15 @@
     </delete>
 
     <select id="pageSearch" resultType="com.cms.manage.entity.SysLogLoginEntity">
-        SELECT id, title, login_user_name, login_ip, browser,
-               operating_system, status, type, message,
+        SELECT id, title, login_user_name, login_ip, browser,operating_system, status, type, message,
                create_time, update_time
-        FROM sys_log_login ORDER BY create_time DESC
+        FROM sys_log_login
+        <where>
+            <if test="request.keyword != null and request.keyword != ''">
+                AND login_user_name LIKE CONCAT('%',#{request.keyword},'%')
+            </if>
+        </where>
+        ORDER BY create_time DESC
     </select>
 
 </mapper>

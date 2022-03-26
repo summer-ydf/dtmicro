@@ -43,6 +43,7 @@ public class SysOperatorController {
         return sysOperatorService.pageSearch(request);
     }
 
+    @Log(title = "编辑操作员日志记录", businessType = BusinessType.UPDATE)
     @ApiOperation(value = "添加操作员")
     @PostMapping("/save")
     public ResultUtil<SysOperatorEntity> save(@RequestBody SysOperatorEntity request) {
@@ -63,6 +64,7 @@ public class SysOperatorController {
         return sysOperatorService.deleteOperatorById(id);
     }
 
+    @Log(title = "批量删除操作员日志记录", businessType = BusinessType.DELETE)
     @ApiOperation(value = "批量删除操作员")
     @DeleteMapping("/delete_bath")
     public ResultUtil<?> deleteBath(@RequestBody long[] ids) {

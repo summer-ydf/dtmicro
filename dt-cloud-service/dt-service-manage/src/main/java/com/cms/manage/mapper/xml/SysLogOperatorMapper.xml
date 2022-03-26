@@ -10,11 +10,15 @@
     </delete>
 
     <select id="pageSearch" resultType="com.cms.manage.entity.SysLogOperatorEntity">
-        SELECT id, title, business_type, request_method_name,
-               request_method_type, request_user_name, request_url,
-               request_ip, request_param, response_param, status, error_info,
-               create_time, update_time
-        FROM sys_log_operator ORDER BY create_time DESC
+        SELECT id, title, business_type, request_method_name,request_method_type, request_user_name, request_url,
+               request_ip, request_param, response_param, status, error_info,create_time, update_time
+        FROM sys_log_operator
+        <where>
+            <if test="request.keyword != null and request.keyword != ''">
+                AND request_user_name LIKE CONCAT('%',#{request.keyword},'%')
+            </if>
+        </where>
+        ORDER BY create_time DESC
     </select>
 
 </mapper>
