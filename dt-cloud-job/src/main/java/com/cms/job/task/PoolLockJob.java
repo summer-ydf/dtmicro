@@ -1,6 +1,6 @@
 package com.cms.job.task;
 
-import com.cms.common.utils.SysCmsUtils;
+import com.cms.common.tool.utils.SysCmsUtils;
 import org.quartz.Job;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;

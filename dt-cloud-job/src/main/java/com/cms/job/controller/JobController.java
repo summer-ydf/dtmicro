@@ -1,6 +1,6 @@
 package com.cms.job.controller;
 
-import com.cms.common.result.ResultUtil;
+import com.cms.common.tool.result.ResultUtil;
 import com.cms.job.entity.QuartzJobInfo;
 import com.cms.job.task.bean.CronProjectJob;
 import com.cms.job.utils.QuartzUtils;
@@ -23,7 +23,7 @@ public class JobController {
 
     @PostMapping("/addScheduleJob")
     public ResultUtil<String> addScheduleJob(@RequestParam String taskId, @RequestParam String jobName, @RequestParam String jobCron,
-                                          @RequestParam String jobGroupName) {
+                                             @RequestParam String jobGroupName) {
         QuartzJobInfo taskInfo = new QuartzJobInfo();
         taskInfo.setTaskId(taskId);
         taskInfo.setJobClass(CronProjectJob.class);

@@ -1,6 +1,6 @@
 package com.cms.job.task.bean;
 
-import com.cms.common.utils.SysCmsUtils;
+import com.cms.common.tool.utils.SysCmsUtils;
 import com.cms.job.task.PoolLockJob;
 import org.apache.commons.lang3.time.DateFormatUtils;
 

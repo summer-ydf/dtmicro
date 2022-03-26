@@ -1,6 +1,7 @@
 package com.cms.job.utils;
 
-import com.cms.common.utils.SysCmsUtils;
+
+import com.cms.common.tool.utils.SysCmsUtils;
 import com.cms.job.entity.QuartzJobInfo;
 import org.quartz.CronScheduleBuilder;
 import org.quartz.CronTrigger;
