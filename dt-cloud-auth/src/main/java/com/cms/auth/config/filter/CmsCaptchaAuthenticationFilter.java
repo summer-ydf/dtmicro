@@ -3,9 +3,9 @@ package com.cms.auth.config.filter;
 import com.alibaba.fastjson.JSON;
 import com.cms.auth.domain.SecurityClaimsParams;
 import com.cms.auth.exception.ParameterAuthenticationException;
+import com.cms.common.jdbc.utils.RedisUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.StringRedisTemplate;
 
 import javax.servlet.FilterChain;
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +20,7 @@ import static com.cms.common.tool.constant.ConstantCode.CACHE_CODE_KEY;
 public class CmsCaptchaAuthenticationFilter extends CmsAbstractBasicAuthenticationFilter {
 
     @Autowired
-    private StringRedisTemplate stringRedisTemplate;
+    private RedisUtils redisUtils;
 
     @Override
     protected void handle(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) {
@@ -38,10 +38,10 @@ public class CmsCaptchaAuthenticationFilter extends CmsAbstractBasicAuthenticati
     }
 
     private void validCode(String code) {
-        String key = (CACHE_CODE_KEY + code).toLowerCase();
-        String exist = stringRedisTemplate.opsForValue().get((CACHE_CODE_KEY + code).toLowerCase());
-        if (StringUtils.equalsIgnoreCase(exist, code)) {
-            stringRedisTemplate.delete(key);
+        String inputCode = (CACHE_CODE_KEY + code).toLowerCase();
+        Object redisCode = redisUtils.get((CACHE_CODE_KEY + code).toLowerCase());
+        if (!inputCode.equalsIgnoreCase((String) redisCode)) {
+            redisUtils.del(inputCode);
         } else {
             throw new ParameterAuthenticationException("验证码错误");
         }

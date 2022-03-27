@@ -3,13 +3,13 @@ package com.cms.auth.controller;
 import com.cms.auth.service.OlapRabbitMqService;
 import com.cms.common.core.utils.ApiCallUtils;
 import com.cms.common.jdbc.config.IdGeneratorConfig;
+import com.cms.common.jdbc.utils.RedisUtils;
 import com.cms.common.tool.domain.SecurityClaimsUserEntity;
 import com.cms.common.tool.result.ResultException;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.common.tool.utils.SysCmsUtils;
 import com.cms.common.tool.utils.VerifyCodeUtils;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,7 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 import static com.cms.common.tool.constant.ConstantCode.CACHE_CODE_KEY;
 import static com.cms.common.tool.constant.ConstantCode.HEIGHT;
@@ -35,10 +34,10 @@ public class AuthController {
 
     private final IdGeneratorConfig idGeneratorConfig;
     private final OlapRabbitMqService olapRabbitMqService;
-    private final StringRedisTemplate stringRedisTemplate;
+    private final RedisUtils redisUtils;
 
-    public AuthController(StringRedisTemplate stringRedisTemplate, OlapRabbitMqService olapRabbitMqService, IdGeneratorConfig idGeneratorConfig) {
-        this.stringRedisTemplate = stringRedisTemplate;
+    public AuthController(RedisUtils redisUtils, OlapRabbitMqService olapRabbitMqService, IdGeneratorConfig idGeneratorConfig) {
+        this.redisUtils = redisUtils;
         this.olapRabbitMqService = olapRabbitMqService;
         this.idGeneratorConfig = idGeneratorConfig;
     }
@@ -58,7 +57,7 @@ public class AuthController {
         String randomNumber = VerifyCodeUtils.drawRandomText(image,WIDTH,HEIGHT);
         SysCmsUtils.log.info("获取登录验证码："+randomNumber);
         // 存入redis
-        stringRedisTemplate.opsForValue().set((CACHE_CODE_KEY + randomNumber).toLowerCase(),randomNumber,5, TimeUnit.MINUTES);
+        redisUtils.set((CACHE_CODE_KEY + randomNumber).toLowerCase(), randomNumber,60 * 3L);
         ServletOutputStream out = response.getOutputStream();
         ImageIO.write(image, IMG_JPG, out);
         out.flush();
