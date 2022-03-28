@@ -44,8 +44,3 @@ spring:
             threadCount: 10 # 设置并发线程数量
             threadPriority: 5 # 指定线程优先级
             threadsInheritContextClassLoaderOfInitializingThread: true
-mybatis-plus:
-  typeAliasesPackage: com.cms.job.entity
-  mapper-locations: classpath*:com/cms/job/mapper/**/*.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

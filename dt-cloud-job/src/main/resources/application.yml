@@ -19,3 +19,12 @@ management:
     web:
       exposure:
         include: '*'
+# 开启服务调用失败处理
+feign:
+  sentinel:
+    enabled: true
+mybatis-plus:
+  typeAliasesPackage: com.cms.job.entity
+  mapper-locations: classpath*:com/cms/job/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
