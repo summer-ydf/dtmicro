@@ -22,6 +22,7 @@ public abstract class PoolLockJob implements Job {
             return;
         }
         try{
+            // 实现具体任务
             JobDetail jobDetail = jobExecutionContext.getJobDetail();
             JobDataMap jobDataMap = jobDetail.getJobDataMap();
             String taskId = jobDataMap.getString("taskId");

@@ -1,0 +1,32 @@
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/dtcms1.0?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSL=false&nullCatalogMeansCurrent=true
+    username: root
+    password: Passw0rd!
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+  quartz:
+    job-store-type: jdbc  # 将任务持久化到数据库
+    wait-for-jobs-to-complete-on-shutdown: true # 程序结束时会等待quartz相关的内容结束
+    overwrite-existing-jobs: true  # 可以覆盖已有的任务
+    properties:
+      org:
+        quartz:
+          scheduler: # scheduler相关
+            instanceName: scheduler # 调度器实例名称
+            instanceId: AUTO # 调度器实例ID自动生成
+          jobStore: # 持久化相关
+            class: org.quartz.impl.jdbcjobstore.JobStoreTX # 调度信息存储处理类
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate # 使用完全兼容JDBC的驱动
+            tablePrefix: QRTZ_ # quartz相关表前缀
+            useProperties: false # 不使用properties加载 使用yml配置
+          threadPool: # 线程池相关
+            class: org.quartz.simpl.SimpleThreadPool # 指定线程池实现类，对调度器提供固定大小的线程池
+            threadCount: 10 # 设置并发线程数量
+            threadPriority: 5 # 指定线程优先级
+            threadsInheritContextClassLoaderOfInitializingThread: true
+mybatis-plus:
+  typeAliasesPackage: com.cms.job.entity
+  mapper-locations: classpath*:com/cms/job/mapper/**/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
