@@ -3,7 +3,7 @@
 <mapper namespace="com.cms.job.mapper.JobMapper">
 
     <select id="pageSearch" resultType="com.cms.job.entity.JobInformationEntity">
-       SELECT id, task_id, task_name, task_group_name, job_class, cron_expression, create_time, update_time
+       SELECT id, task_id, task_name, task_group_name, job_class, cron_expression, status, create_time, update_time
        FROM t_job_information
         <where>
             <if test="request.keyword != null and request.keyword != ''">

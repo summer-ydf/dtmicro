@@ -28,8 +28,8 @@ public class JobController {
     }
 
     @ApiOperation(value = "分页查询登录日志列表")
-    @GetMapping("/login_page")
-    public ResultUtil<IPage<JobInformationEntity>> loginPage(SysSearchPage request) {
+    @GetMapping("/page")
+    public ResultUtil<IPage<JobInformationEntity>> page(SysSearchPage request) {
         return jobService.pageSearch(request);
     }
 

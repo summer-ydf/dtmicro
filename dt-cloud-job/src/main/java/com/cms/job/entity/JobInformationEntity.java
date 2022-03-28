@@ -44,4 +44,7 @@ public class JobInformationEntity extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "任务运行时间表达式")
     private String cronExpression;
 
+    @ApiModelProperty(value = "执行状态")
+    private Integer status;
+
 }
