@@ -1,25 +1,37 @@
 package com.cms.job.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.cms.common.core.domain.SysSearchPage;
 import com.cms.common.tool.result.ResultUtil;
+import com.cms.job.entity.JobInformationEntity;
 import com.cms.job.entity.QuartzJobInfo;
+import com.cms.job.service.JobService;
 import com.cms.job.task.bean.CronProjectJob;
 import com.cms.job.utils.QuartzUtils;
+import io.swagger.annotations.ApiOperation;
 import org.quartz.SchedulerException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author ydf Created by 2021/12/10 14:33
  */
 @RestController
-@RequestMapping("api/v1/job")
+@RequestMapping("/job")
 public class JobController {
 
-    @Autowired
-    private QuartzUtils quartzUtils;
+    private final QuartzUtils quartzUtils;
+    private final JobService jobService;
+
+    public JobController(QuartzUtils quartzUtils, JobService jobService) {
+        this.quartzUtils = quartzUtils;
+        this.jobService = jobService;
+    }
+
+    @ApiOperation(value = "分页查询登录日志列表")
+    @GetMapping("/login_page")
+    public ResultUtil<IPage<JobInformationEntity>> loginPage(SysSearchPage request) {
+        return jobService.pageSearch(request);
+    }
 
     @PostMapping("/addScheduleJob")
     public ResultUtil<String> addScheduleJob(@RequestParam String taskId, @RequestParam String jobName, @RequestParam String jobCron,
