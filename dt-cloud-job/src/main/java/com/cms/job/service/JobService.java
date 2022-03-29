@@ -15,4 +15,12 @@ public interface JobService extends IService<JobInformationEntity> {
     ResultUtil<IPage<JobInformationEntity>> pageSearch(SysSearchPage request);
 
     ResultUtil<String> addScheduleJob(JobInformationEntity jobInformationEntity);
+
+    ResultUtil<String> updateScheduleJob(JobInformationEntity jobInformationEntity);
+
+    ResultUtil<String> deleteScheduleJob(String taskId);
+
+    ResultUtil<String> pauseScheduleJob(String taskId);
+
+    ResultUtil<String> resumeScheduleJob(String taskId);
 }

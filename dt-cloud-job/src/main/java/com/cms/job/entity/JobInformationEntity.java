@@ -47,4 +47,7 @@ public class JobInformationEntity extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "执行状态")
     private Integer status;
 
+    @ApiModelProperty(value = "参数")
+    private String params;
+
 }

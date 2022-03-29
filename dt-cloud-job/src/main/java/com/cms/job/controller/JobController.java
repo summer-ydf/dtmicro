@@ -4,12 +4,9 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.cms.common.core.domain.SysSearchPage;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.job.entity.JobInformationEntity;
-import com.cms.job.entity.QuartzJobInfo;
 import com.cms.job.service.JobService;
-import com.cms.job.task.bean.CronProjectJob;
 import com.cms.job.utils.QuartzUtils;
 import io.swagger.annotations.ApiOperation;
-import org.quartz.SchedulerException;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -39,46 +36,31 @@ public class JobController {
        return jobService.addScheduleJob(jobInformationEntity);
     }
 
+    @ApiOperation(value = "修改任务")
     @PostMapping("/updateScheduleJob")
-    public ResultUtil<String> updateScheduleJob(@RequestParam String taskId, @RequestParam String jobCron) {
-        try {
-            Boolean aBoolean = quartzUtils.updateScheduleJob(taskId, jobCron);
-            return ResultUtil.success(aBoolean ? "任务已修改" : "任务不存在");
-        } catch (SchedulerException e) {
-            return ResultUtil.error();
-        }
+    public ResultUtil<String> updateScheduleJob(@RequestBody JobInformationEntity jobInformationEntity) {
+        return jobService.updateScheduleJob(jobInformationEntity);
     }
 
-    @PostMapping("/deleteScheduleJob")
-    public ResultUtil<String> deleteScheduleJob(@RequestParam String taskId) {
-        try {
-            quartzUtils.deleteScheduleJob(taskId);
-            return ResultUtil.success("删除成功");
-        } catch (SchedulerException e) {
-            return ResultUtil.success("删除失败");
-        }
+    @ApiOperation(value = "删除任务")
+    @DeleteMapping("/deleteScheduleJob/{taskId}")
+    public ResultUtil<String> deleteScheduleJob(@PathVariable String taskId) {
+        return jobService.deleteScheduleJob(taskId);
     }
 
-    @PostMapping("/pauseScheduleJob")
-    public ResultUtil<String> pauseScheduleJob(@RequestParam String taskId) {
-        try {
-            Boolean aBoolean = quartzUtils.pauseScheduleJob(taskId);
-            return ResultUtil.success(aBoolean ? "任务已暂停" : "任务不存在");
-        } catch (SchedulerException e) {
-            return ResultUtil.error();
-        }
+    @ApiOperation(value = "暂停任务")
+    @PostMapping("/pauseScheduleJob/{taskId}")
+    public ResultUtil<String> pauseScheduleJob(@PathVariable String taskId) {
+        return jobService.pauseScheduleJob(taskId);
     }
 
-    @PostMapping("/resumeScheduleJob")
-    public ResultUtil<String> resumeScheduleJob(@RequestParam String taskId) {
-        try {
-            Boolean aBoolean = quartzUtils.resumeScheduleJob(taskId);
-            return ResultUtil.success(aBoolean ? "任务已恢复" : "任务不存在");
-        } catch (SchedulerException e) {
-            return ResultUtil.error();
-        }
+    @ApiOperation(value = "恢复任务")
+    @PostMapping("/resumeScheduleJob/{taskId}")
+    public ResultUtil<String> resumeScheduleJob(@PathVariable String taskId) {
+        return jobService.resumeScheduleJob(taskId);
     }
 
+    @ApiOperation(value = "查询任务是否存在")
     @PostMapping("/checkExistsJob")
     public ResultUtil<String> checkExists(@RequestParam String taskId) {
         boolean aBoolean = quartzUtils.checkExists(taskId);
