@@ -1,5 +1,7 @@
 server:
   port: 8082
+  servlet:
+    context-path: /api
 spring:
   application:
     name: cms-service-manage

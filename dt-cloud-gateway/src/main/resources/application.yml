@@ -14,22 +14,22 @@ spring:
         enabled: false
     gateway:
       routes:
-        - id: cms-auth
+        - id: cms-service-auth
           uri: lb://cms-service-auth
           predicates:
             - Path=/auth/oauth/**,/auth/anonymous/**,/auth/security/**,/auth/hello,/auth/admin
           filters:
             - StripPrefix=1
-        - id: cms-manage
+        - id: cms-service-manage
           uri: lb://cms-service-manage
           predicates:
-            - Path=/api/**
+            - Path=/manage/api/**
           filters:
             - StripPrefix=1
-        - id: cms-job
+        - id: cms-service-job
           uri: lb://cms-service-job
           predicates:
-            - Path=/api/**
+            - Path=/task/api/**
           filters:
             - StripPrefix=1
 secure:  #配置白名单路径
