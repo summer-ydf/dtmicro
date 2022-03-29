@@ -27,24 +27,16 @@ public class JobController {
         this.jobService = jobService;
     }
 
-    @ApiOperation(value = "分页查询登录日志列表")
+    @ApiOperation(value = "分页查询任务列表")
     @GetMapping("/page")
     public ResultUtil<IPage<JobInformationEntity>> page(SysSearchPage request) {
         return jobService.pageSearch(request);
     }
 
+    @ApiOperation(value = "添加任务")
     @PostMapping("/addScheduleJob")
-    public ResultUtil<String> addScheduleJob(@RequestParam String taskId, @RequestParam String jobName, @RequestParam String jobCron,
-                                             @RequestParam String jobGroupName) {
-        QuartzJobInfo taskInfo = new QuartzJobInfo();
-        taskInfo.setTaskId(taskId);
-        taskInfo.setJobClass(CronProjectJob.class);
-        taskInfo.setCronExpression(jobCron);
-        taskInfo.setTaskName(jobName);
-        taskInfo.setTaskGroupName(jobGroupName);
-        // 启动定时任务
-        Boolean aBoolean = quartzUtils.addScheduleJob(taskInfo);
-        return ResultUtil.success(aBoolean ? "任务开启" : "任务不存在");
+    public ResultUtil<String> addScheduleJob(@RequestBody JobInformationEntity jobInformationEntity) {
+       return jobService.addScheduleJob(jobInformationEntity);
     }
 
     @PostMapping("/updateScheduleJob")

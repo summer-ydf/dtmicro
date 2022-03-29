@@ -13,4 +13,6 @@ import com.cms.job.entity.JobInformationEntity;
 public interface JobService extends IService<JobInformationEntity> {
 
     ResultUtil<IPage<JobInformationEntity>> pageSearch(SysSearchPage request);
+
+    ResultUtil<String> addScheduleJob(JobInformationEntity jobInformationEntity);
 }
