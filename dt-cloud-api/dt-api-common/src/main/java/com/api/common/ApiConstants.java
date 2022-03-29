@@ -8,7 +8,7 @@ public class ApiConstants {
     public static final String APPLICATION_NAME_MANAGE = "cms-service-manage";
     public static final String APPLICATION_NAME_ITEM = "cms-service-item";
 
-    public static final String APPLICATION_MANAGE_API_AFFIX = "/api/manage";
+    public static final String APPLICATION_MANAGE_API_AFFIX = "manage";
     public static final String APPLICATION_ITEM_API_AFFIX = "item";
 
     public static final String APPLICATION_NAME_FLOW ="cms-service-flow";

@@ -11,7 +11,7 @@ spring:
   cloud:
     loadbalancer:
       retry:
-        enabled: false
+        enabled: false #该参数用来开启重试机制，默认是关闭
     gateway:
       routes:
         - id: cms-service-auth
@@ -25,13 +25,13 @@ spring:
           predicates:
             - Path=/manage/api/**
           filters:
-            - StripPrefix=1
+            - StripPrefix=2
         - id: cms-service-job
           uri: lb://cms-service-job
           predicates:
             - Path=/task/api/**
           filters:
-            - StripPrefix=1
+            - StripPrefix=2
 secure:  #配置白名单路径
   ignore:
     urls:
