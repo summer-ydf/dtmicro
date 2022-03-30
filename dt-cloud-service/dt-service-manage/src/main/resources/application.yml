@@ -29,3 +29,4 @@ mybatis-plus:
   mapper-locations: classpath*:com/cms/manage/mapper/**/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  typeEnumsPackage: com.cms.common.tool.enums

@@ -47,6 +47,9 @@ public class ConstantCode {
     public static final Integer INT_TWO = 2;
     public static final String STR_TWO = "2";
     public static final Long LONG_TWO = 2L;
+    public static final Integer INT_THREE = 3;
+    public static final String STR_THREE = "3";
+    public static final Long LONG_THREE = 3L;
 
     public static final String SYS_USER_TABLE_NAME = "CMS用户信息表V1.0";
     public static final String SYS_USER_SHEET_NAME = "CMS系统用户信息";
