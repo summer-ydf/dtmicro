@@ -60,6 +60,7 @@ public class JobServiceImpl extends ServiceImpl<JobMapper, JobInformationEntity>
             if (addScheduleJob) {
                 // 添加任务信息
                 job.setStatus(1);
+                job.setTaskId(taskInfo.getTaskId());
                 this.baseMapper.insert(job);
                 return ResultUtil.success();
             }else {
