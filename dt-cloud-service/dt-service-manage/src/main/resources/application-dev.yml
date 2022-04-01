@@ -1,15 +1,15 @@
 spring:
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/dt_cloud_cms?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSL=false&nullCatalogMeansCurrent=true
+    url: jdbc:mysql://42.192.121.230:3306/dt_cloud_cms?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSL=false&nullCatalogMeansCurrent=true
     username: root
     password: Passw0rd!
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
   redis:
     # Redis服务器连接IP
-    host: localhost
+    host: 42.192.121.230
     # Redis服务器连接端口
-    port: 7000
+    port: 6379
     # Redis服务器连接密码（默认为空）
     password: Passw0rd!
     # 连接超时时间（毫秒）
@@ -26,10 +26,10 @@ spring:
         min-idle: 16
   # 配置RabbitMQ服务器
   rabbitmq:
-    host: localhost
+    host: 42.192.121.230
     port: 5672
-    username: guest
-    password: guest
+    username: admin
+    password: Passw0rd!
     virtual-host: /
 # 分布式事务配置
 seata:

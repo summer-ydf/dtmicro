@@ -6,9 +6,9 @@ import com.cms.common.tool.utils.SysCmsUtils;
 import com.cms.manage.entity.SysLogLoginEntity;
 import com.cms.manage.service.SysLogLoginService;
 import com.rabbitmq.client.Channel;
+import org.springframework.amqp.core.ExchangeTypes;
 import org.springframework.amqp.core.Message;
-import org.springframework.amqp.rabbit.annotation.RabbitHandler;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.annotation.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

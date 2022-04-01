@@ -1,7 +1,6 @@
 package com.cms.job.task.bean;
 
 import com.api.manage.feign.LogFeignClientService;
-import com.cms.common.tool.domain.SysLoginLogVoEntity;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.common.tool.utils.SysCmsUtils;
 import com.cms.job.task.PoolLockJob;
@@ -9,7 +8,6 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * 任务实现类
