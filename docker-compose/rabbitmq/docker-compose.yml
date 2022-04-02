@@ -1,4 +1,4 @@
-version: "3.9.14"
+version: "3.9"
 services:
   dt-rabbitmq:
     image: rabbitmq:management
