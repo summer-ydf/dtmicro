@@ -1,0 +1,15 @@
+version: "3"
+services:
+  dt-minio:
+    image: minio/minio:RELEASE.2021-06-17T00-10-46Z
+    container_name: dt-minio
+    restart: unless-stopped # 指定容器退出后的重启策略为始终重启，但是不考虑在Docker守护进程启动时就已经停止了的容器
+    ports:                  # 映射端口
+      - "9000:9000"
+    environment:            # 设置环境变量,相当于docker run命令中的-e
+      TZ: Asia/Shanghai
+      MINIO_ACCESS_KEY: admin
+      MINIO_SECRET_KEY: Passw0rd!
+    volumes:                # 数据卷挂载路径设置,将本机目录映射到容器目录
+      - /dt/minio/data:/data
+    command: server /data
