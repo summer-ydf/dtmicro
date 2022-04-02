@@ -1,0 +1,17 @@
+version: "3.9.14"
+services:
+  dt-rabbitmq:
+    image: rabbitmq:management
+    container_name: dt-rabbitmq
+    restart: unless-stopped # 指定容器退出后的重启策略为始终重启，但是不考虑在Docker守护进程启动时就已经停止了的容器
+    hostname: dt-rabbitmq
+    ports:                  # 映射端口
+      - "15672:15672"
+      - "5672:5672"
+    environment:            # 设置环境变量,相当于docker run命令中的-e
+      TZ: Asia/Shanghai
+      RABBITMQ_DEFAULT_VHOST: '/'
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: Passw0rd!
+    volumes:                # 数据卷挂载路径设置,将本机目录映射到容器目录
+      - /dt/rabbitmq/data:/var/lib/rabbitmq
