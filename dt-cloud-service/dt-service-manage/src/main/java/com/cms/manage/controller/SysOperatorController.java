@@ -2,24 +2,21 @@ package com.cms.manage.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.cms.common.core.domain.SysSearchPage;
+import com.cms.common.core.file.minio.MinIoUploadFile;
 import com.cms.common.log.annotation.Log;
 import com.cms.common.log.enums.BusinessType;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.entity.SysOperatorEntity;
 import com.cms.manage.service.SysOperatorService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-
-import static com.cms.common.tool.constant.ConstantCode.GATEWAY_AUTHORIZATION;
 
 /**
  * @author ydf Created by 2022/1/12 15:59
@@ -28,6 +25,9 @@ import static com.cms.common.tool.constant.ConstantCode.GATEWAY_AUTHORIZATION;
 @RestController
 @RequestMapping(value = "/operator")
 public class SysOperatorController {
+
+    @Autowired
+    private MinIoUploadFile minIoUploadFile;
 
     private final SysOperatorService sysOperatorService;
 
@@ -38,8 +38,6 @@ public class SysOperatorController {
     @ApiOperation(value = "分页查询用户列表")
     @GetMapping("/page")
     public ResultUtil<IPage<SysOperatorEntity>> page(SysSearchPage request, HttpServletRequest servletRequest) {
-        String token = servletRequest.getHeader(GATEWAY_AUTHORIZATION);
-        System.out.println(token);
         return sysOperatorService.pageSearch(request);
     }
 
@@ -75,6 +73,21 @@ public class SysOperatorController {
     @DeleteMapping("/update_enabled/{id}/{enabled}")
     public ResultUtil<?> updateEnabled(@PathVariable Long id, @PathVariable Boolean enabled) {
         return sysOperatorService.updateEnabled(id,enabled);
+    }
+
+    @ApiOperation(value = "获取头像地址")
+    @GetMapping("/getAvatarUrl/{userId}")
+    public String getAvatarUrl(@PathVariable Long userId) {
+        return sysOperatorService.getAvatarUrl(userId);
+    }
+
+    @ApiOperation(value = "上传头像")
+    @ApiImplicitParams({
+            @ApiImplicitParam(value = "文件",name = "file",required = true,allowMultiple = true,dataType = "MultipartFile")
+    })
+    @PostMapping(value = "/uploadFile",headers = "content-type=multipart/form-data")
+    public String uploadFile(@RequestParam(value = "file") MultipartFile file) {
+        return minIoUploadFile.uploadFile(file, null);
     }
 
 }

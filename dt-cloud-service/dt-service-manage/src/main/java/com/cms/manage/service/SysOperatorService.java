@@ -23,4 +23,6 @@ public interface SysOperatorService extends IService<SysOperatorEntity> {
     ResultUtil<?> deleteBath(long[] ids);
 
     ResultUtil<?> updateEnabled(Long id, Boolean enabled);
+
+    String getAvatarUrl(Long userId);
 }

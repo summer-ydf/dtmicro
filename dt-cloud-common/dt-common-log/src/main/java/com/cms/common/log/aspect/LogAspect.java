@@ -153,7 +153,6 @@ public class LogAspect {
      */
     private void getRequestParams(JoinPoint joinPoint, SysOperatorLogVoEntity sysLog) {
         String requestMethodType = ServletUtils.getRequest().getMethod();
-        System.out.println();
         if (HttpMethod.PUT.name().equals(requestMethodType) || HttpMethod.POST.name().equals(requestMethodType)
                 || HttpMethod.DELETE.name().equals(requestMethodType)) {
             sysLog.setRequestParam(argsArrayToString(joinPoint.getArgs()));

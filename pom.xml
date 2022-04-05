@@ -46,6 +46,7 @@
         <okhttp.version>11.7</okhttp.version>
         <oauth.version>2.2.5.RELEASE</oauth.version>
         <nimbusds.jwt.version>9.15.2</nimbusds.jwt.version>
+        <minio.version>8.2.2</minio.version>
     </properties>
 
     <!--引入公共依赖全局使用-->

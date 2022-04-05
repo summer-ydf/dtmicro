@@ -1,6 +1,7 @@
 package com.cms.manage;
 
 import com.alibaba.cloud.seata.feign.SeataFeignClientAutoConfiguration;
+import com.cms.common.core.file.minio.MinIoUploadFile;
 import com.cms.common.jdbc.config.IdGeneratorConfig;
 import com.cms.common.tool.utils.SysCmsUtils;
 import org.mybatis.spring.annotation.MapperScan;
@@ -27,7 +28,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 @EnableSwagger2
 @EnableTransactionManagement
 @EnableDiscoveryClient
-@Import({IdGeneratorConfig.class})
+@Import({IdGeneratorConfig.class, MinIoUploadFile.class})
 @MapperScan(basePackages = {"com.cms.manage.mapper"})
 @EnableFeignClients(basePackages ={"com.api.*.feign"})
 public class CmsManageApplication {

@@ -88,10 +88,8 @@ public class ConstantCode {
     public static final String BASE_CONFIG_THEME_K_SIX = "主题六";
     public static final String BASE_CONFIG_THEME_V_SIX = "theme_six.css";
 
-    /**
-     * 文件存储桶
-     */
-    public static String MINIO_COMMON_BUCKET_NAME = "cms-bucket";
+    // minio文件公共存储桶
+    public static String MINIO_COMMON_BUCKET_NAME = "dt-cloud-bucket";
 
     /**
      * 登录日志标题常量
@@ -131,37 +129,23 @@ public class ConstantCode {
     public static final String TOKEN_CLAIMS_IVS = "CMDDTYDF&WY196KJ";
     public static final String GATEWAY_AUTHORIZATION = "Cms-Gateway-Authorization";
 
-    // RabbitMQ相关配置
+    // ============RabbitMQ相关配置======
+    // 主题队列
     public static final String RABBITMQ_TOPIC_LOG = "topic.cms.log";
+    // 主题交换机
     public static final String RABBITMQ_EXCHANGE_LOG = "CmsLogTopicExchange";
 
-    /**
-     * 全部数据权限
-     */
+    // ============数据权限配置======
+    // 全部数据权限
     public static final Long DATA_SCOPE_ALL = 1L;
-
-    /**
-     * 自定数据权限
-     */
+    // 自定数据权限
     public static final Long DATA_SCOPE_CUSTOM = 2L;
-
-    /**
-     * 部门数据权限
-     */
+    // 部门数据权限
     public static final Long DATA_SCOPE_DEPT = 3L;
-
-    /**
-     * 部门及以下数据权限
-     */
+    // 部门及以下数据权限
     public static final Long DATA_SCOPE_DEPT_AND_CHILD = 4L;
-
-    /**
-     * 仅本人数据权限
-     */
+    // 仅本人数据权限
     public static final Long DATA_SCOPE_SELF = 5L;
-
-    /**
-     * 数据权限过滤关键字
-     */
+    // 数据权限过滤关键字
     public static final String DATA_SCOPE = "dataScope";
 }

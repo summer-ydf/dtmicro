@@ -17,6 +17,7 @@ import com.cms.manage.mapper.SysOperatorMapper;
 import com.cms.manage.service.SysOperatorService;
 import com.cms.manage.service.SysRoleService;
 import com.github.yitter.idgen.YitIdHelper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -147,5 +148,16 @@ public class SysOperatorServiceImpl extends ServiceImpl<SysOperatorMapper, SysOp
         operator.setEnabled(enabled);
         this.baseMapper.updateById(operator);
         return ResultUtil.success();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public String getAvatarUrl(Long userId) {
+        String url = null;
+        SysOperatorEntity operatorEntity = this.baseMapper.selectById(userId);
+        if (!ObjectUtils.isEmpty(operatorEntity) && StringUtils.isNotBlank(operatorEntity.getAvatar())) {
+            url = operatorEntity.getAvatar();
+        }
+        return url;
     }
 }
