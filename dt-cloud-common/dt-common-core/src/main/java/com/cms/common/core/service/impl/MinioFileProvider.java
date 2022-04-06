@@ -105,6 +105,9 @@ public class MinioFileProvider implements FileProvider {
                 PutObjectArgs putObjectArgs = PutObjectArgs.builder().bucket(bucketName).object(objectName)
                         .stream(file.getInputStream(), file.getSize(), -1).contentType(file.getContentType()).build();
                 minioClient.putObject(putObjectArgs);
+                System.out.println("上传======");
+                System.out.println(bucketName);
+                System.out.println(objectName);
                 // 生成HTTP地址
                 return presignedGetHttpObject(bucketName, objectName);
             }

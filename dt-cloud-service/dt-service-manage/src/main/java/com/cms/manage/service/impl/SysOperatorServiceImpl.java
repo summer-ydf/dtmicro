@@ -150,14 +150,4 @@ public class SysOperatorServiceImpl extends ServiceImpl<SysOperatorMapper, SysOp
         return ResultUtil.success();
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public String getAvatarUrl(Long userId) {
-        String url = null;
-        SysOperatorEntity operatorEntity = this.baseMapper.selectById(userId);
-        if (!ObjectUtils.isEmpty(operatorEntity) && StringUtils.isNotBlank(operatorEntity.getAvatar())) {
-            url = operatorEntity.getAvatar();
-        }
-        return url;
-    }
 }

@@ -74,12 +74,6 @@ public class SysOperatorController {
         return sysOperatorService.updateEnabled(id,enabled);
     }
 
-    @ApiOperation(value = "获取头像地址")
-    @GetMapping("/getAvatarUrl/{userId}")
-    public String getAvatarUrl(@PathVariable Long userId) {
-        return sysOperatorService.getAvatarUrl(userId);
-    }
-
     @ApiOperation(value = "上传头像")
     @ApiImplicitParams({
             @ApiImplicitParam(value = "文件",name = "file",required = true,allowMultiple = true,dataType = "MultipartFile")

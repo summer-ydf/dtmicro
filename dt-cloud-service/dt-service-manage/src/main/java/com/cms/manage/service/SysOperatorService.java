@@ -24,5 +24,4 @@ public interface SysOperatorService extends IService<SysOperatorEntity> {
 
     ResultUtil<?> updateEnabled(Long id, Boolean enabled);
 
-    String getAvatarUrl(Long userId);
 }
