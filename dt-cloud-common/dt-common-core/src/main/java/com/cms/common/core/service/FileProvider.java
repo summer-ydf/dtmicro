@@ -26,5 +26,7 @@ public interface FileProvider {
 
     void removeObject(String bucketName, String objectName);
 
-    String presignedGetObject(String bucketName, String objectName);
+    String presignedGetHttpObject(String bucketName, String objectName);
+
+    String presignedGetChainObject(String fileId);
 }

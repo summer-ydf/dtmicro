@@ -11,13 +11,21 @@ import io.minio.PutObjectArgs;
 import io.minio.RemoveBucketArgs;
 import io.minio.RemoveObjectArgs;
 import io.minio.UploadObjectArgs;
+import io.minio.http.Method;
 import io.minio.messages.Bucket;
 import lombok.extern.apachecommons.CommonsLog;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.net.URL;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author ydf Created by 2022/4/6 15:44
@@ -98,7 +106,7 @@ public class MinioFileProvider implements FileProvider {
                         .stream(file.getInputStream(), file.getSize(), -1).contentType(file.getContentType()).build();
                 minioClient.putObject(putObjectArgs);
                 // 生成HTTP地址
-                return presignedGetObject(bucketName, objectName);
+                return presignedGetHttpObject(bucketName, objectName);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -129,10 +137,11 @@ public class MinioFileProvider implements FileProvider {
     }
 
     @Override
-    public String presignedGetObject(String bucketName, String objectName) {
+    public String presignedGetHttpObject(String bucketName, String objectName) {
         String presignedObjectUrl = null;
         try {
-            GetPresignedObjectUrlArgs objectUrlArgs = GetPresignedObjectUrlArgs.builder().bucket(bucketName).object(objectName).expiry(EXPIRES_TIME_SEC).build();
+            GetPresignedObjectUrlArgs objectUrlArgs = GetPresignedObjectUrlArgs.builder()
+                    .bucket(bucketName != null ? bucketName : BUCKET).object(objectName).expiry(EXPIRES_TIME_SEC).method(Method.POST).build();
             presignedObjectUrl = minioClient.getPresignedObjectUrl(objectUrlArgs);
         } catch (Exception e) {
             e.printStackTrace();
@@ -141,4 +150,89 @@ public class MinioFileProvider implements FileProvider {
         return presignedObjectUrl;
     }
 
+    @Override
+    public String presignedGetChainObject(String fileId) {
+        //校验文件是否为空
+        if (StringUtils.isEmpty(fileId) && !fileId.startsWith("http://") && !fileId.startsWith("https://")){
+            return fileId;
+        }
+        URL url = null;
+        try{
+            url = new URL(fileId);
+        }catch (Exception e){
+            log.error("不合法的URL："+e.getMessage());
+            return fileId;
+        }
+        String path = url.getPath();
+        Map<String, String> params = parseURLParam(fileId);
+        if(!expire(params)){
+            return fileId;
+        }
+        String objectName = path.substring(BUCKET_NAME_PRE_LEN + 1);
+        return presignedGetHttpObject(null,objectName);
+    }
+
+    private boolean expire(Map<String, String> params){
+        //获取链接有效时长 默认两小时
+        String date = params.get("X-Amz-Date");
+        if(StringUtils.isNotBlank(date)){
+            Date exp = null;
+            try {
+                exp = DateUtils.parseDate(date.replaceAll("T", "").replaceAll("Z", ""), new String[]{"yyyyMMddHHmmss"});
+            } catch (ParseException e) {
+                e.printStackTrace();
+                log.info("DateUtils parseDate is error:"+e.getMessage());
+            }
+            if(exp != null){
+                //exp解析时间差8个小时
+                exp = DateUtils.addSeconds(exp, 8 * 60 * 60 + EXPIRES_TIME_SEC);
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String format = simpleDateFormat.format(exp);
+                System.out.println("过期时间："+format);
+                // 当exp < date时 返回true
+                return exp.before(new Date());
+            }
+        }
+        return true;
+    }
+
+    public static Map<String, String> parseURLParam(String URL) {
+        Map<String, String> mapRequest = new HashMap<>();
+        String[] arrSplit = null;
+        String strUrlParam = TruncateUrlPage(URL);
+        if (strUrlParam == null) {
+            return mapRequest;
+        }
+        //每个键值为一组
+        arrSplit = strUrlParam.split("[&]");
+        for (String strSplit : arrSplit) {
+            String[] arrSplitEqual = null;
+            arrSplitEqual = strSplit.split("[=]");
+            //解析出键值
+            if (arrSplitEqual.length > 1) {
+                mapRequest.put(arrSplitEqual[0], arrSplitEqual[1]);
+            } else {
+                if (StringUtils.isNotBlank(arrSplitEqual[0])) {
+                    //只有参数没有值，不加入
+                    mapRequest.put(arrSplitEqual[0], "");
+                }
+            }
+        }
+        return mapRequest;
+    }
+
+    private static String TruncateUrlPage(String strURL) {
+        String strAllParam = null;
+        String[] arrSplit = null;
+        strURL = strURL.trim();
+        arrSplit = strURL.split("[?]");
+        if (strURL.length() > 1) {
+            if (arrSplit.length > 1) {
+                if (arrSplit[1] != null) {
+                    strAllParam = arrSplit[1];
+                }
+            }
+        }
+        return strAllParam;
+    }
 }
