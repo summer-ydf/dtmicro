@@ -83,4 +83,9 @@ public class SysOperatorController {
         return fileProvider.putObject(file, null);
     }
 
+    @GetMapping(value = "/getUrl")
+    public String getUrl(String objectName){
+        return fileProvider.presignedGetHttpObject(null,objectName);
+    }
+
 }
