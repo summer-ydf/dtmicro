@@ -2,7 +2,6 @@ package com.cms.common.core.service.impl;
 
 import cn.hutool.core.util.IdUtil;
 import com.cms.common.core.service.FileProvider;
-import com.cms.common.tool.constant.ConstantCode;
 import io.minio.*;
 import io.minio.http.Method;
 import io.minio.messages.Bucket;
@@ -15,7 +14,6 @@ import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author ydf Created by 2022/4/6 15:44
@@ -24,8 +22,8 @@ import java.util.concurrent.TimeUnit;
 public class MinioFileProvider implements FileProvider {
 
     private MinioClient minioClient;
-    private static final String BUCKET = ConstantCode.MINIO_COMMON_BUCKET_NAME;
-    private static final int EXPIRES_TIME_SEC = 7200;
+    private static final String BUCKET = "default";
+    private static final int EXPIRES_TIME_SEC = 60;
     private static final String BUCKET_NAME_PRE = "/" + BUCKET;
     private static final int BUCKET_NAME_PRE_LEN = BUCKET_NAME_PRE.length();
 
@@ -85,34 +83,23 @@ public class MinioFileProvider implements FileProvider {
     @Override
     public String putObject(MultipartFile file, String bucketName) {
         try {
-//            String fileName = file.getOriginalFilename();
-//            if (null != fileName) {
-//                String objectName = IdUtil.simpleUUID()+fileName.substring(fileName.lastIndexOf("."));
-//                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-//                // 文件存储的目录结构
-//                objectName = sdf.format(new Date()) + "/" + objectName;
-//                bucketName = bucketName != null ? bucketName : BUCKET;
-//                PutObjectArgs putObjectArgs = PutObjectArgs.builder().bucket(bucketName).object(objectName)
-//                        .stream(file.getInputStream(), file.getSize(), -1).contentType(file.getContentType()).build();
-//                minioClient.putObject(putObjectArgs);
-//                System.out.println("上传======");
-//                System.out.println(bucketName);
-//                System.out.println(objectName);
-//                // 生成HTTP地址
-//                return presignedGetHttpObject(bucketName, objectName);
-//            }
-            int idx = Objects.requireNonNull(file.getOriginalFilename()).lastIndexOf(".");
-            String suffix = file.getOriginalFilename().substring(idx + 1);
-            String fileName = UUID.randomUUID() + "." + suffix;
-
-            // 保存文件
-            minioClient.putObject(PutObjectArgs.builder()
-                    .stream(file.getInputStream(), file.getSize(), PutObjectArgs.MIN_MULTIPART_SIZE)
-                    .object(fileName)
-                    .contentType(file.getContentType())
-                    .bucket(BUCKET)
-                    .build());
-            return fileName;
+            String fileName = file.getOriginalFilename();
+            if (null != fileName) {
+                // 文件存储的目录结构
+                String objectName = IdUtil.simpleUUID()+fileName.substring(fileName.lastIndexOf("."));
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+                objectName = sdf.format(new Date()) + "/" + objectName;
+                bucketName = bucketName != null ? bucketName : BUCKET;
+                // 保存文件
+                minioClient.putObject(PutObjectArgs.builder()
+                        .stream(file.getInputStream(), file.getSize(), PutObjectArgs.MIN_MULTIPART_SIZE)
+                        .object(objectName)
+                        .contentType(file.getContentType())
+                        .bucket(bucketName)
+                        .build());
+                // 生成HTTP地址
+                return presignedGetHttpObject(bucketName, objectName);
+            }
         } catch (Exception e) {
             e.printStackTrace();
             log.info("上传文件异常：{}",e.fillInStackTrace());
@@ -145,14 +132,11 @@ public class MinioFileProvider implements FileProvider {
     public String presignedGetHttpObject(String bucketName, String objectName) {
         String presignedObjectUrl = null;
         try {
-//            GetPresignedObjectUrlArgs objectUrlArgs = GetPresignedObjectUrlArgs.builder()
-//                    .bucket(bucketName != null ? bucketName : BUCKET).object(objectName).expiry(EXPIRES_TIME_SEC).method(Method.POST).build();
-//            presignedObjectUrl = minioClient.getPresignedObjectUrl(objectUrlArgs);
             presignedObjectUrl = minioClient.getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder()
-                    .bucket(BUCKET)
-                    .object(objectName).
-                            method(Method.GET)
-                    .expiry(7, TimeUnit.DAYS).build());
+                    .bucket(bucketName)
+                    .object(objectName)
+                    .method(Method.GET)
+                    .expiry(EXPIRES_TIME_SEC).build());
         } catch (Exception e) {
             e.printStackTrace();
             log.error("获取HTTP文件预览地址异常:"+e.fillInStackTrace());

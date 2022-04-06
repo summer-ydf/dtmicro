@@ -10,11 +10,6 @@ spring:
     time-zone: GMT+8
   profiles:
     active: dev
-  servlet:
-    multipart:
-      max-file-size: 100MB
-      max-request-size: 100MB
-      enabled: true
   cloud:
     nacos:
       discovery:
