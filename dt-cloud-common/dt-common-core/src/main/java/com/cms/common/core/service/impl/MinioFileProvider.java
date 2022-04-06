@@ -90,7 +90,7 @@ public class MinioFileProvider implements FileProvider {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
                 objectName = sdf.format(new Date()) + "/" + objectName;
                 bucketName = bucketName != null ? bucketName : BUCKET;
-                // 保存文件
+                // 保存文件(stream 顺序不能错)
                 minioClient.putObject(PutObjectArgs.builder()
                         .stream(file.getInputStream(), file.getSize(), PutObjectArgs.MIN_MULTIPART_SIZE)
                         .object(objectName)
