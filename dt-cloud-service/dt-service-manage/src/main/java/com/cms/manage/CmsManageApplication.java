@@ -1,10 +1,11 @@
 package com.cms.manage;
 
 import com.alibaba.cloud.seata.feign.SeataFeignClientAutoConfiguration;
-import com.cms.common.core.file.minio.MinIoUploadFile;
+import com.cms.common.core.service.FileProvider;
 import com.cms.common.jdbc.config.IdGeneratorConfig;
 import com.cms.common.tool.utils.SysCmsUtils;
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
@@ -12,6 +13,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
@@ -28,16 +30,27 @@ import java.util.concurrent.ThreadPoolExecutor;
 @EnableSwagger2
 @EnableTransactionManagement
 @EnableDiscoveryClient
-@Import({IdGeneratorConfig.class, MinIoUploadFile.class})
+@Import({IdGeneratorConfig.class})
 @MapperScan(basePackages = {"com.cms.manage.mapper"})
 @EnableFeignClients(basePackages ={"com.api.*.feign"})
 public class CmsManageApplication {
+
+    @Autowired
+    private Environment environment;
 
     public static void main(String[] args) {
         SpringApplication.run(CmsManageApplication.class,args);
         SysCmsUtils.log.info("============================================");
         SysCmsUtils.log.info("===============$管理服务已启动:===============");
         SysCmsUtils.log.info("============================================");
+    }
+
+    @Bean
+    public FileProvider fileProvider() {
+        String uploadUrl = environment.getProperty("minio.client.url");
+        String accessKey = environment.getProperty("minio.client.accessKey");
+        String secretKey = environment.getProperty("minio.client.secretKey");
+        return FileProvider.create(uploadUrl,accessKey,secretKey);
     }
 
     @Bean("sysTaskExecutor")

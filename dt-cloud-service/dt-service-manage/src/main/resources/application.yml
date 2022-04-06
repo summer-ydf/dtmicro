@@ -34,7 +34,8 @@ mybatis-plus:
 minio:
   client:
     url: http://42.192.121.230:9000       # MinIo 上传地址
+    accessKey: admin                      # 账号
+    secretKey: Passw0rd!                  # 密码
   http:
     url: http://42.192.121.230:9000       # MinIo 公网地址
-  accessKey: admin                        # 账号
-  secretKey: Passw0rd!                    # 密码
+

@@ -89,7 +89,7 @@ public class ConstantCode {
     public static final String BASE_CONFIG_THEME_V_SIX = "theme_six.css";
 
     // minio文件公共存储桶
-    public static String MINIO_COMMON_BUCKET_NAME = "dt-cloud-bucket";
+    public static String MINIO_COMMON_BUCKET_NAME = "default-bucket";
 
     /**
      * 登录日志标题常量

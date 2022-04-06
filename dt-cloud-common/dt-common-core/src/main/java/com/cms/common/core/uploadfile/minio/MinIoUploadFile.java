@@ -1,4 +1,4 @@
-package com.cms.common.core.file.minio;
+package com.cms.common.core.uploadfile.minio;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.IdUtil;
@@ -30,6 +30,8 @@ public class MinIoUploadFile {
 
     private static MinioClient minioClient;
 
+    private static final int EXPIRES_TIME_SEC = 7200;
+
     public MinIoUploadFile(Environment environment) {
         this.environment = environment;
     }
@@ -39,14 +41,11 @@ public class MinIoUploadFile {
         try {
             minioClient = MinioClient.builder()
                     .endpoint(Objects.requireNonNull(environment.getProperty("minio.client.url")))
-                    .credentials(
-                            Objects.requireNonNull(environment.getProperty("minio.accessKey")),
-                            Objects.requireNonNull(environment.getProperty("minio.secretKey"))
-                    )
+                    .credentials(Objects.requireNonNull(environment.getProperty("minio.accessKey")), Objects.requireNonNull(environment.getProperty("minio.secretKey")))
                     .build();
             Boolean isExist = bucketIsExist(ConstantCode.MINIO_COMMON_BUCKET_NAME);
             if(!isExist) {
-                createBucketPolicy(ConstantCode.MINIO_COMMON_BUCKET_NAME);
+                createBucket(ConstantCode.MINIO_COMMON_BUCKET_NAME);
             }
             log.info("初始化Minio文件服务器============================");
         } catch (Exception e) {
@@ -86,47 +85,6 @@ public class MinIoUploadFile {
             return false;
         }
         return true;
-    }
-
-    /**
-     * 创建存储bucket
-     * @param bucketName 存储bucket名称
-     * @return true/false
-     */
-    public Boolean createBucketPolicy(String bucketName) {
-        try {
-            minioClient.makeBucket(MakeBucketArgs.builder()
-                    .bucket(bucketName)
-                    .build());
-            // 设置桶存储策略
-            BucketPolicyConfig bucketPolicyConfigDto = createBucketPolicyConfigDto(bucketName);
-            SetBucketPolicyArgs setBucketPolicyArgs = SetBucketPolicyArgs.builder()
-                    .bucket(bucketName)
-                    .config(JSONUtil.toJsonStr(bucketPolicyConfigDto))
-                    .build();
-            minioClient.setBucketPolicy(setBucketPolicyArgs);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     *  Bucket访问策略配置
-     * @param bucketName 存储bucket名称
-     * @return 返回策略
-     */
-    private BucketPolicyConfig createBucketPolicyConfigDto(String bucketName) {
-        BucketPolicyConfig.Statement statement = BucketPolicyConfig.Statement.builder()
-                .Effect("Allow")
-                .Principal("*")
-                .Action("s3:GetObject")
-                .Resource("arn:aws:s3:::"+bucketName+"/*.**").build();
-        return BucketPolicyConfig.builder()
-                .Version("2012-10-17")
-                .Statement(CollUtil.toList(statement))
-                .build();
     }
 
     /**
@@ -217,5 +175,17 @@ public class MinIoUploadFile {
             return false;
         }
         return true;
+    }
+
+    public String presignedGetHttpObject(String bucketName, String objectName){
+        String presignedObjectUrl = null;
+        try {
+            GetPresignedObjectUrlArgs objectUrlArgs = GetPresignedObjectUrlArgs.builder().bucket(bucketName).object(objectName).expiry(EXPIRES_TIME_SEC).build();
+            minioClient.getPresignedObjectUrl(objectUrlArgs);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("presignedGetObject error:"+e.getMessage());
+        }
+        return presignedObjectUrl;
     }
 }

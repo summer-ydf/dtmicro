@@ -2,7 +2,7 @@ package com.cms.manage.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.cms.common.core.domain.SysSearchPage;
-import com.cms.common.core.file.minio.MinIoUploadFile;
+import com.cms.common.core.service.FileProvider;
 import com.cms.common.log.annotation.Log;
 import com.cms.common.log.enums.BusinessType;
 import com.cms.common.tool.result.ResultUtil;
@@ -12,7 +12,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,13 +25,13 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping(value = "/operator")
 public class SysOperatorController {
 
-    @Autowired
-    private MinIoUploadFile minIoUploadFile;
+    private final FileProvider fileProvider;
 
     private final SysOperatorService sysOperatorService;
 
-    public SysOperatorController(SysOperatorService sysOperatorService) {
+    public SysOperatorController(SysOperatorService sysOperatorService, FileProvider fileProvider) {
         this.sysOperatorService = sysOperatorService;
+        this.fileProvider = fileProvider;
     }
 
     @ApiOperation(value = "分页查询用户列表")
@@ -87,7 +86,7 @@ public class SysOperatorController {
     })
     @PostMapping(value = "/uploadFile",headers = "content-type=multipart/form-data")
     public String uploadFile(@RequestParam(value = "file") MultipartFile file) {
-        return minIoUploadFile.uploadFile(file, null);
+        return fileProvider.putObject(file, null);
     }
 
 }
