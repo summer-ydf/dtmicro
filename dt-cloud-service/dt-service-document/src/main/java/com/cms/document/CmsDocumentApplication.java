@@ -1,6 +1,7 @@
 package com.cms.document;
 
 import com.cms.common.core.service.FileProvider;
+import com.cms.common.tool.utils.SysCmsUtils;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -32,6 +33,9 @@ public class CmsDocumentApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(CmsDocumentApplication.class,args);
+        SysCmsUtils.log.info("============================================");
+        SysCmsUtils.log.info("===============$文件服务已启动:===============");
+        SysCmsUtils.log.info("============================================");
     }
 
     @Bean
