@@ -35,8 +35,14 @@ public class FileInformationEntity extends BaseEntity implements Serializable {
     private String suffix;
 
     @ApiModelProperty(value = "大小")
-    private Double size;
+    private Long size;
 
     @ApiModelProperty(value = "文件地址")
     private String fileUrl;
+
+    @ApiModelProperty(value = "桶名称")
+    private String bucket;
+
+    @ApiModelProperty(value = "文件对象名称")
+    private String objectName;
 }

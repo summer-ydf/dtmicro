@@ -5,12 +5,12 @@ import com.cms.common.core.service.FileProvider;
 import io.minio.*;
 import io.minio.http.Method;
 import io.minio.messages.Bucket;
+import io.minio.messages.Item;
 import lombok.extern.apachecommons.CommonsLog;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.ByteArrayInputStream;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -25,8 +25,6 @@ public class MinioFileProvider implements FileProvider {
     private MinioClient minioClient;
     private static final String BUCKET = "default";
     private static final int EXPIRES_TIME_SEC = 60;
-    private static final String BUCKET_NAME_PRE = "/" + BUCKET;
-    private static final int BUCKET_NAME_PRE_LEN = BUCKET_NAME_PRE.length();
 
     public MinioFileProvider(String url, String accessKey, String secretKey) {
         try {
@@ -59,16 +57,14 @@ public class MinioFileProvider implements FileProvider {
     }
 
     @Override
-    public List<Bucket> listBuckets() {
+    public List<String> listBucketNames() {
         // 列出所有存储桶
-        List<Bucket> bucketList = new ArrayList<>();
-        try {
-            bucketList = minioClient.listBuckets();
-        } catch (Exception e) {
-            e.printStackTrace();
-            log.info("列出所有存储桶异常：{}",e.fillInStackTrace());
+        List<Bucket> bucketList = getBuckets();
+        List<String> bucketListName = new ArrayList<>();
+        for (Bucket bucket : bucketList) {
+            bucketListName.add(bucket.name());
         }
-        return bucketList;
+        return bucketListName;
     }
 
     @Override
@@ -130,6 +126,14 @@ public class MinioFileProvider implements FileProvider {
     }
 
     @Override
+    public Iterable<Result<Item>> listObjects(String bucketName) {
+        return minioClient.listObjects(ListObjectsArgs.builder()
+                .bucket(bucketName)
+                .recursive(true)
+                .build());
+    }
+
+    @Override
     public String presignedGetHttpObject(String bucketName, String objectName) {
         String presignedObjectUrl = null;
         try {
@@ -165,8 +169,20 @@ public class MinioFileProvider implements FileProvider {
         if(!expire(params)){
             return fileId;
         }
-        String objectName = path.substring(BUCKET_NAME_PRE_LEN + 1);
+        String bucketNamePre = "/" + bucketName;
+        String objectName = path.substring(bucketNamePre.length() + 1);
         return presignedGetHttpObject(bucketName,objectName);
+    }
+
+    private List<Bucket> getBuckets() {
+        List<Bucket> bucketList = new ArrayList<>();
+        try {
+            bucketList = minioClient.listBuckets();
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.info("列出所有存储桶异常：{}",e.fillInStackTrace());
+        }
+        return bucketList;
     }
 
     private boolean expire(Map<String, String> params){
@@ -193,7 +209,7 @@ public class MinioFileProvider implements FileProvider {
         return true;
     }
 
-    private static Map<String, String> parseURLParam(String url) {
+    private Map<String, String> parseURLParam(String url) {
         Map<String, String> mapRequest = new HashMap<>();
         String[] arrSplit = null;
         String strUrlParam = TruncateUrlPage(url);
@@ -215,7 +231,7 @@ public class MinioFileProvider implements FileProvider {
         return mapRequest;
     }
 
-    private static String TruncateUrlPage(String strURL) {
+    private String TruncateUrlPage(String strURL) {
         String strAllParam = null;
         String[] arrSplit = null;
         strURL = strURL.trim();

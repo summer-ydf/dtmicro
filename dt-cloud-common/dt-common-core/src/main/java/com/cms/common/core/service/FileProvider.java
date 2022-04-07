@@ -1,7 +1,9 @@
 package com.cms.common.core.service;
 
 import com.cms.common.core.service.impl.MinioFileProvider;
+import io.minio.Result;
 import io.minio.messages.Bucket;
+import io.minio.messages.Item;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
@@ -16,7 +18,7 @@ public interface FileProvider {
 
     void makeBucket(String bucketName);
 
-    List<Bucket> listBuckets();
+    List<String> listBucketNames();
 
     void removeBucket(String bucketName);
 
@@ -25,6 +27,8 @@ public interface FileProvider {
     void putObject(String bucketName, String objectName, String fileName);
 
     void removeObject(String bucketName, String objectName);
+
+    Iterable<Result<Item>> listObjects(String bucketName);
 
     String presignedGetHttpObject(String bucketName, String objectName);
 
