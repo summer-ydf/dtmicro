@@ -43,6 +43,11 @@ public class FileInformationServiceImpl extends ServiceImpl<FileInformationMappe
         return ResultUtil.success(list);
     }
 
+    @Override
+    public void removeObject(String bucketName, String objectName) {
+        this.baseMapper.removeObject(bucketName,objectName);
+    }
+
     private String getObjectName(String fileId) {
         URL url = null;
         try{

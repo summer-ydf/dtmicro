@@ -15,4 +15,6 @@ public interface FileInformationService extends IService<FileInformationEntity> 
     void saveFile(MultipartFile file,String bucket,String url);
 
     ResultUtil<IPage<FileInformationEntity>> pageSearch(SysSearchPage request);
+
+    void removeObject(String bucketName, String objectName);
 }

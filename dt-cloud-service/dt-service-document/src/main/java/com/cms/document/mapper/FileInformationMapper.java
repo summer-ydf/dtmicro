@@ -12,4 +12,6 @@ import com.cms.document.entity.FileInformationEntity;
 public interface FileInformationMapper extends BaseMapper<FileInformationEntity> {
 
     IPage<FileInformationEntity> pageSearch(Page<FileInformationEntity> page, SysSearchPage request);
+
+    void removeObject(String bucketName, String objectName);
 }

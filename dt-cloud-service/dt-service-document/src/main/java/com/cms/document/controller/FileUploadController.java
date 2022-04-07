@@ -89,6 +89,7 @@ public class FileUploadController {
     @PostMapping("/delFile")
     public ResultUtil<?> delFile(@RequestParam String bucketName, @RequestParam String objectName) {
         fileProvider.removeObject(bucketName, objectName);
+        fileInformationService.removeObject(bucketName,objectName);
         return ResultUtil.success();
     }
 }

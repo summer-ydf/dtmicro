@@ -2,6 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cms.document.mapper.FileInformationMapper">
 
+    <delete id="removeObject">
+        DELETE FROM t_file_info WHERE bucket = #{bucketName} and object_name = #{objectName}
+    </delete>
+
     <select id="pageSearch" resultType="com.cms.document.entity.FileInformationEntity">
         SELECT * FROM t_file_info
         <where>
