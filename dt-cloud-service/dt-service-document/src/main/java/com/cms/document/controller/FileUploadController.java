@@ -1,22 +1,21 @@
 package com.cms.document.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.cms.common.core.domain.SysSearchPage;
 import com.cms.common.core.service.FileProvider;
 import com.cms.common.tool.result.ResultUtil;
+import com.cms.document.entity.FileInformationEntity;
 import com.cms.document.service.FileInformationService;
-import io.minio.Result;
-import io.minio.messages.Item;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -28,9 +27,7 @@ import java.util.List;
 public class FileUploadController {
 
     private final FileInformationService fileInformationService;
-
     private final FileProvider fileProvider;
-    private Result<Item> result;
 
     public FileUploadController(FileProvider fileProvider, FileInformationService fileInformationService) {
         this.fileProvider = fileProvider;
@@ -50,50 +47,28 @@ public class FileUploadController {
         return url;
     }
 
-    @ApiOperation(value = "获取文件HTTP地址")
-    @GetMapping(value = "/getUrl")
-    public String getUrl(@RequestParam String objectName) {
-        return fileProvider.presignedGetHttpObject(null,objectName);
-    }
-
-    @ApiOperation(value = "生成新的HTTP地址")
-    @GetMapping(value = "/getHttpUrl")
-    public String getHttpUrl(@RequestParam String fileId) {
-        return fileProvider.presignedGetChainObject(fileId);
-    }
-
     @ApiOperation(value = "获取所有存储桶")
     @GetMapping(value = "/listBucketNames")
     public ResultUtil<List<String>> listBucketNames() {
         return ResultUtil.success(fileProvider.listBucketNames());
     }
 
-    @ApiOperation(value = "获取所有存储桶")
-    @GetMapping(value = "/listObjects/{bucket}")
-    public ResultUtil<?> listObjects(@PathVariable String bucket) {
-        Iterable<Result<Item>> results = fileProvider.listObjects(bucket);
-        Iterator<Result<Item>> iter = results.iterator();
-        int i = 0;
-        while(iter.hasNext()) {
-            i = i + 1;
-            Result<Item> result = iter.next();
-            try {
-                Item item = result.get();
-                System.out.println("存储文件详情=================文件详情："+i);
-                System.out.println("etag:" + item.etag());
-                System.out.println("objectName:" + item.objectName());
-                System.out.println("isDir:" + item.isDir());
-                System.out.println("lastModified:" + item.lastModified());
-                System.out.println("owner:" + item.owner().displayName());
-                System.out.println("size:" + item.size());
-                System.out.println("userMetadata:" + item.userMetadata());
-                System.out.println("storageClass:" + item.storageClass());
-                System.out.println("item to String:" + item.toString());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return ResultUtil.success();
+    @ApiOperation(value = "分页查询文件列表")
+    @GetMapping("/page")
+    public ResultUtil<IPage<FileInformationEntity>> page(SysSearchPage request) {
+        return fileInformationService.pageSearch(request);
+    }
+
+    @ApiOperation(value = "获取文件HTTP地址")
+    @GetMapping(value = "/getUrl")
+    public ResultUtil<String> getUrl(@RequestParam String bucketName, @RequestParam String objectName) {
+        return ResultUtil.success(fileProvider.presignedGetHttpObject(bucketName,objectName));
+    }
+
+    @ApiOperation(value = "生成新的HTTP地址")
+    @GetMapping(value = "/getHttpUrl")
+    public ResultUtil<String> getHttpUrl(@RequestParam String fileId) {
+        return ResultUtil.success(fileProvider.presignedGetChainObject(fileId));
     }
 
 }

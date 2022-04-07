@@ -1,6 +1,10 @@
 package com.cms.document.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.cms.common.core.domain.SysSearchPage;
+import com.cms.common.tool.result.ResultUtil;
 import com.cms.document.entity.FileInformationEntity;
 import com.cms.document.mapper.FileInformationMapper;
 import com.cms.document.service.FileInformationService;
@@ -29,6 +33,14 @@ public class FileInformationServiceImpl extends ServiceImpl<FileInformationMappe
         fileInformation.setBucket(bucket);
         fileInformation.setObjectName(getObjectName(url));
         this.baseMapper.insert(fileInformation);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ResultUtil<IPage<FileInformationEntity>> pageSearch(SysSearchPage request) {
+        Page<FileInformationEntity> page = new Page<>(request.getCurrent(),request.getSize());
+        IPage<FileInformationEntity> list = this.baseMapper.pageSearch(page,request);
+        return ResultUtil.success(list);
     }
 
     private String getObjectName(String fileId) {
