@@ -2,11 +2,9 @@ package com.cms.common.tool.utils;
 
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
-import com.cms.common.tool.domain.SysDataScopeVoEntity;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
 /**

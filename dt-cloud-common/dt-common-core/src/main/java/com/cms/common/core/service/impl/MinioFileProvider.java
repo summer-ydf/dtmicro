@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.ByteArrayInputStream;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -90,7 +91,7 @@ public class MinioFileProvider implements FileProvider {
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
                 objectName = sdf.format(new Date()) + "/" + objectName;
                 bucketName = bucketName != null ? bucketName : BUCKET;
-                // 保存文件(stream 顺序不能错)
+                // 保存文件
                 minioClient.putObject(PutObjectArgs.builder()
                         .stream(file.getInputStream(), file.getSize(), PutObjectArgs.MIN_MULTIPART_SIZE)
                         .object(objectName)
@@ -158,12 +159,14 @@ public class MinioFileProvider implements FileProvider {
             return fileId;
         }
         String path = url.getPath();
+        String[] split = path.split("/");
+        String bucketName = split[1];
         Map<String, String> params = parseURLParam(fileId);
         if(!expire(params)){
             return fileId;
         }
         String objectName = path.substring(BUCKET_NAME_PRE_LEN + 1);
-        return presignedGetHttpObject(null,objectName);
+        return presignedGetHttpObject(bucketName,objectName);
     }
 
     private boolean expire(Map<String, String> params){
@@ -182,7 +185,7 @@ public class MinioFileProvider implements FileProvider {
                 exp = DateUtils.addSeconds(exp, 8 * 60 * 60 + EXPIRES_TIME_SEC);
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String format = simpleDateFormat.format(exp);
-                System.out.println("过期时间："+format);
+                log.info("过期时间："+format);
                 // 当exp < date时 返回true
                 return exp.before(new Date());
             }
@@ -190,24 +193,21 @@ public class MinioFileProvider implements FileProvider {
         return true;
     }
 
-    public static Map<String, String> parseURLParam(String URL) {
+    private static Map<String, String> parseURLParam(String url) {
         Map<String, String> mapRequest = new HashMap<>();
         String[] arrSplit = null;
-        String strUrlParam = TruncateUrlPage(URL);
+        String strUrlParam = TruncateUrlPage(url);
         if (strUrlParam == null) {
             return mapRequest;
         }
-        //每个键值为一组
         arrSplit = strUrlParam.split("[&]");
         for (String strSplit : arrSplit) {
             String[] arrSplitEqual = null;
             arrSplitEqual = strSplit.split("[=]");
-            //解析出键值
             if (arrSplitEqual.length > 1) {
                 mapRequest.put(arrSplitEqual[0], arrSplitEqual[1]);
             } else {
                 if (StringUtils.isNotBlank(arrSplitEqual[0])) {
-                    //只有参数没有值，不加入
                     mapRequest.put(arrSplitEqual[0], "");
                 }
             }

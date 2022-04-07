@@ -1,0 +1,26 @@
+spring:
+  datasource:
+    url: jdbc:mysql://42.192.121.230:3306/dt_cloud_document?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai&useSSL=false&nullCatalogMeansCurrent=true
+    username: root
+    password: Passw0rd!
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+  redis:
+    # Redis服务器连接IP
+    host: 42.192.121.230
+    # Redis服务器连接端口
+    port: 6379
+    # Redis服务器连接密码（默认为空）
+    password: Passw0rd!
+    # 连接超时时间（毫秒）
+    timeout: 5000
+    lettuce:
+      pool:
+        # 连接池最大连接数（使用负值表示没有限制） 默认 8
+        max-active: 16
+        # 连接池最大阻塞等待时间（使用负值表示没有限制） 默认 -1
+        max-wait: -1
+        # 连接池中的最大空闲连接 默认 8
+        max-idle: 16
+        # 连接池中的最小空闲连接 默认 0
+        min-idle: 16

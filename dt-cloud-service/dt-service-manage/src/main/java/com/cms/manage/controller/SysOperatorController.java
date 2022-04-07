@@ -2,18 +2,14 @@ package com.cms.manage.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.cms.common.core.domain.SysSearchPage;
-import com.cms.common.core.service.FileProvider;
 import com.cms.common.log.annotation.Log;
 import com.cms.common.log.enums.BusinessType;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.entity.SysOperatorEntity;
 import com.cms.manage.service.SysOperatorService;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -25,13 +21,10 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping(value = "/operator")
 public class SysOperatorController {
 
-    private final FileProvider fileProvider;
-
     private final SysOperatorService sysOperatorService;
 
-    public SysOperatorController(SysOperatorService sysOperatorService, FileProvider fileProvider) {
+    public SysOperatorController(SysOperatorService sysOperatorService) {
         this.sysOperatorService = sysOperatorService;
-        this.fileProvider = fileProvider;
     }
 
     @ApiOperation(value = "分页查询用户列表")
@@ -72,20 +65,6 @@ public class SysOperatorController {
     @DeleteMapping("/update_enabled/{id}/{enabled}")
     public ResultUtil<?> updateEnabled(@PathVariable Long id, @PathVariable Boolean enabled) {
         return sysOperatorService.updateEnabled(id,enabled);
-    }
-
-    @ApiOperation(value = "上传头像")
-    @ApiImplicitParams({
-            @ApiImplicitParam(value = "文件",name = "file",required = true,allowMultiple = true,dataType = "MultipartFile")
-    })
-    @PostMapping(value = "/uploadFile",headers = "content-type=multipart/form-data")
-    public String uploadFile(@RequestParam(value = "file") MultipartFile file) {
-        return fileProvider.putObject(file, null);
-    }
-
-    @GetMapping(value = "/getUrl")
-    public String getUrl(String objectName){
-        return fileProvider.presignedGetHttpObject(null,objectName);
     }
 
 }

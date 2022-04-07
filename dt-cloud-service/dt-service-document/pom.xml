@@ -9,8 +9,8 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>dt-service-manage</artifactId>
-    <description>系统管理服务</description>
+    <artifactId>dt-service-document</artifactId>
+    <description>文件系统服务</description>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
@@ -28,19 +28,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-
-        <!-- canal -->
-        <dependency>
-            <groupId>com.alibaba.otter</groupId>
-            <artifactId>canal.client</artifactId>
-            <version>${canal.version}</version>
-        </dependency>
-        <!--RabbitMQ消息中间件-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-amqp</artifactId>
-        </dependency>
-
         <!--导入公共模块-->
         <!-- Cloud Common tool -->
         <dependency>
@@ -60,27 +47,6 @@
             <artifactId>dt-common-log</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
-        <!-- Cloud Common datascope -->
-        <dependency>
-            <groupId>com.dt</groupId>
-            <artifactId>dt-common-datascope</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.dt</groupId>
-            <artifactId>dt-api-workflow</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.dt</groupId>
-            <artifactId>dt-api-manage</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.dt</groupId>
-            <artifactId>dt-api-item</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
     </dependencies>
 
     <build>
@@ -89,7 +55,7 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>com.cms.manage.CmsManageApplication</mainClass>
+                    <mainClass>com.cms.document.CmsDocumentApplication</mainClass>
                 </configuration>
                 <executions>
                     <execution>
