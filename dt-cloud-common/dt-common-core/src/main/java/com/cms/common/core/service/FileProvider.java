@@ -2,9 +2,10 @@ package com.cms.common.core.service;
 
 import com.cms.common.core.service.impl.MinioFileProvider;
 import io.minio.Result;
-import io.minio.messages.Bucket;
 import io.minio.messages.Item;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -33,4 +34,8 @@ public interface FileProvider {
     String presignedGetHttpObject(String bucketName, String objectName);
 
     String presignedGetChainObject(String fileId);
+
+    String shareGetHttpObject(String bucketName, String objectName, String type, int exp);
+
+    void downloadFile(String bucketName, String objectName, HttpServletResponse response);
 }

@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -65,10 +67,28 @@ public class FileUploadController {
         return ResultUtil.success(fileProvider.presignedGetHttpObject(bucketName,objectName));
     }
 
-    @ApiOperation(value = "生成新的HTTP地址")
+    @ApiOperation(value = "查看文件")
     @GetMapping(value = "/getHttpUrl")
     public ResultUtil<String> getHttpUrl(@RequestParam String fileId) {
         return ResultUtil.success(fileProvider.presignedGetChainObject(fileId));
     }
 
+    @ApiOperation(value = "分享文件")
+    @GetMapping(value = "/share")
+    public ResultUtil<String> share(@RequestParam String bucketName, @RequestParam String objectName, @RequestParam String type,@RequestParam int exp) {
+        return ResultUtil.success(fileProvider.shareGetHttpObject(bucketName,objectName,type,exp));
+    }
+
+    @ApiOperation(value = "下载文件")
+    @PostMapping("/downloadFile")
+    public void downloadFile(@RequestParam String bucketName, @RequestParam String objectName, HttpServletResponse response) {
+        fileProvider.downloadFile(bucketName, objectName,response);
+    }
+
+    @ApiOperation(value = "删除文件")
+    @PostMapping("/delFile")
+    public ResultUtil<?> delFile(@RequestParam String bucketName, @RequestParam String objectName) {
+        fileProvider.removeObject(bucketName, objectName);
+        return ResultUtil.success();
+    }
 }

@@ -9,12 +9,16 @@ import io.minio.messages.Item;
 import lombok.extern.apachecommons.CommonsLog;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
+import org.springframework.util.FastByteArrayOutputStream;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author ydf Created by 2022/4/6 15:44
@@ -172,6 +176,67 @@ public class MinioFileProvider implements FileProvider {
         String bucketNamePre = "/" + bucketName;
         String objectName = path.substring(bucketNamePre.length() + 1);
         return presignedGetHttpObject(bucketName,objectName);
+    }
+
+    @Override
+    public String shareGetHttpObject(String bucketName, String objectName, String type, int exp) {
+        String presignedObjectUrl = null;
+        TimeUnit unit = null;
+        try {
+            switch (type) {
+                case "days":
+                    // 按照天数分享，最大不超过7天
+                    unit = TimeUnit.DAYS;
+                    break;
+                case "hours":
+                    // 按照小时分享
+                    unit = TimeUnit.HOURS;
+                    break;
+                case "seconds":
+                    // 按照分钟分享
+                    unit = TimeUnit.MINUTES;
+                    break;
+                default:
+                    // 按照秒钟分享
+                    unit = TimeUnit.SECONDS;
+                    break;
+            }
+            presignedObjectUrl = minioClient.getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder()
+                    .bucket(bucketName)
+                    .object(objectName)
+                    .method(Method.GET)
+                    .expiry(exp, unit).build());
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("获取HTTP文件预览地址异常:"+e.fillInStackTrace());
+        }
+        return presignedObjectUrl;
+    }
+
+    @Override
+    public void downloadFile(String bucketName, String objectName, HttpServletResponse res) {
+        GetObjectArgs objectArgs = GetObjectArgs.builder().bucket(bucketName).object(objectName).build();
+        try (GetObjectResponse response = minioClient.getObject(objectArgs)){
+            byte[] buf = new byte[1024];
+            int len;
+            try (FastByteArrayOutputStream os = new FastByteArrayOutputStream()){
+                while ((len=response.read(buf)) != -1){
+                    os.write(buf,0,len);
+                }
+                os.flush();
+                byte[] bytes = os.toByteArray();
+                res.setCharacterEncoding("utf-8");
+                //设置强制下载不打开
+                res.setContentType("application/force-download");
+                res.addHeader("Content-Disposition", "attachment;fileName=" + objectName);
+                try (ServletOutputStream stream = res.getOutputStream()){
+                    stream.write(bytes);
+                    stream.flush();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private List<Bucket> getBuckets() {
