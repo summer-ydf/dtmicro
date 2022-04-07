@@ -32,6 +32,12 @@ spring:
             - Path=/task/api/**
           filters:
             - StripPrefix=2
+        - id: cms-service-document
+          uri: lb://cms-service-document
+          predicates:
+            - Path=/doc/api/**
+          filters:
+            - StripPrefix=2
 secure:  #配置白名单路径
   ignore:
     urls:
