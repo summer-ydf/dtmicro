@@ -10,8 +10,13 @@ import lombok.extern.apachecommons.CommonsLog;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -211,15 +216,55 @@ public class MinioFileProvider implements FileProvider {
     }
 
     @Override
-    public InputStream downloadFile(String bucketName, String objectName) {
-        InputStream stream = null;
+    public void downloadFile(String bucketName, String objectName, HttpServletResponse response) {
+        InputStream inputStream = null;
+        OutputStream outputStream = null;
+        int totalSize = 0;
         try {
-            stream = minioClient.getObject(GetObjectArgs.builder().bucket(bucketName).object(objectName).build());
+            // 查询对象信息
+            StatObjectResponse statObject = minioClient.statObject(StatObjectArgs.builder().bucket(bucketName).object(objectName).build());
+            if (statObject != null && statObject.size() > 0) {
+                // 获取文件流
+                inputStream = minioClient.getObject(GetObjectArgs.builder().bucket(bucketName).object(objectName).build());
+                // 获取文件大小
+                // 此输入流在不受阻塞情况下能读取的字节数,总是0，不能用次函数：inputStream.available()
+                totalSize = Math.toIntExact(statObject.size());
+                log.info("Minio当前下载文件大小:"+ totalSize / 1024 + "KB");
+                // 输出文件到浏览器
+                byte[] bf = new byte[1024];
+                int length;
+                response.reset();
+                response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(objectName.substring(objectName.lastIndexOf("/") + 1), "UTF-8"));
+                response.setContentType("application/octet-stream");
+                response.setHeader("Content-Length", String.valueOf(totalSize));
+                response.setCharacterEncoding("UTF-8");
+                outputStream = response.getOutputStream();
+                // 输出文件
+                while ((length = inputStream.read(bf)) > 0) {
+                    outputStream.write(bf, 0, length);
+                }
+            }else {
+                log.info("文件信息不存在!");
+            }
         } catch (Exception e) {
             e.printStackTrace();
             log.info("下载文件异常：{}",e.fillInStackTrace());
+        } finally {
+            // 关闭输入流
+            try {
+                assert inputStream != null;
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            // 关闭输出流
+            assert outputStream != null;
+            try {
+                outputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        return stream;
     }
 
     private List<Bucket> getBuckets() {

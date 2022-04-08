@@ -17,11 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URLEncoder;
 import java.util.List;
 
 /**
@@ -83,44 +79,21 @@ public class FileUploadController {
         return ResultUtil.success(fileProvider.shareGetHttpObject(bucketName,objectName,type,exp));
     }
 
-    @ApiOperation(value = "下载文件")
-    @GetMapping("/downloadFile")
-    public ServletOutputStream downloadFile(@RequestParam String bucket, @RequestParam String objectName, HttpServletResponse response) throws Exception {
-        InputStream in = fileProvider.downloadFile(bucket, objectName);
-        response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(objectName.substring(objectName.lastIndexOf("/") + 1), "UTF-8"));
-        ServletOutputStream out = null;
-        try {
-            // 向浏览器输出的二进制数据，是字节流，可以处理任意类型的数据
-            out = response.getOutputStream();
-            int len;
-            byte[] buffer = new byte[2048];
-            while ((len = in.read(buffer)) > 0) {
-                out.write(buffer, 0, len);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                in.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            try {
-                assert out != null;
-                out.flush();
-                out.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        return out;
-    }
-
     @ApiOperation(value = "删除文件")
     @PostMapping("/delFile")
     public ResultUtil<?> delFile(@RequestParam String bucketName, @RequestParam String objectName) {
         fileProvider.removeObject(bucketName, objectName);
         fileInformationService.removeObject(bucketName,objectName);
         return ResultUtil.success();
+    }
+
+    @ApiOperation(value = "下载文件")
+    @ApiImplicitParams({
+            @ApiImplicitParam(value = "bucket名称",name = "bucket",required = true),
+            @ApiImplicitParam(value = "objectName名称",name = "objectName",required = true)
+    })
+    @GetMapping("/downloadFile")
+    public void downloadFile(@RequestParam String bucket, @RequestParam String objectName, HttpServletResponse response) {
+        fileProvider.downloadFile(bucket, objectName,response);
     }
 }

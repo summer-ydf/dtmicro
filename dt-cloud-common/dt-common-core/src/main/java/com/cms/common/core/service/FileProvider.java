@@ -6,7 +6,6 @@ import io.minio.messages.Item;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -38,5 +37,5 @@ public interface FileProvider {
 
     String shareGetHttpObject(String bucketName, String objectName, String type, int exp);
 
-    InputStream downloadFile(String bucketName, String objectName);
+    void downloadFile(String bucketName, String objectName, HttpServletResponse response);
 }
