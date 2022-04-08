@@ -226,8 +226,7 @@ public class MinioFileProvider implements FileProvider {
                 os.flush();
                 byte[] bytes = os.toByteArray();
                 res.setCharacterEncoding("utf-8");
-                //设置强制下载不打开
-                res.setContentType("application/force-download");
+                res.setContentType("application/octet-stream");
                 res.addHeader("Content-Disposition", "attachment;fileName=" + objectName);
                 try (ServletOutputStream stream = res.getOutputStream()){
                     stream.write(bytes);

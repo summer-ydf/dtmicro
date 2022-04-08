@@ -12,6 +12,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -81,8 +82,8 @@ public class FileUploadController {
 
     @ApiOperation(value = "下载文件")
     @PostMapping("/downloadFile")
-    public void downloadFile(@RequestParam String bucketName, @RequestParam String objectName, HttpServletResponse response) {
-        fileProvider.downloadFile(bucketName, objectName,response);
+    public void downloadFile(@RequestBody FileInformationEntity information, HttpServletResponse response) {
+        fileProvider.downloadFile(information.getBucket(), information.getObjectName(),response);
     }
 
     @ApiOperation(value = "删除文件")
