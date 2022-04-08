@@ -20,7 +20,6 @@ import java.net.URLEncoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author ydf Created by 2022/4/6 15:44
@@ -181,33 +180,14 @@ public class MinioFileProvider implements FileProvider {
     }
 
     @Override
-    public String shareGetHttpObject(String bucketName, String objectName, String type, int exp) {
+    public String shareGetHttpObject(String bucketName, String objectName, int exp) {
         String presignedObjectUrl = null;
-        TimeUnit unit = null;
         try {
-            switch (type) {
-                case "days":
-                    // 按照天数分享，最大不超过7天
-                    unit = TimeUnit.DAYS;
-                    break;
-                case "hours":
-                    // 按照小时分享
-                    unit = TimeUnit.HOURS;
-                    break;
-                case "seconds":
-                    // 按照分钟分享
-                    unit = TimeUnit.MINUTES;
-                    break;
-                default:
-                    // 按照秒钟分享
-                    unit = TimeUnit.SECONDS;
-                    break;
-            }
             presignedObjectUrl = minioClient.getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder()
                     .bucket(bucketName)
                     .object(objectName)
                     .method(Method.GET)
-                    .expiry(exp, unit).build());
+                    .expiry(exp).build());
         } catch (Exception e) {
             e.printStackTrace();
             log.error("获取HTTP文件预览地址异常:"+e.fillInStackTrace());

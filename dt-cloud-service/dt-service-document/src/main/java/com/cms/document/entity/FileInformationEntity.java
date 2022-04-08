@@ -1,6 +1,7 @@
 package com.cms.document.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.cms.common.jdbc.domain.BaseEntity;
@@ -11,6 +12,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.beans.Transient;
 import java.io.Serializable;
 
 /**
@@ -45,4 +47,8 @@ public class FileInformationEntity extends BaseEntity implements Serializable {
 
     @ApiModelProperty(value = "文件对象名称")
     private String objectName;
+
+    @ApiModelProperty(value = "过期时长")
+    @TableField(exist = false)
+    private String exp;
 }

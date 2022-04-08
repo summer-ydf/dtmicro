@@ -10,11 +10,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -74,16 +70,16 @@ public class FileUploadController {
     }
 
     @ApiOperation(value = "分享文件")
-    @GetMapping(value = "/share")
-    public ResultUtil<String> share(@RequestParam String bucketName, @RequestParam String objectName, @RequestParam String type,@RequestParam int exp) {
-        return ResultUtil.success(fileProvider.shareGetHttpObject(bucketName,objectName,type,exp));
+    @PostMapping(value = "/shareFile")
+    public ResultUtil<String> shareFile(@RequestBody FileInformationEntity informationEntity) {
+        return ResultUtil.success(fileProvider.shareGetHttpObject(informationEntity.getBucket(),informationEntity.getObjectName(), Integer.parseInt(informationEntity.getExp())));
     }
 
     @ApiOperation(value = "删除文件")
     @PostMapping("/delFile")
-    public ResultUtil<?> delFile(@RequestParam String bucketName, @RequestParam String objectName) {
-        fileProvider.removeObject(bucketName, objectName);
-        fileInformationService.removeObject(bucketName,objectName);
+    public ResultUtil<?> delFile(@RequestBody FileInformationEntity informationEntity) {
+        fileProvider.removeObject(informationEntity.getBucket(), informationEntity.getObjectName());
+        fileInformationService.removeObject(informationEntity.getBucket(), informationEntity.getObjectName());
         return ResultUtil.success();
     }
 

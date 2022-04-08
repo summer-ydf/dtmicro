@@ -35,7 +35,7 @@ public interface FileProvider {
 
     String presignedGetChainObject(String fileId);
 
-    String shareGetHttpObject(String bucketName, String objectName, String type, int exp);
+    String shareGetHttpObject(String bucketName, String objectName, int exp);
 
     void downloadFile(String bucketName, String objectName, HttpServletResponse response);
 }
