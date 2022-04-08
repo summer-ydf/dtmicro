@@ -10,7 +10,10 @@
         SELECT * FROM t_file_info
         <where>
             <if test="request.keyword != null and request.keyword != ''">
-                AND bucket = #{request.keyword}
+                AND suffix = #{request.keyword}
+            </if>
+            <if test="request.category != null and request.category != ''">
+                AND bucket = #{request.category}
             </if>
         </where>
         ORDER BY create_time DESC
