@@ -12,13 +12,16 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URLEncoder;
 import java.util.List;
 
 /**
@@ -81,9 +84,36 @@ public class FileUploadController {
     }
 
     @ApiOperation(value = "下载文件")
-    @PostMapping("/downloadFile")
-    public void downloadFile(@RequestBody FileInformationEntity information, HttpServletResponse response) {
-        fileProvider.downloadFile(information.getBucket(), information.getObjectName(),response);
+    @GetMapping("/downloadFile")
+    public ServletOutputStream downloadFile(@RequestParam String bucket, @RequestParam String objectName, HttpServletResponse response) throws Exception {
+        InputStream in = fileProvider.downloadFile(bucket, objectName);
+        response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(objectName.substring(objectName.lastIndexOf("/") + 1), "UTF-8"));
+        ServletOutputStream out = null;
+        try {
+            // 向浏览器输出的二进制数据，是字节流，可以处理任意类型的数据
+            out = response.getOutputStream();
+            int len;
+            byte[] buffer = new byte[2048];
+            while ((len = in.read(buffer)) > 0) {
+                out.write(buffer, 0, len);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                in.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                assert out != null;
+                out.flush();
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return out;
     }
 
     @ApiOperation(value = "删除文件")

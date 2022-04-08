@@ -9,11 +9,8 @@ import io.minio.messages.Item;
 import lombok.extern.apachecommons.CommonsLog;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
-import org.springframework.util.FastByteArrayOutputStream;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletResponse;
+import java.io.InputStream;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -214,28 +211,15 @@ public class MinioFileProvider implements FileProvider {
     }
 
     @Override
-    public void downloadFile(String bucketName, String objectName, HttpServletResponse res) {
-        GetObjectArgs objectArgs = GetObjectArgs.builder().bucket(bucketName).object(objectName).build();
-        try (GetObjectResponse response = minioClient.getObject(objectArgs)){
-            byte[] buf = new byte[1024];
-            int len;
-            try (FastByteArrayOutputStream os = new FastByteArrayOutputStream()){
-                while ((len=response.read(buf)) != -1){
-                    os.write(buf,0,len);
-                }
-                os.flush();
-                byte[] bytes = os.toByteArray();
-                res.setCharacterEncoding("utf-8");
-                res.setContentType("application/octet-stream");
-                res.addHeader("Content-Disposition", "attachment;fileName=" + objectName);
-                try (ServletOutputStream stream = res.getOutputStream()){
-                    stream.write(bytes);
-                    stream.flush();
-                }
-            }
+    public InputStream downloadFile(String bucketName, String objectName) {
+        InputStream stream = null;
+        try {
+            stream = minioClient.getObject(GetObjectArgs.builder().bucket(bucketName).object(objectName).build());
         } catch (Exception e) {
             e.printStackTrace();
+            log.info("下载文件异常：{}",e.fillInStackTrace());
         }
+        return stream;
     }
 
     private List<Bucket> getBuckets() {
