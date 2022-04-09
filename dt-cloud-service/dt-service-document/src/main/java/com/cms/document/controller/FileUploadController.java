@@ -64,9 +64,9 @@ public class FileUploadController {
     }
 
     @ApiOperation(value = "查看文件")
-    @GetMapping(value = "/getHttpUrl")
-    public ResultUtil<String> getHttpUrl(@RequestParam String fileId) {
-        return ResultUtil.success(fileProvider.presignedGetChainObject(fileId));
+    @PostMapping(value = "/getHttpUrl")
+    public ResultUtil<String> getHttpUrl(@RequestBody FileInformationEntity informationEntity) {
+        return ResultUtil.success(fileProvider.presignedGetChainObject(informationEntity.getFileUrl()));
     }
 
     @ApiOperation(value = "分享文件")

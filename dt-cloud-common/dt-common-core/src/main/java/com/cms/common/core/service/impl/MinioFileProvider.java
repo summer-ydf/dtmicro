@@ -29,7 +29,7 @@ public class MinioFileProvider implements FileProvider {
 
     private MinioClient minioClient;
     private static final String BUCKET = "default";
-    private static final int EXPIRES_TIME_SEC = 60;
+    private static final int EXPIRES_TIME_SEC = 7200;
 
     public MinioFileProvider(String url, String accessKey, String secretKey) {
         try {
