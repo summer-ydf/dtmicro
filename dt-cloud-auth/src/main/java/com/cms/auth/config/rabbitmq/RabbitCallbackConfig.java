@@ -38,7 +38,7 @@ public class RabbitCallbackConfig {
                     .publishStatus(publishStatus)
                     .message(cause)
                     .build();
-            // TODO RPC远程调用保存数据
+            // TODO RPC远程调用异步保存数据
             SysCmsUtils.log.info("RabbitMQ消息投递成功!!!");
             SysCmsUtils.log.info("记录发送消息日志："+mqMessageVoEntity);
         });
