@@ -18,6 +18,8 @@ public class RabbitCallbackConfig {
         rabbitTemplate.setConnectionFactory(connectionFactory);
         // 设置开启Mandatory,才能触发回调函数,无论消息推送结果怎么样都强制调用回调函数
         rabbitTemplate.setMandatory(true);
+
+        // 当交换机不存在，或者交换机队列绑定失败的时候触发该回调函数
         rabbitTemplate.setConfirmCallback((correlationData, ack, cause) -> {
             if (!ack) {
                 SysCmsUtils.log.error("消息发送失败!");
@@ -26,8 +28,8 @@ public class RabbitCallbackConfig {
             SysCmsUtils.log.info("RabbitMQ消息投递成功!!!");
         });
 
+        // 当队列不存在，或者匹配失败的时候触发该回调函数
         rabbitTemplate.setReturnCallback((message, replyCode, replyText, exchange, routingKey) -> {
-            // 当队列不存在，或者匹配失败的时候触发该回调函数
             SysCmsUtils.log.info("ReturnCallback:     "+"消息："+message);
             SysCmsUtils.log.info("ReturnCallback:     "+"回应码："+replyCode);
             SysCmsUtils.log.info("ReturnCallback:     "+"回应信息："+replyText);
