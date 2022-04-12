@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cms.common.core.domain.SysSearchPage;
 import com.cms.common.tool.result.ResultUtil;
+import com.cms.common.tool.utils.SysCmsUtils;
 import com.cms.manage.entity.SysLogLoginEntity;
 import com.cms.manage.mapper.SysLogLoginMapper;
 import com.cms.manage.service.SysLogLoginService;
@@ -24,8 +25,10 @@ public class SysLogLoginServiceImpl extends ServiceImpl<SysLogLoginMapper, SysLo
 
     @Async("sysTaskExecutor")
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public void saveLoginLog(SysLogLoginEntity loginLogEntity) {
         this.baseMapper.insert(loginLogEntity);
+        SysCmsUtils.log.warn("插入数据到MySQL中，当前线程[{}]",Thread.currentThread().getName());
     }
 
     @Override

@@ -7,15 +7,17 @@ import com.cms.common.tool.domain.SysLoginLogVoEntity;
 import eu.bitwalker.useragentutils.Browser;
 import eu.bitwalker.useragentutils.OperatingSystem;
 import eu.bitwalker.useragentutils.UserAgent;
+import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
 import java.util.Map;
+
 import static com.cms.common.tool.constant.ConstantCode.RABBITMQ_LOG_TOPIC_EXCHANGE;
 
 /**
@@ -29,7 +31,6 @@ public class OlapRabbitMqServiceImpl implements OlapRabbitMqService {
 
     @Override
     public void sendLoginLog(HttpServletRequest request, SecurityClaimsUserEntity securityClaimsUser, boolean flag) {
-        Map<String,Object> objectMap = new HashMap<>(2);
         String agent = request.getHeader("User-Agent");
         // 解析agent字符串
         UserAgent userAgent = UserAgent.parseUserAgentString(agent);
@@ -48,8 +49,10 @@ public class OlapRabbitMqServiceImpl implements OlapRabbitMqService {
                 .browser(browser.getName())
                 .message(null)
                 .build();
-        objectMap.put("data",buildObject);
         // RabbitMQ消息推送
-        rabbitTemplate.convertAndSend(RABBITMQ_LOG_TOPIC_EXCHANGE, "log.dt",objectMap);
+        // correlationData可携带参数，消息处理回调函数中可以使用
+        CorrelationData correlationData = new CorrelationData(buildObject.getLoginUserName());
+        rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter());
+        rabbitTemplate.convertAndSend(RABBITMQ_LOG_TOPIC_EXCHANGE, "log.dt",buildObject,correlationData);
     }
 }

@@ -23,7 +23,7 @@ public class RabbitCallbackConfig {
                 SysCmsUtils.log.error("消息发送失败!");
                 // TODO 发送失败，可以记录失败日志
             }
-            SysCmsUtils.log.info("RabbitMQ消息投递成功!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            SysCmsUtils.log.info("RabbitMQ消息投递成功!!!");
         });
 
         rabbitTemplate.setReturnCallback((message, replyCode, replyText, exchange, routingKey) -> {

@@ -23,13 +23,13 @@ public class RabbitLogTopicConfig {
     }
 
     @Bean
-    public Queue deadExchange() {
+    public Exchange deadExchange() {
         return ExchangeBuilder.topicExchange(RABBITMQ_LOG_DEAD_LETTER_EXCHANGE).durable(true).build();
     }
 
     @Bean
-    public Binding logDeadLetterBinding(Queue deadQueue, Exchange deadExchange) {
-        return BindingBuilder.bind(deadQueue).to(deadExchange).with(RABBITMQ_LOG_DEAD_LETTER_ROUTING_KEY).noargs();
+    public Binding bindDeadExchange() {
+        return BindingBuilder.bind(deadQueue()).to(deadExchange()).with(RABBITMQ_LOG_DEAD_LETTER_ROUTING_KEY).noargs();
     }
 
     @Bean
@@ -51,7 +51,7 @@ public class RabbitLogTopicConfig {
     }
 
     @Bean
-    Binding bindingExchange(Queue topicQueue, Exchange topicExchange) {
+    public Binding bindingTopicExchange(Queue topicQueue, Exchange topicExchange) {
         return BindingBuilder.bind(topicQueue).to(topicExchange).with(RABBITMQ_LOG_TOPIC_ROUTING_KEY).noargs();
     }
 }
