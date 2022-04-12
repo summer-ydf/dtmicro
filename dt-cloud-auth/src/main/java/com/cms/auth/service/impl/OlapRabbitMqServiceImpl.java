@@ -16,9 +16,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.cms.common.tool.constant.ConstantCode.RABBITMQ_EXCHANGE_LOG;
-import static com.cms.common.tool.constant.ConstantCode.RABBITMQ_TOPIC_LOG;
+import static com.cms.common.tool.constant.ConstantCode.RABBITMQ_LOG_TOPIC_EXCHANGE;
 
 /**
  * @author ydf Created by 2022/1/25 13:58
@@ -52,6 +50,6 @@ public class OlapRabbitMqServiceImpl implements OlapRabbitMqService {
                 .build();
         objectMap.put("data",buildObject);
         // RabbitMQ消息推送
-        rabbitTemplate.convertAndSend(RABBITMQ_EXCHANGE_LOG, RABBITMQ_TOPIC_LOG, objectMap);
+        rabbitTemplate.convertAndSend(RABBITMQ_LOG_TOPIC_EXCHANGE, "log.dt",objectMap);
     }
 }

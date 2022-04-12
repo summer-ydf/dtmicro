@@ -131,9 +131,19 @@ public class ConstantCode {
 
     // ============RabbitMQ相关配置======
     // 主题队列
-    public static final String RABBITMQ_TOPIC_LOG = "topic.cms.log";
+    public static final String RABBITMQ_LOG_TOPIC_QUEUE = "log-topic-queue";
     // 主题交换机
-    public static final String RABBITMQ_EXCHANGE_LOG = "CmsLogTopicExchange";
+    public static final String RABBITMQ_LOG_TOPIC_EXCHANGE = "log-topic-exchange";
+    // 主题路由键
+    public static final String RABBITMQ_LOG_TOPIC_ROUTING_KEY = "log.*";
+
+    // 死信队列
+    public static final String RABBITMQ_LOG_DEAD_LETTER_QUEUE = "log-dead-letter-queue";
+    // 死信交换机
+    public static final String RABBITMQ_LOG_DEAD_LETTER_EXCHANGE = "log-dead-letter-exchange";
+    // 死信路由键
+    public static final String RABBITMQ_LOG_DEAD_LETTER_ROUTING_KEY = "log--dead-letter-routing-key";
+
 
     // ============数据权限配置======
     // 全部数据权限

@@ -24,10 +24,40 @@ spring:
         max-idle: 16
         # 连接池中的最小空闲连接 默认 0
         min-idle: 16
-  # 配置RabbitMQ服务器
+  # 配置RabbitMQ服务器>>>>>>单机配置
+#  rabbitmq:
+#    host: 42.192.121.230
+#    port: 5672
+#    username: admin
+#    password: Passw0rd!
+#    virtual-host: /
+  # 配置RabbitMQ服务器>>>>>>集群配置
   rabbitmq:
-    host: 42.192.121.230
-    port: 5672
-    username: admin
-    password: Passw0rd!
+    addresses: localhost:5671,localhost:5672,localhost:5673
+    username: guest
+    password: guest
     virtual-host: /
+    # 开启重试
+    template:
+      retry:
+        enabled: true #开启重试机制：默认是关闭的
+        initial-interval: 1000ms #重试起始间隔时间。
+        max-attempts: 3 #最大重试次数
+        max-interval: 1000ms #最大重试间隔时间
+        multiplier: 2 #间隔时间乘数。（这里配置间隔时间乘数为 2，则第一次间隔时间 1 秒，第二次重试间隔时间 2 秒，第三次 4 秒，以此类推）
+    listener: #开启消费者确认机制
+      simple:
+        # 每次从RabbitMQ获取的消息数量
+        prefetch: 1
+        default-requeue-rejected: false
+        # 每个队列启动的消费者数量
+        concurrency: 1
+        # 每个队列最大的消费者数量
+        max-concurrency: 1
+        # 签收模式为手动签收-那么需要在代码中手动ACK，消息确认方式，其有三种配置方式，分别是none、manual(手动ack) 和auto(自动ack) 默认auto
+        acknowledge-mode: auto
+        retry:
+          enabled: true # 消费者是否支持重试
+          max-attempts: 3 #重试最大次数
+          max-interval: 3000ms #最大重试间隔时间
+          initial-interval: 2000ms #重试间隔时间
