@@ -2,6 +2,7 @@ package com.cms.auth.service.impl;
 
 import com.cms.auth.service.OlapRabbitMqService;
 import com.cms.common.core.utils.CoreWebUtils;
+import com.cms.common.jdbc.config.IdGeneratorConfig;
 import com.cms.common.tool.domain.SecurityClaimsUserEntity;
 import com.cms.common.tool.domain.SysLoginLogVoEntity;
 import eu.bitwalker.useragentutils.Browser;
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Map;
+import java.util.UUID;
 
 import static com.cms.common.tool.constant.ConstantCode.RABBITMQ_LOG_TOPIC_EXCHANGE;
 
@@ -28,6 +29,8 @@ public class OlapRabbitMqServiceImpl implements OlapRabbitMqService {
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
+    @Autowired
+    private IdGeneratorConfig idGeneratorConfig;
 
     @Override
     public void sendLoginLog(HttpServletRequest request, SecurityClaimsUserEntity securityClaimsUser, boolean flag) {
@@ -40,6 +43,7 @@ public class OlapRabbitMqServiceImpl implements OlapRabbitMqService {
         OperatingSystem operatingSystem = userAgent.getOperatingSystem();
         String message =  securityClaimsUser.getUsername() + "在：" + LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + " 点击了登录";
         SysLoginLogVoEntity buildObject = SysLoginLogVoEntity.builder()
+                .messageId(String.valueOf(idGeneratorConfig.nextId(Object.class)))
                 .loginIp(CoreWebUtils.getIpAddress(request))
                 .loginUserName(securityClaimsUser.getUsername())
                 .title(message)
@@ -50,8 +54,7 @@ public class OlapRabbitMqServiceImpl implements OlapRabbitMqService {
                 .message(null)
                 .build();
         // RabbitMQ消息推送
-        // correlationData可携带参数，消息处理回调函数中可以使用
-        CorrelationData correlationData = new CorrelationData(buildObject.getLoginUserName());
+        CorrelationData correlationData = new CorrelationData(buildObject.getMessageId());
         rabbitTemplate.setMessageConverter(new Jackson2JsonMessageConverter());
         rabbitTemplate.convertAndSend(RABBITMQ_LOG_TOPIC_EXCHANGE, "log.dt",buildObject,correlationData);
     }

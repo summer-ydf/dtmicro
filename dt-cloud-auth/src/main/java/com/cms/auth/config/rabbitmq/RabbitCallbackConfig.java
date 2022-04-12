@@ -1,10 +1,13 @@
 package com.cms.auth.config.rabbitmq;
 
+import com.cms.common.tool.domain.SysMqMessageVoEntity;
 import com.cms.common.tool.utils.SysCmsUtils;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.Date;
 
 /**
  * @author ydf Created by 2022/1/25 15:02
@@ -21,11 +24,23 @@ public class RabbitCallbackConfig {
 
         // 当交换机不存在，或者交换机队列绑定失败的时候触发该回调函数
         rabbitTemplate.setConfirmCallback((correlationData, ack, cause) -> {
+            int publishStatus = 1;
             if (!ack) {
-                SysCmsUtils.log.error("消息发送失败!");
-                // TODO 发送失败，可以记录失败日志
+                SysCmsUtils.log.error("RabbitMQ消息投递失败!!!");
+                publishStatus = 2;
             }
+            // 发送成功，记录发送日志
+            assert correlationData != null;
+            SysMqMessageVoEntity mqMessageVoEntity = SysMqMessageVoEntity.builder()
+                    .messageId(correlationData.getId())
+                    .title("发送登录日志消息")
+                    .publishDate(new Date())
+                    .publishStatus(publishStatus)
+                    .message(cause)
+                    .build();
+            // TODO RPC远程调用保存数据
             SysCmsUtils.log.info("RabbitMQ消息投递成功!!!");
+            SysCmsUtils.log.info("记录发送消息日志："+mqMessageVoEntity);
         });
 
         // 当队列不存在，或者匹配失败的时候触发该回调函数

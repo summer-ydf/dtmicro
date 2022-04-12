@@ -54,4 +54,7 @@ public class SysLogLoginEntity extends BaseEntity implements Serializable {
 
     @ApiModelProperty(value = "操作信息")
     private String message;
+
+    @ApiModelProperty(value = "消息ID")
+    private String messageId;
 }

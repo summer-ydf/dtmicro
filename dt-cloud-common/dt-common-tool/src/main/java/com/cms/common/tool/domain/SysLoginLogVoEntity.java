@@ -59,4 +59,9 @@ public class SysLoginLogVoEntity implements Serializable {
      * 操作信息
      */
     private String message;
+
+    /**
+     * 消息ID
+     */
+    private String messageId;
 }
