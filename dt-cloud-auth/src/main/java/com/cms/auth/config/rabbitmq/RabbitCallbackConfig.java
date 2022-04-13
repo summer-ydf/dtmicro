@@ -1,9 +1,11 @@
 package com.cms.auth.config.rabbitmq;
 
+import com.cms.auth.service.RpcManageService;
 import com.cms.common.tool.domain.SysMqMessageVoEntity;
 import com.cms.common.tool.utils.SysCmsUtils;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,6 +16,9 @@ import java.util.Date;
  */
 @Configuration
 public class RabbitCallbackConfig {
+
+    @Autowired
+    private RpcManageService rpcManageService;
 
     @Bean
     public RabbitTemplate createRabbitTemplate(ConnectionFactory connectionFactory) {
@@ -38,18 +43,18 @@ public class RabbitCallbackConfig {
                     .publishStatus(publishStatus)
                     .message(cause)
                     .build();
-            // TODO RPC远程调用异步保存数据
+            // RPC远程调用异步保存数据
+            rpcManageService.saveMqMessageInfo(mqMessageVoEntity);
             SysCmsUtils.log.info("RabbitMQ消息投递成功!!!");
-            SysCmsUtils.log.info("记录发送消息日志："+mqMessageVoEntity);
         });
 
         // 当队列不存在，或者匹配失败的时候触发该回调函数
         rabbitTemplate.setReturnCallback((message, replyCode, replyText, exchange, routingKey) -> {
-            SysCmsUtils.log.info("ReturnCallback:     "+"消息："+message);
-            SysCmsUtils.log.info("ReturnCallback:     "+"回应码："+replyCode);
-            SysCmsUtils.log.info("ReturnCallback:     "+"回应信息："+replyText);
-            SysCmsUtils.log.info("ReturnCallback:     "+"交换机："+exchange);
-            SysCmsUtils.log.info("ReturnCallback:     "+"路由键："+routingKey);
+            SysCmsUtils.log.info("ReturnCallback->>>"+"消息："+message);
+            SysCmsUtils.log.info("ReturnCallback->>>"+"回应码："+replyCode);
+            SysCmsUtils.log.info("ReturnCallback->>>"+"回应信息："+replyText);
+            SysCmsUtils.log.info("ReturnCallback->>>"+"交换机："+exchange);
+            SysCmsUtils.log.info("ReturnCallback->>>"+"路由键："+routingKey);
         });
         return rabbitTemplate;
     }

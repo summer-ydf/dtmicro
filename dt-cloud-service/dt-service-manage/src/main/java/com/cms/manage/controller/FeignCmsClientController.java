@@ -1,10 +1,13 @@
 package com.cms.manage.controller;
 
 import com.api.manage.feign.LogFeignClientService;
+import com.api.manage.feign.MessageFeignClientService;
 import com.api.manage.feign.OauthFeignClientService;
 import com.cms.common.tool.domain.SecurityClaimsUserEntity;
+import com.cms.common.tool.domain.SysMqMessageVoEntity;
 import com.cms.common.tool.domain.SysOperatorLogVoEntity;
 import com.cms.common.tool.result.ResultUtil;
+import com.cms.common.tool.utils.SysCmsUtils;
 import com.cms.manage.entity.SysLogOperatorEntity;
 import com.cms.manage.service.SysLogLoginService;
 import com.cms.manage.service.SysLogOperatorService;
@@ -18,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @Api(tags = "远程调用接口API")
 @RestController
-public class FeignCmsClientController implements OauthFeignClientService, LogFeignClientService {
+public class FeignCmsClientController implements OauthFeignClientService, LogFeignClientService, MessageFeignClientService {
 
     private final SysLogLoginService sysLogLoginService;
     private final SysLogOperatorService sysOperatorLogService;
@@ -45,5 +48,11 @@ public class FeignCmsClientController implements OauthFeignClientService, LogFei
     @Override
     public ResultUtil<Long> findLoginLogCount() {
         return ResultUtil.success(sysLogLoginService.count());
+    }
+
+    @Override
+    public ResultUtil<SysMqMessageVoEntity> saveMqMessage(SysMqMessageVoEntity sysMqMessageVoEntity) {
+        SysCmsUtils.log.info("保存发送消息信息->>>"+sysMqMessageVoEntity);
+        return ResultUtil.success();
     }
 }
