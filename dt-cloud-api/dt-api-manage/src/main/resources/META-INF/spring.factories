@@ -1,3 +1,4 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   com.api.manage.factory.OauthFeignClientFallback,\
-  com.api.manage.factory.LogFeignClientFallback
+  com.api.manage.factory.LogFeignClientFallback,\
+  com.api.manage.factory.MessageFeignClientFallback

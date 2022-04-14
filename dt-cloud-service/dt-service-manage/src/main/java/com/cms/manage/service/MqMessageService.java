@@ -1,7 +1,5 @@
 package com.cms.manage.service;
 
-import com.cms.common.tool.domain.SysMqMessageVoEntity;
-import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.entity.MqMessageEntity;
 
 /**
@@ -9,5 +7,5 @@ import com.cms.manage.entity.MqMessageEntity;
  */
 public interface MqMessageService {
 
-    ResultUtil<SysMqMessageVoEntity> saveMqMessage(MqMessageEntity mqMessageEntity);
+    void saveMqMessage(MqMessageEntity mqMessageEntity);
 }

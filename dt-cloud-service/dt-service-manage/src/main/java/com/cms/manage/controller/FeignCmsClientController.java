@@ -59,6 +59,7 @@ public class FeignCmsClientController implements OauthFeignClientService, LogFei
         SysCmsUtils.log.info("保存发送消息信息->>>"+sysMqMessageVoEntity);
         MqMessageEntity mqMessageEntity = new MqMessageEntity();
         BeanUtils.copyProperties(sysMqMessageVoEntity,mqMessageEntity);
-        return mqMessageService.saveMqMessage(mqMessageEntity);
+        mqMessageService.saveMqMessage(mqMessageEntity);
+        return ResultUtil.success();
     }
 }

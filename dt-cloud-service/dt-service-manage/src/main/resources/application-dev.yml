@@ -26,7 +26,7 @@ spring:
         min-idle: 16
   data:
     mongodb:
-      uri: mongodb://root:123456@42.192.121.230:27017/micro  # mongodb连接配置
+      uri: mongodb://dt:Passw0rd!@42.192.121.230:27017/xc_micro
   # 配置RabbitMQ服务器>>>>>>单机配置
   rabbitmq:
     host: 42.192.121.230
