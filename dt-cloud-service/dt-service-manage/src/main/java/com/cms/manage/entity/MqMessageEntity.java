@@ -12,14 +12,19 @@ import java.util.Date;
  * @author ydf Created by 2022/4/14 16:17
  */
 @Data
-@Document(collation = "mq_message_record")
+@Document(collection = "mq_message_record")
 public class MqMessageEntity implements Serializable {
+
+    /**
+     * 主键
+     */
     @Id
     private String id;
 
     /**
      * 消息ID
      */
+    @Indexed(unique = true)
     private String messageId;
 
     /**
