@@ -8,7 +8,9 @@ import com.cms.common.tool.domain.SysMqMessageVoEntity;
 import com.cms.common.tool.domain.SysOperatorLogVoEntity;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.common.tool.utils.SysCmsUtils;
+import com.cms.manage.entity.MqMessageEntity;
 import com.cms.manage.entity.SysLogOperatorEntity;
+import com.cms.manage.service.MqMessageService;
 import com.cms.manage.service.SysLogLoginService;
 import com.cms.manage.service.SysLogOperatorService;
 import com.cms.manage.service.SysOperatorService;
@@ -26,11 +28,13 @@ public class FeignCmsClientController implements OauthFeignClientService, LogFei
     private final SysLogLoginService sysLogLoginService;
     private final SysLogOperatorService sysOperatorLogService;
     private final SysOperatorService sysOperatorService;
+    private final MqMessageService mqMessageService;
 
-    public FeignCmsClientController(SysOperatorService sysOperatorService, SysLogOperatorService sysOperatorLogService, SysLogLoginService sysLogLoginService) {
+    public FeignCmsClientController(SysOperatorService sysOperatorService, SysLogOperatorService sysOperatorLogService, SysLogLoginService sysLogLoginService, MqMessageService mqMessageService) {
         this.sysOperatorService = sysOperatorService;
         this.sysOperatorLogService = sysOperatorLogService;
         this.sysLogLoginService = sysLogLoginService;
+        this.mqMessageService = mqMessageService;
     }
 
     @Override
@@ -53,6 +57,8 @@ public class FeignCmsClientController implements OauthFeignClientService, LogFei
     @Override
     public ResultUtil<SysMqMessageVoEntity> saveMqMessage(SysMqMessageVoEntity sysMqMessageVoEntity) {
         SysCmsUtils.log.info("保存发送消息信息->>>"+sysMqMessageVoEntity);
-        return ResultUtil.success();
+        MqMessageEntity mqMessageEntity = new MqMessageEntity();
+        BeanUtils.copyProperties(sysMqMessageVoEntity,mqMessageEntity);
+        return mqMessageService.saveMqMessage(mqMessageEntity);
     }
 }

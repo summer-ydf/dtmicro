@@ -25,25 +25,25 @@ spring:
         # 连接池中的最小空闲连接 默认 0
         min-idle: 16
   # 配置RabbitMQ服务器>>>>>>单机模式
-#  rabbitmq:
-#    host: 42.192.121.230
-#    port: 5672
-#    username: admin
-#    password: Passw0rd!
-#    virtual-host: /
-#    # 发送者开启 confirm 确认机制
-#    #publisher-confirms: true 新版本此配置已经失效，可使用下面的配置实现
-#    publisher-confirm-type: correlated
-#    # 发送者开启 return 确认机制
-#    publisher-returns: true
-  # 配置RabbitMQ服务器>>>>>>集群模式
   rabbitmq:
-    addresses: localhost:5671,localhost:5672,localhost:5673
-    username: guest
-    password: guest
+    host: 42.192.121.230
+    port: 5672
+    username: admin
+    password: Passw0rd!
     virtual-host: /
     # 发送者开启 confirm 确认机制
     #publisher-confirms: true 新版本此配置已经失效，可使用下面的配置实现
     publisher-confirm-type: correlated
     # 发送者开启 return 确认机制
     publisher-returns: true
+  # 配置RabbitMQ服务器>>>>>>集群模式
+#  rabbitmq:
+#    addresses: localhost:5671,localhost:5672,localhost:5673
+#    username: guest
+#    password: guest
+#    virtual-host: /
+#    # 发送者开启 confirm 确认机制
+#    #publisher-confirms: true 新版本此配置已经失效，可使用下面的配置实现
+#    publisher-confirm-type: correlated
+#    # 发送者开启 return 确认机制
+#    publisher-returns: true
