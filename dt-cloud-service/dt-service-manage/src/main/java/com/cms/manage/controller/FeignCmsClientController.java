@@ -9,7 +9,7 @@ import com.cms.common.tool.domain.SysOperatorLogVoEntity;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.entity.MqMessageEntity;
 import com.cms.manage.entity.SysLogOperatorEntity;
-import com.cms.manage.service.MqMessageService;
+import com.cms.manage.service.MessageService;
 import com.cms.manage.service.SysLogLoginService;
 import com.cms.manage.service.SysLogOperatorService;
 import com.cms.manage.service.SysOperatorService;
@@ -27,9 +27,9 @@ public class FeignCmsClientController implements OauthFeignClientService, LogFei
     private final SysLogLoginService sysLogLoginService;
     private final SysLogOperatorService sysOperatorLogService;
     private final SysOperatorService sysOperatorService;
-    private final MqMessageService mqMessageService;
+    private final MessageService mqMessageService;
 
-    public FeignCmsClientController(SysOperatorService sysOperatorService, SysLogOperatorService sysOperatorLogService, SysLogLoginService sysLogLoginService, MqMessageService mqMessageService) {
+    public FeignCmsClientController(SysOperatorService sysOperatorService, SysLogOperatorService sysOperatorLogService, SysLogLoginService sysLogLoginService, MessageService mqMessageService) {
         this.sysOperatorService = sysOperatorService;
         this.sysOperatorLogService = sysOperatorLogService;
         this.sysLogLoginService = sysLogLoginService;
