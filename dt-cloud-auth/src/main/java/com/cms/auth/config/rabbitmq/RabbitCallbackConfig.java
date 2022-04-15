@@ -29,22 +29,20 @@ public class RabbitCallbackConfig {
 
         // 当交换机不存在，或者交换机队列绑定失败的时候触发该回调函数
         rabbitTemplate.setConfirmCallback((correlationData, ack, cause) -> {
-            int publishStatus = 1;
             if (!ack) {
                 SysCmsUtils.log.error("RabbitMQ消息投递失败!!!");
-                publishStatus = 2;
+                // 记录异常日志
+                assert correlationData != null;
+                SysMqMessageVoEntity mqMessageVoEntity = SysMqMessageVoEntity.builder()
+                        .messageId(correlationData.getId())
+                        .title("异常登录日志消息")
+                        .publishDate(new Date())
+                        .publishStatus(2)
+                        .message(cause)
+                        .build();
+                // RPC远程调用异步保存数据
+                rpcManageService.saveMqMessageInfo(mqMessageVoEntity);
             }
-            // 发送成功，记录发送日志
-            assert correlationData != null;
-            SysMqMessageVoEntity mqMessageVoEntity = SysMqMessageVoEntity.builder()
-                    .messageId(correlationData.getId())
-                    .title("发送登录日志消息")
-                    .publishDate(new Date())
-                    .publishStatus(publishStatus)
-                    .message(cause)
-                    .build();
-            // RPC远程调用异步保存数据
-            rpcManageService.saveMqMessageInfo(mqMessageVoEntity);
             SysCmsUtils.log.info("RabbitMQ消息投递成功!!!");
         });
 
