@@ -8,6 +8,7 @@ import com.cms.common.tool.utils.SysCmsUtils;
 import com.cms.manage.entity.MqMessageEntity;
 import com.cms.manage.service.MqMessageService;
 import com.mongodb.client.result.DeleteResult;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -46,6 +47,9 @@ public class MqMessageServiceImpl implements MqMessageService {
         Integer pageSize = request.getSize();
         if (null != request.getStatus()) {
             query.addCriteria(Criteria.where("publish_status").is(request.getStatus()));
+        }
+        if (StringUtils.isNotBlank(request.getKeyword())) {
+            query.addCriteria(Criteria.where("message_id").is(request.getKeyword()));
         }
         // 查询总记录数
         int count = (int) mongoTemplate.count(query, MqMessageEntity.class);

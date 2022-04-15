@@ -26,6 +26,7 @@ public class MqMessageEntity implements Serializable {
      * 消息ID
      */
     @Indexed(unique = true)
+    @Field("message_id")
     private String messageId;
 
     /**
