@@ -7,7 +7,6 @@ import com.cms.common.tool.domain.SecurityClaimsUserEntity;
 import com.cms.common.tool.domain.SysMqMessageVoEntity;
 import com.cms.common.tool.domain.SysOperatorLogVoEntity;
 import com.cms.common.tool.result.ResultUtil;
-import com.cms.common.tool.utils.SysCmsUtils;
 import com.cms.manage.entity.MqMessageEntity;
 import com.cms.manage.entity.SysLogOperatorEntity;
 import com.cms.manage.service.MqMessageService;
@@ -56,7 +55,6 @@ public class FeignCmsClientController implements OauthFeignClientService, LogFei
 
     @Override
     public ResultUtil<SysMqMessageVoEntity> saveMqMessage(SysMqMessageVoEntity sysMqMessageVoEntity) {
-        SysCmsUtils.log.info("保存发送消息信息->>>"+sysMqMessageVoEntity);
         MqMessageEntity mqMessageEntity = new MqMessageEntity();
         BeanUtils.copyProperties(sysMqMessageVoEntity,mqMessageEntity);
         mqMessageService.saveMqMessage(mqMessageEntity);

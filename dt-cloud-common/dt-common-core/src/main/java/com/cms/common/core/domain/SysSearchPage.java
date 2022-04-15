@@ -35,6 +35,11 @@ public class SysSearchPage extends PageEntity {
     private String category;
 
     /**
+     * 状态
+     */
+    private Integer status;
+
+    /**
      * 数据权限参数
      */
     private Map<String, Object> params;
