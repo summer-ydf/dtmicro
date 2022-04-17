@@ -26,7 +26,7 @@ public class SysConfigEntity extends BaseEntity implements Serializable {
 
     @ApiModelProperty(value = "主键")
     @TableId(type = IdType.INPUT)
-    private String id;
+    private Long id;
 
     @ApiModelProperty(value = "配置key")
     private String k;
