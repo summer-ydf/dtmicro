@@ -29,7 +29,6 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
                 config.setId(c.getId());
                 config.setK(c.getK());
                 config.setV(c.getV());
-                config.setType(c.getType());
                 configList.add(config);
             });
         }

@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.cms.common.core.domain.SysSearchPage;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.entity.MqMessageEntity;
-import com.cms.manage.entity.SysOperatorSettingEntity;
 import com.cms.manage.entity.WxMessageEntity;
 import com.cms.manage.service.MessageService;
 import io.swagger.annotations.Api;

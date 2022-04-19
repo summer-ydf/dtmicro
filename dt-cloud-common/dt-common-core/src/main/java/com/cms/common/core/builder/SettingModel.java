@@ -36,7 +36,7 @@ public class SettingModel {
 
     private SettingModelDataLoader loader;
    
-    private SettingModelDataCallbacker callbacker;
+    private SettingModelDataCallBacker callbacker; // 回调
 
     public SettingModel(String key, String title, String placeholder) {
         this.key = key;
@@ -44,11 +44,11 @@ public class SettingModel {
         this.placeholder = placeholder;
     }
 
-    public SettingModel(String key, String title, String placeholder, SettingModelDataCallbacker callbacker) {
+    public SettingModel(String key, String title, String placeholder, SettingModelDataCallBacker callBacker) {
         this.key = key;
         this.title = title;
         this.placeholder = placeholder;
-        this.callbacker = callbacker;
+        this.callbacker = callBacker;
     }
 
     public SettingModel(String key, String title, String placeholder, String rettype) {

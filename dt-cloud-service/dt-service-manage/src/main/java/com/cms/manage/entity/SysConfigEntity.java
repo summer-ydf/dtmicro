@@ -34,7 +34,4 @@ public class SysConfigEntity extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "配置value")
     private String v;
 
-    @ApiModelProperty(value = "配置类型")
-    private String type;
-
 }

@@ -1,7 +1,7 @@
 package com.cms.manage;
 
-import com.cms.common.core.builder.SettingBuilders;
-import com.cms.common.core.builder.SettingModelBuilders;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.cms.common.jdbc.config.IdGeneratorConfig;
 import com.cms.common.tool.utils.SysCmsUtils;
 import org.mybatis.spring.annotation.MapperScan;
@@ -40,16 +40,8 @@ public class CmsManageApplication {
     }
 
     static {
-        SettingBuilders.addModels("s1","系统配置", new SettingModelBuilders()
-                .buildModel("server.url","系统内网地址","http://ip:port")
-                .buildModel("flow.ff.zp.count","发放流程转批最大次数","发放流程转批最大次数,最大3次")
-                .buildModel("flow.ff.zp.open","是否发放流程转批","1是，0否")
-                .buildModel("flow.seal.type","签章类型","1服务器签章，2本地UK签章,默认服务器")
-                .buildModel("flow.seal.api","服务器签章接口地址","服务器签章接口地址")
-                .buildModel("flow.seal.url","服务器签章URL","服务器签章URL")
-                .buildModel("flow.sign.client.port","本地UK签章端口","本地UK签章端口")
-                .buildModel("flow.wx.template.id","流程微信通知模板ID","流程微信通知模板ID")
-        );
+        JSON.DEFAULT_GENERATE_FEATURE |= SerializerFeature.WriteMapNullValue.getMask();
+        ConfigConstants.init();
     }
 
     @Bean("sysTaskExecutor")

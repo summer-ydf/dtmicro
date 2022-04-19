@@ -1,5 +1,6 @@
 package com.cms.common.core.builder;
 
+import com.cms.common.core.domain.Params;
 import com.cms.common.core.domain.SysConfig;
 import com.cms.common.core.utils.EncryptUtils;
 import lombok.Data;
@@ -124,31 +125,32 @@ public class SettingBuilders {
 //    }
 //
 //
-//    public static List<SchoolSetting> settingParamsToList(Params params){
-//        List<SchoolSetting> schoolSettingList =new ArrayList<>();
-//        List<SettingModels> settingss = values();
-//        for(SettingModels setting:settingss){
-//            List<SettingModel> models = setting.getSettingModels();
-//            for( SettingModel model:models){
-//                String convert_key=model.getKey().replaceAll("[.]","_");
-//                String value= StringUtils.trim(params.getString(convert_key));
-//                if(StringUtils.isEmpty(value)){
-//                    continue;
-//                }
-//                SchoolSetting schoolSetting =new SchoolSetting();
-//                schoolSetting.setK(convert_key);
-//                if(model.isEncrypt()){
-//                    schoolSetting.setV(EncryptUtils.encryptAES_CBC(value,en_key,en_iv, EncryptUtils.EncodeType.Hex));
-//                }else {
-//                    schoolSetting.setV(value);
-//                }
-//                schoolSetting.setVal(value);
-//                schoolSettingList.add(schoolSetting);
-//
-//            }
-//        }
-//        return schoolSettingList;
-//    }
+
+    public static List<SysConfig> settingParamsToList(Params params) {
+        List<SysConfig> schoolSettingList = new ArrayList<>();
+        List<SettingModels> settingss = values();
+        for(SettingModels setting : settingss) {
+            List<SettingModel> models = setting.getSettingModels();
+            for( SettingModel model : models) {
+                String convert_key = model.getKey().replaceAll("[.]","_");
+                String value = StringUtils.trim(params.getString(convert_key));
+                if(StringUtils.isEmpty(value)) {
+                    continue;
+                }
+                SysConfig schoolSetting =new SysConfig();
+                schoolSetting.setK(convert_key);
+                if(model.isEncrypt()) {
+                    schoolSetting.setV(EncryptUtils.encryptAES_CBC(value,en_key,en_iv, EncryptUtils.EncodeType.Hex));
+                }else {
+                    schoolSetting.setV(value);
+                }
+                schoolSetting.setVal(value);
+                schoolSettingList.add(schoolSetting);
+            }
+        }
+        return schoolSettingList;
+    }
+
 //    public static Params removePub(Params params){
 //        List<SettingModels> settingss = values();
 //        for(SettingModels setting:settingss){

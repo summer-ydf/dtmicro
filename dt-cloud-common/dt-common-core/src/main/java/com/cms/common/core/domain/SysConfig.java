@@ -15,5 +15,6 @@ public class SysConfig {
 
     private String v;
 
-    private String type;
+    // 未加密值
+    private String val;
 }

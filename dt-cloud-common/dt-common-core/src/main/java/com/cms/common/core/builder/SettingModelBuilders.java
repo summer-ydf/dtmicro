@@ -20,8 +20,8 @@ public class SettingModelBuilders implements Serializable {
         return this;
     }
 
-    public SettingModelBuilders buildModel(String key, String title, String placeholder, SettingModelDataCallbacker callbacker){
-        models.add(new SettingModel(key,title,placeholder,callbacker));
+    public SettingModelBuilders buildModel(String key, String title, String placeholder, SettingModelDataCallBacker callBacker){
+        models.add(new SettingModel(key,title,placeholder,callBacker));
         return this;
     }
 
