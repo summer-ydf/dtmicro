@@ -1,8 +1,11 @@
 package com.cms.manage.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.cms.common.core.domain.SysConfig;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.entity.SysConfigEntity;
+
+import java.util.List;
 
 /**
  * @author DT
@@ -11,4 +14,6 @@ import com.cms.manage.entity.SysConfigEntity;
 public interface SysConfigService extends IService<SysConfigEntity> {
 
     ResultUtil<?> listConfigs();
+
+    ResultUtil<?> saveConfigs(List<SysConfig> sysConfigs);
 }

@@ -55,11 +55,10 @@ public class SettingBuilders {
                     if(model.getType().equals("select")){
                         String de= "";
                         if(model.isEncrypt()){
-                            //de= EncryptUtils.decryptAES_CBC(schoolSettingOptional.get().getV(),en_key,en_iv, EncryptUtils.EncodeType.Hex);
+                            de= EncryptUtils.decryptAES_CBC(schoolSettingOptional.get().getV(),en_key,en_iv, EncryptUtils.EncodeType.Hex);
                         }else {
                             de= schoolSettingOptional.get().getV();
                         }
-
                         settingModel.setValue(de.split(","));
                     }else{
                         if(model.isEncrypt()){
@@ -78,77 +77,73 @@ public class SettingBuilders {
         return schoolSettingList;
     }
 
-//    public static Params settingMap(List<SchoolSetting> settingList){
-//        Params params=new Params();
-//        List<SettingModels> settingss = values();
-//        for(SettingModels setting:settingss){
-//
-//            List<SettingModel> models = setting.getSettingModels();
-//            for( SettingModel model:models){
-//                if(model.getPub()==0){
-//                    continue;
-//                }
-//                String convert_key=model.getKey().replaceAll("[.]","_");
-//                Optional<SchoolSetting> schoolSettingOptional = settingList.stream().filter(schoolSetting -> schoolSetting.getK().equals(convert_key)).findAny();
-//                if(schoolSettingOptional.isPresent()){
-//                    if(model.isEncrypt()){
-//                        params.put(model.getKey(),EncryptUtils.decryptAES_CBC(schoolSettingOptional.get().getV(),en_key,en_iv, EncryptUtils.EncodeType.Hex));
-//                    }else {
-//                        params.put(model.getKey(),schoolSettingOptional.get().getV());
-//                    }
-//
-//                }
-//
-//            }
-//        }
-//        return params;
-//    }
-//    public static List<SettingModel> settingModel(List<SchoolSetting> settingList){
-//        List<SettingModel> result_models=new ArrayList<>();
-//        List<SettingModels> settingss = values();
-//        for(SettingModels setting:settingss){
-//            List<SettingModel> models = setting.getSettingModels();
-//            for( SettingModel model:models){
-//                String convert_key=model.getKey().replaceAll("[.]","_");
-//                Optional<SchoolSetting> schoolSettingOptional = settingList.stream().filter(schoolSetting -> schoolSetting.getK().equals(convert_key)).findAny();
-//                if(schoolSettingOptional.isPresent()){
-//                    if(model.isEncrypt()){
-//                        model.setValue(EncryptUtils.decryptAES_CBC(schoolSettingOptional.get().getV(),en_key,en_iv, EncryptUtils.EncodeType.Hex));
-//                    }else {
-//                        model.setValue(schoolSettingOptional.get().getV());
-//                    }
-//                    result_models.add(model);
-//                }
-//            }
-//        }
-//        return result_models;
-//    }
-//
-//
+    public static Params settingMap(List<SysConfig> configList) {
+        Params params = new Params();
+        List<SettingModels> settingModelsList = values();
+        for(SettingModels setting : settingModelsList) {
+            List<SettingModel> models = setting.getSettingModels();
+            for(SettingModel model : models) {
+                if(model.getPub()==0) {
+                    continue;
+                }
+                String convertKey = model.getKey().replaceAll("[.]","_");
+                Optional<SysConfig> schoolSettingOptional = configList.stream().filter(sysConfig -> sysConfig.getK().equals(convertKey)).findAny();
+                if(schoolSettingOptional.isPresent()) {
+                    if(model.isEncrypt()) {
+                        params.put(model.getKey(),EncryptUtils.decryptAES_CBC(schoolSettingOptional.get().getV(),en_key,en_iv, EncryptUtils.EncodeType.Hex));
+                    }else {
+                        params.put(model.getKey(),schoolSettingOptional.get().getV());
+                    }
+                }
+            }
+        }
+        return params;
+    }
+
+    public static List<SettingModel> settingModel(List<SysConfig> configList){
+        List<SettingModel> result_models = new ArrayList<>();
+        List<SettingModels> settingss = values();
+        for(SettingModels setting:settingss){
+            List<SettingModel> models = setting.getSettingModels();
+            for( SettingModel model:models){
+                String convert_key=model.getKey().replaceAll("[.]","_");
+                Optional<SysConfig> schoolSettingOptional = configList.stream().filter(schoolSetting -> schoolSetting.getK().equals(convert_key)).findAny();
+                if(schoolSettingOptional.isPresent()){
+                    if(model.isEncrypt()){
+                        model.setValue(EncryptUtils.decryptAES_CBC(schoolSettingOptional.get().getV(),en_key,en_iv, EncryptUtils.EncodeType.Hex));
+                    }else {
+                        model.setValue(schoolSettingOptional.get().getV());
+                    }
+                    result_models.add(model);
+                }
+            }
+        }
+        return result_models;
+    }
 
     public static List<SysConfig> settingParamsToList(Params params) {
-        List<SysConfig> schoolSettingList = new ArrayList<>();
-        List<SettingModels> settingss = values();
-        for(SettingModels setting : settingss) {
+        List<SysConfig> sysConfigList = new ArrayList<>();
+        List<SettingModels> settingModelsList = values();
+        for(SettingModels setting : settingModelsList) {
             List<SettingModel> models = setting.getSettingModels();
             for( SettingModel model : models) {
-                String convert_key = model.getKey().replaceAll("[.]","_");
-                String value = StringUtils.trim(params.getString(convert_key));
+                String convertKey = model.getKey().replaceAll("[.]","_");
+                String value = StringUtils.trim(params.getString(convertKey));
                 if(StringUtils.isEmpty(value)) {
                     continue;
                 }
-                SysConfig schoolSetting =new SysConfig();
-                schoolSetting.setK(convert_key);
+                SysConfig sysConfig =new SysConfig();
+                sysConfig.setK(convertKey);
                 if(model.isEncrypt()) {
-                    schoolSetting.setV(EncryptUtils.encryptAES_CBC(value,en_key,en_iv, EncryptUtils.EncodeType.Hex));
+                    sysConfig.setV(EncryptUtils.encryptAES_CBC(value,en_key,en_iv, EncryptUtils.EncodeType.Hex));
                 }else {
-                    schoolSetting.setV(value);
+                    sysConfig.setV(value);
                 }
-                schoolSetting.setVal(value);
-                schoolSettingList.add(schoolSetting);
+                sysConfig.setVal(value);
+                sysConfigList.add(sysConfig);
             }
         }
-        return schoolSettingList;
+        return sysConfigList;
     }
 
 //    public static Params removePub(Params params){
