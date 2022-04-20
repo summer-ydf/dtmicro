@@ -2,12 +2,14 @@ package com.cms.manage;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.cms.common.core.cache.CacheUtils;
 import com.cms.common.jdbc.config.IdGeneratorConfig;
 import com.cms.common.tool.utils.SysCmsUtils;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
@@ -23,11 +25,12 @@ import java.util.concurrent.ThreadPoolExecutor;
  * @author ydf Created by 2021/11/23 14:54
  */
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
+@EnableCaching
 @EnableAsync
 @EnableSwagger2
 @EnableTransactionManagement
 @EnableDiscoveryClient
-@Import({IdGeneratorConfig.class})
+@Import({IdGeneratorConfig.class, CacheUtils.class})
 @MapperScan(basePackages = {"com.cms.manage.mapper"})
 @EnableFeignClients(basePackages ={"com.api.*.feign"})
 public class CmsManageApplication {

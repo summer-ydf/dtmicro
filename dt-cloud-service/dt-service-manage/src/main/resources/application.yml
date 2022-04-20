@@ -15,6 +15,10 @@ spring:
       discovery:
         server-addr: 127.0.0.1:8848
         enabled: true
+  cache:
+    type: EHCACHE
+    ehcache:
+      config: classpath:ehcache.xml
 management:
   endpoints:
     web:

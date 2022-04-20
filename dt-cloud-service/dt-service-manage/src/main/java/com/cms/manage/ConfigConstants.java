@@ -33,7 +33,7 @@ public class ConfigConstants {
         );
 
         SettingBuilders.addModels("s4","定时任务配置", new SettingModelBuilders()
-                .buildModel("ti.cron","查询时间","查询频率:cron表达式",new JobSettingCallBacker())
+                .buildModel("ti.cron","查询时间","查询频率:cron表达式", new JobSettingCallBacker())
         );
     }
 }
