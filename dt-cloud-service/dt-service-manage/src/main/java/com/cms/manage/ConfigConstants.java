@@ -18,7 +18,7 @@ public class ConfigConstants {
                 .buildModel("wx.appid","appid","微信公众号用户唯一凭证","input",true)
                 .buildModel("wx.secret","secret","微信公众号用户唯一凭证密钥","input",true)
                 .buildModel("wx.templated","消息模板ID","微信公众号应用消息模板ID","input",true)
-                .buildModel("wx.enabled","状态","是否开启消息发送","radio",false)
+                .buildModel("wx.enabled","启用状态","是否开启消息发送","switch",false)
         );
 
         SettingBuilders.addModels("s2","企业微信配置", new SettingModelBuilders()
