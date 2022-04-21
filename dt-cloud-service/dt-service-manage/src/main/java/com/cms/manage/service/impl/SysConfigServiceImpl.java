@@ -7,11 +7,13 @@ import com.cms.common.core.builder.SettingModel;
 import com.cms.common.core.cache.CacheUtils;
 import com.cms.common.core.domain.Params;
 import com.cms.common.core.domain.SysConfig;
+import com.cms.common.jdbc.config.IdGenerator;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.entity.SysConfigEntity;
 import com.cms.manage.mapper.SysConfigMapper;
 import com.cms.manage.service.SysConfigService;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,10 +62,19 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
         if (!sysConfigs.isEmpty()) {
             // 更新数据库
             for (SysConfig c : sysConfigs) {
-                SysConfigEntity sys = new SysConfigEntity();
-                sys.setK(c.getK());
-                sys.setV(c.getV());
-                this.baseMapper.update(sys, new QueryWrapper<SysConfigEntity>().eq("k", c.getK()));
+                SysConfigEntity configEntity = this.baseMapper.selectOne(new QueryWrapper<SysConfigEntity>().eq("k", c.getK()));
+                if (!ObjectUtils.isEmpty(configEntity)) {
+                    // 更新
+                    configEntity.setV(c.getV());
+                    this.baseMapper.updateById(configEntity);
+                }else {
+                    // 新增
+                    SysConfigEntity sys = new SysConfigEntity();
+                    sys.setId(IdGenerator.generateId());
+                    sys.setK(c.getK());
+                    sys.setV(c.getV());
+                    this.baseMapper.insert(sys);
+                }
             }
             // 删除缓存中的旧数据
             CacheUtils.remove(CACHE_SETTINGS, DEFAULT_CONFIG);
