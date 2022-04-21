@@ -23,6 +23,10 @@ management:
 feign:
   sentinel:
     enabled: true
+  httpclient:
+    enabled: false # 关闭httpclient
+  okhttp:
+    enabled: true  # 开启okhttp
 mybatis-plus:
   typeAliasesPackage: com.cms.job.entity
   mapper-locations: classpath*:com/cms/job/mapper/**/*.xml

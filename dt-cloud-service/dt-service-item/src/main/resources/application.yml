@@ -37,6 +37,10 @@ management:
 feign:
   sentinel:
     enabled: true  # 开启服务调用失败处理
+  httpclient:
+    enabled: false # 关闭httpclient
+  okhttp:
+    enabled: true  # 开启okhttp
 mybatis-plus:
   typeAliasesPackage: com.cms.item.entity
   mapper-locations: classpath*:com/cms/item/mapper/**/*.xml
