@@ -1,6 +1,7 @@
 package com.cms.auth.config.rabbitmq;
 
 import com.cms.auth.service.RpcManageService;
+import com.cms.common.jdbc.config.IdGenerator;
 import com.cms.common.tool.domain.SysMqMessageVoEntity;
 import com.cms.common.tool.utils.SysCmsUtils;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -53,6 +54,16 @@ public class RabbitCallbackConfig {
             SysCmsUtils.log.info("ReturnCallback->>>"+"回应信息："+replyText);
             SysCmsUtils.log.info("ReturnCallback->>>"+"交换机："+exchange);
             SysCmsUtils.log.info("ReturnCallback->>>"+"路由键："+routingKey);
+            // 记录异常日志
+            SysMqMessageVoEntity mqMessageVoEntity = SysMqMessageVoEntity.builder()
+                    .messageId(String.valueOf(IdGenerator.generateId()))
+                    .title("异常登录日志消息")
+                    .publishDate(new Date())
+                    .publishStatus(2)
+                    .message("回应码->>>"+ replyCode + ",回应消息->>>"+ replyText + ",路由key->>>"+routingKey)
+                    .build();
+            // RPC远程调用异步保存数据
+            rpcManageService.saveMqMessageInfo(mqMessageVoEntity);
         });
         return rabbitTemplate;
     }

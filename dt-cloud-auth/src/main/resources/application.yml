@@ -28,6 +28,7 @@ feign:
     enabled: false # 关闭httpclient
   okhttp:
     enabled: true  # 开启okhttp
+#SpringBoot的日志级别默认为info,大于full,导致feign的日志配置不会输出，所以加以下配置
 logging:
   level:
     com.api.manage.feign.OauthFeignClientService: debug
