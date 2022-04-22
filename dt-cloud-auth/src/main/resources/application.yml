@@ -30,7 +30,6 @@ feign:
     enabled: true  # 开启okhttp
 logging:
   level:
-    # feign日志以什么级别监控哪个接口
     com.api.manage.feign.OauthFeignClientService: debug
 mybatis-plus:
   mapper-locations: classpath*:com/cms/auth/mapper/**/*.xml

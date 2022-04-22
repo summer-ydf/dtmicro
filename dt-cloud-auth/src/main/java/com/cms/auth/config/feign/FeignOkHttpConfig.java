@@ -1,4 +1,4 @@
-package com.cms.auth.config;
+package com.cms.auth.config.feign;
 
 import com.cms.auth.config.interceptor.OkHttpLogInterceptor;
 import feign.Feign;
