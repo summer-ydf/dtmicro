@@ -13,6 +13,7 @@ import com.cms.manage.entity.SysConfigEntity;
 import com.cms.manage.mapper.SysConfigMapper;
 import com.cms.manage.service.SysConfigService;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
@@ -43,7 +44,7 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
     public ResultUtil<?> listConfigs() {
         List<SysConfigEntity> configs = this.baseMapper.selectList(null);
         List<SysConfig> configList = new ArrayList<>();
-        if (!configs.isEmpty()) {
+        if (!CollectionUtils.isEmpty(configs)) {
             configs.forEach(c -> {
                 SysConfig config = new SysConfig();
                 config.setId(c.getId());
@@ -59,7 +60,7 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
     public ResultUtil<?> saveConfigs(List<SysConfig> sysConfigs) {
         // 缓存里面取出旧的数据
         Params params = configParams();
-        if (!sysConfigs.isEmpty()) {
+        if (!CollectionUtils.isEmpty(sysConfigs)) {
             // 更新数据库
             for (SysConfig c : sysConfigs) {
                 SysConfigEntity configEntity = this.baseMapper.selectOne(new QueryWrapper<SysConfigEntity>().eq("k", c.getK()));
@@ -81,7 +82,7 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
             // 参数回调
             List<SettingModel> models = SettingBuilders.settingModel(sysConfigs);
             for (SettingModel model : models) {
-                if(model.getCallbacker()!=null){
+                if(model.getCallbacker() != null){
                     model.getCallbacker().callback(params.get(model.getKey()),model.getValue());
                 }
             }

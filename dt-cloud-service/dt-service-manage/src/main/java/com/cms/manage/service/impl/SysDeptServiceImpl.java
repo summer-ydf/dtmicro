@@ -14,6 +14,7 @@ import com.cms.manage.vo.SysDeptRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class SysDeptServiceImpl extends ServiceImpl<SysDeptMapper, SysDepartment
         }
         // 构建树结构数据返回
         List<SysDepartmentEntity> treeEntityList = new ArrayList<>();
-        if(null != entityList && !entityList.isEmpty()){
+        if(!CollectionUtils.isEmpty(entityList)){
             treeEntityList =  buildTree(entityList,"0");
         }
         return ResultUtil.success(treeEntityList);

@@ -22,6 +22,7 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +45,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRoleEntity
     public ResultUtil<IPage<SysRoleEntity>> pageSearch(SysSearchPage request) {
         Page<SysRoleEntity> page = new Page<>(request.getCurrent(),request.getSize());
         IPage<SysRoleEntity> list = this.baseMapper.pageSearch(page,request);
-        if(!list.getRecords().isEmpty()) {
+        if(!CollectionUtils.isEmpty(list.getRecords())) {
             list.getRecords().forEach(role -> {
                 List<Long> longs = this.baseMapper.selectRoleDeptList(role.getId());
                 List<Long> deptIds = new ArrayList<>();
@@ -78,7 +79,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRoleEntity
                     ,DateFormatUtils.format(request.getEndTime(),"yyyy-MM-dd HH:mm:ss"));
         }
         List<SysRoleEntity> roleEntityList = this.baseMapper.selectList(wrapper);
-        if(!roleEntityList.isEmpty()) {
+        if(!CollectionUtils.isEmpty(roleEntityList)) {
             roleEntityList.forEach(it -> {
                 // 根据角色ID查询角色权限信息
                 List<SysMenuEntity> menuEntityList = this.baseMapper.getMenuListByRoleId(it.getId());
@@ -147,7 +148,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRoleEntity
                 resultIds.add(id);
             }
         }
-        if(!resultIds.isEmpty()) {
+        if(!CollectionUtils.isEmpty(resultIds)) {
             for (Long id : resultIds) {
                 this.deleteRoleRelevantTable(id);
             }
@@ -164,12 +165,12 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRoleEntity
     private void deleteRoleRelevantTable(Long id) {
         // 删除角色权限中间表
         List<Long> collectIds = this.baseMapper.listRoleMenuByRoleId(id);
-        if(!collectIds.isEmpty()) {
+        if(!CollectionUtils.isEmpty(collectIds)) {
             this.baseMapper.deleteRoleMenuByIds(collectIds);
         }
         // 删除角色数据权限中间表
         List<Long> longs = this.baseMapper.selectRoleDataScopeList(id);
-        if(!longs.isEmpty()) {
+        if(!CollectionUtils.isEmpty(longs)) {
             this.baseMapper.deleteRoleDataScopeByIds(longs);
         }
     }
@@ -189,7 +190,7 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRoleEntity
     @Transactional(rollbackFor = Exception.class)
     public ResultUtil<?> saveRoleMenu(SysRoleMenuData sysRoleMenuData) {
         List<SysRoleMenuEntity> sysRoleMenuEntityList = this.baseMapper.selectRoleMenuList(sysRoleMenuData.getRoleId());
-        if(!sysRoleMenuEntityList.isEmpty()) {
+        if(!CollectionUtils.isEmpty(sysRoleMenuEntityList)) {
             // 删除旧数据
             List<Long> ids = sysRoleMenuEntityList.stream().map(SysRoleMenuEntity::getId).collect(Collectors.toList());
             this.baseMapper.deleteBathRoleMenu(ids);
@@ -210,11 +211,11 @@ public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRoleEntity
     public ResultUtil<?> saveRoleDataScope(SysRoleScope sysRoleScope) {
         // 删除旧数据
         List<Long> ids = this.baseMapper.selectRoleDataScopeList(sysRoleScope.getRoleId());
-        if(!ids.isEmpty()) {
+        if(!CollectionUtils.isEmpty(ids)) {
             this.baseMapper.deleteRoleDataScopeByIds(ids);
         }
         // 添加角色的数据权限
-        if (!sysRoleScope.getDeptIds().isEmpty() && sysRoleScope.getDataScope().equals(DATA_SCOPE_CUSTOM)) {
+        if (!CollectionUtils.isEmpty(sysRoleScope.getDeptIds()) && sysRoleScope.getDataScope().equals(DATA_SCOPE_CUSTOM)) {
             sysRoleScope.getDeptIds().forEach(deptId -> {
                 SysRoleDeptEntity roleDeptEntity = new SysRoleDeptEntity();
                 roleDeptEntity.setId(IdGenerator.generateId());

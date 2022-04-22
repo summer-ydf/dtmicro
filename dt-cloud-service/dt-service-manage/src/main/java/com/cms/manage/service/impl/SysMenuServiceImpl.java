@@ -14,6 +14,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -101,7 +102,7 @@ public class SysMenuServiceImpl extends ServiceImpl<SysMenuMapper, SysMenuEntity
             }
             delIds.add(id);
         }
-        if(!delIds.isEmpty()) {
+        if(!CollectionUtils.isEmpty(delIds)) {
             this.baseMapper.deleteBath(ids);
         }
         return ResultUtil.success("删除成功");

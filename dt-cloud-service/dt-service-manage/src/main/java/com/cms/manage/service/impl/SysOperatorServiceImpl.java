@@ -22,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
@@ -48,7 +49,7 @@ public class SysOperatorServiceImpl extends ServiceImpl<SysOperatorMapper, SysOp
             List<SysRoleDataScope> roleDataScopes = this.baseMapper.selectRoleDataScopeByUserId(operator.getId());
             System.out.println("查询操作员角色数据权限->>>"+roleDataScopes);
             List<SysDataScopeVoEntity> roles = new ArrayList<>();
-            if (!roleDataScopes.isEmpty()) {
+            if (!CollectionUtils.isEmpty(roleDataScopes)) {
                 for (SysRoleDataScope data : roleDataScopes) {
                     roles.add(SysDataScopeVoEntity.builder().roleId(data.getRoleId()).dataScope(data.getDataScope()).build());
                 }
@@ -77,10 +78,10 @@ public class SysOperatorServiceImpl extends ServiceImpl<SysOperatorMapper, SysOp
     public ResultUtil<IPage<SysOperatorEntity>> pageSearch(SysSearchPage request) {
         Page<SysOperatorEntity> page = new Page<>(request.getCurrent(),request.getSize());
         IPage<SysOperatorEntity> list = this.baseMapper.pageSearch(page,request);
-        if(!list.getRecords().isEmpty()) {
+        if(!CollectionUtils.isEmpty(list.getRecords())) {
             for (SysOperatorEntity operator : list.getRecords()) {
                 List<Long> roleIds =  this.baseMapper.selectOperatorAndRoleById(operator.getId());
-                if (!roleIds.isEmpty()) {
+                if (!CollectionUtils.isEmpty(roleIds)) {
                     List<String> resultList = new ArrayList<>();
                     roleIds.forEach(id -> {
                         SysRoleEntity serviceOne = sysRoleService.getOne(new QueryWrapper<SysRoleEntity>().eq("id", id));
