@@ -1,0 +1,46 @@
+spring:
+  application:
+    name: cms-service-gateway-plus
+  main:
+    allow-bean-definition-overriding: true
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  profiles:
+    active: dev
+  cloud:
+    loadbalancer:
+      retry:
+        enabled: false #该参数用来开启重试机制，默认是关闭
+    gateway:
+      routes:
+        - id: cms-service-oauth
+          uri: lb://cms-service-oauth
+          predicates:
+            - Path=/auth/oauth/**,/auth/anonymous/**,/auth/security/**,/auth/hello,/auth/admin
+          filters:
+            - StripPrefix=1
+        - id: cms-service-manage
+          uri: lb://cms-service-manage
+          predicates:
+            - Path=/manage/api/**
+          filters:
+            - StripPrefix=2
+        - id: cms-service-job
+          uri: lb://cms-service-job
+          predicates:
+            - Path=/task/api/**
+          filters:
+            - StripPrefix=2
+        - id: cms-service-document
+          uri: lb://cms-service-document
+          predicates:
+            - Path=/doc/api/**
+          filters:
+            - StripPrefix=2
+secure:  #配置白名单路径
+  ignore:
+    urls:
+      - /auth/oauth/**
+      - /auth/anonymous/**
+      - /auth/hello
