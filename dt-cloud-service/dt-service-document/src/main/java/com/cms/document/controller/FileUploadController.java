@@ -92,4 +92,24 @@ public class FileUploadController {
     public void downloadFile(@RequestParam String bucket, @RequestParam String objectName, HttpServletResponse response) {
         fileProvider.downloadFile(bucket, objectName,response);
     }
+
+    @ApiOperation(value = "上传文件测试")
+    @ApiImplicitParams({
+            @ApiImplicitParam(value = "文件",name = "file",required = true,allowMultiple = true,dataType = "MultipartFile")
+    })
+    @PostMapping(value = "/uploadFileTest",headers = "content-type=multipart/form-data")
+    @CrossOrigin(origins = "*")
+    public ResultUtil<?> uploadFile(@RequestParam(value = "file") MultipartFile file) {
+        String url = fileProvider.putObject(file, null);
+        // 保存上传文件信息
+        fileInformationService.saveFile(file,null,url);
+        return ResultUtil.success(url);
+    }
+
+    @ApiOperation(value = "获取文件数据")
+    @GetMapping(value = "/list")
+    @CrossOrigin(origins = "*")
+    public ResultUtil<List<FileInformationEntity>> list() {
+        return ResultUtil.success(fileInformationService.list());
+    }
 }
