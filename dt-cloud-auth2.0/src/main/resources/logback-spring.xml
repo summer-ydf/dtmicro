@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 支持日志级别热修改 -->
+<configuration scan="true" scanPeriod="10 minutes" debug="false">
+
+    <!-- 打印格式 -->
+    <property name="PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%-5level] %-40.40logger{39} : %msg%n" />
+
+    <!-- 输出到控制台 -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- 彩色日志 -->
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>
+                %d{yyyy-MM-dd HH:mm:ss} [%thread] %magenta(%-5level) %green([%-50.50class]) >>> %cyan(%msg) %n
+            </pattern>
+        </layout>
+    </appender>
+
+    <!-- 输出到文件 -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_HOME}/cms-oauth-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!-- 日志保留天数 -->
+            <MaxHistory>100</MaxHistory>
+            <!-- 日志文件最大值 -->
+            <maxFileSize>100MB</maxFileSize>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>${PATTERN}</pattern>
+        </layout>
+    </appender>
+
+    <springProfile name="dev">
+        <logger name="com.cms" level="debug"/>
+        <logger name="bar" level="debug"/>
+        <logger name="Log" level="debug"/>
+        <logger name="org.springframework" level="warn"/>
+    </springProfile>
+
+    <!-- 开发环境输出到控制台，测试和生产输出到文件。 -->
+    <root level="info">
+        <springProfile name="dev">
+            <appender-ref ref="CONSOLE" />
+        </springProfile>
+
+        <springProfile name="test,prod">
+            <appender-ref ref="FILE" />
+        </springProfile>
+    </root>
+</configuration>
