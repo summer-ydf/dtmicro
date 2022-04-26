@@ -1,8 +1,11 @@
 package com.cms.oauth.security.config;
 
+import com.cms.oauth.security.model.mobile.SmsCodeAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -24,6 +27,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailsService sysUserDetailsService;
+    @Autowired
+    private UserDetailsService memberUserDetailsService;
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
 
     /**
      * Security接口拦截配置
@@ -47,7 +54,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) {
-        auth.authenticationProvider(daoAuthenticationProvider());
+        auth
+                .authenticationProvider(daoAuthenticationProvider())
+                .authenticationProvider(smsCodeAuthenticationProvider());
+    }
+
+    /**
+     * 手机验证码认证授权提供者
+     *
+     * @return
+     */
+    @Bean
+    public SmsCodeAuthenticationProvider smsCodeAuthenticationProvider() {
+        SmsCodeAuthenticationProvider provider = new SmsCodeAuthenticationProvider();
+        provider.setUserDetailsService(memberUserDetailsService);
+        provider.setRedisTemplate(redisTemplate);
+        return provider;
     }
 
     /**

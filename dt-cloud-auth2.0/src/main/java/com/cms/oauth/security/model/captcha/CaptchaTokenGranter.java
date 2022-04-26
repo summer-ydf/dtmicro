@@ -1,4 +1,4 @@
-package com.cms.oauth.security.model;
+package com.cms.oauth.security.model.captcha;
 
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
@@ -25,7 +25,7 @@ import java.util.Map;
 import static com.cms.common.tool.constant.ConstantCode.CACHE_CODE_KEY;
 
 /**
- * 验证码授权模式 授权者
+ * 验证码授权者
  * @author ydf Created by 2022/4/26 16:05
  */
 public class CaptchaTokenGranter extends AbstractTokenGranter {

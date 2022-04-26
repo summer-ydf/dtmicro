@@ -1,17 +1,25 @@
 package com.cms.oauth.security.config;
 
+import com.alibaba.fastjson.JSON;
 import com.cms.common.tool.domain.SecurityClaimsUserEntity;
 import com.cms.common.tool.domain.SysDataScopeVoEntity;
-import com.cms.oauth.security.model.CaptchaTokenGranter;
-import com.cms.oauth.service.impl.UserDetailsServiceImpl;
+import com.cms.common.tool.result.ResultEnum;
+import com.cms.common.tool.result.ResultUtil;
+import com.cms.oauth.security.model.captcha.CaptchaTokenGranter;
+import com.cms.oauth.security.model.mobile.SmsCodeTokenGranter;
+import com.cms.oauth.service.impl.SysUserDetailsServiceImpl;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,6 +37,7 @@ import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.rsa.crypto.KeyStoreKeyFactory;
+import org.springframework.security.web.AuthenticationEntryPoint;
 
 import java.security.KeyPair;
 import java.util.ArrayList;
@@ -51,7 +60,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
-    private UserDetailsServiceImpl userDetailsService;
+    private SysUserDetailsServiceImpl userDetailsService;
 //    @Autowired
 //    private ClientDetailsServiceImpl clientDetailsService;
 
@@ -78,7 +87,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 // 授权范围域
                 .scopes("all")
                 // 授权方式
-                .authorizedGrantTypes("password", "refresh_token","captcha");
+                .authorizedGrantTypes("password", "refresh_token","captcha","sms_code");
     }
 
     /**
@@ -104,18 +113,67 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 endpoints.getOAuth2RequestFactory(), authenticationManager, redisTemplate
         ));
 
+        // 添加手机短信验证码授权模式的授权者
+        granterList.add(new SmsCodeTokenGranter(endpoints.getTokenServices(), endpoints.getClientDetailsService(),
+                endpoints.getOAuth2RequestFactory(), authenticationManager
+        ));
+
         CompositeTokenGranter compositeTokenGranter = new CompositeTokenGranter(granterList);
         endpoints
                 .authenticationManager(authenticationManager)
                 .accessTokenConverter(jwtAccessTokenConverter())
                 .tokenEnhancer(tokenEnhancerChain)
                 .userDetailsService(userDetailsService)
+                //.userDetailsService(userDetailsService)
                 // refresh token有两种使用方式：重复使用(true)、非重复使用(false)，默认为true
                 //      1 重复使用：access token过期刷新时， refresh token过期时间未改变，仍以初次生成的时间为准
                 //      2 非重复使用：access token过期刷新时， refresh token过期时间延续，在refresh token有效期内刷新便永不失效达到无需再次登录的目的
                 .tokenGranter(compositeTokenGranter)
                 .reuseRefreshTokens(true);
+
+//        CompositeTokenGranter compositeTokenGranter = new CompositeTokenGranter(granterList);
+//        endpoints
+//                .authenticationManager(authenticationManager)
+//                .accessTokenConverter(jwtAccessTokenConverter())
+//                .tokenEnhancer(tokenEnhancerChain)
+//                .tokenGranter(compositeTokenGranter)
+//
+//                .tokenServices(tokenServices(endpoints))
+//        ;
     }
+
+//    public DefaultTokenServices tokenServices(AuthorizationServerEndpointsConfigurer endpoints) {
+//        TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
+//        List<TokenEnhancer> tokenEnhancers = new ArrayList<>();
+//        tokenEnhancers.add(tokenEnhancer());
+//        tokenEnhancers.add(jwtAccessTokenConverter());
+//        tokenEnhancerChain.setTokenEnhancers(tokenEnhancers);
+//
+//        DefaultTokenServices tokenServices = new DefaultTokenServices();
+//        tokenServices.setTokenStore(endpoints.getTokenStore());
+//        tokenServices.setSupportRefreshToken(true);
+//        tokenServices.setClientDetailsService(clientDetailsService);
+//        tokenServices.setTokenEnhancer(tokenEnhancerChain);
+//
+//        // 多用户体系下，刷新token再次认证客户端ID和 UserDetailService 的映射Map
+//        Map<String, UserDetailsService> clientUserDetailsServiceMap = new HashMap<>();
+//        clientUserDetailsServiceMap.put(SecurityConstants.ADMIN_CLIENT_ID, sysUserDetailsService); // 系统管理客户端
+//        clientUserDetailsServiceMap.put(SecurityConstants.APP_CLIENT_ID, memberUserDetailsService); // Android、IOS、H5 移动客户端
+//        clientUserDetailsServiceMap.put(SecurityConstants.WEAPP_CLIENT_ID, memberUserDetailsService); // 微信小程序客户端
+//
+//        // 刷新token模式下，重写预认证提供者替换其AuthenticationManager，可自定义根据客户端ID和认证方式区分用户体系获取认证用户信息
+//        PreAuthenticatedAuthenticationProvider provider = new PreAuthenticatedAuthenticationProvider();
+//        provider.setPreAuthenticatedUserDetailsService(new PreAuthenticatedUserDetailsService<>(clientUserDetailsServiceMap));
+//        tokenServices.setAuthenticationManager(new ProviderManager(Arrays.asList(provider)));
+//
+//        /** refresh_token有两种使用方式：重复使用(true)、非重复使用(false)，默认为true
+//         *  1 重复使用：access_token过期刷新时， refresh_token过期时间未改变，仍以初次生成的时间为准
+//         *  2 非重复使用：access_token过期刷新时， refresh_token过期时间延续，在refresh_token有效期内刷新便永不失效达到无需再次登录的目的
+//         */
+//        tokenServices.setReuseRefreshToken(true);
+//        return tokenServices;
+//
+//    }
 
     /**
      * TODO 配置令牌访问端点安全的约束 不配置的话 不支持url参数提交
@@ -179,23 +237,42 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         };
     }
 
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setHideUserNotFoundExceptions(false); // 用户不存在异常抛出
-        provider.setUserDetailsService(userDetailsService);
-        provider.setPasswordEncoder(passwordEncoder());
-        return provider;
-    }
+//    @Bean
+//    public DaoAuthenticationProvider authenticationProvider() {
+//        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+//        provider.setHideUserNotFoundExceptions(false); // 用户不存在异常抛出
+//        provider.setUserDetailsService(userDetailsService);
+//        provider.setPasswordEncoder(passwordEncoder());
+//        return provider;
+//    }
 
     /**
      * 密码编码器
      * 委托方式，根据密码的前缀选择对应的encoder，例如：{bcypt}前缀->标识BCYPT算法加密；{noop}->标识不使用任何加密即明文的方式
      * 密码判读 DaoAuthenticationProvider#additionalAuthenticationChecks
      */
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+//    }
+
+
+    /**
+     * 客户端认证失败处理
+     * @return 返回JSON
+     */
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+    public AuthenticationEntryPoint authenticationEntryPoint() {
+        return (request, response, e) -> {
+            System.out.println("客户端认证失败处理================================================");
+            response.setStatus(HttpStatus.OK.value());
+            response.setHeader(HttpHeaders.CONTENT_TYPE, "application/json;charset=UTF-8");
+            response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
+            response.setHeader(HttpHeaders.CACHE_CONTROL, "no-cache");
+            ResultUtil<Object> error = ResultUtil.error(ResultEnum.OAUTH2_BASE_ERROR.getCode(), ResultEnum.OAUTH2_BASE_ERROR.getMessage());
+            response.getWriter().print(JSON.toJSONString(error));
+            response.getWriter().flush();
+        };
     }
 }
 

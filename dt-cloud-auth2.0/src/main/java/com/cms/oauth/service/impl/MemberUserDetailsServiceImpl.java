@@ -1,7 +1,6 @@
 package com.cms.oauth.service.impl;
 
 import com.api.manage.feign.OauthFeignClientService;
-import com.cms.common.core.utils.CoreWebUtils;
 import com.cms.common.tool.domain.SecurityClaimsUserEntity;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.common.tool.utils.SysCmsUtils;
@@ -11,34 +10,30 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ObjectUtils;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
- * UserDetailService自定义实现加载用户认证信息
  * @author DT
- * @date 2022/4/25 18:59
+ * @date 2022/4/26 20:07
  */
-@Service
-public class UserDetailsServiceImpl implements UserDetailsService {
+@Service("memberUserDetailsService")
+public class MemberUserDetailsServiceImpl implements UserDetailsService {
 
     private final OauthFeignClientService oauthFeignClientService;
 
-    public UserDetailsServiceImpl(OauthFeignClientService oauthFeignClientService) {
+    public MemberUserDetailsServiceImpl(OauthFeignClientService oauthFeignClientService) {
         this.oauthFeignClientService = oauthFeignClientService;
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        HttpServletRequest request = CoreWebUtils.currentRequest();
-//        SecurityClaimsParams params = (SecurityClaimsParams) request.getAttribute(SecurityClaimsParams.class.getName());
-//        if(ObjectUtils.isEmpty(params)) {
-//            throw new UsernameNotFoundException("缺少登录附加参数");
-//        }
-        SecurityClaimsParams claimsParams = SecurityClaimsParams.builder().scope("web").username(username).build();
+    public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        return null;
+    }
+
+    public UserDetails loadUserByMobile(String mobile) {
+        System.out.println("通过手机号码登录:"+mobile);
+        SecurityClaimsParams claimsParams = SecurityClaimsParams.builder().scope("web").username(mobile).build();
         SysCmsUtils.log.info("远程调用设置参数->>>" + claimsParams);
-        ResultUtil<SecurityClaimsUserEntity> claimsUserResultUtil = oauthFeignClientService.loadUserByUsername(username,claimsParams.getScope());
+        ResultUtil<SecurityClaimsUserEntity> claimsUserResultUtil = oauthFeignClientService.loadUserByUsername(mobile,claimsParams.getScope());
         SysCmsUtils.log.info("远程调用回调结果->>>" + claimsUserResultUtil);
         if (!claimsUserResultUtil.isSuccess()) {
             throw new UsernameNotFoundException(claimsUserResultUtil.getMessage());
@@ -46,4 +41,3 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return SecurityUser.from(claimsUserResultUtil.getData());
     }
 }
-
