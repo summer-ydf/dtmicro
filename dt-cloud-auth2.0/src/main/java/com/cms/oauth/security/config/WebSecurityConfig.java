@@ -1,4 +1,4 @@
-package com.cms.oauth.config;
+package com.cms.oauth.security.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

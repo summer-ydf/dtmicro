@@ -1,4 +1,4 @@
-package com.cms.gateway.config;
+package com.cms.gateway.config.security;
 
 import cn.hutool.core.collection.CollectionUtil;
 import cn.hutool.core.convert.Convert;
