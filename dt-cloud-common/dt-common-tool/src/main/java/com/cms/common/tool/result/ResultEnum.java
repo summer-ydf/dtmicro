@@ -24,7 +24,12 @@ public enum ResultEnum {
     VALID_CODE_ERROR(50006, "验证码错误！"),
     VALID_USERNAME_ERROR(50007, "用户名或者密码错误！"),
     GATEWAY_TIMEOUT_ERROR(50008, "网关超时"),
-    SERVICE_UNAVAILABLE_ERROR(50009, "服务模块未启动");
+    SERVICE_UNAVAILABLE_ERROR(50009, "服务模块未启动"),
+
+    ACCESS_UNAUTHORIZED(6001, "访问未授权"),
+    TOKEN_INVALID_OR_EXPIRED(6002, "token无效或已过期"),
+    TOKEN_ACCESS_FORBIDDEN(6003, "token已被禁止访问"),
+    PROHIBIT_OPERATION(6004, "测试环境禁止操作数据");
 
     private Integer code;
 

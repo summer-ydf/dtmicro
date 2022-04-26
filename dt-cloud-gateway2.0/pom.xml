@@ -46,21 +46,54 @@
             <groupId>com.alibaba.csp</groupId>
             <artifactId>sentinel-datasource-nacos</artifactId>
         </dependency>
-        <!-- Oauth2 -->
+<!--        &lt;!&ndash; Oauth2 &ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.cloud</groupId>-->
+<!--            <artifactId>spring-cloud-starter-security</artifactId>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.cloud</groupId>-->
+<!--            <artifactId>spring-cloud-starter-oauth2</artifactId>-->
+<!--        </dependency>-->
+        <!-- OAuth2资源服务器-->
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-security</artifactId>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-oauth2</artifactId>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-oauth2-resource-server</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-oauth2-jose</artifactId>
+        </dependency>
+        <!-- redis缓存 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.lettuce</groupId>
+                    <artifactId>lettuce-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!--采用jedis驱动连接-->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
         </dependency>
         <!-- JWT -->
-        <dependency>
-            <groupId>com.nimbusds</groupId>
-            <artifactId>nimbus-jose-jwt</artifactId>
-            <version>${nimbusds.jwt.version}</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.nimbusds</groupId>-->
+<!--            <artifactId>nimbus-jose-jwt</artifactId>-->
+<!--            <version>${nimbusds.jwt.version}</version>-->
+<!--        </dependency>-->
         <!-- Cloud Common tool -->
         <dependency>
             <groupId>com.dt</groupId>

@@ -91,4 +91,18 @@ public class ResultUtil<T> implements Serializable {
     public static <T> ResultUtil<T> error(String message) {
         return new ResultUtil<>(2001,message,null,false, System.currentTimeMillis());
     }
+
+    public static <T> ResultUtil<T> failed(ResultEnum resultEnum) {
+        return result(resultEnum.getCode(), resultEnum.getMessage(), null);
+    }
+
+    private static <T> ResultUtil<T> result(Integer code, String message, T data) {
+        ResultUtil<T> result = new ResultUtil<>();
+        result.setCode(code);
+        result.setData(data);
+        result.setMessage(message);
+        result.setSuccess(false);
+        result.setTimestamp(System.currentTimeMillis());
+        return result;
+    }
 }
