@@ -12,10 +12,7 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.common.DefaultThrowableAnalyzer;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
-import org.springframework.security.oauth2.common.exceptions.InsufficientScopeException;
-import org.springframework.security.oauth2.common.exceptions.InvalidScopeException;
-import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
-import org.springframework.security.oauth2.common.exceptions.UnsupportedGrantTypeException;
+import org.springframework.security.oauth2.common.exceptions.*;
 import org.springframework.security.oauth2.provider.error.WebResponseExceptionTranslator;
 import org.springframework.security.web.util.ThrowableAnalyzer;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
@@ -84,14 +81,15 @@ public class OAuth2WebResponseExceptionTranslator implements WebResponseExceptio
         // 用户名密码验证错误
         System.out.println("e.getOAuth2ErrorCode()===="+e.getOAuth2ErrorCode());
         // unauthorized：账号错误  invalid_grant：密码错误
-        if(StringUtils.equals(e.getOAuth2ErrorCode(),"invalid_grant")){
+        //|| e instanceof OAuth2WebResponseExceptionTranslator.UnauthorizedException
+        if(e instanceof InvalidGrantException){
             exception = oAuth2AuthenticationFailureHandler.onAuthenticationFailure(e);
         }else if(e instanceof UnsupportedGrantTypeException) {
             System.out.println("不支持的认证模式========================");
-            exception = oAuth2AuthenticationFailureHandler.UnsupportedGrantTypeFailure(e);
+            exception = oAuth2AuthenticationFailureHandler.unsupportedGrantTypeFailure(e);
         }else if (e instanceof InvalidScopeException) {
             System.out.println("非授权范围========================");
-            exception = oAuth2AuthenticationFailureHandler.InvalidScopeFailure(e);
+            exception = oAuth2AuthenticationFailureHandler.invalidScopeFailure(e);
         }else {
             exception = new CmsOAuth2Exception(e.getMessage(), e);
             exception.setHttpErrorCode(e.getHttpErrorCode());

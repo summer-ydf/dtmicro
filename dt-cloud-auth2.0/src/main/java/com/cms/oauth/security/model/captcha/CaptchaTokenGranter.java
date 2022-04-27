@@ -2,6 +2,14 @@ package com.cms.oauth.security.model.captcha;
 
 import cn.hutool.core.lang.Assert;
 import cn.hutool.core.util.StrUtil;
+import com.alibaba.fastjson.JSON;
+import com.cms.common.core.utils.CoreWebUtils;
+import com.cms.common.tool.result.ResultEnum;
+import com.cms.common.tool.result.ResultUtil;
+import com.cms.oauth.security.exception.ParameterAuthenticationException;
+import com.cms.oauth.security.handler.RestExceptionHandler;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.AccountStatusException;
@@ -19,6 +27,10 @@ import org.springframework.security.oauth2.provider.TokenRequest;
 import org.springframework.security.oauth2.provider.token.AbstractTokenGranter;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -59,10 +71,12 @@ public class CaptchaTokenGranter extends AbstractTokenGranter {
         // 验证码校验逻辑
         String validateCode = parameters.get("code");
         System.out.println("输入验证码："+validateCode);
-        Assert.isTrue(StrUtil.isNotBlank(validateCode), "验证码不能为空");
-
-        // 校验验证码是否正确
-        checkVerificationCode(validateCode);
+        if (StringUtils.isNotBlank(validateCode)) {
+            // 校验验证码是否正确
+            checkVerificationCode(validateCode);
+        }else {
+            throw new ParameterAuthenticationException("验证码不能为空");
+        }
 
         String username = parameters.get("username");
         String password = parameters.get("password");
@@ -98,7 +112,7 @@ public class CaptchaTokenGranter extends AbstractTokenGranter {
             // 验证通过，删除缓存
             redisTemplate.delete(redisKey);
         } else {
-            Assert.isTrue(false,"您输入的验证码不正确");
+            throw new ParameterAuthenticationException("您输入的验证码不正确");
         }
     }
 }

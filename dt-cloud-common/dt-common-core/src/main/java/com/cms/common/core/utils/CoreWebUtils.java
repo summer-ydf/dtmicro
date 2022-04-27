@@ -6,6 +6,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author ydf Created by 2022/1/21 16:41
@@ -15,6 +16,11 @@ public class CoreWebUtils {
     public static HttpServletRequest currentRequest() {
         RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
         return ((ServletRequestAttributes) requestAttributes).getRequest();
+    }
+
+    public static HttpServletResponse currentResponse() {
+        RequestAttributes requestAttributes = RequestContextHolder.currentRequestAttributes();
+        return ((ServletRequestAttributes) requestAttributes).getResponse();
     }
 
     public static String getIpAddress(HttpServletRequest request) {

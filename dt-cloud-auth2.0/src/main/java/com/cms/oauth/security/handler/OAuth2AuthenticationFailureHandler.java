@@ -10,7 +10,7 @@ public interface OAuth2AuthenticationFailureHandler {
 
     CmsOAuth2Exception onAuthenticationFailure(OAuth2Exception exception);
 
-    CmsOAuth2Exception UnsupportedGrantTypeFailure(OAuth2Exception exception);
+    CmsOAuth2Exception unsupportedGrantTypeFailure(OAuth2Exception exception);
 
-    CmsOAuth2Exception InvalidScopeFailure(OAuth2Exception exception);
+    CmsOAuth2Exception invalidScopeFailure(OAuth2Exception exception);
 }

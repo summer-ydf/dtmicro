@@ -31,34 +31,36 @@ public class TokenAuthenticationFailureHandler implements OAuth2AuthenticationFa
         SysCmsUtils.log.info("账号密码错误异常处理：====================");
         try{
             HttpServletRequest request = CoreWebUtils.currentRequest();
-            SecurityClaimsParams params = (SecurityClaimsParams) request.getAttribute(SecurityClaimsParams.class.getName());
-            String username = params.getUsername();
+//            SecurityClaimsParams params = (SecurityClaimsParams) request.getAttribute(SecurityClaimsParams.class.getName());
+//            String username = params.getUsername();
+
             // 密码超过5次错误，用户冻结15分钟
-            String loginCountStr = stringRedisTemplate.opsForValue().get(ConstantCode.CACHE_LOGIN_LOCK + username);
-            int lockCount = NumberUtils.toInt(loginCountStr,0) + 1;
-            if(lockCount >= ConstantCode.LOCK_TIME) {
-                Date expDate = DateUtils.addMinutes(new Date(), ConstantCode.LOCK_MINUTE);
-                stringRedisTemplate.opsForValue().set(ConstantCode.CACHE_LOGIN_LOCK + username, String.valueOf(expDate.getTime()), ConstantCode.LOCK_MINUTE, TimeUnit.MINUTES);
-                ex.setOauth2ErrorCode("您的账号已被冻结15分钟");
-            }else {
-                stringRedisTemplate.opsForValue().set(ConstantCode.CACHE_LOGIN_LOCK + username, String.valueOf(lockCount), ConstantCode.LOCK_MINUTE, TimeUnit.MINUTES);
-                ex.setOauth2ErrorCode("用户密码校验错误，再输错"+(5 - lockCount)+"次该用户将被锁定15分钟");
-            }
-        }catch (Exception exception){
+//            String loginCountStr = stringRedisTemplate.opsForValue().get(ConstantCode.CACHE_LOGIN_LOCK + username);
+//            int lockCount = NumberUtils.toInt(loginCountStr,0) + 1;
+//            if(lockCount >= ConstantCode.LOCK_TIME) {
+//                Date expDate = DateUtils.addMinutes(new Date(), ConstantCode.LOCK_MINUTE);
+//                stringRedisTemplate.opsForValue().set(ConstantCode.CACHE_LOGIN_LOCK + username, String.valueOf(expDate.getTime()), ConstantCode.LOCK_MINUTE, TimeUnit.MINUTES);
+//                ex.setOauth2ErrorCode("您的账号已被冻结15分钟");
+//            }else {
+//                stringRedisTemplate.opsForValue().set(ConstantCode.CACHE_LOGIN_LOCK + username, String.valueOf(lockCount), ConstantCode.LOCK_MINUTE, TimeUnit.MINUTES);
+//                ex.setOauth2ErrorCode("用户密码校验错误，再输错"+(5 - lockCount)+"次该用户将被锁定15分钟");
+//            }
+            ex.setOauth2ErrorCode("账号或者密码错误");
+        }catch (Exception exception) {
             ex.setOauth2ErrorCode(exception.getMessage());
         }
         return ex;
     }
 
     @Override
-    public CmsOAuth2Exception UnsupportedGrantTypeFailure(OAuth2Exception oAuth2Exception) {
+    public CmsOAuth2Exception unsupportedGrantTypeFailure(OAuth2Exception oAuth2Exception) {
         CmsOAuth2Exception ex = new CmsOAuth2Exception(oAuth2Exception.getMessage(), oAuth2Exception);
         ex.setOauth2ErrorCode("不支持的授权模式");
         return ex;
     }
 
     @Override
-    public CmsOAuth2Exception InvalidScopeFailure(OAuth2Exception oAuth2Exception) {
+    public CmsOAuth2Exception invalidScopeFailure(OAuth2Exception oAuth2Exception) {
         CmsOAuth2Exception ex = new CmsOAuth2Exception(oAuth2Exception.getMessage(), oAuth2Exception);
         ex.setOauth2ErrorCode("非授权范围");
         return ex;
