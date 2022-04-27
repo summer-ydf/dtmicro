@@ -1,5 +1,8 @@
 package com.cms.oauth.controller;
 
+import cn.binarywang.wx.miniapp.api.WxMaService;
+import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
+import cn.binarywang.wx.miniapp.bean.WxMaUserInfo;
 import com.cms.common.core.utils.ApiCallUtils;
 import com.cms.common.jdbc.config.IdGeneratorConfig;
 import com.cms.common.jdbc.utils.RedisUtils;
@@ -10,7 +13,10 @@ import com.cms.common.tool.utils.SysCmsUtils;
 import com.cms.common.tool.utils.VerifyCodeUtils;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import me.chanjar.weixin.common.error.WxErrorException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,6 +42,8 @@ import static com.cms.common.tool.constant.ConstantCode.WIDTH;
 @RestController
 public class ApiController {
 
+    @Autowired
+    private WxMaService wxMaService;
     private final IdGeneratorConfig idGeneratorConfig;
     private final RedisUtils redisUtils;
 
@@ -44,9 +52,27 @@ public class ApiController {
         this.idGeneratorConfig = idGeneratorConfig;
     }
 
-    @PostMapping(value = "/test")
-    public ResultUtil<?> test() {
-        return ResultUtil.success();
+    @ApiOperation(value = "解析code获取微信用户基础信息")
+    @GetMapping(value = "/anonymous/getWxInfo/{code}")
+    public ResultUtil<?> getWxInfo(@PathVariable String code) {
+        try {
+            // 解析code获取微信用户基础信息
+            WxMaJscode2SessionResult sessionInfo =  wxMaService.getUserService().getSessionInfo(code);
+            log.info("解析微信小程序用户信息："+sessionInfo);
+            log.info("openid："+sessionInfo.getOpenid());
+            log.info("sessionKey："+sessionInfo.getSessionKey());
+            // 获取微信用户信息
+            //WxMaUserInfo userInfo = wxMaService.getUserService().getUserInfo(sessionKey, encryptedData, iv);
+            //log.info("userInfo："+userInfo);
+            return ResultUtil.success();
+        } catch (WxErrorException e) {
+            e.printStackTrace();
+            int errorCode = e.getError().getErrorCode();
+            String errorMsg = e.getError().getErrorMsg();
+            log.error("错误代码【{}】",errorCode);
+            log.error(">>>错误信息【{}】",errorMsg);
+            return ResultUtil.error("WX解析错误");
+        }
     }
 
     @GetMapping("/anonymous/valid_code")

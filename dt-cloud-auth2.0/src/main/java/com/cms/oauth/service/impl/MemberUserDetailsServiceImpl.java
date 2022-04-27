@@ -40,4 +40,16 @@ public class MemberUserDetailsServiceImpl implements UserDetailsService {
         }
         return SecurityUser.from(claimsUserResultUtil.getData());
     }
+
+    public UserDetails loadUserByOpenId(String openid) {
+        System.out.println("通过微信号登录:"+openid);
+        SecurityClaimsParams claimsParams = SecurityClaimsParams.builder().scope("web").username(openid).build();
+        SysCmsUtils.log.info("远程调用设置参数->>>" + claimsParams);
+        ResultUtil<SecurityClaimsUserEntity> claimsUserResultUtil = oauthFeignClientService.loadUserByUsername(openid,claimsParams.getScope());
+        SysCmsUtils.log.info("远程调用回调结果->>>" + claimsUserResultUtil);
+        if (!claimsUserResultUtil.isSuccess()) {
+            throw new UsernameNotFoundException(claimsUserResultUtil.getMessage());
+        }
+        return SecurityUser.from(claimsUserResultUtil.getData());
+    }
 }

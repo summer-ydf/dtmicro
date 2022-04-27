@@ -1,6 +1,8 @@
 package com.cms.oauth.security.config;
 
+import cn.binarywang.wx.miniapp.api.WxMaService;
 import com.cms.oauth.security.model.mobile.SmsCodeAuthenticationProvider;
+import com.cms.oauth.security.model.wechat.WechatAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -30,6 +32,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService memberUserDetailsService;
     @Autowired
+    private WxMaService wxMaService;
+    @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
     /**
@@ -42,6 +46,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // @link https://gitee.com/xiaoym/knife4j/issues/I1Q5X6 (接口文档knife4j需要放行的规则)
                 .antMatchers("/webjars/**", "/doc.html", "/swagger-resources/**", "/v2/api-docs").permitAll()
                 .anyRequest().authenticated()
+                .and()
+                .formLogin()
                 .and()
                 .csrf().disable();
     }
@@ -56,7 +62,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(AuthenticationManagerBuilder auth) {
         auth
                 .authenticationProvider(daoAuthenticationProvider())
-                .authenticationProvider(smsCodeAuthenticationProvider());
+                .authenticationProvider(smsCodeAuthenticationProvider())
+                .authenticationProvider(wechatAuthenticationProvider());
     }
 
     /**
@@ -69,6 +76,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         SmsCodeAuthenticationProvider provider = new SmsCodeAuthenticationProvider();
         provider.setUserDetailsService(memberUserDetailsService);
         provider.setRedisTemplate(redisTemplate);
+        return provider;
+    }
+
+    /**
+     * 微信认证授权提供者
+     *
+     * @return
+     */
+    @Bean
+    public WechatAuthenticationProvider wechatAuthenticationProvider() {
+        WechatAuthenticationProvider provider = new WechatAuthenticationProvider();
+        provider.setUserDetailsService(memberUserDetailsService);
+        provider.setWxMaService(wxMaService);
+//        provider.setMemberFeignClient(memberFeignClient);
         return provider;
     }
 

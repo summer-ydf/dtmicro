@@ -58,4 +58,8 @@ secure:
       - /hello
       - /login.html
       - /favicon.ico
+wechat:  #微信小程序配置
+  app:
+    appid: wxa68b60e7906e6586
+    secret: c828a2844a48405c9edb652fb17c2439
 

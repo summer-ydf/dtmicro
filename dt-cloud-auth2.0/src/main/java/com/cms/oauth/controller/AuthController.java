@@ -60,7 +60,7 @@ public class AuthController {
             @ApiImplicitParam(name = "username", defaultValue = "admin", value = "用户名"),
             @ApiImplicitParam(name = "password", defaultValue = "123456", value = "用户密码")
     })
-    @PostMapping("/token")
+    @PostMapping("/1token")
     public Object postAccessToken(
             @ApiIgnore Principal principal,
             @ApiIgnore @RequestParam Map<String, String> parameters) throws HttpRequestMethodNotSupportedException {

@@ -5,8 +5,16 @@ import com.cms.common.tool.domain.SecurityClaimsUserEntity;
 import com.cms.common.tool.domain.SysDataScopeVoEntity;
 import com.cms.common.tool.result.ResultEnum;
 import com.cms.common.tool.result.ResultUtil;
+import com.cms.oauth.security.exception.OAuth2WebResponseExceptionTranslator;
+import com.cms.oauth.security.handler.OAuth2AuthenticationFailureHandler;
+import com.cms.oauth.security.handler.OAuth2AuthenticationSuccessHandler;
+import com.cms.oauth.security.handler.RestExceptionHandler;
+import com.cms.oauth.security.handler.TokenAuthenticationFailureHandler;
+import com.cms.oauth.security.handler.TokenAuthenticationSuccessHandler;
+import com.cms.oauth.security.interceptor.AuthorizationInterceptor;
 import com.cms.oauth.security.model.captcha.CaptchaTokenGranter;
 import com.cms.oauth.security.model.mobile.SmsCodeTokenGranter;
+import com.cms.oauth.security.model.wechat.WechatTokenGranter;
 import com.cms.oauth.service.impl.SysUserDetailsServiceImpl;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +23,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
@@ -65,6 +74,36 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 //    private ClientDetailsServiceImpl clientDetailsService;
 
     /**
+     * 自定义异常处理类
+     */
+    @Autowired
+    private RestExceptionHandler restExceptionHandler;
+
+    /**
+     * 自定义异常处理
+     */
+    @Bean
+    public OAuth2WebResponseExceptionTranslator oAuth2WebResponseExceptionTranslator() {
+        return new OAuth2WebResponseExceptionTranslator(oAuth2AuthenticationFailureHandler());
+    }
+    @Bean
+    public OAuth2AuthenticationFailureHandler oAuth2AuthenticationFailureHandler() {
+        return new TokenAuthenticationFailureHandler();
+    }
+
+    /**
+     * 登录成功处理器
+     */
+    @Bean
+    public AuthorizationInterceptor authorizationInterceptor() {
+        return new AuthorizationInterceptor(oAuth2AuthenticationSuccessHandler());
+    }
+    @Bean
+    public OAuth2AuthenticationSuccessHandler oAuth2AuthenticationSuccessHandler() {
+        return new TokenAuthenticationSuccessHandler();
+    }
+
+    /**
      * OAuth2客户端【数据库加载】
      */
 //    @Override
@@ -87,11 +126,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 // 授权范围域
                 .scopes("all")
                 // 授权方式
-                .authorizedGrantTypes("password", "refresh_token","captcha","sms_code");
+                .authorizedGrantTypes("password", "refresh_token","captcha","sms_code","wechat");
     }
 
     /**
-     * 配置授权（authorization）以及令牌（token）的访问端点和令牌服务(token services)
+     * 用来配置令牌（token）的访问端点和令牌服务(token services)
+     * @param endpoints 返回
      */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
@@ -118,19 +158,29 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 endpoints.getOAuth2RequestFactory(), authenticationManager
         ));
 
+        // 添加微信授权模式的授权者
+        granterList.add(new WechatTokenGranter(endpoints.getTokenServices(), endpoints.getClientDetailsService(),
+                endpoints.getOAuth2RequestFactory(), authenticationManager
+        ));
+
         CompositeTokenGranter compositeTokenGranter = new CompositeTokenGranter(granterList);
         endpoints
+                // 密码模式需要
                 .authenticationManager(authenticationManager)
                 .accessTokenConverter(jwtAccessTokenConverter())
                 .tokenEnhancer(tokenEnhancerChain)
+                // 配置加载用户信息的服务
                 .userDetailsService(userDetailsService)
+                // 自定义异常处理
+                .exceptionTranslator(oAuth2WebResponseExceptionTranslator())
                 //.userDetailsService(userDetailsService)
                 // refresh token有两种使用方式：重复使用(true)、非重复使用(false)，默认为true
                 //      1 重复使用：access token过期刷新时， refresh token过期时间未改变，仍以初次生成的时间为准
                 //      2 非重复使用：access token过期刷新时， refresh token过期时间延续，在refresh token有效期内刷新便永不失效达到无需再次登录的目的
                 .tokenGranter(compositeTokenGranter)
-                .reuseRefreshTokens(true);
-
+                .reuseRefreshTokens(true)
+                // 允许端点POST提交访问令牌
+                .allowedTokenEndpointRequestMethods(HttpMethod.POST).addInterceptor(authorizationInterceptor());
 //        CompositeTokenGranter compositeTokenGranter = new CompositeTokenGranter(granterList);
 //        endpoints
 //                .authenticationManager(authenticationManager)
@@ -175,15 +225,27 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 //
 //    }
 
+
     /**
-     * TODO 配置令牌访问端点安全的约束 不配置的话 不支持url参数提交
+     * 配置令牌访问端点安全的约束
      * @param oauthServer 对象
      */
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) {
         // 检测令牌
         oauthServer.tokenKeyAccess("isAuthenticated()").checkTokenAccess("permitAll()");
+        // 自定义client_id认证失败处理
+//        CmsClientCredentialsTokenEndpointFilter endpointFilter = new CmsClientCredentialsTokenEndpointFilter(oauthServer);
+//        endpointFilter.afterPropertiesSet();
+//        endpointFilter.setAuthenticationEntryPoint(authenticationEntryPoint());
+//        // 客户端认证之前的过滤器
+//        oauthServer.addTokenEndpointAuthenticationFilter(endpointFilter);
+//        oauthServer.authenticationEntryPoint(authenticationEntryPoint());
+        // 开启支持form表单参数提交的方式
          oauthServer.allowFormAuthenticationForClients();
+        // 自定义异常处理端口，访问oauth/token
+        //oauthServer.authenticationEntryPoint(restExceptionHandler::loginExceptionHandler);
+//        oauthServer.accessDeniedHandler((req,res,ex)-> System.out.println("sss----"+ex.getMessage()));
     }
 
     /**
@@ -261,18 +323,18 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      * 客户端认证失败处理
      * @return 返回JSON
      */
-    @Bean
-    public AuthenticationEntryPoint authenticationEntryPoint() {
-        return (request, response, e) -> {
-            System.out.println("客户端认证失败处理================================================");
-            response.setStatus(HttpStatus.OK.value());
-            response.setHeader(HttpHeaders.CONTENT_TYPE, "application/json;charset=UTF-8");
-            response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
-            response.setHeader(HttpHeaders.CACHE_CONTROL, "no-cache");
-            ResultUtil<Object> error = ResultUtil.error(ResultEnum.OAUTH2_BASE_ERROR.getCode(), ResultEnum.OAUTH2_BASE_ERROR.getMessage());
-            response.getWriter().print(JSON.toJSONString(error));
-            response.getWriter().flush();
-        };
-    }
+//    @Bean
+//    public AuthenticationEntryPoint authenticationEntryPoint() {
+//        return (request, response, e) -> {
+//            System.out.println("客户端认证失败处理================================================");
+//            response.setStatus(HttpStatus.OK.value());
+//            response.setHeader(HttpHeaders.CONTENT_TYPE, "application/json;charset=UTF-8");
+//            response.setHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
+//            response.setHeader(HttpHeaders.CACHE_CONTROL, "no-cache");
+//            ResultUtil<Object> error = ResultUtil.error(ResultEnum.OAUTH2_BASE_ERROR.getCode(), ResultEnum.OAUTH2_BASE_ERROR.getMessage());
+//            response.getWriter().print(JSON.toJSONString(error));
+//            response.getWriter().flush();
+//        };
+//    }
 }
 

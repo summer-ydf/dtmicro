@@ -16,7 +16,7 @@ public enum ResultEnum {
     ACCOUNT_OTHERS(4003),ACCOUNT_OTHERS_MESSAGE("账号下线！"),
 
     SYSTEM_ERROR(50000, "系统执行错误！"),
-    OAuth2Exception(50001, "认证错误！"),
+    OAuth2Exception(50001, "Oauth2认证错误统一返回"),
     OAUTH2_GRANT_TYPE_ERROR(50002, "非密码模式！"),
     OAUTH2_INVALID_SCOPE_ERROR(50003, "非授权范围！"),
     OAUTH2_BASE_ERROR(50004, "客户端认证失败！"),
@@ -25,6 +25,8 @@ public enum ResultEnum {
     VALID_USERNAME_ERROR(50007, "用户名或者密码错误！"),
     GATEWAY_TIMEOUT_ERROR(50008, "网关超时"),
     SERVICE_UNAVAILABLE_ERROR(50009, "服务模块未启动"),
+
+    OAUTH2_UNSUPPORTED_GRANT_TYPE(70001, "不支持的认证模式"),
 
     ACCESS_UNAUTHORIZED(6001, "访问未授权"),
     TOKEN_INVALID_OR_EXPIRED(6002, "token无效或已过期"),
