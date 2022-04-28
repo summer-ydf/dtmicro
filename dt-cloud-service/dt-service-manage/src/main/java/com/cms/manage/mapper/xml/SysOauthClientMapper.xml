@@ -2,4 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cms.manage.mapper.SysOauthClientMapper">
 
+    <select id="pageSearch" resultType="com.cms.manage.entity.SysOauthClientEntity">
+        SELECT client_id, resource_ids, client_secret, scope, authorized_grant_types, web_server_redirect_uri,
+               authorities, access_token_validity, refresh_token_validity, additional_information, autoapprove
+        FROM oauth_client_details
+        <where>
+            <if test="request.keyword != null and request.keyword != ''">
+                AND client_id LIKE CONCAT('%',#{request.keyword},'%')
+            </if>
+        </where>
+    </select>
 </mapper>

@@ -1,6 +1,7 @@
 package com.cms.manage.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
@@ -10,6 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 客户端实体对象
@@ -55,4 +57,8 @@ public class SysOauthClientEntity implements Serializable {
 
     @ApiModelProperty(value = "是否自动放行")
     private String autoapprove;
+
+    @ApiModelProperty(value = "前端接收：授权模式集合")
+    @TableField(exist = false)
+    private List<String> authorizedGrantTypesArray;
 }

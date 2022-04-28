@@ -3,7 +3,6 @@ package com.cms.oauth.security.model.refresh;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
-import com.cms.oauth.service.impl.MemberUserDetailsServiceImpl;
 import com.cms.oauth.service.impl.SysUserDetailsServiceImpl;
 import com.nimbusds.jose.JWSObject;
 import lombok.NoArgsConstructor;
@@ -18,7 +17,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.util.Assert;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import sun.security.util.SecurityConstants;
 
 import javax.servlet.http.HttpServletRequest;
 import java.nio.charset.StandardCharsets;
@@ -35,7 +33,6 @@ public class PreAuthenticatedUserDetailsService<T extends Authentication> implem
     /**
      * 客户端ID和用户服务 UserDetailService 的映射
      *
-     * @see com.youlai.auth.security.config.AuthorizationServerConfig#tokenServices(AuthorizationServerEndpointsConfigurer)
      */
     private Map<String, UserDetailsService> userDetailsServiceMap;
 
