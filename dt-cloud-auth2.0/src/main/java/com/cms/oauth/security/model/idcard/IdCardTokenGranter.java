@@ -1,6 +1,7 @@
-package com.cms.oauth.security.model.mobile;
+package com.cms.oauth.security.model.idcard;
 
 import com.cms.oauth.security.exception.ParameterAuthenticationException;
+import com.cms.oauth.security.model.mobile.SmsCodeAuthenticationToken;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.AccountStatusException;
@@ -8,7 +9,12 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.oauth2.common.exceptions.InvalidGrantException;
-import org.springframework.security.oauth2.provider.*;
+import org.springframework.security.oauth2.provider.ClientDetails;
+import org.springframework.security.oauth2.provider.ClientDetailsService;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.OAuth2Request;
+import org.springframework.security.oauth2.provider.OAuth2RequestFactory;
+import org.springframework.security.oauth2.provider.TokenRequest;
 import org.springframework.security.oauth2.provider.token.AbstractTokenGranter;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 
@@ -16,24 +22,23 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * 手机验证码授权者
- * @author DT
- * @date 2022/4/26 19:10
+ * 身份证号码授权者
+ * @author ydf Created by 2022/4/28 13:04
  */
-public class SmsCodeTokenGranter extends AbstractTokenGranter {
+public class IdCardTokenGranter extends AbstractTokenGranter {
 
     /**
-     * 声明授权者 SmsCodeTokenGranter 支持授权模式 sms_code
-     * 根据接口传值 grant_type = sms_code 的值匹配到此授权者
+     * 声明授权者 IdCardTokenGranter 支持授权模式 id_card
+     * 根据接口传值 grant_type = id_card 的值匹配到此授权者
      * 匹配逻辑详见下面的两个方法
      *
      * @see org.springframework.security.oauth2.provider.CompositeTokenGranter#grant(String, TokenRequest)
      * @see org.springframework.security.oauth2.provider.token.AbstractTokenGranter#grant(String, TokenRequest)
      */
-    private static final String GRANT_TYPE = "sms_code";
+    private static final String GRANT_TYPE = "id_card";
     private final AuthenticationManager authenticationManager;
 
-    public SmsCodeTokenGranter(AuthorizationServerTokenServices tokenServices, ClientDetailsService clientDetailsService,
+    public IdCardTokenGranter(AuthorizationServerTokenServices tokenServices, ClientDetailsService clientDetailsService,
                                OAuth2RequestFactory requestFactory, AuthenticationManager authenticationManager
     ) {
         super(tokenServices, clientDetailsService, requestFactory, GRANT_TYPE);
@@ -45,24 +50,23 @@ public class SmsCodeTokenGranter extends AbstractTokenGranter {
 
         Map<String, String> parameters = new LinkedHashMap<>(tokenRequest.getRequestParameters());
 
-        String mobile = parameters.get("mobile"); // 手机号
-        String code = parameters.get("code"); // 短信验证码
+        String idno = parameters.get("idno"); // 身份证号
+        String name = parameters.get("name"); // 姓名
 
-        System.out.println("手机验证码授权者："+mobile);
-        System.out.println("手机验证码授权者："+code);
+        System.out.println("身份证号码授权者："+idno);
+        System.out.println("身份证号码授权者："+name);
 
-        if (StringUtils.isBlank(mobile)) {
-            throw new ParameterAuthenticationException("手机号码不能为空");
+        if (StringUtils.isBlank(idno)) {
+            throw new ParameterAuthenticationException("身份证号码不能为空");
         }
 
-        if (StringUtils.isBlank(code)) {
-            throw new ParameterAuthenticationException("短信验证码不能为空");
+        if (StringUtils.isBlank(name)) {
+            throw new ParameterAuthenticationException("姓名不能为空");
         }
 
-        parameters.remove("mobile");
-        parameters.remove("code");
+        //parameters.remove("code");
 
-        Authentication userAuth = new SmsCodeAuthenticationToken(mobile, code);
+        Authentication userAuth = new IdCardAuthenticationToken(idno, name);
         ((AbstractAuthenticationToken) userAuth).setDetails(parameters);
 
         try {
@@ -73,12 +77,11 @@ public class SmsCodeTokenGranter extends AbstractTokenGranter {
             throw new InvalidGrantException(var9.getMessage());
         }
 
-        if (userAuth != null && userAuth.isAuthenticated()) {
+        if (userAuth != null && userAuth.isAuthenticated()) { // 认证成功
             OAuth2Request storedOAuth2Request = this.getRequestFactory().createOAuth2Request(client, tokenRequest);
             return new OAuth2Authentication(storedOAuth2Request, userAuth);
-        } else {
-            throw new InvalidGrantException("Could not authenticate user: " + mobile);
+        } else { // 认证失败
+            throw new InvalidGrantException("Could not authenticate user: " + idno);
         }
     }
 }
-

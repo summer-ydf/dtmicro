@@ -69,7 +69,7 @@ public class SysOperatorServiceImpl extends ServiceImpl<SysOperatorMapper, SysOp
                     .build();
             return ResultUtil.success(securityClaimsUser);
         }
-        return ResultUtil.error("登录失败,未找到登录用户");
+        return ResultUtil.error("用户不存在");
     }
 
     @Override

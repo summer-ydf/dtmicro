@@ -14,34 +14,34 @@ import org.springframework.stereotype.Service;
  * @author DT
  * @date 2022/4/25 19:00
  */
-//@Service
-//@AllArgsConstructor
-//public class ClientDetailsServiceImpl implements ClientDetailsService {
-//
-//    private OAuthClientFeignClient oAuthClientFeignClient;
-//
-//    @Override
-//    @SneakyThrows
-//    public ClientDetails loadClientByClientId(String clientId) {
-//        try {
-//            Result<SysOauthClient> result = oAuthClientFeignClient.getOAuthClientById(clientId);
-//            if (Result.success().getCode().equals(result.getCode())) {
-//                SysOauthClient client = result.getData();
-//                BaseClientDetails clientDetails = new BaseClientDetails(
-//                        client.getClientId(),
-//                        client.getResourceIds(),
-//                        client.getScope(),
-//                        client.getAuthorizedGrantTypes(),
-//                        client.getAuthorities(),
-//                        client.getWebServerRedirectUri());
-//                clientDetails.setClientSecret(PasswordEncoderTypeEnum.NOOP.getPrefix() + client.getClientSecret());
-//                return clientDetails;
-//            } else {
-//                throw new NoSuchClientException("No client with requested id: " + clientId);
-//            }
-//        } catch (EmptyResultDataAccessException var4) {
-//            throw new NoSuchClientException("No client with requested id: " + clientId);
-//        }
-//    }
-//}
+@Service
+@AllArgsConstructor
+public class ClientDetailsServiceImpl implements ClientDetailsService {
+
+    private OAuthClientFeignClient oAuthClientFeignClient;
+
+    @Override
+    @SneakyThrows
+    public ClientDetails loadClientByClientId(String clientId) {
+        try {
+            Result<SysOauthClient> result = oAuthClientFeignClient.getOAuthClientById(clientId);
+            if (Result.success().getCode().equals(result.getCode())) {
+                SysOauthClient client = result.getData();
+                BaseClientDetails clientDetails = new BaseClientDetails(
+                        client.getClientId(),
+                        client.getResourceIds(),
+                        client.getScope(),
+                        client.getAuthorizedGrantTypes(),
+                        client.getAuthorities(),
+                        client.getWebServerRedirectUri());
+                clientDetails.setClientSecret(PasswordEncoderTypeEnum.NOOP.getPrefix() + client.getClientSecret());
+                return clientDetails;
+            } else {
+                throw new NoSuchClientException("No client with requested id: " + clientId);
+            }
+        } catch (EmptyResultDataAccessException var4) {
+            throw new NoSuchClientException("No client with requested id: " + clientId);
+        }
+    }
+}
 

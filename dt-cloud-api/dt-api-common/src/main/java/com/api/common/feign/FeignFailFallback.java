@@ -13,7 +13,7 @@ public interface FeignFailFallback {
 
     default <T> ResultUtil<T> fail() {
         log.info("调用失败统一处理返回：服务未开启====================");
-        return ResultUtil.error("业务模块未启动");
+        return ResultUtil.error("管理端服务未启动");
     }
 
 }

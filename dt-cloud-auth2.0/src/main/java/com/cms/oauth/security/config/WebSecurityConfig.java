@@ -1,6 +1,7 @@
 package com.cms.oauth.security.config;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
+import com.cms.oauth.security.model.idcard.IdCardAuthenticationProvider;
 import com.cms.oauth.security.model.mobile.SmsCodeAuthenticationProvider;
 import com.cms.oauth.security.model.wechat.WechatAuthenticationProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private UserDetailsService sysUserDetailsService;
     @Autowired
     private UserDetailsService memberUserDetailsService;
+    @Autowired
+    private UserDetailsService idCardUserDetailsService;
     @Autowired
     private WxMaService wxMaService;
     @Autowired
@@ -63,7 +66,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth
                 .authenticationProvider(daoAuthenticationProvider())
                 .authenticationProvider(smsCodeAuthenticationProvider())
-                .authenticationProvider(wechatAuthenticationProvider());
+                .authenticationProvider(wechatAuthenticationProvider())
+                .authenticationProvider(idCardAuthenticationProvider());
     }
 
     /**
@@ -107,6 +111,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return provider;
     }
 
+    /**
+     * 身份证认证授权提供者
+     *
+     * @return
+     */
+    @Bean
+    public IdCardAuthenticationProvider idCardAuthenticationProvider() {
+        IdCardAuthenticationProvider provider = new IdCardAuthenticationProvider();
+        provider.setUserDetailsService(idCardUserDetailsService);
+        return provider;
+    }
 
     /**
      * 密码编码器

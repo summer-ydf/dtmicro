@@ -1,14 +1,6 @@
 package com.cms.oauth.security.model.captcha;
 
-import cn.hutool.core.lang.Assert;
-import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson.JSON;
-import com.cms.common.core.utils.CoreWebUtils;
-import com.cms.common.tool.result.ResultEnum;
-import com.cms.common.tool.result.ResultUtil;
 import com.cms.oauth.security.exception.ParameterAuthenticationException;
-import com.cms.oauth.security.handler.RestExceptionHandler;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
@@ -27,10 +19,6 @@ import org.springframework.security.oauth2.provider.TokenRequest;
 import org.springframework.security.oauth2.provider.token.AbstractTokenGranter;
 import org.springframework.security.oauth2.provider.token.AuthorizationServerTokenServices;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
-import java.io.Writer;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
