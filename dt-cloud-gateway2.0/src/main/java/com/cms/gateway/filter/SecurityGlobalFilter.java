@@ -19,12 +19,15 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
+import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 import sun.security.util.SecurityConstants;
 
 import java.net.URLEncoder;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * 网关拦截器配置类
@@ -68,6 +71,12 @@ public class SecurityGlobalFilter implements GlobalFilter, Ordered {
         JSONObject jsonObject = JSONUtil.parseObj(payload);
         String jti = jsonObject.getStr("jti");
         System.out.println("3>获取到jti唯一标识："+jti);
+
+        // JWT过期时间戳(单位：秒)
+        Long expireTime = jsonObject.getLong("exp");
+        // 当前时间（单位：秒）
+        long currentTime = System.currentTimeMillis() / 1000;
+        System.out.println("4>JWT过期时间戳：" + (expireTime - currentTime));
         Boolean isExist = redisTemplate.hasKey("auth:token:blacklist:" + jti);
         if (isExist) {
             System.out.println("不存在返回测试============================================");

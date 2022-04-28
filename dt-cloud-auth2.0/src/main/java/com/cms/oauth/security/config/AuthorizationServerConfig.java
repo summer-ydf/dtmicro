@@ -6,8 +6,11 @@ import com.cms.oauth.security.exception.OAuthWebResponseExceptionTranslator;
 import com.cms.oauth.security.model.captcha.CaptchaTokenGranter;
 import com.cms.oauth.security.model.idcard.IdCardTokenGranter;
 import com.cms.oauth.security.model.mobile.SmsCodeTokenGranter;
+import com.cms.oauth.security.model.refresh.PreAuthenticatedUserDetailsService;
 import com.cms.oauth.security.model.wechat.WechatTokenGranter;
 import com.cms.oauth.service.impl.ClientDetailsServiceImpl;
+import com.cms.oauth.service.impl.IdCardUserDetailsServiceImpl;
+import com.cms.oauth.service.impl.MemberUserDetailsServiceImpl;
 import com.cms.oauth.service.impl.SysUserDetailsServiceImpl;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,8 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
@@ -28,14 +33,18 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.provider.CompositeTokenGranter;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.TokenGranter;
+import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.rsa.crypto.KeyStoreKeyFactory;
+import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
+import sun.security.util.SecurityConstants;
 
 import java.security.KeyPair;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -54,9 +63,14 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private AuthenticationManager authenticationManager;
     @Autowired
-    private SysUserDetailsServiceImpl userDetailsService;
+    private SysUserDetailsServiceImpl sysUserDetailsService;
+    @Autowired
+    private MemberUserDetailsServiceImpl memberUserDetailsService;
+    @Autowired
+    private IdCardUserDetailsServiceImpl idCardUserDetailsService;
     @Autowired
     private ClientDetailsServiceImpl clientDetailsService;
+
 
     /**
      * OAuth2客户端【数据库加载】
@@ -130,7 +144,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .accessTokenConverter(jwtAccessTokenConverter())
                 .tokenEnhancer(tokenEnhancerChain)
                 // 配置加载用户信息的服务
-                .userDetailsService(userDetailsService)
+                //.userDetailsService(userDetailsService)
                 // 自定义异常处理
                 .exceptionTranslator(new OAuthWebResponseExceptionTranslator())
                 //.userDetailsService(userDetailsService)
@@ -138,7 +152,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 //      1 重复使用：access token过期刷新时， refresh token过期时间未改变，仍以初次生成的时间为准
                 //      2 非重复使用：access token过期刷新时， refresh token过期时间延续，在refresh token有效期内刷新便永不失效达到无需再次登录的目的
                 .tokenGranter(compositeTokenGranter)
-                .reuseRefreshTokens(true)
+                //.reuseRefreshTokens(true)
+                .tokenServices(tokenServices(endpoints))
                 // 允许端点POST提交访问令牌
                 .allowedTokenEndpointRequestMethods(HttpMethod.POST);
 //        CompositeTokenGranter compositeTokenGranter = new CompositeTokenGranter(granterList);
@@ -152,38 +167,42 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 //        ;
     }
 
-//    public DefaultTokenServices tokenServices(AuthorizationServerEndpointsConfigurer endpoints) {
-//        TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
-//        List<TokenEnhancer> tokenEnhancers = new ArrayList<>();
-//        tokenEnhancers.add(tokenEnhancer());
-//        tokenEnhancers.add(jwtAccessTokenConverter());
-//        tokenEnhancerChain.setTokenEnhancers(tokenEnhancers);
-//
-//        DefaultTokenServices tokenServices = new DefaultTokenServices();
-//        tokenServices.setTokenStore(endpoints.getTokenStore());
-//        tokenServices.setSupportRefreshToken(true);
-//        tokenServices.setClientDetailsService(clientDetailsService);
-//        tokenServices.setTokenEnhancer(tokenEnhancerChain);
-//
-//        // 多用户体系下，刷新token再次认证客户端ID和 UserDetailService 的映射Map
-//        Map<String, UserDetailsService> clientUserDetailsServiceMap = new HashMap<>();
-//        clientUserDetailsServiceMap.put(SecurityConstants.ADMIN_CLIENT_ID, sysUserDetailsService); // 系统管理客户端
-//        clientUserDetailsServiceMap.put(SecurityConstants.APP_CLIENT_ID, memberUserDetailsService); // Android、IOS、H5 移动客户端
-//        clientUserDetailsServiceMap.put(SecurityConstants.WEAPP_CLIENT_ID, memberUserDetailsService); // 微信小程序客户端
-//
-//        // 刷新token模式下，重写预认证提供者替换其AuthenticationManager，可自定义根据客户端ID和认证方式区分用户体系获取认证用户信息
-//        PreAuthenticatedAuthenticationProvider provider = new PreAuthenticatedAuthenticationProvider();
-//        provider.setPreAuthenticatedUserDetailsService(new PreAuthenticatedUserDetailsService<>(clientUserDetailsServiceMap));
-//        tokenServices.setAuthenticationManager(new ProviderManager(Arrays.asList(provider)));
-//
-//        /** refresh_token有两种使用方式：重复使用(true)、非重复使用(false)，默认为true
-//         *  1 重复使用：access_token过期刷新时， refresh_token过期时间未改变，仍以初次生成的时间为准
-//         *  2 非重复使用：access_token过期刷新时， refresh_token过期时间延续，在refresh_token有效期内刷新便永不失效达到无需再次登录的目的
-//         */
-//        tokenServices.setReuseRefreshToken(true);
-//        return tokenServices;
-//
-//    }
+    public DefaultTokenServices tokenServices(AuthorizationServerEndpointsConfigurer endpoints) {
+        TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
+        List<TokenEnhancer> tokenEnhancers = new ArrayList<>();
+        tokenEnhancers.add(tokenEnhancer());
+        tokenEnhancers.add(jwtAccessTokenConverter());
+        tokenEnhancerChain.setTokenEnhancers(tokenEnhancers);
+
+        DefaultTokenServices tokenServices = new DefaultTokenServices();
+        tokenServices.setTokenStore(endpoints.getTokenStore());
+        tokenServices.setSupportRefreshToken(true);
+        tokenServices.setClientDetailsService(clientDetailsService);
+        tokenServices.setTokenEnhancer(tokenEnhancerChain);
+
+        // 多用户体系下，刷新token再次认证客户端ID和 UserDetailService 的映射Map
+        Map<String, UserDetailsService> clientUserDetailsServiceMap = new HashMap<>();
+        clientUserDetailsServiceMap.put("web", sysUserDetailsService); // 系统管理客户端
+        clientUserDetailsServiceMap.put("app", memberUserDetailsService); // Android、IOS、H5 移动客户端
+        clientUserDetailsServiceMap.put("wechart", memberUserDetailsService); // 微信小程序客户端
+        clientUserDetailsServiceMap.put("idcard", idCardUserDetailsService); // 自定义身份证
+
+        System.out.println("多用户体系下，刷新token再次认证客户端ID和 UserDetailService 的映射Map============");
+        System.out.println(clientUserDetailsServiceMap);
+
+        // 刷新token模式下，重写预认证提供者替换其AuthenticationManager，可自定义根据客户端ID和认证方式区分用户体系获取认证用户信息
+        PreAuthenticatedAuthenticationProvider provider = new PreAuthenticatedAuthenticationProvider();
+        provider.setPreAuthenticatedUserDetailsService(new PreAuthenticatedUserDetailsService<>(clientUserDetailsServiceMap));
+        tokenServices.setAuthenticationManager(new ProviderManager(Collections.singletonList(provider)));
+
+        /** refresh_token有两种使用方式：重复使用(true)、非重复使用(false)，默认为true
+         *  1 重复使用：access_token过期刷新时， refresh_token过期时间未改变，仍以初次生成的时间为准
+         *  2 非重复使用：access_token过期刷新时， refresh_token过期时间延续，在refresh_token有效期内刷新便永不失效达到无需再次登录的目的
+         */
+        tokenServices.setReuseRefreshToken(true);
+        return tokenServices;
+
+    }
 
 
     /**
