@@ -9,6 +9,7 @@ import com.cms.common.core.domain.SysSearchPage;
 import com.cms.common.datascope.annotation.DataScope;
 import com.cms.common.tool.domain.SecurityClaimsUserEntity;
 import com.cms.common.tool.domain.SysDataScopeVoEntity;
+import com.cms.common.tool.enums.AuthenticationIdentityEnum;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.entity.SysOperatorEntity;
 import com.cms.manage.entity.SysOperatorRoleEntity;
@@ -65,6 +66,11 @@ public class SysOperatorServiceImpl extends ServiceImpl<SysOperatorMapper, SysOp
                     .isEnabled(operator.isEnabled())
                     .isAdmin(operator.isAdmin())
                     .roles(roles)
+                    .mobile(operator.getMobile())
+                    .idno(operator.getIdno())
+                    .openid(operator.getOpenid())
+                    // 系统后台管理端标识
+                    .authenticationIdentity(AuthenticationIdentityEnum.USERNAME.getValue())
                     .build();
             return ResultUtil.success(securityClaimsUser);
         }

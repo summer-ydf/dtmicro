@@ -32,6 +32,11 @@ public class SecurityUser extends SecurityClaimsUserEntity implements UserDetail
         securityUser.setEnabled(user.isEnabled());
         securityUser.setAdmin(user.isAdmin());
         securityUser.setRoles(user.getRoles());
+        securityUser.setMobile(user.getMobile());
+        securityUser.setIdno(user.getIdno());
+        securityUser.setOpenid(user.getOpenid());
+        // 返回的登录客户端标识
+        securityUser.setAuthenticationIdentity(user.getAuthenticationIdentity());
         return securityUser;
     }
 

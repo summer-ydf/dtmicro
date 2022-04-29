@@ -27,7 +27,6 @@ public class ClientDetailsServiceImpl implements ClientDetailsService {
     }
 
     @Override
-    @SneakyThrows
     public ClientDetails loadClientByClientId(String clientId) {
         try {
             SysCmsUtils.log.info("远程调用客户端获取信息->>>" + clientId);

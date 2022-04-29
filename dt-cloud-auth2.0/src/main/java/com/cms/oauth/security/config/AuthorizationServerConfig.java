@@ -1,5 +1,6 @@
 package com.cms.oauth.security.config;
 
+import com.cms.common.tool.constant.ConstantSecurityCode;
 import com.cms.common.tool.domain.SecurityClaimsUserEntity;
 import com.cms.common.tool.domain.SysDataScopeVoEntity;
 import com.cms.oauth.security.exception.OAuthWebResponseExceptionTranslator;
@@ -12,8 +13,8 @@ import com.cms.oauth.service.impl.ClientDetailsServiceImpl;
 import com.cms.oauth.service.impl.IdCardUserDetailsServiceImpl;
 import com.cms.oauth.service.impl.MemberUserDetailsServiceImpl;
 import com.cms.oauth.service.impl.SysUserDetailsServiceImpl;
+import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -54,47 +55,25 @@ import java.util.Map;
  */
 @Configuration
 @EnableAuthorizationServer
+@RequiredArgsConstructor
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
-    @Autowired
-    private RedisTemplate<String, Object> redisTemplate;
-    @Autowired
-    private AuthenticationManager authenticationManager;
-    @Autowired
-    private SysUserDetailsServiceImpl sysUserDetailsService;
-    @Autowired
-    private MemberUserDetailsServiceImpl memberUserDetailsService;
-    @Autowired
-    private IdCardUserDetailsServiceImpl idCardUserDetailsService;
-    @Autowired
-    private ClientDetailsServiceImpl clientDetailsService;
-
+    private final AuthenticationManager authenticationManager;
+    private final RedisTemplate<String, Object> redisTemplate;
+    private final ClientDetailsServiceImpl clientDetailsService;
+    private final SysUserDetailsServiceImpl sysUserDetailsService;
+    private final MemberUserDetailsServiceImpl memberUserDetailsService;
+    private final IdCardUserDetailsServiceImpl idCardUserDetailsService;
 
     /**
-     * OAuth2客户端【数据库加载】
+     * 加载Oauth2客户端（数据库）
+     * @param clients 客户端实例
      */
     @Override
     @SneakyThrows
     public void configure(ClientDetailsServiceConfigurer clients) {
         clients.withClientDetails(clientDetailsService);
     }
-
-    /**
-     * OAuth2客户端【内存加载】
-     */
-//    @Override
-//    @SneakyThrows
-//    public void configure(ClientDetailsServiceConfigurer clients) {
-//        clients.inMemory()
-//                // 客户端ID
-//                .withClient("cms")
-//                // 客户端密钥
-//                .secret(new BCryptPasswordEncoder().encode("dt$pwd123"))
-//                // 授权范围域
-//                .scopes("all")
-//                // 授权方式
-//                .authorizedGrantTypes("password", "refresh_token","captcha","sms_code","wechat","id_card");
-//    }
 
     /**
      * 用来配置令牌（token）的访问端点和令牌服务(token services)
@@ -111,7 +90,6 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         //token存储模式设定 默认为InMemoryTokenStore模式存储到内存中
         //endpoints.tokenStore(jwtTokenStore());
 
-        // TODO 验证码模式改造
         // 获取原有默认授权模式(授权码模式、密码模式、客户端模式、简化模式)的授权者
         List<TokenGranter> granterList = new ArrayList<>(Arrays.asList(endpoints.getTokenGranter()));
 
@@ -180,10 +158,11 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
         // 多用户体系下，刷新token再次认证客户端ID和 UserDetailService 的映射Map
         Map<String, UserDetailsService> clientUserDetailsServiceMap = new HashMap<>();
-        clientUserDetailsServiceMap.put("web", sysUserDetailsService); // 系统管理客户端
-        clientUserDetailsServiceMap.put("app", memberUserDetailsService); // Android、IOS、H5 移动客户端
-        clientUserDetailsServiceMap.put("wechart", memberUserDetailsService); // 微信小程序客户端
-        clientUserDetailsServiceMap.put("idcard", idCardUserDetailsService); // 自定义身份证
+        clientUserDetailsServiceMap.put(ConstantSecurityCode.ADMIN_CLIENT_ID, sysUserDetailsService); // 系统管理客户端
+        clientUserDetailsServiceMap.put(ConstantSecurityCode.WEB_CLIENT_ID, sysUserDetailsService); // 系统管理客户端
+        clientUserDetailsServiceMap.put(ConstantSecurityCode.APP_CLIENT_ID, memberUserDetailsService); // Android、IOS、H5 移动客户端
+        clientUserDetailsServiceMap.put(ConstantSecurityCode.WECHAT_CLIENT_ID, memberUserDetailsService); // 微信小程序客户端
+        clientUserDetailsServiceMap.put(ConstantSecurityCode.IDCARD_CLIENT_ID, idCardUserDetailsService); // 自定义身份证
 
         System.out.println("多用户体系下，刷新token再次认证客户端ID和 UserDetailService 的映射Map============");
         System.out.println(clientUserDetailsServiceMap);
@@ -269,6 +248,8 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 }
             }
             additionalInfo.put("roles",resultRoles);
+            // 客户端登录标识
+            additionalInfo.put("authenticationIdentity",claimsUser.getAuthenticationIdentity());
             // 注意添加的额外信息，最好不要和已有的json对象中的key重名，容易出现错误
             //additionalInfo.put("authorities", user.getAuthorities());
             ((DefaultOAuth2AccessToken) accessToken).setAdditionalInformation(additionalInfo);

@@ -3,6 +3,8 @@ package com.cms.oauth.security.model.refresh;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
+import com.cms.common.tool.enums.AuthenticationIdentityEnum;
+import com.cms.common.tool.enums.IBaseEnum;
 import com.cms.oauth.service.impl.SysUserDetailsServiceImpl;
 import com.nimbusds.jose.JWSObject;
 import lombok.NoArgsConstructor;
@@ -24,7 +26,7 @@ import java.util.Base64;
 import java.util.Map;
 
 /**
- * 刷新token 再次认证
+ * 刷新Token令牌，重新认证授权
  * @author ydf Created by 2022/4/28 17:11
  */
 @NoArgsConstructor
@@ -32,7 +34,6 @@ public class PreAuthenticatedUserDetailsService<T extends Authentication> implem
 
     /**
      * 客户端ID和用户服务 UserDetailService 的映射
-     *
      */
     private Map<String, UserDetailsService> userDetailsServiceMap;
 
@@ -57,8 +58,9 @@ public class PreAuthenticatedUserDetailsService<T extends Authentication> implem
     public UserDetails loadUserDetails(T authentication) throws UsernameNotFoundException {
         String clientId = getOAuth2ClientId();
         // 获取认证身份标识，默认是用户名:username
-//        AuthenticationIdentityEnum authenticationIdentityEnum = IBaseEnum.getEnumByValue(RequestUtils.getAuthenticationIdentity(), AuthenticationIdentityEnum.class);
+        AuthenticationIdentityEnum authenticationIdentityEnum = IBaseEnum.getEnumByValue(getAuthenticationIdentity(), AuthenticationIdentityEnum.class);
         String authenticationIdentity = getAuthenticationIdentity();
+        System.out.println("获取到用户身份标识："+authenticationIdentityEnum);
         System.out.println("获取到用户身份标识："+authenticationIdentity);
         System.out.println("获取到clientID："+clientId);
 
@@ -130,8 +132,7 @@ public class PreAuthenticatedUserDetailsService<T extends Authentication> implem
 
     /**
      * 解析JWT获取获取认证身份标识
-     *
-     * @return
+     * @return 认证身份标识
      */
     @SneakyThrows
     public static String getAuthenticationIdentity() {
@@ -142,11 +143,10 @@ public class PreAuthenticatedUserDetailsService<T extends Authentication> implem
         String payload = StrUtil.toString(JWSObject.parse(refreshToken).getPayload());
         System.out.println("payload:"+payload);
         JSONObject jsonObject = JSONUtil.parseObj(payload);
-
-        //String authenticationIdentity = jsonObject.getStr("username");
-//        if (StrUtil.isBlank(authenticationIdentity)) {
-//            authenticationIdentity = AuthenticationIdentityEnum.USERNAME.getValue();
-//        }
-        return null;
+        String authenticationIdentity = jsonObject.getStr("username");
+        if (StrUtil.isBlank(authenticationIdentity)) {
+            authenticationIdentity = AuthenticationIdentityEnum.USERNAME.getValue();
+        }
+        return authenticationIdentity;
     }
 }

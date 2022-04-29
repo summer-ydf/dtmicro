@@ -37,6 +37,15 @@ public class SysOperatorEntity extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "账号")
     private String username;
 
+    @ApiModelProperty(value = "手机号码")
+    private String mobile;
+
+    @ApiModelProperty(value = "身份证号码")
+    private String idno;
+
+    @ApiModelProperty(value = "微信号ID")
+    private String openid;
+
     @ApiModelProperty(value = "密码")
     private String password;
 

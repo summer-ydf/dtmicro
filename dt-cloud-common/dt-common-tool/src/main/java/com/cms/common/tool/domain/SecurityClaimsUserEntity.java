@@ -32,6 +32,26 @@ public class SecurityClaimsUserEntity implements Serializable {
     private String username;
 
     /**
+     * 手机号码
+     */
+    private String mobile;
+
+    /**
+     * 身份证号码
+     */
+    private String idno;
+
+    /**
+     * 微信号ID
+     */
+    private String openid;
+
+    /**
+     * 扩展字段：认证身份标识
+     */
+    private String authenticationIdentity;
+
+    /**
      * 登录用户密码
      */
     private String password;
