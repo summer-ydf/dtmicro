@@ -86,27 +86,27 @@ public interface ConstantSecurityCode {
     String SMS_CODE_PREFIX = "SMS_CODE:";
 
     /**
-     * 系统管理 web 客户端ID
+     * PC端客户端ID
      */
     String WEB_CLIENT_ID = "cms-web";
 
     /**
-     * 系统管理带验证码 web 客户端ID
+     * PC端客户端ID (带验证码)
      */
     String ADMIN_CLIENT_ID = "cms-admin-web";
 
     /**
-     * 移动端（H5/Android/IOS）客户端ID
+     * APP客户端ID
      */
     String APP_CLIENT_ID = "cms-app";
 
     /**
-     * 小程序端（微信小程序、....） 客户端ID
+     * 小程序端客户端ID
      */
     String WECHAT_CLIENT_ID = "cms-wechat";
 
     /**
-     * 自定义身份证号认证端（微信小程序、....） 客户端ID
+     * 自定义身份证号认证端客户端ID
      */
     String IDCARD_CLIENT_ID = "cms-idcard";
 }

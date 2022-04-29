@@ -8,10 +8,10 @@ import lombok.Getter;
  */
 public enum AuthenticationIdentityEnum implements IBaseEnum<String> {
 
-    USERNAME("username", "用户名登录"),
-    MOBILE("mobile", "手机号登录"),
+    USERNAME("username", "PC端登录"),
+    MOBILE("mobile", "APP端登录"),
     IDCARD("idcard", "身份证号登录"),
-    OPENID("openId", "微信认证登录");
+    OPENID("openId", "小程序微信认证登录");
 
     @Getter
     private String value;

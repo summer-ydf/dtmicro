@@ -4,7 +4,6 @@ import com.api.manage.feign.OauthClientFeignClientService;
 import com.cms.common.tool.domain.SysOauthClientVoEntity;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.common.tool.utils.SysCmsUtils;
-import lombok.SneakyThrows;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.ClientDetailsService;
