@@ -33,6 +33,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService memberUserDetailsService;
     @Autowired
+    private UserDetailsService wechatUserDetailsService;
+    @Autowired
     private UserDetailsService idCardUserDetailsService;
     @Autowired
     private WxMaService wxMaService;
@@ -91,7 +93,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public WechatAuthenticationProvider wechatAuthenticationProvider() {
         WechatAuthenticationProvider provider = new WechatAuthenticationProvider();
-        provider.setUserDetailsService(memberUserDetailsService);
+        provider.setUserDetailsService(wechatUserDetailsService);
         provider.setWxMaService(wxMaService);
 //        provider.setMemberFeignClient(memberFeignClient);
         return provider;

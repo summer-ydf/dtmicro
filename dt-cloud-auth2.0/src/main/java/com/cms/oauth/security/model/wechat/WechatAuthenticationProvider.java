@@ -3,6 +3,7 @@ package com.cms.oauth.security.model.wechat;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import com.cms.oauth.service.impl.MemberUserDetailsServiceImpl;
+import com.cms.oauth.service.impl.WechatUserDetailsServiceImpl;
 import lombok.Data;
 import lombok.SneakyThrows;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -57,7 +58,7 @@ public class WechatAuthenticationProvider implements AuthenticationProvider {
 //            memberDTO.setOpenid(openid);
 //            memberFeignClient.addMember(memberDTO);
 //        }
-        UserDetails userDetails = ((MemberUserDetailsServiceImpl) userDetailsService).loadUserByOpenId(openid);
+        UserDetails userDetails = ((WechatUserDetailsServiceImpl) userDetailsService).loadUserByOpenId(openid);
         WechatAuthenticationToken result = new WechatAuthenticationToken(userDetails, new HashSet<>());
         result.setDetails(authentication.getDetails());
         return result;

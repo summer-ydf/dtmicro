@@ -12,9 +12,8 @@ import org.springframework.security.oauth2.provider.client.BaseClientDetails;
 import org.springframework.stereotype.Service;
 
 /**
- * ClientDetailsService自定义实现客户端认证信息
- * @author DT
- * @date 2022/4/25 19:00
+ * 获取客户端信息【MySQL中】
+ * @author ydf Created by 2022/4/25 18:59
  */
 @Service
 public class ClientDetailsServiceImpl implements ClientDetailsService {

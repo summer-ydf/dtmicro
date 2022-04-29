@@ -9,6 +9,7 @@ import com.cms.common.tool.enums.IBaseEnum;
 import com.cms.oauth.service.impl.IdCardUserDetailsServiceImpl;
 import com.cms.oauth.service.impl.MemberUserDetailsServiceImpl;
 import com.cms.oauth.service.impl.SysUserDetailsServiceImpl;
+import com.cms.oauth.service.impl.WechatUserDetailsServiceImpl;
 import com.nimbusds.jose.JWSObject;
 import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
@@ -82,8 +83,8 @@ public class PreAuthenticatedUserDetailsService<T extends Authentication> implem
                 return idCardUserDetailsService.loadUserByIdCard(authentication.getName(), null);
             case OPENID: {
                 // 微信小程序端
-                MemberUserDetailsServiceImpl memberUserDetailsService = (MemberUserDetailsServiceImpl) userDetailsService;
-                return memberUserDetailsService.loadUserByOpenId(authentication.getName());
+                WechatUserDetailsServiceImpl wechatUserDetailsService = (WechatUserDetailsServiceImpl) userDetailsService;
+                return wechatUserDetailsService.loadUserByOpenId(authentication.getName());
             }
             default:
                 // 默认认证体系，通过username

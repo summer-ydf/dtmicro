@@ -9,10 +9,7 @@ import com.cms.oauth.security.model.idcard.IdCardTokenGranter;
 import com.cms.oauth.security.model.mobile.SmsCodeTokenGranter;
 import com.cms.oauth.security.model.refresh.PreAuthenticatedUserDetailsService;
 import com.cms.oauth.security.model.wechat.WechatTokenGranter;
-import com.cms.oauth.service.impl.ClientDetailsServiceImpl;
-import com.cms.oauth.service.impl.IdCardUserDetailsServiceImpl;
-import com.cms.oauth.service.impl.MemberUserDetailsServiceImpl;
-import com.cms.oauth.service.impl.SysUserDetailsServiceImpl;
+import com.cms.oauth.service.impl.*;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.context.annotation.Bean;
@@ -63,6 +60,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     private final ClientDetailsServiceImpl clientDetailsService;
     private final SysUserDetailsServiceImpl sysUserDetailsService;
     private final MemberUserDetailsServiceImpl memberUserDetailsService;
+    private final WechatUserDetailsServiceImpl wechatUserDetailsService;
     private final IdCardUserDetailsServiceImpl idCardUserDetailsService;
 
     /**
@@ -161,7 +159,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         clientUserDetailsServiceMap.put(ConstantSecurityCode.ADMIN_CLIENT_ID, sysUserDetailsService); // 系统管理客户端
         clientUserDetailsServiceMap.put(ConstantSecurityCode.WEB_CLIENT_ID, sysUserDetailsService); // 系统管理客户端
         clientUserDetailsServiceMap.put(ConstantSecurityCode.APP_CLIENT_ID, memberUserDetailsService); // Android、IOS、H5 移动客户端
-        clientUserDetailsServiceMap.put(ConstantSecurityCode.WECHAT_CLIENT_ID, memberUserDetailsService); // 微信小程序客户端
+        clientUserDetailsServiceMap.put(ConstantSecurityCode.WECHAT_CLIENT_ID, wechatUserDetailsService); // 微信小程序客户端
         clientUserDetailsServiceMap.put(ConstantSecurityCode.IDCARD_CLIENT_ID, idCardUserDetailsService); // 自定义身份证
 
         System.out.println("多用户体系下，刷新token再次认证客户端ID和 UserDetailService 的映射Map============");
