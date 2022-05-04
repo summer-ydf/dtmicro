@@ -21,10 +21,6 @@ public class SecurityClaimsUserEntity implements Serializable {
 
     private static final long serialVersionUID = -7487458381816891683L;
 
-    /**
-     * 授权范围
-     */
-    private String scope;
 
     /**
      * 登录用户账号
@@ -47,7 +43,7 @@ public class SecurityClaimsUserEntity implements Serializable {
     private String openid;
 
     /**
-     * 扩展字段：认证身份标识
+     * 登录客户端身份标识
      */
     private String authenticationIdentity;
 
@@ -108,7 +104,6 @@ public class SecurityClaimsUserEntity implements Serializable {
 
     public Map<String,Object> jwtClaims() {
         Map<String,Object> claims_json = new HashMap<>();
-        claims_json.put("scope",getScope());
         claims_json.put("username",getUsername());
         claims_json.put("userid",getUserid());
         claims_json.put("avatar",getAvatar());

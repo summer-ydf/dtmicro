@@ -19,5 +19,14 @@ import static com.api.common.ApiConstants.APPLICATION_NAME_MANAGE;
 public interface OauthFeignClientService {
 
     @GetMapping(value = APPLICATION_MANAGE_API_AFFIX + "/loadUserByUsername")
-    ResultUtil<SecurityClaimsUserEntity> loadUserByUsername(@RequestParam String username, @RequestParam String scope);
+    ResultUtil<SecurityClaimsUserEntity> loadUserByUsername(@RequestParam String username);
+
+    @GetMapping(value = APPLICATION_MANAGE_API_AFFIX + "/loadUserByMobile")
+    ResultUtil<SecurityClaimsUserEntity> loadUserByMobile(@RequestParam String mobile);
+
+    @GetMapping(value = APPLICATION_MANAGE_API_AFFIX + "/loadUserByIdCardAndName")
+    ResultUtil<SecurityClaimsUserEntity> loadUserByIdCardAndName(@RequestParam String idno, @RequestParam String name);
+
+    @GetMapping(value = APPLICATION_MANAGE_API_AFFIX + "/loadUserByOpenId")
+    ResultUtil<SecurityClaimsUserEntity> loadUserByOpenId(@RequestParam String openid);
 }

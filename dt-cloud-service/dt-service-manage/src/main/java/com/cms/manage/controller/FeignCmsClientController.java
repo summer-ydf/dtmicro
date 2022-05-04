@@ -22,6 +22,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.cms.common.tool.enums.AuthenticationIdentityEnum.*;
+
 /**
  * @author ydf Created by 2022/1/7 16:20
  */
@@ -44,8 +46,23 @@ public class FeignCmsClientController implements OauthFeignClientService, LogFei
     }
 
     @Override
-    public ResultUtil<SecurityClaimsUserEntity> loadUserByUsername(String username, String scope) {
-        return sysOperatorService.loadUserByUsername(username,scope);
+    public ResultUtil<SecurityClaimsUserEntity> loadUserByUsername(String username) {
+        return sysOperatorService.oauthAuthenticationByAccount(username,USERNAME, null);
+    }
+
+    @Override
+    public ResultUtil<SecurityClaimsUserEntity> loadUserByMobile(String mobile) {
+        return sysOperatorService.oauthAuthenticationByAccount(mobile,MOBILE, null);
+    }
+
+    @Override
+    public ResultUtil<SecurityClaimsUserEntity> loadUserByIdCardAndName(String idno, String name) {
+        return sysOperatorService.oauthAuthenticationByAccount(idno,IDCARD, name);
+    }
+
+    @Override
+    public ResultUtil<SecurityClaimsUserEntity> loadUserByOpenId(String openid) {
+        return sysOperatorService.oauthAuthenticationByAccount(openid,OPENID, null);
     }
 
     @Override

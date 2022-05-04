@@ -23,9 +23,25 @@ public class OauthFeignClientFallback implements FeignFailFallback, FallbackFact
         LOGGER.info("调用登录接口请求出错：{}",throwable.getMessage());
         return new OauthFeignClientService() {
             @Override
-            public ResultUtil<SecurityClaimsUserEntity> loadUserByUsername(String username, String scope) {
+            public ResultUtil<SecurityClaimsUserEntity> loadUserByUsername(String username) {
                 return fail();
             }
+
+            @Override
+            public ResultUtil<SecurityClaimsUserEntity> loadUserByMobile(String mobile) {
+                return fail();
+            }
+
+            @Override
+            public ResultUtil<SecurityClaimsUserEntity> loadUserByIdCardAndName(String idno, String name) {
+                return fail();
+            }
+
+            @Override
+            public ResultUtil<SecurityClaimsUserEntity> loadUserByOpenId(String openid) {
+                return fail();
+            }
+
         };
     }
 }

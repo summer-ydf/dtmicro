@@ -32,10 +32,11 @@ public class WechatUserDetailsServiceImpl implements UserDetailsService {
 
     public UserDetails loadUserByOpenId(String openid) {
         log.info("Oauth2 登录认证中,小程序微信授权模式【{}】",openid);
-        SecurityClaimsParams claimsParams = SecurityClaimsParams.builder().scope("web").username(openid).build();
-        log.info("远程调用设置参数->>>" + claimsParams);
-        ResultUtil<SecurityClaimsUserEntity> claimsUserResultUtil = oauthFeignClientService.loadUserByUsername(openid,claimsParams.getScope());
+
+        ResultUtil<SecurityClaimsUserEntity> claimsUserResultUtil = oauthFeignClientService.loadUserByOpenId(openid);
+
         log.info("Oauth2 授权回调结果【{}】",claimsUserResultUtil);
+
         if (!claimsUserResultUtil.isSuccess()) {
             throw new UsernameNotFoundException(claimsUserResultUtil.getMessage());
         }

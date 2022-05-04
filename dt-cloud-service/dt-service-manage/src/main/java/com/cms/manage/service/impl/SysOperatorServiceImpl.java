@@ -28,6 +28,8 @@ import org.springframework.util.ObjectUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.cms.common.tool.enums.AuthenticationIdentityEnum.*;
+
 /**
  * @author ydf Created by 2022/1/7 17:22
  */
@@ -41,9 +43,31 @@ public class SysOperatorServiceImpl extends ServiceImpl<SysOperatorMapper, SysOp
 
     @Override
     @Transactional(readOnly = true)
-    public ResultUtil<SecurityClaimsUserEntity> loadUserByUsername(String username, String scope) {
-        System.out.println("获取数据库账号密码->>>"+username);
-        SysOperatorEntity operator = this.baseMapper.selectOne(new QueryWrapper<SysOperatorEntity>().eq("username", username).eq("scope",scope));
+    public ResultUtil<SecurityClaimsUserEntity> oauthAuthenticationByAccount(String account, AuthenticationIdentityEnum authenticationIdentityEnum,String name) {
+        System.out.println("获取数据库账号密码->>>"+account);
+        String authenticationIdentity = USERNAME.getValue();
+        QueryWrapper<SysOperatorEntity> queryWrapper = new QueryWrapper<>();
+        switch (authenticationIdentityEnum) {
+            case USERNAME:
+                queryWrapper.eq("username", account);
+                authenticationIdentity = USERNAME.getValue();
+                break;
+            case MOBILE:
+                queryWrapper.eq("mobile", account);
+                authenticationIdentity = MOBILE.getValue();
+                break;
+            case IDCARD:
+                queryWrapper.eq("idno", account).eq("name", name);
+                authenticationIdentity = IDCARD.getValue();
+                break;
+            case OPENID:
+                queryWrapper.eq("openid", account);
+                authenticationIdentity = OPENID.getValue();
+                break;
+            default:
+                queryWrapper.eq("id", account);
+        }
+        SysOperatorEntity operator = this.baseMapper.selectOne(queryWrapper);
         if(!ObjectUtils.isEmpty(operator)) {
             // 查询操作员角色数据权限
             List<SysRoleDataScope> roleDataScopes = this.baseMapper.selectRoleDataScopeByUserId(operator.getId());
@@ -58,7 +82,6 @@ public class SysOperatorServiceImpl extends ServiceImpl<SysOperatorMapper, SysOp
                     .userid(operator.getId())
                     .username(operator.getUsername())
                     .password(operator.getPassword())
-                    .scope(operator.getScope())
                     .deptId(operator.getDeptId())
                     .isAccountNonExpired(operator.isAccountNonExpired())
                     .isCredentialsNonExpired(operator.isCredentialsNonExpired())
@@ -69,8 +92,7 @@ public class SysOperatorServiceImpl extends ServiceImpl<SysOperatorMapper, SysOp
                     .mobile(operator.getMobile())
                     .idno(operator.getIdno())
                     .openid(operator.getOpenid())
-                    // 系统后台管理端标识
-                    .authenticationIdentity(AuthenticationIdentityEnum.USERNAME.getValue())
+                    .authenticationIdentity(authenticationIdentity)
                     .build();
             return ResultUtil.success(securityClaimsUser);
         }

@@ -8,10 +8,13 @@
             t.id,
             t.username,
             t.avatar,
-            t.scope,
             t.is_enabled,
             t.create_time,
             t.dept_id,
+            t.name,
+            t.mobile,
+            t.idno,
+            t.openid,
             p.label AS deptName
         FROM sys_operator AS t
         LEFT JOIN sys_department p on t.dept_id = p.id

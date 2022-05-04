@@ -142,25 +142,29 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     }
 
     public DefaultTokenServices tokenServices(AuthorizationServerEndpointsConfigurer endpoints) {
+
+        DefaultTokenServices tokenServices = new DefaultTokenServices();
+        // 是否刷新令牌
+        tokenServices.setSupportRefreshToken(true);
+        // 令牌存储策略
+        tokenServices.setTokenStore(endpoints.getTokenStore());
+        // 客户端存储策略
+        tokenServices.setClientDetailsService(clientDetailsService);
+        // 设置令牌增强
         TokenEnhancerChain tokenEnhancerChain = new TokenEnhancerChain();
-        List<TokenEnhancer> tokenEnhancers = new ArrayList<>();
+        List<TokenEnhancer> tokenEnhancers = new ArrayList<>(10);
         tokenEnhancers.add(tokenEnhancer());
         tokenEnhancers.add(jwtAccessTokenConverter());
         tokenEnhancerChain.setTokenEnhancers(tokenEnhancers);
-
-        DefaultTokenServices tokenServices = new DefaultTokenServices();
-        tokenServices.setTokenStore(endpoints.getTokenStore());
-        tokenServices.setSupportRefreshToken(true);
-        tokenServices.setClientDetailsService(clientDetailsService);
         tokenServices.setTokenEnhancer(tokenEnhancerChain);
 
         // 多用户体系下，刷新token再次认证客户端ID和 UserDetailService 的映射Map
         Map<String, UserDetailsService> clientUserDetailsServiceMap = new HashMap<>();
-        clientUserDetailsServiceMap.put(ConstantSecurityCode.ADMIN_CLIENT_ID, sysUserDetailsService); // 系统管理客户端
-        clientUserDetailsServiceMap.put(ConstantSecurityCode.WEB_CLIENT_ID, sysUserDetailsService); // 系统管理客户端
-        clientUserDetailsServiceMap.put(ConstantSecurityCode.APP_CLIENT_ID, memberUserDetailsService); // Android、IOS、H5 移动客户端
-        clientUserDetailsServiceMap.put(ConstantSecurityCode.WECHAT_CLIENT_ID, wechatUserDetailsService); // 微信小程序客户端
-        clientUserDetailsServiceMap.put(ConstantSecurityCode.IDCARD_CLIENT_ID, idCardUserDetailsService); // 自定义身份证
+        clientUserDetailsServiceMap.put(ConstantSecurityCode.ADMIN_CLIENT_ID, sysUserDetailsService);
+        clientUserDetailsServiceMap.put(ConstantSecurityCode.WEB_CLIENT_ID, sysUserDetailsService);
+        clientUserDetailsServiceMap.put(ConstantSecurityCode.APP_CLIENT_ID, memberUserDetailsService);
+        clientUserDetailsServiceMap.put(ConstantSecurityCode.WECHAT_CLIENT_ID, wechatUserDetailsService);
+        clientUserDetailsServiceMap.put(ConstantSecurityCode.IDCARD_CLIENT_ID, idCardUserDetailsService);
 
         System.out.println("多用户体系下，刷新token再次认证客户端ID和 UserDetailService 的映射Map============");
         System.out.println(clientUserDetailsServiceMap);
@@ -170,10 +174,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         provider.setPreAuthenticatedUserDetailsService(new PreAuthenticatedUserDetailsService<>(clientUserDetailsServiceMap));
         tokenServices.setAuthenticationManager(new ProviderManager(Collections.singletonList(provider)));
 
-        /** refresh_token有两种使用方式：重复使用(true)、非重复使用(false)，默认为true
-         *  1 重复使用：access_token过期刷新时， refresh_token过期时间未改变，仍以初次生成的时间为准
-         *  2 非重复使用：access_token过期刷新时， refresh_token过期时间延续，在refresh_token有效期内刷新便永不失效达到无需再次登录的目的
-         */
+        // 允许重复使用refresh token
         tokenServices.setReuseRefreshToken(true);
         return tokenServices;
 

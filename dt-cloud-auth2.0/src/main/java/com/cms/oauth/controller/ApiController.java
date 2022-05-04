@@ -53,17 +53,16 @@ public class ApiController {
     }
 
     @ApiOperation(value = "解析code获取微信用户基础信息")
-    @GetMapping(value = "/anonymous/getWxInfo/{code}")
-    public ResultUtil<?> getWxInfo(@PathVariable String code) {
+    @GetMapping(value = "/anonymous/getWxInfo")
+    public ResultUtil<?> getWxInfo(String code, String encryptedData, String iv) {
         try {
             // 解析code获取微信用户基础信息
-            WxMaJscode2SessionResult sessionInfo =  wxMaService.getUserService().getSessionInfo(code);
-            log.info("解析微信小程序用户信息："+sessionInfo);
-            log.info("openid："+sessionInfo.getOpenid());
-            log.info("sessionKey："+sessionInfo.getSessionKey());
+            WxMaJscode2SessionResult session =  wxMaService.getUserService().getSessionInfo(code);
+            String sessionKey = session.getSessionKey();
+            log.info("解析微信小程序用户信息："+session);
             // 获取微信用户信息
-            //WxMaUserInfo userInfo = wxMaService.getUserService().getUserInfo(sessionKey, encryptedData, iv);
-            //log.info("userInfo："+userInfo);
+            WxMaUserInfo userInfo = wxMaService.getUserService().getUserInfo(sessionKey, encryptedData, iv);
+            log.info("userInfo："+userInfo);
             return ResultUtil.success();
         } catch (WxErrorException e) {
             e.printStackTrace();

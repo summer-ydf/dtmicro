@@ -65,7 +65,7 @@ public class PreAuthenticatedUserDetailsService<T extends Authentication> implem
 
         UserDetailsService userDetailsService = userDetailsServiceMap.get(clientId);
 
-        log.info("系统免密登录，刷新令牌重新认证，认证身份【{}】，认证参数【{}】,携带令牌ID【{}】",authenticationIdentityEnum, authentication.getName(), clientId);
+        log.info("系统免密登录，刷新令牌重新认证，认证身份【{}】，认证参数【{}】,客户端ID【{}】",authenticationIdentityEnum, authentication.getName(), clientId);
 
         switch (authenticationIdentityEnum) {
             case USERNAME:
@@ -116,7 +116,6 @@ public class PreAuthenticatedUserDetailsService<T extends Authentication> implem
         String refreshToken = request.getParameter("refresh_token");
         String payload = StrUtil.toString(JWSObject.parse(refreshToken).getPayload());
         JSONObject jsonObject = JSONUtil.parseObj(payload);
-        log.info("解析JWT获取获取认证身份标识【{}】",jsonObject);
         String authenticationIdentity = jsonObject.getStr("authenticationIdentity");
         if (StrUtil.isBlank(authenticationIdentity)) {
             authenticationIdentity = USERNAME.getValue();

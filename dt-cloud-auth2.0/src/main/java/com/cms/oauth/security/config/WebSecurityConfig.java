@@ -1,6 +1,7 @@
 package com.cms.oauth.security.config;
 
 import cn.binarywang.wx.miniapp.api.WxMaService;
+import com.api.manage.feign.OauthFeignClientService;
 import com.cms.oauth.security.model.idcard.IdCardAuthenticationProvider;
 import com.cms.oauth.security.model.mobile.SmsCodeAuthenticationProvider;
 import com.cms.oauth.security.model.wechat.WechatAuthenticationProvider;
@@ -38,6 +39,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private UserDetailsService idCardUserDetailsService;
     @Autowired
     private WxMaService wxMaService;
+    @Autowired
+    private OauthFeignClientService oauthFeignClientService;
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
@@ -95,7 +98,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         WechatAuthenticationProvider provider = new WechatAuthenticationProvider();
         provider.setUserDetailsService(wechatUserDetailsService);
         provider.setWxMaService(wxMaService);
-//        provider.setMemberFeignClient(memberFeignClient);
+        provider.setOauthFeignClientService(oauthFeignClientService);
         return provider;
     }
 
