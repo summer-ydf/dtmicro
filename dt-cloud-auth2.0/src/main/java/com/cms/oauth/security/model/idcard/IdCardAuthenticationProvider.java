@@ -1,10 +1,7 @@
 package com.cms.oauth.security.model.idcard;
 
-import com.cms.oauth.security.model.mobile.SmsCodeAuthenticationToken;
 import com.cms.oauth.service.impl.IdCardUserDetailsServiceImpl;
-import com.cms.oauth.service.impl.MemberUserDetailsServiceImpl;
 import lombok.Data;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -21,9 +18,6 @@ import java.util.HashSet;
 public class IdCardAuthenticationProvider implements AuthenticationProvider {
 
     private UserDetailsService userDetailsService;
-    //private MemberFeignClient memberFeignClient;
-//    private RedisTemplate<String, Object> redisTemplate;
-
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -33,15 +27,6 @@ public class IdCardAuthenticationProvider implements AuthenticationProvider {
 
         System.out.println("输入身份证："+idno);
         System.out.println("输入姓名："+name);
-
-//        String codeKey = AuthConstants.SMS_CODE_PREFIX + mobile;
-//        String correctCode = redisTemplate.opsForValue().get(codeKey);
-//        // 验证码比对
-//        if (StrUtil.isBlank(correctCode) || !code.equals(correctCode)) {
-//            throw new BizException("验证码不正确");
-//        } else {
-//            redisTemplate.delete(codeKey);
-//        }
 
         UserDetails userDetails = ((IdCardUserDetailsServiceImpl) userDetailsService).loadUserByIdCard(idno,name);
         IdCardAuthenticationToken result = new IdCardAuthenticationToken(userDetails, authentication.getCredentials(), new HashSet<>());

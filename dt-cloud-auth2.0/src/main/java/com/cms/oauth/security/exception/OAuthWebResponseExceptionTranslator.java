@@ -12,6 +12,7 @@ import org.springframework.security.oauth2.common.exceptions.UnsupportedGrantTyp
 import org.springframework.security.oauth2.provider.error.WebResponseExceptionTranslator;
 
 /**
+ * OAuth2通用异常处理
  * @author ydf Created by 2022/4/28 10:29
  */
 @Slf4j

@@ -3,11 +3,8 @@ package com.cms.oauth.controller;
 import cn.binarywang.wx.miniapp.api.WxMaService;
 import cn.binarywang.wx.miniapp.bean.WxMaJscode2SessionResult;
 import cn.binarywang.wx.miniapp.bean.WxMaUserInfo;
-import com.cms.common.core.utils.ApiCallUtils;
 import com.cms.common.jdbc.config.IdGeneratorConfig;
 import com.cms.common.jdbc.utils.RedisUtils;
-import com.cms.common.tool.domain.SecurityClaimsUserEntity;
-import com.cms.common.tool.result.ResultException;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.common.tool.utils.SysCmsUtils;
 import com.cms.common.tool.utils.VerifyCodeUtils;
@@ -16,21 +13,16 @@ import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import static com.cms.common.tool.constant.ConstantCode.CACHE_CODE_KEY;
-import static com.cms.common.tool.constant.ConstantCode.GATEWAY_AUTHORIZATION;
 import static com.cms.common.tool.constant.ConstantCode.HEIGHT;
 import static com.cms.common.tool.constant.ConstantCode.IMG_JPG;
 import static com.cms.common.tool.constant.ConstantCode.WIDTH;
@@ -106,18 +98,5 @@ public class ApiController {
     public String hello() {
         System.out.println("不需要校验======================");
         return "hello!!!!";
-    }
-
-    @GetMapping("/admin")
-    public String admin(HttpServletRequest request) {
-        String token = request.getHeader("payload");
-        System.out.println("获取资源==============="+token);
-        try {
-            SecurityClaimsUserEntity claimsUser = ApiCallUtils.securityClaimsUser(request);
-            System.out.println("获取携带参数==============="+claimsUser);
-        } catch (ResultException e) {
-            e.printStackTrace();
-        }
-        return "admin!!!!";
     }
 }

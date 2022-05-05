@@ -17,14 +17,13 @@ import java.util.Map;
 
 /**
  * 手机验证码授权者
- * @author DT
- * @date 2022/4/26 19:10
+ * @author ydf Created by 2022/4/28 13:04
  */
 public class SmsCodeTokenGranter extends AbstractTokenGranter {
 
     /**
-     * 声明授权者 SmsCodeTokenGranter 支持授权模式 sms_code
-     * 根据接口传值 grant_type = sms_code 的值匹配到此授权者
+     * 声明授权者SmsCodeTokenGranter支持授权模式 sms_code
+     * 根据接口传值grant_type=sms_code的值匹配到此授权者
      * 匹配逻辑详见下面的两个方法
      *
      * @see org.springframework.security.oauth2.provider.CompositeTokenGranter#grant(String, TokenRequest)
@@ -34,19 +33,19 @@ public class SmsCodeTokenGranter extends AbstractTokenGranter {
     private final AuthenticationManager authenticationManager;
 
     public SmsCodeTokenGranter(AuthorizationServerTokenServices tokenServices, ClientDetailsService clientDetailsService,
-                               OAuth2RequestFactory requestFactory, AuthenticationManager authenticationManager
-    ) {
+                               OAuth2RequestFactory requestFactory, AuthenticationManager authenticationManager) {
         super(tokenServices, clientDetailsService, requestFactory, GRANT_TYPE);
         this.authenticationManager = authenticationManager;
     }
 
     @Override
     protected OAuth2Authentication getOAuth2Authentication(ClientDetails client, TokenRequest tokenRequest) {
-
         Map<String, String> parameters = new LinkedHashMap<>(tokenRequest.getRequestParameters());
 
-        String mobile = parameters.get("mobile"); // 手机号
-        String code = parameters.get("code"); // 短信验证码
+        // 手机号
+        String mobile = parameters.get("mobile");
+        // 短信验证码
+        String code = parameters.get("code");
 
         System.out.println("手机验证码授权者："+mobile);
         System.out.println("手机验证码授权者："+code);
@@ -74,9 +73,11 @@ public class SmsCodeTokenGranter extends AbstractTokenGranter {
         }
 
         if (userAuth != null && userAuth.isAuthenticated()) {
+            // 认证成功
             OAuth2Request storedOAuth2Request = this.getRequestFactory().createOAuth2Request(client, tokenRequest);
             return new OAuth2Authentication(storedOAuth2Request, userAuth);
         } else {
+            // 认证失败
             throw new InvalidGrantException("Could not authenticate user: " + mobile);
         }
     }

@@ -28,8 +28,8 @@ import java.util.Map;
 public class IdCardTokenGranter extends AbstractTokenGranter {
 
     /**
-     * 声明授权者 IdCardTokenGranter 支持授权模式 id_card
-     * 根据接口传值 grant_type = id_card 的值匹配到此授权者
+     * 声明授权者IdCardTokenGranter支持授权模式id_card
+     * 根据接口传值grant_type=id_card的值匹配到此授权者
      * 匹配逻辑详见下面的两个方法
      *
      * @see org.springframework.security.oauth2.provider.CompositeTokenGranter#grant(String, TokenRequest)
@@ -39,19 +39,18 @@ public class IdCardTokenGranter extends AbstractTokenGranter {
     private final AuthenticationManager authenticationManager;
 
     public IdCardTokenGranter(AuthorizationServerTokenServices tokenServices, ClientDetailsService clientDetailsService,
-                               OAuth2RequestFactory requestFactory, AuthenticationManager authenticationManager
-    ) {
+                               OAuth2RequestFactory requestFactory, AuthenticationManager authenticationManager) {
         super(tokenServices, clientDetailsService, requestFactory, GRANT_TYPE);
         this.authenticationManager = authenticationManager;
     }
 
     @Override
     protected OAuth2Authentication getOAuth2Authentication(ClientDetails client, TokenRequest tokenRequest) {
-
         Map<String, String> parameters = new LinkedHashMap<>(tokenRequest.getRequestParameters());
-
-        String idno = parameters.get("idno"); // 身份证号
-        String name = parameters.get("name"); // 姓名
+        // 身份证号
+        String idno = parameters.get("idno");
+        // 姓名
+        String name = parameters.get("name");
 
         System.out.println("身份证号码授权者："+idno);
         System.out.println("身份证号码授权者："+name);
@@ -64,7 +63,9 @@ public class IdCardTokenGranter extends AbstractTokenGranter {
             throw new ParameterAuthenticationException("姓名不能为空");
         }
 
-        //parameters.remove("code");
+        // 移除后续无用参数
+        parameters.remove("idno");
+        parameters.remove("name");
 
         Authentication userAuth = new IdCardAuthenticationToken(idno, name);
         ((AbstractAuthenticationToken) userAuth).setDetails(parameters);
@@ -77,10 +78,12 @@ public class IdCardTokenGranter extends AbstractTokenGranter {
             throw new InvalidGrantException(var9.getMessage());
         }
 
-        if (userAuth != null && userAuth.isAuthenticated()) { // 认证成功
+        if (userAuth != null && userAuth.isAuthenticated()) {
+            // 认证成功
             OAuth2Request storedOAuth2Request = this.getRequestFactory().createOAuth2Request(client, tokenRequest);
             return new OAuth2Authentication(storedOAuth2Request, userAuth);
-        } else { // 认证失败
+        } else {
+            // 认证失败
             throw new InvalidGrantException("Could not authenticate user: " + idno);
         }
     }

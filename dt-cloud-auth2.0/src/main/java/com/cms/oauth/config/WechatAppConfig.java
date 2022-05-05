@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * 微信小程序配置
+ * 微信小程序配置类
  * @author ydf Created by 2022/4/27 10:32
  */
 @Configuration

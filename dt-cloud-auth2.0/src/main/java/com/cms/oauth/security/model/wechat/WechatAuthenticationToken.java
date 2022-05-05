@@ -19,25 +19,14 @@ public class WechatAuthenticationToken extends AbstractAuthenticationToken {
     @Getter
     private String iv;
 
-    /**
-     * 账号校验之前的token构建
-     *
-     * @param principal
-     */
     public WechatAuthenticationToken(Object principal, String encryptedData,String iv) {
         super(null);
         this.principal = principal;
         this.encryptedData = encryptedData;
-        this.iv=iv;
+        this.iv = iv;
         setAuthenticated(false);
     }
 
-    /**
-     * 账号校验成功之后的token构建
-     *
-     * @param principal
-     * @param authorities
-     */
     public WechatAuthenticationToken(Object principal, Collection<? extends GrantedAuthority> authorities) {
         super(authorities);
         this.principal = principal;

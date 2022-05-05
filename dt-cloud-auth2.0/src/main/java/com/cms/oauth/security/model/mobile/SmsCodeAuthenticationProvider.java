@@ -13,16 +13,13 @@ import java.util.HashSet;
 
 /**
  * 短信验证码认证授权提供者
- * @author DT
- * @date 2022/4/26 19:18
+ * @author ydf Created by 2022/4/28 13:04
  */
 @Data
 public class SmsCodeAuthenticationProvider implements AuthenticationProvider {
 
     private UserDetailsService userDetailsService;
-    //private MemberFeignClient memberFeignClient;
     private RedisTemplate<String, Object> redisTemplate;
-
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {

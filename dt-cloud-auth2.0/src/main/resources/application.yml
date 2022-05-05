@@ -52,8 +52,7 @@ secure:
       - /druid/**
       - /oauth/**
       - /security/logout/**
-      - /anonymous/valid_code/**
-      - /anonymous/generate_id/**
+      - /anonymous/**
       - /rsa/publicKey
       - /hello
       - /login.html

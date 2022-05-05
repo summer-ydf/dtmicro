@@ -3,7 +3,6 @@ package com.cms.oauth.service.impl;
 import com.api.manage.feign.OauthFeignClientService;
 import com.cms.common.tool.domain.SecurityClaimsUserEntity;
 import com.cms.common.tool.result.ResultUtil;
-import com.cms.oauth.domain.SecurityClaimsParams;
 import com.cms.oauth.domain.SecurityUser;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;

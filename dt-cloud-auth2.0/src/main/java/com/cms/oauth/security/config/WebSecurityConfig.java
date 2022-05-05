@@ -5,8 +5,6 @@ import com.api.manage.feign.OauthFeignClientService;
 import com.cms.oauth.security.model.idcard.IdCardAuthenticationProvider;
 import com.cms.oauth.security.model.mobile.SmsCodeAuthenticationProvider;
 import com.cms.oauth.security.model.wechat.WechatAuthenticationProvider;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -22,42 +20,49 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * Security安全拦截配置
- * @author DT
- * @date 2022/4/25 18:56
+ * @author ydf Created by 2022/4/25 18:58
  */
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private UserDetailsService sysUserDetailsService;
-    @Autowired
-    private UserDetailsService memberUserDetailsService;
-    @Autowired
-    private UserDetailsService wechatUserDetailsService;
-    @Autowired
-    private UserDetailsService idCardUserDetailsService;
-    @Autowired
-    private WxMaService wxMaService;
-    @Autowired
-    private OauthFeignClientService oauthFeignClientService;
-    @Autowired
-    private RedisTemplate<String, Object> redisTemplate;
+    private final UserDetailsService sysUserDetailsService;
+    private final UserDetailsService memberUserDetailsService;
+    private final UserDetailsService wechatUserDetailsService;
+    private final UserDetailsService idCardUserDetailsService;
+    private final WxMaService wxMaService;
+    private final OauthFeignClientService oauthFeignClientService;
+    private final RedisTemplate<String, Object> redisTemplate;
 
-    /**
-     * Security接口拦截配置
-     */
+    public WebSecurityConfig(UserDetailsService sysUserDetailsService, UserDetailsService memberUserDetailsService, UserDetailsService wechatUserDetailsService, UserDetailsService idCardUserDetailsService, WxMaService wxMaService, OauthFeignClientService oauthFeignClientService, RedisTemplate<String, Object> redisTemplate) {
+        this.sysUserDetailsService = sysUserDetailsService;
+        this.memberUserDetailsService = memberUserDetailsService;
+        this.wechatUserDetailsService = wechatUserDetailsService;
+        this.idCardUserDetailsService = idCardUserDetailsService;
+        this.wxMaService = wxMaService;
+        this.oauthFeignClientService = oauthFeignClientService;
+        this.redisTemplate = redisTemplate;
+    }
+
+    @Bean
+    public IgnoreUrlsConfig ignoreUrlsConfig() {
+        return new IgnoreUrlsConfig();
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        // 设置白名单不拦截
+        for (String url : ignoreUrlsConfig().getUrls()) {
+            http.authorizeRequests().antMatchers(url).permitAll();
+        }
         http.authorizeRequests()
-                .antMatchers("/oauth/**","/hello","/anonymous/**").permitAll()
-                // @link https://gitee.com/xiaoym/knife4j/issues/I1Q5X6 (接口文档knife4j需要放行的规则)
-                .antMatchers("/webjars/**", "/doc.html", "/swagger-resources/**", "/v2/api-docs").permitAll()
-                .anyRequest().authenticated()
+                .anyRequest()
+                .authenticated()
                 .and()
                 .formLogin()
                 .and()
-                .csrf().disable();
+                .csrf()
+                .disable();
     }
 
     @Bean
@@ -77,8 +82,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * 手机验证码认证授权提供者
-     *
-     * @return
      */
     @Bean
     public SmsCodeAuthenticationProvider smsCodeAuthenticationProvider() {
@@ -90,8 +93,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * 微信认证授权提供者
-     *
-     * @return
      */
     @Bean
     public WechatAuthenticationProvider wechatAuthenticationProvider() {
@@ -104,22 +105,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * 用户名密码认证授权提供者
-     *
-     * @return
      */
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(sysUserDetailsService);
         provider.setPasswordEncoder(passwordEncoder());
-        provider.setHideUserNotFoundExceptions(false); // 是否隐藏用户不存在异常，默认:true-隐藏；false-抛出异常；
+        // 是否隐藏用户不存在异常，默认:true 隐藏；false 抛出异常；
+        provider.setHideUserNotFoundExceptions(false);
         return provider;
     }
 
     /**
      * 身份证认证授权提供者
-     *
-     * @return
      */
     @Bean
     public IdCardAuthenticationProvider idCardAuthenticationProvider() {
@@ -130,9 +128,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * 密码编码器
-     * <p>
-     * 委托方式，根据密码的前缀选择对应的encoder，例如：{bcypt}前缀->标识BCYPT算法加密；{noop}->标识不使用任何加密即明文的方式
-     * 密码判读 DaoAuthenticationProvider#additionalAuthenticationChecks
      */
     @Bean
     public PasswordEncoder passwordEncoder() {

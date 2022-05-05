@@ -23,8 +23,8 @@ import java.util.Map;
 public class WechatTokenGranter extends AbstractTokenGranter {
 
     /**
-     * 声明授权者 WechatTokenGranter 支持授权模式 wechat
-     * 根据接口传值 grant_type = wechat 的值匹配到此授权者
+     * 声明授权者WechatTokenGranter支持授权模式wechat
+     * 根据接口传值grant_type=wechat的值匹配到此授权者
      * 匹配逻辑详见下面的两个方法
      *
      * @see org.springframework.security.oauth2.provider.CompositeTokenGranter#grant(String, TokenRequest)
@@ -33,14 +33,14 @@ public class WechatTokenGranter extends AbstractTokenGranter {
     private static final String GRANT_TYPE = "wechat";
     private final AuthenticationManager authenticationManager;
 
-    public WechatTokenGranter(AuthorizationServerTokenServices tokenServices, ClientDetailsService clientDetailsService, OAuth2RequestFactory requestFactory, AuthenticationManager authenticationManager) {
+    public WechatTokenGranter(AuthorizationServerTokenServices tokenServices, ClientDetailsService clientDetailsService,
+                              OAuth2RequestFactory requestFactory, AuthenticationManager authenticationManager) {
         super(tokenServices, clientDetailsService, requestFactory, GRANT_TYPE);
         this.authenticationManager = authenticationManager;
     }
 
     @Override
     protected OAuth2Authentication getOAuth2Authentication(ClientDetails client, TokenRequest tokenRequest) {
-
         Map<String, String> parameters = new LinkedHashMap<>(tokenRequest.getRequestParameters());
         String code = parameters.get("code");
         String encryptedData = parameters.get("encryptedData");
@@ -51,19 +51,21 @@ public class WechatTokenGranter extends AbstractTokenGranter {
         parameters.remove("encryptedData");
         parameters.remove("iv");
 
-        Authentication userAuth = new WechatAuthenticationToken(code, encryptedData,iv); // 未认证状态
+        Authentication userAuth = new WechatAuthenticationToken(code, encryptedData,iv);
+        // 未认证状态
         ((AbstractAuthenticationToken) userAuth).setDetails(parameters);
-
         try {
-            userAuth = this.authenticationManager.authenticate(userAuth); // 认证中
+            userAuth = this.authenticationManager.authenticate(userAuth);
+            // 认证中
         } catch (Exception e) {
             throw new InvalidGrantException(e.getMessage());
         }
-
-        if (userAuth != null && userAuth.isAuthenticated()) { // 认证成功
+        if (userAuth != null && userAuth.isAuthenticated()) {
+            // 认证成功
             OAuth2Request storedOAuth2Request = this.getRequestFactory().createOAuth2Request(client, tokenRequest);
             return new OAuth2Authentication(storedOAuth2Request, userAuth);
-        } else { // 认证失败
+        } else {
+            // 认证失败
             throw new InvalidGrantException("Could not authenticate code: " + code);
         }
     }
