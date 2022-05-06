@@ -48,9 +48,9 @@ mybatis-plus:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 # canal配置
 canal:
-  ip: localhost
+  ip: 42.192.121.230
   user: canal
   password: canal
   port: 11111
-  defaultDatabaseName: test_jdbc
+  defaultDatabaseName: dt_cloud_cms
   destination: example

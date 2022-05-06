@@ -24,5 +24,36 @@ systemctl start mysqld.service
 重启服务之后,进入mysql命令行新增并授权 canal 链接 mysql账号具有作为 mysql slave 的权限
 
 
+SHOW VARIABLES LIKE 'validate_password%';
+
+SELECT * FROM `user`
+
+
+mysql> set global validate_password_length=0;
+ERROR 1193 (HY000): Unknown system variable 'validate_password_length'
+mysql> set global validate_password.policy=0;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> set global validate_password.length=1;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> CREATE USER canal IDENTIFIED BY 'canal';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> GRANT SELECT,UPDATE,INSERT,DELETE,REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO 'canal'@'%';
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> FLUSH PRIVILEGES;
+Query OK, 0 rows affected (0.01 sec)
+
+
+# 创建用户canal，密码为canal
+CREATE USER canal IDENTIFIED BY 'canal';
+# canal用户授权
+GRANT SELECT,UPDATE,INSERT,DELETE,REPLICATION SLAVE, REPLICATION CLIENT ON *.* TO 'canal'@'%';
+# 刷新权限
+FLUSH PRIVILEGES;
+
+
 
 
