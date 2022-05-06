@@ -21,6 +21,9 @@ systemctl stop mysqld.service
 systemctl status mysqld.service
 systemctl start mysqld.service
 
+
+https://blog.csdn.net/qq_35551748/article/details/106410066
+
 重启服务之后,进入mysql命令行新增并授权 canal 链接 mysql账号具有作为 mysql slave 的权限
 
 
