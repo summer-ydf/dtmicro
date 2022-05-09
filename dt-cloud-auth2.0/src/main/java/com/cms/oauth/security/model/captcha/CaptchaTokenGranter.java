@@ -65,10 +65,8 @@ public class CaptchaTokenGranter extends AbstractTokenGranter {
         String username = parameters.get("username");
         String password = parameters.get("password");
 
-        // 移除后续无用参数
-        parameters.remove("username");
+        // 移除后续无用参数，移除后在auth.getAuthentication().getDetails()中将无法获取到，原账号密码模式只是移除了密码字段，为了安全
         parameters.remove("password");
-        parameters.remove("code");
 
         // 和密码模式一样的逻辑
         Authentication userAuth = new UsernamePasswordAuthenticationToken(username, password);
