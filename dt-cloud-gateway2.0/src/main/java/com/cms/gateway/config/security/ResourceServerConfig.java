@@ -81,9 +81,8 @@ public class ResourceServerConfig {
     public ServerAccessDeniedHandler accessDeniedHandler() {
         return (exchange, denied) -> {
             log.info("未授权自定义响应");
-            Mono<Void> mono = Mono.defer(() -> Mono.just(exchange.getResponse()))
+            return Mono.defer(() -> Mono.just(exchange.getResponse()))
                     .flatMap(response -> GatewayConstant.responseErrorJson(exchange, ResultEnum.ACCESS_UNAUTHORIZED));
-            return mono;
         };
     }
 
@@ -94,9 +93,8 @@ public class ResourceServerConfig {
     public ServerAuthenticationEntryPoint authenticationEntryPoint() {
         return (exchange, e) -> {
             log.info("token无效或者已过期自定义响应");
-            Mono<Void> mono = Mono.defer(() -> Mono.just(exchange.getResponse()))
+            return Mono.defer(() -> Mono.just(exchange.getResponse()))
                     .flatMap(response -> GatewayConstant.responseErrorJson(exchange, ResultEnum.TOKEN_INVALID_OR_EXPIRED));
-            return mono;
         };
     }
 
