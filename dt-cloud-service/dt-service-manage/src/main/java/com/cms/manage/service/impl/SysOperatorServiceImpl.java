@@ -45,6 +45,16 @@ public class SysOperatorServiceImpl extends ServiceImpl<SysOperatorMapper, SysOp
     @Transactional(readOnly = true)
     public ResultUtil<SecurityClaimsUserEntity> oauthAuthenticationByAccount(String account, AuthenticationIdentityEnum authenticationIdentityEnum,String name) {
         System.out.println("获取数据库账号密码->>>"+account);
+
+        // openFeign的默认请求时长是1秒 如果一秒还没有相应 直接返回错误信息
+        try {
+            System.out.println("开始休眠");
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("完成休眠");
+
         String authenticationIdentity = USERNAME.getValue();
         QueryWrapper<SysOperatorEntity> queryWrapper = new QueryWrapper<>();
         switch (authenticationIdentityEnum) {

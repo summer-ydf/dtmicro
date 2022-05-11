@@ -58,9 +58,6 @@ public class SmsCodeTokenGranter extends AbstractTokenGranter {
             throw new ParameterAuthenticationException("短信验证码不能为空");
         }
 
-        parameters.remove("mobile");
-        parameters.remove("code");
-
         Authentication userAuth = new SmsCodeAuthenticationToken(mobile, code);
         ((AbstractAuthenticationToken) userAuth).setDetails(parameters);
 

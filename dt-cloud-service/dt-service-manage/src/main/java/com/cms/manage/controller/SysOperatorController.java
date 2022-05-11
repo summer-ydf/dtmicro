@@ -11,8 +11,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-
 /**
  * @author ydf Created by 2022/1/12 15:59
  */
@@ -29,7 +27,7 @@ public class SysOperatorController {
 
     @ApiOperation(value = "分页查询用户列表")
     @GetMapping("/page")
-    public ResultUtil<IPage<SysOperatorEntity>> page(SysSearchPage request, HttpServletRequest servletRequest) {
+    public ResultUtil<IPage<SysOperatorEntity>> page(SysSearchPage request) {
         return sysOperatorService.pageSearch(request);
     }
 

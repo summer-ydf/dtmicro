@@ -63,10 +63,6 @@ public class IdCardTokenGranter extends AbstractTokenGranter {
             throw new ParameterAuthenticationException("姓名不能为空");
         }
 
-        // 移除后续无用参数
-        parameters.remove("idno");
-        parameters.remove("name");
-
         Authentication userAuth = new IdCardAuthenticationToken(idno, name);
         ((AbstractAuthenticationToken) userAuth).setDetails(parameters);
 
