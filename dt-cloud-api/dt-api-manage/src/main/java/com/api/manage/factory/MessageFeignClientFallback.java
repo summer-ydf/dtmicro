@@ -24,7 +24,7 @@ public class MessageFeignClientFallback implements FeignFailFallback, FallbackFa
 
             @Override
             public ResultUtil<SysMqMessageVoEntity> saveMqMessage(SysMqMessageVoEntity sysMqMessageVoEntity) {
-                return fail();
+                return fail(throwable);
             }
         };
     }

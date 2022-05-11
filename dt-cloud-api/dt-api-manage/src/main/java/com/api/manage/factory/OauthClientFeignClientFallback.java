@@ -21,7 +21,7 @@ public class OauthClientFeignClientFallback implements FeignFailFallback, Fallba
         return new OauthClientFeignClientService() {
             @Override
             public ResultUtil<SysOauthClientVoEntity> getOauthClientByClientId(String clientId) {
-                return fail();
+                return fail(throwable);
             }
         };
     }

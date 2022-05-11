@@ -2,15 +2,12 @@ package com.api.manage.factory;
 
 import com.api.common.feign.FeignFailFallback;
 import com.api.manage.feign.LogFeignClientService;
-import com.cms.common.tool.domain.SysLoginLogVoEntity;
 import com.cms.common.tool.domain.SysOperatorLogVoEntity;
 import com.cms.common.tool.result.ResultUtil;
 import feign.hystrix.FallbackFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 /**
  * @author ydf Created by 2022/1/7 16:25
@@ -26,11 +23,11 @@ public class LogFeignClientFallback implements FeignFailFallback, FallbackFactor
         return new LogFeignClientService() {
             @Override
             public ResultUtil<SysOperatorLogVoEntity> saveOprLog(SysOperatorLogVoEntity sysOperatorLogVoEntity) {
-                return fail();
+                return fail(throwable);
             }
             @Override
             public ResultUtil<Long> findLoginLogCount() {
-                return fail();
+                return fail(throwable);
             }
         };
     }

@@ -24,22 +24,22 @@ public class OauthFeignClientFallback implements FeignFailFallback, FallbackFact
         return new OauthFeignClientService() {
             @Override
             public ResultUtil<SecurityClaimsUserEntity> loadUserByUsername(String username) {
-                return fail();
+                return fail(throwable);
             }
 
             @Override
             public ResultUtil<SecurityClaimsUserEntity> loadUserByMobile(String mobile) {
-                return fail();
+                return fail(throwable);
             }
 
             @Override
             public ResultUtil<SecurityClaimsUserEntity> loadUserByIdCardAndName(String idno, String name) {
-                return fail();
+                return fail(throwable);
             }
 
             @Override
             public ResultUtil<SecurityClaimsUserEntity> loadUserByOpenId(String openid) {
-                return fail();
+                return fail(throwable);
             }
 
         };

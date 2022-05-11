@@ -26,7 +26,7 @@ public class WorkflowFeignClientFallback implements FeignFailFallback, FallbackF
             @Override
             public ResultUtil<?> getFlowPort(String userId) {
                 log.info("服务降级!",throwable);
-                return fail();
+                return fail(throwable);
             }
 
             @Override
