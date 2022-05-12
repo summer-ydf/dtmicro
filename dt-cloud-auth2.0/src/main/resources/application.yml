@@ -71,4 +71,11 @@ wechat:  #微信小程序配置
   app:
     appid: wxa68b60e7906e6586
     secret: c828a2844a48405c9edb652fb17c2439
+tencent:  #腾讯云短信服务参数配置
+  sms:
+    secretId: AKIDpTryoMvDEzTfaEafT0GEvLUO2PVKr76p
+    secretKey: TfaFciW3a93lDQO6YmjQr41i9MJ1TfcJ
+    sdkAppId: 1400677106
+    signName: Java码神公众号
+    templateId: 1400274
 

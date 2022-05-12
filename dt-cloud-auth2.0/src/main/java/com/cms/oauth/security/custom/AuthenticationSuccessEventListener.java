@@ -3,6 +3,7 @@ package com.cms.oauth.security.custom;
 import org.springframework.context.ApplicationListener;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
 import org.springframework.stereotype.Component;
+import org.springframework.util.ObjectUtils;
 
 /**
  * 登录成功处理器
@@ -14,6 +15,10 @@ public class AuthenticationSuccessEventListener implements ApplicationListener<A
     @Override
     public void onApplicationEvent(AuthenticationSuccessEvent auth) {
         System.out.println("登录成功处理================");
-        System.out.println(auth.getAuthentication().getDetails());
+        Object details = auth.getAuthentication().getDetails();
+        System.out.println(details);
+        if (!ObjectUtils.isEmpty(details)) {
+
+        }
     }
 }
