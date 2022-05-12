@@ -8,9 +8,13 @@ import com.cms.common.jdbc.utils.RedisUtils;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.common.tool.utils.SysCmsUtils;
 import com.cms.common.tool.utils.VerifyCodeUtils;
+import com.cms.oauth.service.TencentSmsService;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -92,6 +98,26 @@ public class ApiController {
     @ApiOperation(value = "生成分布式唯一ID")
     public ResultUtil<Long> generateId() {
         return ResultUtil.success(idGeneratorConfig.nextId(Object.class));
+    }
+
+
+    @Autowired
+    private TencentSmsService tencentSmsService;
+
+    @ApiOperation(value = "发送短信和验证")
+    @GetMapping("/send")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "phone", value = "手机号", required = true, example = "13800000000", paramType = "query", dataTypeClass = Integer.class),
+            @ApiImplicitParam(name = "code", value = "验证码验证", required = false, example = "889520", paramType = "query")})
+    public ResultUtil<?> sendSms(@NotEmpty(message = "非法的手机号") @Pattern(regexp = "^1[0-9]{10}$", message = "非法的手机号") String phone, String code) {
+        if (StringUtils.isNotBlank(code)) {
+            if (tencentSmsService.validationCode(phone, code)) {
+                return ResultUtil.success("验证码正确");
+            }
+            return ResultUtil.error("验证码错误");
+        }
+        String result = tencentSmsService.sendSms(phone);
+        return ResultUtil.success(result);
     }
 
     @GetMapping("/hello")
