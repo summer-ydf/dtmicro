@@ -1,19 +1,19 @@
 package com.cms.oauth.service.impl;
 
 
+import com.cms.common.jdbc.utils.RedisUtils;
 import com.cms.oauth.service.TencentSmsService;
 import com.tencentcloudapi.common.exception.TencentCloudSDKException;
 import com.tencentcloudapi.sms.v20190711.SmsClient;
 import com.tencentcloudapi.sms.v20190711.models.SendSmsRequest;
 import com.tencentcloudapi.sms.v20190711.models.SendSmsResponse;
+import com.tencentcloudapi.sms.v20190711.models.SendStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.util.concurrent.TimeUnit;
+import static com.cms.common.tool.constant.ConstantCode.PHONE_CODE_KEY;
 
 /**
  * @author ydf Created by 2022/5/12 17:53
@@ -22,46 +22,51 @@ import java.util.concurrent.TimeUnit;
 @Service
 public class TencentSmsServiceImpl implements TencentSmsService {
 
-    /**
-     * 短信验证码长度
-     */
-    private final Integer LENGTH = 6;
+    private final SmsClient smsClient;
+    private final RedisUtils redisUtils;
 
-    @Autowired
-    private SmsClient smsClient;
-    @Autowired
-    private StringRedisTemplate redisTemplate;
+    @Value("${tencent.sms.sdkAppId}")
+    private String sdkAppId;
+    @Value("${tencent.sms.templateId}")
+    private String templateId;
+    @Value("${tencent.sms.signName}")
+    private String signName;
 
-    @Value("${tencent.sms.account.sms_sdk_app_id}")
-    private String SMS_SDK_APP_ID;
-    @Value("${tencent.sms.account.template_id}")
-    private String TEMPLATE_ID;
-    @Value("${tencent.sms.account.sign_name}")
-    private String SIGN_NAME;
+    public TencentSmsServiceImpl(SmsClient smsClient, RedisUtils redisUtils) {
+        this.smsClient = smsClient;
+        this.redisUtils = redisUtils;
+    }
 
     @Override
     public String sendSms(String phone) {
+        // 构建目标手机号码
         String[] phoneNumbers = {"+86" + phone};
-        //生成随机验证码
+        // 构建随机验证码
         final String code = generateCode();
-        //加入数组
-        String[] templateParams = {code};
-        //实例请求，组装参数
+        // 构建内容参数
+        String[] templateParams = {code,"5"};
+        // 实例化一个请求对象,每个接口都会对应一个request对象
         SendSmsRequest sendSmsRequest = new SendSmsRequest();
-        sendSmsRequest.setSmsSdkAppid(SMS_SDK_APP_ID);
-        sendSmsRequest.setTemplateID(TEMPLATE_ID);
-        sendSmsRequest.setSign(SIGN_NAME);
-        //发送的手机号
+        sendSmsRequest.setSmsSdkAppid(sdkAppId);
+        sendSmsRequest.setTemplateID(templateId);
+        sendSmsRequest.setSign(signName);
+        // 发送的手机号
         sendSmsRequest.setPhoneNumberSet(phoneNumbers);
-        //发送的内容（验证码）
+        // 发送的内容（验证码）
         sendSmsRequest.setTemplateParamSet(templateParams);
         try {
-            //发送
-            final SendSmsResponse sendSmsResponse = smsClient.SendSms(sendSmsRequest);
-            log.info("短信发送成功：{}", sendSmsResponse.toString());
-            //加入缓存
-            redisTemplate.opsForValue().set(phone, code, 5, TimeUnit.MINUTES);
-            return "OK";
+            // 返回的resp是一个SendSmsResponse的实例，与请求对象对应
+            SendSmsResponse resp = smsClient.SendSms(sendSmsRequest);
+            SendStatus[] statusSet = resp.getSendStatusSet();
+            for (SendStatus status : statusSet) {
+                String statusCode = status.getCode();
+                if (statusCode.equals("Ok")) {
+                    log.info("短信发送成功：{}", SendSmsResponse.toJsonString(resp));
+                    // 加入缓存
+                    redisUtils.set((PHONE_CODE_KEY + phone).toLowerCase(), code,60 * 5L);
+                }
+            }
+            return "发送成功";
         } catch (TencentCloudSDKException e) {
             log.error("发送失败，或者剩余短信数量不足", e);
         }
@@ -70,8 +75,11 @@ public class TencentSmsServiceImpl implements TencentSmsService {
 
     @Override
     public Boolean validationCode(String phone, String code) {
-        final String data = (String) redisTemplate.opsForValue().get(phone);
-        if (code.equals(data)) {
+        String redisKey = (PHONE_CODE_KEY + phone).toLowerCase();
+        Object redisValue = redisUtils.get(redisKey);
+        if (code.equals(redisValue)) {
+            // 验证通过，删除缓存
+            redisUtils.del(redisKey);
             return true;
         } else {
             return false;
@@ -80,10 +88,8 @@ public class TencentSmsServiceImpl implements TencentSmsService {
 
     /**
      * 生成随机的验证码
-     *
-     * @return
      */
     public String generateCode() {
-        return RandomStringUtils.randomNumeric(LENGTH);
+        return RandomStringUtils.randomNumeric(6);
     }
 }

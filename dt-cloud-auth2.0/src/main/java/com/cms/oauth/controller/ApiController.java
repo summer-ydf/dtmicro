@@ -15,7 +15,6 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import me.chanjar.weixin.common.error.WxErrorException;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -40,14 +39,16 @@ import static com.cms.common.tool.constant.ConstantCode.WIDTH;
 @RestController
 public class ApiController {
 
-    @Autowired
-    private WxMaService wxMaService;
+    private final WxMaService wxMaService;
     private final IdGeneratorConfig idGeneratorConfig;
     private final RedisUtils redisUtils;
+    private final TencentSmsService tencentSmsService;
 
-    public ApiController(RedisUtils redisUtils, IdGeneratorConfig idGeneratorConfig) {
+    public ApiController(RedisUtils redisUtils, IdGeneratorConfig idGeneratorConfig, TencentSmsService tencentSmsService, WxMaService wxMaService) {
         this.redisUtils = redisUtils;
         this.idGeneratorConfig = idGeneratorConfig;
+        this.tencentSmsService = tencentSmsService;
+        this.wxMaService = wxMaService;
     }
 
     @ApiOperation(value = "解析code获取微信用户基础信息")
@@ -100,15 +101,11 @@ public class ApiController {
         return ResultUtil.success(idGeneratorConfig.nextId(Object.class));
     }
 
-
-    @Autowired
-    private TencentSmsService tencentSmsService;
-
-    @ApiOperation(value = "发送短信和验证")
-    @GetMapping("/send")
+    @ApiOperation(value = "腾讯云发送短信和验证")
+    @GetMapping("/anonymous/send_sms")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "phone", value = "手机号", required = true, example = "13800000000", paramType = "query", dataTypeClass = Integer.class),
-            @ApiImplicitParam(name = "code", value = "验证码验证", required = false, example = "889520", paramType = "query")})
+            @ApiImplicitParam(name = "phone", value = "手机号", required = true),
+            @ApiImplicitParam(name = "code", value = "验证码验证", required = false)})
     public ResultUtil<?> sendSms(@NotEmpty(message = "非法的手机号") @Pattern(regexp = "^1[0-9]{10}$", message = "非法的手机号") String phone, String code) {
         if (StringUtils.isNotBlank(code)) {
             if (tencentSmsService.validationCode(phone, code)) {

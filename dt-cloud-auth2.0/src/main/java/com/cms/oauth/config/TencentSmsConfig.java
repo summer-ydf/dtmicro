@@ -18,22 +18,22 @@ public class TencentSmsConfig {
     /**
      * API相关
      */
-    private static String URL ="sms.tencentcloudapi.com";
+    private static final String URL ="sms.tencentcloudapi.com";
     private static final String REGION = "ap-guangzhou";
 
     /**
      * 账号
      */
-    @Value("${tencent.sms.account.secret_id}")
-    private String SECRET_ID;
-    @Value("${tencent.sms.account.secret_key}")
-    private String SECRET_KEY;
+    @Value("${tencent.sms.secretId}")
+    private String secretId;
+    @Value("${tencent.sms.secretKey}")
+    private String secretKey;
 
     @Bean
     public SmsClient smsClient() {
         // 实例化一个认证对象，入参需要传入腾讯云账户secretId，secretKey,此处还需注意密钥对的保密
         // 密钥可前往https://console.cloud.tencent.com/cam/capi网站进行获取
-        Credential cred = new Credential(SECRET_ID, SECRET_KEY);
+        Credential cred = new Credential(secretId, secretKey);
         // 实例化一个http选项，可选的，没有特殊需求可以跳过
         HttpProfile httpProfile = new HttpProfile();
         httpProfile.setEndpoint(URL);
