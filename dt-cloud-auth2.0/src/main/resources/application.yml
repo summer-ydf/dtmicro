@@ -13,7 +13,7 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 42.192.121.230:8848
+        server-addr: 192.168.31.158:8848
         enabled: true
 management:
   endpoints:
@@ -65,6 +65,7 @@ secure:
       - /anonymous/**
       - /rsa/publicKey
       - /hello
+      - /myLogin
       - /login.html
       - /favicon.ico
 wechat:  #微信小程序配置
