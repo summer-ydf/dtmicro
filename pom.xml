@@ -22,6 +22,7 @@
         <module>dt-cloud-mall</module>
         <module>dt-cloud-auth2.0</module>
         <module>dt-cloud-gateway2.0</module>
+        <module>dt-cloud-dubbo</module>
     </modules>
 
     <!--核心版本控制-->
