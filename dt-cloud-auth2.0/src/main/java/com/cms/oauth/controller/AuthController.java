@@ -80,4 +80,15 @@ public class AuthController {
         return "login";
     }
 
+    /**
+     * 授权码模式登录回调
+     * @param code 授权码
+     * @return 返回页面
+     */
+    @RequestMapping(value = "anonymous/cmscode")
+    public String cmscode(@RequestParam("code") String code) {
+        System.out.println("获取到授权码：" + code);
+        return "success";
+    }
+
 }
