@@ -4,7 +4,7 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: 192.168.31.158:8848
+        server-addr: 127.0.0.1:8848
         enabled: true
     sentinel:
       enabled: true # sentinel开关
