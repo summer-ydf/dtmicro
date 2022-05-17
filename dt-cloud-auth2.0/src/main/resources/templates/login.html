@@ -1,14 +1,32 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 </head>
 <body>
-<div>
-    <a href="https://gitee.com/oauth/authorize?client_id=0b9b675ca37e6018dc733e6a925ed12300050c2b52a5b41094c14f8eb15ec44e&redirect_uri=http://127.0.0.1:8086/anonymous/authcode&response_type=code">
-        <span>Gitee登录</span>
-    </a>
-</div>
+<h1>OAuth2.0认证中心</h1>
+<form action="/anonymous/oauthLogin" method="post">
+    <table>
+        <tr>
+            <td>账号:</td>
+            <td>
+                <label><input type="text" name="username"/></label>
+            </td>
+        </tr>
+        <tr>
+            <td>密码:</td>
+            <td>
+                <label><input type="password" name="password"/></label>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="submit">登录</button>
+            </td>
+        </tr>
+    </table>
+</form>
 </body>
 </html>

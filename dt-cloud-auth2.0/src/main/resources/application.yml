@@ -65,7 +65,7 @@ secure:
       - /anonymous/**
       - /rsa/publicKey
       - /hello
-      - /myLogin
+      - /login
       - /login.html
       - /favicon.ico
 wechat:  #微信小程序配置

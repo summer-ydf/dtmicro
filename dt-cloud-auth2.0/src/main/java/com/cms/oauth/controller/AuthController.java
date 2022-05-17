@@ -8,7 +8,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,14 +18,23 @@ import java.util.Map;
 @Controller
 public class AuthController {
 
-    @RequestMapping(value = "/anonymous/myLogin")
+    /**
+     * Gitee第三方登录
+     * @return 返回登录页面
+     */
+    @RequestMapping(value = "/anonymous/giteeLogin")
     public String login() {
         // https://www.cnblogs.com/lzj123/p/10279007.html
         // https://gitee.com/UnityAlvin/gulimall/commit/222302f1e34f78d8f0d5045363857fb693604608
         System.out.println("返回自定义登录页面");
-        return "login";
+        return "gitee/login";
     }
 
+    /**
+     * Gitee登录回调
+     * @param code 授权码
+     * @return 返回处理成功页面
+     */
     @RequestMapping(value = "anonymous/authcode")
     public String authcode(@RequestParam("code") String code) {
         System.out.println("获取到授权码："+code);
@@ -51,8 +59,25 @@ public class AuthController {
         System.out.println("获取用户基础信息："+infoJson);
         if (StringUtils.isNotBlank(code)) {
             // 封装登录请求参数
-            return "success";
+            return "gitee/success";
         }
+        return "gitee/login";
+    }
+
+    /**
+     * 授权码模式自定义登录页面
+     * @return 返回登录页面
+     */
+    @RequestMapping(value = "/anonymous/cmsLogin")
+    public String cmsLogin() {
+        // https://www.cnblogs.com/lzj123/p/10279007.html
+        // 1、访问认证服务器获取 code
+        // GET请求 http://localhost:8086/oauth/authorize?client_id=cms-web&response_type=code&scope=all&redirect_uri=http://www.baidu.com
+        // 2、认证服务器会重定向到 login 页面让用户进行登录授权，成功之后认证服务器重定向到指定的url
+        // 3、在重定向的 url 后面会带上授权码 code，此时客户端则可以拿这个授权码 code 去换取 token
+        // POST请求 http://localhost:8086/oauth/token?client_secret=dt$pwd123&scope=all&client_id=cms-web&redirect_uri=http://www.baidu.com&code=MmdJcX&client_secret=dt$pwd123&grant_type=authorization_code
+        System.out.println("返回自定义登录页面");
         return "login";
     }
+
 }

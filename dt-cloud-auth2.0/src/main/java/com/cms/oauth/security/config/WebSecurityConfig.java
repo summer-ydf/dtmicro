@@ -60,7 +60,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticated()
                 .and()
                 .formLogin()
-                .loginPage("/myLogin") // 配置自定义登录页面（授权码模式使用）
+                .loginPage("/anonymous/cmsLogin") // 配置自定义登录页面（授权码模式使用）
+                .loginProcessingUrl("/anonymous/oauthLogin") // 配置自定义登录接口
                 .and()
                 .csrf()
                 .disable();
