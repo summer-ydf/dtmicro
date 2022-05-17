@@ -5,7 +5,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.cms.common.core.utils.HttpClientInstance;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.util.EntityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,10 +39,16 @@ public class AuthController {
         params.put("grant_type","authorization_code");
         // 获取accesstoken
         HttpClientInstance httpClientInstance = HttpClientInstance.getInstance();
-       String post = httpClientInstance.post("https://gitee.com/oauth/token", params);
-       JSONObject jsonObject = JSON.parseObject(post);
-        System.out.println("返回用户信息===========");
-        System.out.println(jsonObject);
+        String post = httpClientInstance.post("https://gitee.com/oauth/token", params);
+        JSONObject baseJson = JSON.parseObject(post);
+        System.out.println("获取accesstoken："+baseJson);
+        // 获取用户基础信息
+        String accessToken = baseJson.getString("access_token");
+        String url = "https://gitee.com/api/v5/user?access_token=%s";
+        String format_url = String.format(url, accessToken);
+        String get = httpClientInstance.get(format_url);
+        JSONObject infoJson = JSON.parseObject(get);
+        System.out.println("获取用户基础信息："+infoJson);
         if (StringUtils.isNotBlank(code)) {
             // 封装登录请求参数
             return "success";
