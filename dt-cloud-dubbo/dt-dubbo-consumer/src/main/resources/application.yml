@@ -1,5 +1,5 @@
 server:
-  port: 9901
+  port: 9902
 spring:
   main:
     allow-bean-definition-overriding: true
@@ -16,16 +16,15 @@ management:
 # Dubbo配置
 dubbo:
   application:
-    name: cms-dubbo-provider
-    register-mode: all # 新特性，注册模型：默认all，表示接口级别和应用级别都会保存，instance，应用级别，interface,接口级别
+    name: cms-dubbo-consumer
   protocol:
     name: dubbo
   registry:
     address: zookeeper://127.0.0.1:2181
 
 mybatis-plus:
-  typeAliasesPackage: com.cms.provider.entity
-  mapper-locations: classpath*:com/cms/provider/mapper/**/*.xml
+  typeAliasesPackage: com.cms.consumer.entity
+  mapper-locations: classpath*:com/cms/consumer/mapper/**/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
