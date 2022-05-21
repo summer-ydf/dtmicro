@@ -32,7 +32,7 @@ public class IdCardUserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByIdCard(String idno, String name) {
         log.info("Oauth2 登录认证中,身份证授权模式【{},{}】",idno,name);
 
-        ResultUtil<SecurityClaimsUserEntity> claimsUserResultUtil = oauthFeignClientService.loadUserByIdCardAndName(idno,name);
+        ResultUtil<SecurityClaimsUserEntity> claimsUserResultUtil = oauthFeignClientService.loadUserByIdCard(idno);
 
         log.info("Oauth2 授权回调结果【{}】",claimsUserResultUtil);
 

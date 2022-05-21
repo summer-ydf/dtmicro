@@ -1,7 +1,6 @@
 package com.cms.auth.config.handler;
 
 import com.cms.auth.config.exception.CmsOAuth2Exception;
-import com.cms.auth.domain.SecurityClaimsParams;
 import com.cms.common.core.utils.CoreWebUtils;
 import com.cms.common.tool.constant.ConstantCode;
 import com.cms.common.tool.utils.SysCmsUtils;
@@ -30,8 +29,7 @@ public class TokenAuthenticationFailureHandler implements OAuth2AuthenticationFa
         SysCmsUtils.log.info("账号密码错误异常处理：====================");
         try{
             HttpServletRequest request = CoreWebUtils.currentRequest();
-            SecurityClaimsParams params = (SecurityClaimsParams) request.getAttribute(SecurityClaimsParams.class.getName());
-            String username = params.getUsername();
+            String username = request.getParameter("username");
             // 密码超过5次错误，用户冻结15分钟
             String loginCountStr = stringRedisTemplate.opsForValue().get(ConstantCode.CACHE_LOGIN_LOCK + username);
             int lockCount = NumberUtils.toInt(loginCountStr,0) + 1;

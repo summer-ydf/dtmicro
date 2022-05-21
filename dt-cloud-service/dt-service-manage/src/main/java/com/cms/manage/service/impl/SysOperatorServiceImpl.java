@@ -43,18 +43,7 @@ public class SysOperatorServiceImpl extends ServiceImpl<SysOperatorMapper, SysOp
 
     @Override
     @Transactional(readOnly = true)
-    public ResultUtil<SecurityClaimsUserEntity> oauthAuthenticationByAccount(String account, AuthenticationIdentityEnum authenticationIdentityEnum,String name) {
-        System.out.println("获取数据库账号密码->>>"+account);
-
-        // openFeign的默认请求时长是1秒 如果一秒还没有相应 直接返回错误信息
-        try {
-            System.out.println("开始休眠");
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        System.out.println("完成休眠");
-
+    public ResultUtil<SecurityClaimsUserEntity> oauthAuthenticationByAccount(String account, AuthenticationIdentityEnum authenticationIdentityEnum) {
         String authenticationIdentity = USERNAME.getValue();
         QueryWrapper<SysOperatorEntity> queryWrapper = new QueryWrapper<>();
         switch (authenticationIdentityEnum) {
@@ -67,7 +56,7 @@ public class SysOperatorServiceImpl extends ServiceImpl<SysOperatorMapper, SysOp
                 authenticationIdentity = MOBILE.getValue();
                 break;
             case IDCARD:
-                queryWrapper.eq("idno", account).eq("name", name);
+                queryWrapper.eq("idno", account);
                 authenticationIdentity = IDCARD.getValue();
                 break;
             case OPENID:
@@ -81,7 +70,6 @@ public class SysOperatorServiceImpl extends ServiceImpl<SysOperatorMapper, SysOp
         if(!ObjectUtils.isEmpty(operator)) {
             // 查询操作员角色数据权限
             List<SysRoleDataScope> roleDataScopes = this.baseMapper.selectRoleDataScopeByUserId(operator.getId());
-            System.out.println("查询操作员角色数据权限->>>"+roleDataScopes);
             List<SysDataScopeVoEntity> roles = new ArrayList<>();
             if (!CollectionUtils.isEmpty(roleDataScopes)) {
                 for (SysRoleDataScope data : roleDataScopes) {

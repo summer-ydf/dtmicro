@@ -13,7 +13,7 @@ import com.cms.manage.entity.SysOperatorEntity;
  */
 public interface SysOperatorService extends IService<SysOperatorEntity> {
 
-    ResultUtil<SecurityClaimsUserEntity> oauthAuthenticationByAccount(String account, AuthenticationIdentityEnum authenticationIdentityEnum,String name);
+    ResultUtil<SecurityClaimsUserEntity> oauthAuthenticationByAccount(String account, AuthenticationIdentityEnum authenticationIdentityEnum);
 
     ResultUtil<IPage<SysOperatorEntity>> pageSearch(SysSearchPage request);
 

@@ -24,8 +24,8 @@ public interface OauthFeignClientService {
     @GetMapping(value = APPLICATION_MANAGE_API_AFFIX + "/loadUserByMobile")
     ResultUtil<SecurityClaimsUserEntity> loadUserByMobile(@RequestParam String mobile);
 
-    @GetMapping(value = APPLICATION_MANAGE_API_AFFIX + "/loadUserByIdCardAndName")
-    ResultUtil<SecurityClaimsUserEntity> loadUserByIdCardAndName(@RequestParam String idno, @RequestParam String name);
+    @GetMapping(value = APPLICATION_MANAGE_API_AFFIX + "/loadUserByIdCard")
+    ResultUtil<SecurityClaimsUserEntity> loadUserByIdCard(@RequestParam String idno);
 
     @GetMapping(value = APPLICATION_MANAGE_API_AFFIX + "/loadUserByOpenId")
     ResultUtil<SecurityClaimsUserEntity> loadUserByOpenId(@RequestParam String openid);

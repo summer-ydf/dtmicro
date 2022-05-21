@@ -47,22 +47,22 @@ public class FeignCmsClientController implements OauthFeignClientService, LogFei
 
     @Override
     public ResultUtil<SecurityClaimsUserEntity> loadUserByUsername(String username) {
-        return sysOperatorService.oauthAuthenticationByAccount(username,USERNAME, null);
+        return sysOperatorService.oauthAuthenticationByAccount(username,USERNAME);
     }
 
     @Override
     public ResultUtil<SecurityClaimsUserEntity> loadUserByMobile(String mobile) {
-        return sysOperatorService.oauthAuthenticationByAccount(mobile,MOBILE, null);
+        return sysOperatorService.oauthAuthenticationByAccount(mobile,MOBILE);
     }
 
     @Override
-    public ResultUtil<SecurityClaimsUserEntity> loadUserByIdCardAndName(String idno, String name) {
-        return sysOperatorService.oauthAuthenticationByAccount(idno,IDCARD, name);
+    public ResultUtil<SecurityClaimsUserEntity> loadUserByIdCard(String idno) {
+        return sysOperatorService.oauthAuthenticationByAccount(idno,IDCARD);
     }
 
     @Override
     public ResultUtil<SecurityClaimsUserEntity> loadUserByOpenId(String openid) {
-        return sysOperatorService.oauthAuthenticationByAccount(openid,OPENID, null);
+        return sysOperatorService.oauthAuthenticationByAccount(openid,OPENID);
     }
 
     @Override

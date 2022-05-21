@@ -33,7 +33,7 @@ public class OauthFeignClientFallback implements FeignFailFallback, FallbackFact
             }
 
             @Override
-            public ResultUtil<SecurityClaimsUserEntity> loadUserByIdCardAndName(String idno, String name) {
+            public ResultUtil<SecurityClaimsUserEntity> loadUserByIdCard(String idno) {
                 return fail(throwable);
             }
 

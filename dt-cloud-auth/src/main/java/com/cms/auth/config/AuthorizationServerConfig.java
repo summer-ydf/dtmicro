@@ -137,12 +137,10 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      */
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        // TODO 从jdbc查出数据来存储，会导致设置的令牌过期时间不生效
-        //clients.withClientDetails(clientDetails());
         clients.inMemory()
-                .withClient("cms")
+                .withClient("cms-admin-web")
                 .secret(new BCryptPasswordEncoder().encode("dt$pwd123"))
-                .scopes("web")
+                .scopes("all")
                 .authorizedGrantTypes("password", "refresh_token");
     }
 

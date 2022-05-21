@@ -1,7 +1,5 @@
 package com.cms.auth.config.filter;
 
-import com.alibaba.fastjson.JSON;
-import com.cms.auth.domain.SecurityClaimsParams;
 import com.cms.auth.exception.ParameterAuthenticationException;
 import com.cms.common.jdbc.utils.RedisUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -24,23 +22,17 @@ public class CmsCaptchaAuthenticationFilter extends CmsAbstractBasicAuthenticati
 
     @Override
     protected void handle(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) {
-        String claims = request.getParameter("claims");
         String code = request.getParameter("valid_code");
-        if(StringUtils.isEmpty(code)) {
+        if(StringUtils.isBlank(code)) {
             throw new ParameterAuthenticationException("缺少验证码参数");
         }
-        if(StringUtils.isEmpty(claims)) {
-            throw new ParameterAuthenticationException("缺少附加参数");
-        }
         this.validCode(code);
-        SecurityClaimsParams params = JSON.parseObject(claims,SecurityClaimsParams.class);
-        request.setAttribute(SecurityClaimsParams.class.getName(),params);
     }
 
     private void validCode(String code) {
         String inputCode = (CACHE_CODE_KEY + code).toLowerCase();
         Object redisCode = redisUtils.get((CACHE_CODE_KEY + code).toLowerCase());
-        if (!inputCode.equalsIgnoreCase((String) redisCode)) {
+        if (code.equalsIgnoreCase((String) redisCode)) {
             redisUtils.del(inputCode);
         } else {
             throw new ParameterAuthenticationException("验证码错误");

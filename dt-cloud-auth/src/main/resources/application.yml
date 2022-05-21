@@ -20,14 +20,22 @@ management:
     web:
       exposure:
         include: '*'
-# 对Feign的支持
+# OpenFeign配置
 feign:
   sentinel:
     enabled: true
   httpclient:
-    enabled: false # 关闭httpclient
+    enabled: false            # 关闭httpclient
   okhttp:
-    enabled: true  # 开启okhttp
+    enabled: true             # 开启okhttp
+  client:                     # openfeign远程访问的默认超时时间是1s，可以使用如下配置方式修改，也可以使人ribbon方式配置
+    config:
+      default:                # OpenFeign默认调用所有服务的默认超时时间,如果针对某个服务配置，可将default换成服务名称即可
+        connectTimeout: 5000  # 建立连接所用的时间，适用于网络状况正常的情况下，两端连接所需要的时间
+        readTimeout: 5000     # 指建立连接后从服务端读取到可用资源所用的时间,默认为1s
+#ribbon:                      #设置feign客户端超时时间(OpenFeign默认支持ribbon)
+#  ReadTimeout: 2000
+#  ConnectTimeout: 2000
 #SpringBoot的日志级别默认为info,大于full,导致feign的日志配置不会输出，所以加以下配置
 logging:
   level:
