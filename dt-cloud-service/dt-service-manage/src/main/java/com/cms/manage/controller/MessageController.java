@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 /**
  * @author ydf Created by 2022/4/15 10:55
  */
@@ -50,8 +52,8 @@ public class MessageController {
 
     @ApiOperation(value = "发送微信公众号模板信息")
     @PostMapping("/wx_send_message")
-    public ResultUtil<?> save(@RequestBody WxMessageEntity wxMessageEntity) {
-        return messageService.wxSendMessage(wxMessageEntity);
+    public ResultUtil<?> save(@RequestBody List<Long> receiverIds) {
+        return messageService.wxSendMessage(receiverIds);
     }
 
     @ApiOperation(value = "查询微信公众号消息日志分页")

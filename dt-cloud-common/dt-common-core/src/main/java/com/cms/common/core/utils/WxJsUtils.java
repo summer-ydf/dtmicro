@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
+ * https://mp.weixin.qq.com/debug/cgi-bin/sandboxinfo?action=showinfo&t=sandbox/index
  * @author ydf Created by 2022/4/13 10:24
  */
 public class WxJsUtils {
@@ -37,7 +38,7 @@ public class WxJsUtils {
      * @param secret 第三方用户唯一凭证密钥，即appsecret
      * @return 返回Access token，建议保存到缓存中，默认有效时长两小时（7200s）
      */
-    public JSONObject getBaseToken(String appid, String secret){
+    public static JSONObject getBaseToken(String appid, String secret){
         String url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=%s&secret=%s";
         url = String.format(url,appid,secret);
         String result = httpClientInstance.get(url);
@@ -54,7 +55,7 @@ public class WxJsUtils {
      * @param access_token 调用接口凭证
      * @return 返回用户信息列表
      */
-    public JSONObject getUsers(String access_token) {
+    public static JSONObject getUsers(String access_token) {
         String url = "https://api.weixin.qq.com/cgi-bin/user/get?access_token=%s&next_openid=";
         url = String.format(url,access_token);
         String result = httpClientInstance.get(url);
@@ -72,7 +73,7 @@ public class WxJsUtils {
      * @param openid 普通用户的标识，对当前公众号唯一
      * @return 返回用户信息
      */
-    public JSONObject getUserDetail(String access_token, String openid){
+    public static JSONObject getUserDetail(String access_token, String openid){
         String url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=%s&openid=%s&lang=zh_CN";
         url = String.format(url,access_token,openid);
         String result = httpClientInstance.get(url);
@@ -100,21 +101,27 @@ public class WxJsUtils {
         return JSON.parseObject(result);
     }
 
-    public static void main(String[] args) {
+    /**
+     * 发送消息测试模板
+     * @param token 调用接口凭证
+     * @param openid 接收者
+     * @return 返回json
+     */
+    public static JSONObject sendTemplateTest(String token,String templateid,String openid) {
         Template tem = new Template();
-        tem.setTemplate_id(template_id);
+        tem.setTemplate_id(templateid);
         tem.setTopcolor("#44b549");
         tem.setTouser(openid);
-        tem.setUrl("https://www.baidu.com");
+        tem.setUrl("https://blog.csdn.net/qq_41107231");
         Map<String, Object> paras = new HashMap<>();
         paras.put("topic", new TemplateParam("您的订单正在配送中，请及时查看快递员配送信息", "#2f1e5f"));
-        paras.put("user", new TemplateParam("严先生", "#173177"));
+        paras.put("user", new TemplateParam("XXX先生", "#173177"));
         paras.put("number", new TemplateParam(UUID.randomUUID().toString().replaceAll("-","").substring(0,12), "#2ab530"));
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         paras.put("date", new TemplateParam(simpleDateFormat.format(new Date()), "#2ab530"));
         paras.put("remark", new TemplateParam("点击详情可查看您的配送信息", "#173177"));
         tem.setData(paras);
-        JSONObject jsonObject = new WxJsUtils().sendTemplateMsg(token, tem);
+        return WxJsUtils.sendTemplateMsg(token, tem);
     }
 
     public static class Template {

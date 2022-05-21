@@ -6,6 +6,8 @@ import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.entity.MqMessageEntity;
 import com.cms.manage.entity.WxMessageEntity;
 
+import java.util.List;
+
 /**
  * @author ydf Created by 2022/4/14 16:25
  */
@@ -25,5 +27,5 @@ public interface MessageService {
 
     ResultUtil<?> deleteBathWxMessage(String[] ids);
 
-    ResultUtil<?> wxSendMessage(WxMessageEntity wxMessageEntity);
+    ResultUtil<?> wxSendMessage(List<Long> receiverIds);
 }

@@ -11,6 +11,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @author ydf Created by 2022/1/12 15:59
  */
@@ -63,6 +65,12 @@ public class SysOperatorController {
     @DeleteMapping("/update_enabled/{id}/{enabled}")
     public ResultUtil<?> updateEnabled(@PathVariable Long id, @PathVariable Boolean enabled) {
         return sysOperatorService.updateEnabled(id,enabled);
+    }
+
+    @ApiOperation(value = "获取所有操作员信息")
+    @GetMapping("/findAll")
+    public ResultUtil<List<SysOperatorEntity>> findAll() {
+        return ResultUtil.success(sysOperatorService.list());
     }
 
 }
