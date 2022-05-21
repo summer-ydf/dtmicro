@@ -6,6 +6,7 @@ import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.entity.MqMessageEntity;
 import com.cms.manage.entity.WxMessageEntity;
 import com.cms.manage.service.MessageService;
+import com.cms.manage.vo.WxMessageRequest;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -52,8 +53,8 @@ public class MessageController {
 
     @ApiOperation(value = "发送微信公众号模板信息")
     @PostMapping("/wx_send_message")
-    public ResultUtil<?> save(@RequestBody List<Long> receiverIds) {
-        return messageService.wxSendMessage(receiverIds);
+    public ResultUtil<?> save(@RequestBody WxMessageRequest wxMessageRequest) {
+        return messageService.wxSendMessage(wxMessageRequest);
     }
 
     @ApiOperation(value = "查询微信公众号消息日志分页")

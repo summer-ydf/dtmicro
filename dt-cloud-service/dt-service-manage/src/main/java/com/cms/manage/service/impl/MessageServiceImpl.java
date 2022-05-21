@@ -14,6 +14,7 @@ import com.cms.manage.entity.WxMessageEntity;
 import com.cms.manage.service.MessageService;
 import com.cms.manage.service.SysOperatorService;
 import com.cms.manage.utils.ConfigPropertyUtils;
+import com.cms.manage.vo.WxMessageRequest;
 import com.mongodb.client.result.DeleteResult;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -153,7 +154,7 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public ResultUtil<?> wxSendMessage(List<Long> receiverIds) {
+    public ResultUtil<?> wxSendMessage(WxMessageRequest wxMessageRequest) {
         // TODO 发送消息数据量过大时，可以将消息先放入消息队列中，单独的消息服务来处理
         String enabled = ConfigPropertyUtils.getConfigProperty("wx.enabled");
         String appid = ConfigPropertyUtils.getConfigProperty("wx.appid");
@@ -165,7 +166,7 @@ public class MessageServiceImpl implements MessageService {
         if (StringUtils.isBlank(appid) || StringUtils.isBlank(secret) || StringUtils.isBlank(templateid)) {
             return ResultUtil.error("公众号消息参数未配置");
         }
-        for (Long id : receiverIds) {
+        for (Long id : wxMessageRequest.getReceiverIds()) {
             String openid = null;
             SysOperatorEntity operatorEntity = sysOperatorService.getById(id);
             if (StringUtils.isNotBlank(operatorEntity.getOpenid())) {
@@ -174,32 +175,69 @@ public class MessageServiceImpl implements MessageService {
             if (StringUtils.isBlank(openid)) {
                 continue;
             }
-            // 获取token
-            String token = stringRedisTemplate.opsForValue().get(WECHAT_TOKEN_KEY + openid);
-            if (null == token) {
-                JSONObject baseToken = WxJsUtils.getBaseToken(appid, secret);
-                assert baseToken != null;
-                token = baseToken.getString("access_token");
-                stringRedisTemplate.opsForValue().set(WECHAT_TOKEN_KEY + openid,token,7200L, TimeUnit.SECONDS);
+            // TODO 根据发送渠道发送消息,后期业务复杂可以设计为策略模式，或者模板模式
+            if (wxMessageRequest.getCategory().equals(STR_ONE)) {
+                wechatSend(appid, secret, templateid, id, openid, operatorEntity);
+            }else if (wxMessageRequest.getCategory().equals(STR_TWO)) {
+                qyWechatSend(appid, secret, templateid, id, openid, operatorEntity);
             }
-            // 发送消息
-            JSONObject jsonObject = WxJsUtils.sendTemplateTest(token, templateid, openid);
-            String errcode = jsonObject.getString("errcode");
-            // 存储发送消息日志
-            WxMessageEntity message = new WxMessageEntity();
-            message.setId(String.valueOf(IdGenerator.generateId()));
-            message.setCategory(STR_ONE);
-            message.setReceiverId(String.valueOf(id));
-            message.setReceiverName(operatorEntity.getName());
-            message.setReceiverOpenid(openid);
-            message.setSendData(jsonObject.toJSONString());
-            message.setBackData(jsonObject.toJSONString());
-            message.setTempId(templateid);
-            message.setSendDate(new Date());
-            message.setStatus(errcode.equals(STR_ZERO) ? 1 : 2);
-            mongoTemplate.save(message);
-            SysCmsUtils.log.info("插入MongoDB日志信息，当前线程[{}]",Thread.currentThread().getName());
         }
         return ResultUtil.success();
+    }
+
+    private void wechatSend(String appid, String secret, String templateid, Long id, String openid, SysOperatorEntity operatorEntity) {
+        // 获取token
+        String token = stringRedisTemplate.opsForValue().get(WECHAT_TOKEN_KEY + openid);
+        if (null == token) {
+            JSONObject baseToken = WxJsUtils.getBaseToken(appid, secret);
+            assert baseToken != null;
+            token = baseToken.getString("access_token");
+            stringRedisTemplate.opsForValue().set(WECHAT_TOKEN_KEY + openid,token,7200L, TimeUnit.SECONDS);
+        }
+        // 发送消息
+        JSONObject jsonObject = WxJsUtils.sendTemplateTest(token, templateid, openid);
+        String errcode = jsonObject.getString("errcode");
+        // 存储发送消息日志
+        WxMessageEntity message = new WxMessageEntity();
+        message.setId(String.valueOf(IdGenerator.generateId()));
+        message.setCategory(STR_ONE);
+        message.setReceiverId(String.valueOf(id));
+        message.setReceiverName(operatorEntity.getName());
+        message.setReceiverOpenid(openid);
+        message.setSendData(jsonObject.toJSONString());
+        message.setBackData(jsonObject.toJSONString());
+        message.setTempId(templateid);
+        message.setSendDate(new Date());
+        message.setStatus(errcode.equals(STR_ZERO) ? 1 : 2);
+        mongoTemplate.save(message);
+        SysCmsUtils.log.info("插入MongoDB日志信息，当前线程[{}]",Thread.currentThread().getName());
+    }
+
+    private void qyWechatSend(String appid, String secret, String templateid, Long id, String openid, SysOperatorEntity operatorEntity) {
+        // 获取token
+        String token = stringRedisTemplate.opsForValue().get(QYWECHAT_TOKEN_KEY + openid);
+        if (null == token) {
+            JSONObject baseToken = WxJsUtils.getBaseToken(appid, secret);
+            assert baseToken != null;
+            token = baseToken.getString("access_token");
+            stringRedisTemplate.opsForValue().set(QYWECHAT_TOKEN_KEY + openid,token,7200L, TimeUnit.SECONDS);
+        }
+        // 发送消息
+        JSONObject jsonObject = WxJsUtils.sendTemplateTest(token, templateid, openid);
+        String errcode = jsonObject.getString("errcode");
+        // 存储发送消息日志
+        WxMessageEntity message = new WxMessageEntity();
+        message.setId(String.valueOf(IdGenerator.generateId()));
+        message.setCategory(STR_ONE);
+        message.setReceiverId(String.valueOf(id));
+        message.setReceiverName(operatorEntity.getName());
+        message.setReceiverOpenid(openid);
+        message.setSendData(jsonObject.toJSONString());
+        message.setBackData(jsonObject.toJSONString());
+        message.setTempId(templateid);
+        message.setSendDate(new Date());
+        message.setStatus(errcode.equals(STR_ZERO) ? 1 : 2);
+        mongoTemplate.save(message);
+        SysCmsUtils.log.info("插入MongoDB日志信息，当前线程[{}]",Thread.currentThread().getName());
     }
 }

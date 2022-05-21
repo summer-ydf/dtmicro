@@ -123,6 +123,7 @@ public class ConstantCode {
     public static final String PHONE_CODE_KEY = CMS_KEY_PREX + "auth:phone:code:";
     // 操作员消息推送公众号Token
     public static final String WECHAT_TOKEN_KEY = CMS_KEY_PREX + "wx:token:code:";
+    public static final String QYWECHAT_TOKEN_KEY = CMS_KEY_PREX + "qywx:token:code:";
 
     // OAuth2客户端初始化常量
     public static final String OAUTH_CLIENT_ID = "cms";

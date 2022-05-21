@@ -5,6 +5,7 @@ import com.cms.common.core.domain.SysSearchPage;
 import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.entity.MqMessageEntity;
 import com.cms.manage.entity.WxMessageEntity;
+import com.cms.manage.vo.WxMessageRequest;
 
 import java.util.List;
 
@@ -27,5 +28,5 @@ public interface MessageService {
 
     ResultUtil<?> deleteBathWxMessage(String[] ids);
 
-    ResultUtil<?> wxSendMessage(List<Long> receiverIds);
+    ResultUtil<?> wxSendMessage(WxMessageRequest wxMessageRequest);
 }
