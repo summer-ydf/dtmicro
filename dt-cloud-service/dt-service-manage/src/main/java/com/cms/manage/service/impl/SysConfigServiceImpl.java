@@ -12,6 +12,7 @@ import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.entity.SysConfigEntity;
 import com.cms.manage.mapper.SysConfigMapper;
 import com.cms.manage.service.SysConfigService;
+import com.cms.manage.utils.ConfigPropertyUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
@@ -19,26 +20,15 @@ import org.springframework.util.ObjectUtils;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.cms.common.tool.constant.ConstantCode.EHCACHE_CONFIG_KEY;
+import static com.cms.common.tool.constant.ConstantCode.EHCACHE_CONFIG_NAME;
+
 /**
  * @author DT
  * @date 2022/4/17 13:47
  */
 @Service
 public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfigEntity> implements SysConfigService {
-
-    private static final String DEFAULT_CONFIG = "default_config";
-    private static final String CACHE_SETTINGS = "cache_settings";
-
-    @Override
-    public Params configParams() {
-        Params cache = (Params)CacheUtils.get(CACHE_SETTINGS,DEFAULT_CONFIG);
-        if(cache == null) {
-            List<SysConfig> configs = this.baseMapper.selectConfigList();
-            cache = SettingBuilders.settingMap(configs);
-            CacheUtils.put(CACHE_SETTINGS,DEFAULT_CONFIG,cache);
-        }
-        return cache;
-    }
 
     @Override
     public ResultUtil<?> listConfigs() {
@@ -59,7 +49,7 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
     @Override
     public ResultUtil<?> saveConfigs(List<SysConfig> sysConfigs) {
         // 缓存里面取出旧的数据
-        Params params = configParams();
+        Params params = ConfigPropertyUtils.params();
         if (!CollectionUtils.isEmpty(sysConfigs)) {
             // 更新数据库
             for (SysConfig c : sysConfigs) {
@@ -78,7 +68,7 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
                 }
             }
             // 删除缓存中的旧数据
-            CacheUtils.remove(CACHE_SETTINGS, DEFAULT_CONFIG);
+            CacheUtils.remove(EHCACHE_CONFIG_NAME, EHCACHE_CONFIG_KEY);
             // 参数回调
             List<SettingModel> models = SettingBuilders.settingModel(sysConfigs);
             for (SettingModel model : models) {
@@ -88,5 +78,10 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
             }
         }
         return ResultUtil.success();
+    }
+
+    @Override
+    public List<SysConfig> selectConfigList() {
+        return this.baseMapper.selectConfigList();
     }
 }

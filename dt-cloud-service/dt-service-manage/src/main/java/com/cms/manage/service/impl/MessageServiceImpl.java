@@ -8,6 +8,7 @@ import com.cms.common.tool.utils.SysCmsUtils;
 import com.cms.manage.entity.MqMessageEntity;
 import com.cms.manage.entity.WxMessageEntity;
 import com.cms.manage.service.MessageService;
+import com.cms.manage.utils.ConfigPropertyUtils;
 import com.mongodb.client.result.DeleteResult;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -123,7 +124,7 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public ResultUtil<?> deleteWxMessageById(String id) {
         WxMessageEntity wxMessageEntity = mongoTemplate.findById(id, WxMessageEntity.class);
-        System.out.println("查询到的数据:"+wxMessageEntity);
+        SysCmsUtils.log.info("查询到Mongodb的数据:{}",wxMessageEntity);
         if (!ObjectUtils.isEmpty(wxMessageEntity)) {
             mongoTemplate.remove(wxMessageEntity);
         }
@@ -139,7 +140,10 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public ResultUtil<?> wxSendMessage(WxMessageEntity wxMessageEntity) {
-        //mongoTemplate.save(wxMessageEntity);
+        // TODO 发送消息数据量过大时，可以将消息先放入消息队列中，单独的消息服务来处理
+        String configProperty = ConfigPropertyUtils.getConfigProperty("wx.appid");
+        mongoTemplate.save(wxMessageEntity);
+        SysCmsUtils.log.info("插入MongoDB日志信息，当前线程[{}]",Thread.currentThread().getName());
         return ResultUtil.success();
     }
 }

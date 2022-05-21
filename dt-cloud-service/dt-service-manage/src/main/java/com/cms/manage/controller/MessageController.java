@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * @author ydf Created by 2022/4/15 10:55
  */
-@Api(tags = "MQ信息日志API")
+@Api(tags = "信息日志API")
 @RestController
 @RequestMapping("/message")
 public class MessageController {

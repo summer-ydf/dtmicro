@@ -14,9 +14,9 @@ import java.util.List;
  */
 public interface SysConfigService extends IService<SysConfigEntity> {
 
-    Params configParams();
-
     ResultUtil<?> listConfigs();
 
     ResultUtil<?> saveConfigs(List<SysConfig> sysConfigs);
+
+    List<SysConfig> selectConfigList();
 }

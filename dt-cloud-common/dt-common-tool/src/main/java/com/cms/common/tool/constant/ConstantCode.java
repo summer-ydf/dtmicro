@@ -29,6 +29,12 @@ public class ConstantCode {
     public static final Long KAPTCHA_EXP_TIME = 60 * 3L;
 
     /**
+     * EHCACHE 缓存常量
+     */
+    public static final String EHCACHE_CONFIG_KEY = "default_config";
+    public static final String EHCACHE_CONFIG_NAME = "cache_settings";
+
+    /**
      * 密码错误缓存常量
      */
     public static final String LOGIN_LOCK = "dt::login::";
