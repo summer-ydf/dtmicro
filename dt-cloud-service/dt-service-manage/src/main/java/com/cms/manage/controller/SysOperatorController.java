@@ -73,4 +73,12 @@ public class SysOperatorController {
         return ResultUtil.success(sysOperatorService.list());
     }
 
+    @Log(title = "更新个人信息日志记录", businessType = BusinessType.UPDATE)
+    @ApiOperation(value = "更新个人信息")
+    @PostMapping("/updateMyInfo")
+    public ResultUtil<SysOperatorEntity> updateMyInfo(@RequestBody SysOperatorEntity request) {
+        sysOperatorService.updateById(request);
+        return ResultUtil.success();
+    }
+
 }
