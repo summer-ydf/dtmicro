@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 模型实体对象
  * @author DT辰白
  * @date 2022/4/17 14:42
  */
@@ -15,28 +16,56 @@ import java.util.List;
 @Getter
 @Setter
 public class SettingModel {
-   
+
+    /**
+     * key
+     */
     private String key;
-    
+
+    /**
+     * 标题
+     */
     private String title;
-    
+
+    /**
+     * 输入提示
+     */
     private String placeholder;
-    
+
+    /**
+     * 值
+     */
     private Object value;
-   
+
+    /**
+     * 类型
+     */
     private String type = "input";
-   
+
+    /**
+     * 数据集合
+     */
     private List data = new ArrayList();
-   
-    private int pub = 1;//是否公开，1是，0否
 
-    private boolean encrypt = true;//是否加密存储
+    /**
+     * 是否公开，1是，0否
+     */
+    private int pub = 1;
 
-    private String rettype;//返回类型
+    /**
+     * 是否加密存储
+     */
+    private boolean encrypt = true;
 
-    private SettingModelDataLoader loader;
-   
-    private SettingModelDataCallBacker callbacker; // 回调
+    /**
+     * 返回类型
+     */
+    private String rettype;
+
+    /**
+     * 回调
+     */
+    private SettingModelDataCallBacker callbacker;
 
     public SettingModel(String key, String title, String placeholder) {
         this.key = key;
@@ -92,12 +121,4 @@ public class SettingModel {
         this.encrypt = encrypt;
     }
 
-    public SettingModel(String key, String title, String placeholder, String type, SettingModelDataLoader loader) {
-        this(key, title, placeholder);
-        this.type = type;
-        this.loader = loader;
-        if (this.type.equals("select")) {
-            this.value = new ArrayList<>();
-        }
-    }
 }

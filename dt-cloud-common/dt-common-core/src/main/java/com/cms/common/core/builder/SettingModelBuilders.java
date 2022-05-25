@@ -7,13 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * 构建模型类
  * @author DT辰白
  * @date 2022/4/17 14:43
  */
 @NoArgsConstructor
 public class SettingModelBuilders implements Serializable {
 
-    private List<SettingModel> models = new ArrayList<>();
+    private final List<SettingModel> models = new ArrayList<>();
 
     public SettingModelBuilders buildModel(String key, String title, String placeholder){
         models.add(new SettingModel(key,title,placeholder));
@@ -50,11 +51,6 @@ public class SettingModelBuilders implements Serializable {
 
     public SettingModelBuilders buildModel(String key, String title, String placeholder, String type, boolean encrypt){
         models.add(new SettingModel(key,title,placeholder,type,encrypt));
-        return this;
-    }
-
-    public SettingModelBuilders buildModel(String key, String title, String placeholder, String type, SettingModelDataLoader loader){
-        models.add(new SettingModel(key,title,placeholder,type,loader));
         return this;
     }
 
