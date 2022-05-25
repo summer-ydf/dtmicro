@@ -7,7 +7,7 @@ import org.springframework.util.ObjectUtils;
 
 /**
  * 登录成功处理器
- * @author ydf Created by 2022/5/9 17:49
+ * @author DT辰白 Created by 2022/5/9 17:49
  */
 @Component
 public class AuthenticationSuccessEventListener implements ApplicationListener<AuthenticationSuccessEvent> {

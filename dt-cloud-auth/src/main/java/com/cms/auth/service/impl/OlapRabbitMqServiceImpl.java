@@ -21,7 +21,7 @@ import java.time.format.DateTimeFormatter;
 import static com.cms.common.tool.constant.ConstantCode.RABBITMQ_LOG_TOPIC_EXCHANGE;
 
 /**
- * @author ydf Created by 2022/1/25 13:58
+ * @author DT辰白 Created by 2022/1/25 13:58
  */
 @Service
 public class OlapRabbitMqServiceImpl implements OlapRabbitMqService {

@@ -7,7 +7,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 /**
- * @author ydf Created by 2022/2/11 15:46
+ * @author DT辰白 Created by 2022/2/11 15:46
  */
 @Service
 public class AsyncLogService {

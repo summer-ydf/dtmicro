@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * 系统角色服务接口
- * @author DT
+ * @author DT辰白
  * @date 2021/6/2 22:19
  */
 public interface SysRoleService extends IService<SysRoleEntity> {

@@ -13,7 +13,7 @@ import org.springframework.security.oauth2.provider.error.WebResponseExceptionTr
 
 /**
  * OAuth2通用异常处理
- * @author ydf Created by 2022/4/28 10:29
+ * @author DT辰白 Created by 2022/4/28 10:29
  */
 @Slf4j
 public class OAuthWebResponseExceptionTranslator implements WebResponseExceptionTranslator {

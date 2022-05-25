@@ -7,7 +7,7 @@ import com.cms.manage.entity.SysConfigEntity;
 import java.util.List;
 
 /**
- * @author DT
+ * @author DT辰白
  * @date 2022/4/17 13:48
  */
 public interface SysConfigMapper extends BaseMapper<SysConfigEntity> {

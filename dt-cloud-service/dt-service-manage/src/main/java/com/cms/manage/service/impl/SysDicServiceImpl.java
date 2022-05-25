@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 /**
- * @author ydf Created by 2022/3/30 11:19
+ * @author DT辰白 Created by 2022/3/30 11:19
  */
 @Service
 public class SysDicServiceImpl extends ServiceImpl<SysDicMapper, SysDicEntity> implements SysDicService {

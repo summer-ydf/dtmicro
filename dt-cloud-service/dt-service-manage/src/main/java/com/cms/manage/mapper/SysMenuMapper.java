@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
- * @author ydf Created by 2022/2/17 15:51
+ * @author DT辰白 Created by 2022/2/17 15:51
  */
 public interface SysMenuMapper extends BaseMapper<SysMenuEntity> {
 

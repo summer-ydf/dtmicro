@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import static com.cms.common.tool.constant.ConstantCode.GATEWAY_AUTHORIZATION;
 
 /**
- * @author ydf Created by 2022/1/22 15:14
+ * @author DT辰白 Created by 2022/1/22 15:14
  */
 public class ApiCallUtils {
 

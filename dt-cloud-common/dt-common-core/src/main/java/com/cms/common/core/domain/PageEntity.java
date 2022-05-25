@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 /**
  * 分页查询基础实体类
- * @author DT
+ * @author DT辰白
  * @date 2021/6/12 11:29
  */
 @Data

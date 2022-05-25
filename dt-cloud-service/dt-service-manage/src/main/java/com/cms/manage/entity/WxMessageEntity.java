@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @author ydf Created by 2022/4/15 17:24
+ * @author DT辰白 Created by 2022/4/15 17:24
  */
 @Data
 @Document(collection = "wx_message_record")

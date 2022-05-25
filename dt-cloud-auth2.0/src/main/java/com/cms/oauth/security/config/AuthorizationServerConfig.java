@@ -47,7 +47,7 @@ import java.util.Map;
 
 /**
  * Oauth2.0认证授权配置类
- * @author ydf Created by 2022/4/25 18:58
+ * @author DT辰白 Created by 2022/4/25 18:58
  */
 @Configuration
 @EnableAuthorizationServer

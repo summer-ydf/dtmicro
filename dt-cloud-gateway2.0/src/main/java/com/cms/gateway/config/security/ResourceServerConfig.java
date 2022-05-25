@@ -34,7 +34,7 @@ import java.util.List;
 
 /**
  * 资源服务器配置类
- * @author ydf Created by 2022/4/26 10:16
+ * @author DT辰白 Created by 2022/4/26 10:16
  */
 @Slf4j
 @ConfigurationProperties(prefix = "security")

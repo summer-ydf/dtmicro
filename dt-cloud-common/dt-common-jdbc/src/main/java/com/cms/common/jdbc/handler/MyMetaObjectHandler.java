@@ -9,7 +9,7 @@ import java.util.Date;
 
 /**
  * mybatis-plus 自动填充配置
- * @author ydf Created by 2022/2/14 10:07
+ * @author DT辰白 Created by 2022/2/14 10:07
  */
 @CommonsLog
 @Component

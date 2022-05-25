@@ -2,7 +2,7 @@ package com.cms.common.tool.constant;
 
 /**
  * 日志类型常量代码
- * @author ydf Created by 2021/11/25 11:16
+ * @author DT辰白 Created by 2021/11/25 11:16
  */
 public class ConstantLogTypeCode {
 

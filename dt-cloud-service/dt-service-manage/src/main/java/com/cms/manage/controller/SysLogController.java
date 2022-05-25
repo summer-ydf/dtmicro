@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @author DT
+ * @author DT辰白
  * @date 2022/3/24 21:53
  */
 @Api(tags = "日志管理API")

@@ -12,7 +12,7 @@ import static com.cms.common.tool.constant.ConstantCode.BASE_CONFIG_THEME_TYPE;
 
 /**
  * 系统配置常量代码
- * @author ydf Created by 2021/11/25 11:14
+ * @author DT辰白 Created by 2021/11/25 11:14
  */
 public class ConstantConfigCode {
 

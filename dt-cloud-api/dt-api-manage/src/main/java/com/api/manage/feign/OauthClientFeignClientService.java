@@ -12,7 +12,7 @@ import static com.api.common.ApiConstants.APPLICATION_MANAGE_API_AFFIX;
 import static com.api.common.ApiConstants.APPLICATION_NAME_MANAGE;
 
 /**
- * @author ydf Created by 2022/4/28 14:51
+ * @author DT辰白 Created by 2022/4/28 14:51
  */
 @Service
 @FeignClient(value = APPLICATION_NAME_MANAGE, fallbackFactory = OauthClientFeignClientFallback.class)

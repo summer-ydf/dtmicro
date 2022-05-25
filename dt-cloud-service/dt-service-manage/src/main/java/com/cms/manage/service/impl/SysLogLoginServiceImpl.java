@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  * 系统登录日志数据实现类
- * @author DT
+ * @author DT辰白
  * @date 2021/11/20 21:28
  */
 @CommonsLog

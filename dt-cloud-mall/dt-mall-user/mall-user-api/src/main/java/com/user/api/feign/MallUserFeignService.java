@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
- * @author ydf Created by 2021/11/23 15:46
+ * @author DT辰白 Created by 2021/11/23 15:46
  */
 @Service
 @FeignClient(value = "cms-mall-user",fallbackFactory = MallUserFeignClientFallback.class)

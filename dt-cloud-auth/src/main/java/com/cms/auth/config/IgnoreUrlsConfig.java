@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * 用于配置白名单资源路径
- * @author DT
+ * @author DT辰白
  * @date 2021/8/28 14:17
  */
 @Getter

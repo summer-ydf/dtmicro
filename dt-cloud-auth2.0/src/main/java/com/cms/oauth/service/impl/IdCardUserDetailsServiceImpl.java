@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * 身份证端认证方式
- * @author ydf Created by 2022/4/25 18:59
+ * @author DT辰白 Created by 2022/4/25 18:59
  */
 @Slf4j
 @Service("idCardUserDetailsService")

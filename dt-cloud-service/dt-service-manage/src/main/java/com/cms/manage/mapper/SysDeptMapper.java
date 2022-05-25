@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * 系统部门数据接口
- * @author DT
+ * @author DT辰白
  * @date 2021/6/13 12:03
  */
 public interface SysDeptMapper extends BaseMapper<SysDepartmentEntity> {

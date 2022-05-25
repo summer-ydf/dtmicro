@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * 当一个类实现了这个接口（ApplicationContextAware）之后，这个类就可以方便获得ApplicationContext中的所有bean
- * @author DT
+ * @author DT辰白
  * @date 2022/5/21 19:23
  */
 @Component("configPropertyUtils")

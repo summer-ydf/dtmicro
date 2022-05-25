@@ -18,7 +18,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import javax.servlet.MultipartConfigElement;
 
 /**
- * @author ydf Created by 2022/4/7 10:06
+ * @author DT辰白 Created by 2022/4/7 10:06
  */
 @SpringBootApplication
 @EnableSwagger2

@@ -10,7 +10,7 @@ import com.cms.manage.entity.SysLogOperatorEntity;
 import com.cms.manage.entity.SysRoleEntity;
 
 /**
- * @author ydf Created by 2022/1/7 17:22
+ * @author DT辰白 Created by 2022/1/7 17:22
  */
 public interface SysLogOperatorService extends IService<SysLogOperatorEntity> {
 

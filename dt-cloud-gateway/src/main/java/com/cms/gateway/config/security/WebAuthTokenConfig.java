@@ -11,7 +11,7 @@ import org.springframework.security.rsa.crypto.KeyStoreKeyFactory;
 import java.security.KeyPair;
 
 /**
- * @author ydf Created by 2022/1/10 12:31
+ * @author DT辰白 Created by 2022/1/10 12:31
  */
 @Configuration
 public class WebAuthTokenConfig {

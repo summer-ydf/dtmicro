@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * @author ydf Created by 2022/4/28 14:50
+ * @author DT辰白 Created by 2022/4/28 14:50
  */
 public class OauthClientFeignClientFallback implements FeignFailFallback, FallbackFactory<OauthClientFeignClientService> {
 

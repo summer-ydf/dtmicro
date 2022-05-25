@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
- * @author ydf Created by 2022/1/7 16:25
+ * @author DT辰白 Created by 2022/1/7 16:25
  */
 @Component
 public class MessageFeignClientFallback implements FeignFailFallback, FallbackFactory<MessageFeignClientService> {

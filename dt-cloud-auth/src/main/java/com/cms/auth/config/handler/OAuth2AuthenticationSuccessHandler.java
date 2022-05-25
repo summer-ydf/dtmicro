@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * @author ydf Created by 2022/1/7 14:05
+ * @author DT辰白 Created by 2022/1/7 14:05
  */
 @FunctionalInterface
 public interface OAuth2AuthenticationSuccessHandler {

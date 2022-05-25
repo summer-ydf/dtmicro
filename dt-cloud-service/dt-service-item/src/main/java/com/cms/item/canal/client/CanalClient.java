@@ -10,7 +10,7 @@ import org.springframework.util.Assert;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @author ydf Created by 2021/10/11 15:03
+ * @author DT辰白 Created by 2021/10/11 15:03
  */
 @CommonsLog
 public class CanalClient implements ClientService {

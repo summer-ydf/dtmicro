@@ -7,8 +7,8 @@ import com.cms.manage.consumer.JobSettingCallBacker;
 import java.util.Arrays;
 
 /**
- * 系统配置
- * @author ydf Created by 2022/4/19 15:36
+ * 系统初始化配置
+ * @author DT辰白 Created by 2022/4/19 15:36
  */
 public class ConfigConstants {
 

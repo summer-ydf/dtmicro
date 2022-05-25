@@ -3,7 +3,7 @@ package com.cms.auth.config.exception;
 import org.springframework.security.core.AuthenticationException;
 
 /**
- * @author ydf Created by 2022/1/6 18:06
+ * @author DT辰白 Created by 2022/1/6 18:06
  */
 public class TokenAuthenticationException extends AuthenticationException {
 

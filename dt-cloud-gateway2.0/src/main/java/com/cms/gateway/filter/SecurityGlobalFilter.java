@@ -26,7 +26,7 @@ import java.net.URLEncoder;
 
 /**
  * 网关拦截器配置类
- * @author ydf Created by 2022/4/26 10:21
+ * @author DT辰白 Created by 2022/4/26 10:21
  */
 @Component
 @Slf4j

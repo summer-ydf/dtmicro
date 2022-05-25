@@ -8,7 +8,7 @@ import java.util.Map;
 
 /**
  * 分页、查询条件参数
- * @author ydf Created by 2022/1/13 13:56
+ * @author DT辰白 Created by 2022/1/13 13:56
  */
 @Data
 @EqualsAndHashCode(callSuper = true)

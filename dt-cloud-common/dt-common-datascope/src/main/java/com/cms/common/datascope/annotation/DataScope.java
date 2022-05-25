@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 
 /**
  * 角色数据权限过滤注解
- * @author ydf Created by 2022/3/18 17:27
+ * @author DT辰白 Created by 2022/3/18 17:27
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

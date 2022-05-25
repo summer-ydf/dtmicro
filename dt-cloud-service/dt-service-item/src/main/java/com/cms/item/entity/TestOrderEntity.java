@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 /**
- * @author ydf Created by 2021/12/22 12:40
+ * @author DT辰白 Created by 2021/12/22 12:40
  */
 @Data
 @TableName("sys_order")

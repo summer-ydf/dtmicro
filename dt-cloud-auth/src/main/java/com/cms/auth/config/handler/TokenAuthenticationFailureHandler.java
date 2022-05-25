@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 账号密码错误异常处理
- * @author ydf Created by 2022/1/6 15:02
+ * @author DT辰白 Created by 2022/1/6 15:02
  */
 public class TokenAuthenticationFailureHandler implements OAuth2AuthenticationFailureHandler {
 

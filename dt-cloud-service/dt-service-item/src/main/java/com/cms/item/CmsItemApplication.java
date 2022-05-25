@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * 核心模块主启动
- * @author ydf Created by 2021/11/23 14:54
+ * @author DT辰白 Created by 2021/11/23 14:54
  */
 @SpringBootApplication(exclude = {SeataFeignClientAutoConfiguration.class, DataSourceAutoConfiguration.class})
 @EnableTransactionManagement

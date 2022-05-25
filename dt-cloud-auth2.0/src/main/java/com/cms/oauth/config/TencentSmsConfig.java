@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * 腾讯云短信服务参数配置
- * @author ydf Created by 2022/5/12 17:19
+ * @author DT辰白 Created by 2022/5/12 17:19
  */
 @Configuration
 public class TencentSmsConfig {

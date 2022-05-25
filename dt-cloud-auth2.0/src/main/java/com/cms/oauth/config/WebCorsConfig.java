@@ -7,7 +7,7 @@ import org.springframework.web.filter.CorsFilter;
 
 /**
  * 处理前后端请求跨越
- * @author ydf Created by 2022/5/17 15:38
+ * @author DT辰白 Created by 2022/5/17 15:38
  */
 public class WebCorsConfig {
 

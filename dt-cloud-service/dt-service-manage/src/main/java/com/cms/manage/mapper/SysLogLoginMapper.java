@@ -9,7 +9,7 @@ import com.cms.manage.entity.SysLogLoginEntity;
 
 /**
  * 系统登录日志数据接口
- * @author DT
+ * @author DT辰白
  * @date 2021/11/20 21:29
  */
 public interface SysLogLoginMapper extends BaseMapper<SysLogLoginEntity> {

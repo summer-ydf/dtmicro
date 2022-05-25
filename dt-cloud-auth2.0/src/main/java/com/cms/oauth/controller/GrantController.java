@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
- * @author ydf Created by 2022/5/17 15:59
+ * @author DT辰白 Created by 2022/5/17 15:59
  */
 @Controller
 @SessionAttributes("authorizationRequest")

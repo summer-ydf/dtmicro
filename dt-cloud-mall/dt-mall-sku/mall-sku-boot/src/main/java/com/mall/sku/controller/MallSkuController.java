@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @author ydf Created by 2021/12/24 11:28
+ * @author DT辰白 Created by 2021/12/24 11:28
  */
 @RestController
 @RequestMapping(value = "sku")

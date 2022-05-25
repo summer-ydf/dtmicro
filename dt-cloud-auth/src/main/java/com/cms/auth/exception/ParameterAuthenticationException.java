@@ -3,7 +3,7 @@ package com.cms.auth.exception;
 import org.springframework.security.core.AuthenticationException;
 
 /**
- * @author ydf Created by 2022/1/6 14:11
+ * @author DT辰白 Created by 2022/1/6 14:11
  */
 public class ParameterAuthenticationException extends AuthenticationException {
 

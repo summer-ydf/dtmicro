@@ -9,7 +9,7 @@ import com.cms.manage.entity.SysConfigEntity;
 import java.util.List;
 
 /**
- * @author DT
+ * @author DT辰白
  * @date 2022/4/17 13:46
  */
 public interface SysConfigService extends IService<SysConfigEntity> {

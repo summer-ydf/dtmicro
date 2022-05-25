@@ -13,7 +13,7 @@ import static com.cms.common.tool.constant.ConstantCode.CACHE_LOGIN_TOKEN;
 
 /**
  * Token令牌存储策略，Redis存储
- * @author ydf Created by 2022/5/5 14:18
+ * @author DT辰白 Created by 2022/5/5 14:18
  */
 public class CustomJwtTokenStore extends JwtTokenStore {
 

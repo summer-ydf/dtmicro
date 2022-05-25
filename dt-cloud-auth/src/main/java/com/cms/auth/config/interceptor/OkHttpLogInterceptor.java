@@ -9,7 +9,7 @@ import java.io.IOException;
 
 /**
  * 日志拦截器
- * @author ydf Created by 2022/4/21 17:48
+ * @author DT辰白 Created by 2022/4/21 17:48
  */
 @Slf4j
 public class OkHttpLogInterceptor implements Interceptor {

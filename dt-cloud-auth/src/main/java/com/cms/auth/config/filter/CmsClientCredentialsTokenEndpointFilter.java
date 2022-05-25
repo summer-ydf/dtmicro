@@ -7,7 +7,7 @@ import org.springframework.security.web.AuthenticationEntryPoint;
 
 /**
  * 重写filter实现客户端自定义异常处理
- * @author DT
+ * @author DT辰白
  * @date 2022/1/6 20:16
  */
 public class CmsClientCredentialsTokenEndpointFilter extends ClientCredentialsTokenEndpointFilter {

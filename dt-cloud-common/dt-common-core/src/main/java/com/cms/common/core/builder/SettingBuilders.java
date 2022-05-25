@@ -9,15 +9,17 @@ import org.apache.commons.lang.StringUtils;
 import java.util.*;
 
 /**
- * @author DT
- * @date 2022/4/17 14:41
+ * 配置模型类
+ * @author DT辰白 Created by 2022/4/19 15:36
  */
 @Data
 public class SettingBuilders {
 
     private static List<SettingModels> list = new ArrayList<>();
-    private static final String en_key="klkskhiioiow0993829848398479e";
-    private static final String en_iv="8982983jklskdhy8iiowieoiwhhuu";
+    // 加密秘钥
+    private static final String en_key = "klkskhiioiow0993829848398479e";
+    // 偏移量
+    private static final String en_iv = "8982983jklskdhy8iiowieoiwhhuu";
 
 
     public static List<SettingModels> values(){

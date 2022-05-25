@@ -3,7 +3,7 @@ package com.cms.common.tool.domain;
 import lombok.Data;
 
 /**
- * @author ydf Created by 2022/4/28 13:55
+ * @author DT辰白 Created by 2022/4/28 13:55
  */
 @Data
 public class SysOauthClientVoEntity {

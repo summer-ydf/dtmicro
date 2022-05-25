@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @author ydf Created by 2021/12/24 11:46
+ * @author DT辰白 Created by 2021/12/24 11:46
  */
 @RestController
 public class MallUserController implements MallUserFeignService {

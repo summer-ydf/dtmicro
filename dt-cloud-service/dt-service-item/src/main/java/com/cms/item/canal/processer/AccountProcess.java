@@ -5,7 +5,7 @@ import com.cms.item.canal.annotation.Canal;
 import com.cms.item.canal.service.MessageProcess;
 
 /**
- * @author ydf Created by 2021/10/11 15:46
+ * @author DT辰白 Created by 2021/10/11 15:46
  */
 @Canal(table = "t_school_test1")
 public class AccountProcess implements MessageProcess {

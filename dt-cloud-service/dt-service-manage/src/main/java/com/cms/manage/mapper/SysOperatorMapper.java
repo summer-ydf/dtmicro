@@ -13,7 +13,7 @@ import java.util.List;
 
 
 /**
- * @author ydf Created by 2022/1/7 17:23
+ * @author DT辰白 Created by 2022/1/7 17:23
  */
 public interface SysOperatorMapper extends BaseMapper<SysOperatorEntity> {
 

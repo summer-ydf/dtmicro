@@ -7,7 +7,7 @@ import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.entity.SysDicEntity;
 
 /**
- * @author ydf Created by 2022/3/30 11:19
+ * @author DT辰白 Created by 2022/3/30 11:19
  */
 public interface SysDicService extends IService<SysDicEntity> {
 

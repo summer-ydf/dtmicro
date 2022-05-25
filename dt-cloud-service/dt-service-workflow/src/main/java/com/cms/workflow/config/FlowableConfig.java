@@ -5,7 +5,7 @@ import org.flowable.spring.boot.EngineConfigurationConfigurer;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * @author ydf Created by 2021/12/1 16:43
+ * @author DT辰白 Created by 2021/12/1 16:43
  */
 @Configuration
 public class FlowableConfig implements EngineConfigurationConfigurer<SpringProcessEngineConfiguration> {

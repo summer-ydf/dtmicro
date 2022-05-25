@@ -4,7 +4,7 @@ import org.springframework.security.core.AuthenticationException;
 
 /**
  * 参数异常
- * @author ydf Created by 2022/4/28 10:29
+ * @author DT辰白 Created by 2022/4/28 10:29
  */
 public class ParameterAuthenticationException extends AuthenticationException {
 

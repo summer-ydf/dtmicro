@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * 系统部门服务接口
- * @author DT
+ * @author DT辰白
  * @date 2021/6/13 12:03
  */
 public interface SysDeptService extends IService<SysDepartmentEntity> {

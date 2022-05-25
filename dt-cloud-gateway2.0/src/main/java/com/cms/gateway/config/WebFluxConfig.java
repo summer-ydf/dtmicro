@@ -15,7 +15,7 @@ import org.springframework.web.reactive.config.WebFluxConfigurer;
 
 /**
  * 开启WebFlux相关配置
- * @author ydf Created by 2022/1/10 12:35
+ * @author DT辰白 Created by 2022/1/10 12:35
  */
 @Configuration
 @EnableWebFlux

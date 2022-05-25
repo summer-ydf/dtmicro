@@ -33,7 +33,7 @@ import static com.cms.common.tool.constant.ConstantCode.IMG_JPG;
 import static com.cms.common.tool.constant.ConstantCode.WIDTH;
 
 /**
- * @author ydf Created by 2022/4/26 12:36
+ * @author DT辰白 Created by 2022/4/26 12:36
  */
 @Slf4j
 @RestController

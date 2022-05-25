@@ -26,7 +26,7 @@ import static com.cms.common.tool.constant.ConstantCode.CACHE_CODE_KEY;
 
 /**
  * 验证码授权者
- * @author ydf Created by 2022/4/26 16:05
+ * @author DT辰白 Created by 2022/4/26 16:05
  */
 public class CaptchaTokenGranter extends AbstractTokenGranter {
 

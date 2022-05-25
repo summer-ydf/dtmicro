@@ -12,7 +12,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 
 /**
  * Swagger2配置类 localhost:xxx/doc.html
- * @author DT
+ * @author DT辰白
  * @date 2021/6/3 21:41
  */
 @Configuration

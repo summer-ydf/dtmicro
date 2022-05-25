@@ -13,7 +13,7 @@ import static com.cms.common.tool.constant.ConstantCode.CACHE_CODE_KEY;
 
 /**
  * 验证码校验
- * @author ydf Created by 2022/1/6 14:09
+ * @author DT辰白 Created by 2022/1/6 14:09
  */
 public class CmsCaptchaAuthenticationFilter extends CmsAbstractBasicAuthenticationFilter {
 

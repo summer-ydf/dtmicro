@@ -7,7 +7,7 @@ import com.cms.provider.service.PmsDeviceService;
 import org.springframework.stereotype.Service;
 
 /**
- * @author ydf Created by 2022/5/17 17:13
+ * @author DT辰白 Created by 2022/5/17 17:13
  */
 @Service
 public class PmsDeviceServiceImpl extends ServiceImpl<PmsDeviceMapper, DeviceEntity> implements PmsDeviceService {

@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * OpenFeign日志打印,需要配置logging.level一起使用
- * @author ydf Created by 2022/4/22 9:43
+ * @author DT辰白 Created by 2022/4/22 9:43
  */
 @Configuration
 public class FeignConfig {

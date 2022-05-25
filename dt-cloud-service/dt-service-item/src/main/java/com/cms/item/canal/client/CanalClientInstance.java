@@ -17,7 +17,7 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- * @author ydf Created by 2021/12/16 16:24
+ * @author DT辰白 Created by 2021/12/16 16:24
  */
 @CommonsLog
 public class CanalClientInstance {

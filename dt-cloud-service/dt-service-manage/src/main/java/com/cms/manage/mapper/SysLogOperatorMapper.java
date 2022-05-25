@@ -9,7 +9,7 @@ import com.cms.manage.entity.SysLogOperatorEntity;
 
 /**
  * 系统操作日志数据接口
- * @author DT
+ * @author DT辰白
  * @date 2021/11/20 17:37
  */
 public interface SysLogOperatorMapper extends BaseMapper<SysLogOperatorEntity> {

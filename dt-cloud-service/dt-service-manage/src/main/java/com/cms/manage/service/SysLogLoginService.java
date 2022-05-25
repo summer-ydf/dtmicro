@@ -7,7 +7,7 @@ import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.entity.SysLogLoginEntity;
 
 /**
- * @author ydf Created by 2022/1/7 17:22
+ * @author DT辰白 Created by 2022/1/7 17:22
  */
 public interface SysLogLoginService extends IService<SysLogLoginEntity> {
 

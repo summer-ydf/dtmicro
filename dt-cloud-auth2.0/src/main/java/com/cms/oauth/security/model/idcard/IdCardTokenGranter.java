@@ -23,7 +23,7 @@ import java.util.Map;
 
 /**
  * 身份证号码授权者
- * @author ydf Created by 2022/4/28 13:04
+ * @author DT辰白 Created by 2022/4/28 13:04
  */
 public class IdCardTokenGranter extends AbstractTokenGranter {
 

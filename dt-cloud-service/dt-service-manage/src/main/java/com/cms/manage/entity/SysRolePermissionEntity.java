@@ -13,7 +13,7 @@ import java.io.Serializable;
 
 /**
  * 系统：角色关联权限信息实体
- * @author DT
+ * @author DT辰白
  * @date 2021/6/5 0:07
  */
 @Data

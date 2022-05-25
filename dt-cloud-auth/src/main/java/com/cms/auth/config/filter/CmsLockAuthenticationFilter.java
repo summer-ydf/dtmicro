@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * 账号锁定校验
- * @author ydf Created by 2022/1/21 17:55
+ * @author DT辰白 Created by 2022/1/21 17:55
  */
 public class CmsLockAuthenticationFilter extends CmsAbstractBasicAuthenticationFilter {
 

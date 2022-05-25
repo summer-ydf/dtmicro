@@ -15,7 +15,7 @@ import java.util.List;
 
 /**
  * 客户端实体对象
- * @author ydf Created by 2022/4/28 15:04
+ * @author DT辰白 Created by 2022/4/28 15:04
  */
 @Data
 @AllArgsConstructor

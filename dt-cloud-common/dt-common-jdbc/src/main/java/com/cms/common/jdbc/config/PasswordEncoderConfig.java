@@ -7,7 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * 注入security密码加密器
- * @author ydf Created by 2022/1/21 10:32
+ * @author DT辰白 Created by 2022/1/21 10:32
  */
 @Configuration
 public class PasswordEncoderConfig {

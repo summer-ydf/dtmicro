@@ -19,7 +19,7 @@ import java.util.List;
 
 /**
  * 系统：部门机构实体
- * @author DT
+ * @author DT辰白
  * @date 2021/6/13 11:51
  */
 @Data

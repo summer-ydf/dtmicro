@@ -7,7 +7,7 @@ import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
 
 /**
- * @author ydf Created by 2021/12/10 16:27
+ * @author DT辰白 Created by 2021/12/10 16:27
  */
 public abstract class PoolLockJob implements Job {
 

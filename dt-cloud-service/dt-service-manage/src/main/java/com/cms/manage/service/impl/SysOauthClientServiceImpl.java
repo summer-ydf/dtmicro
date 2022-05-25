@@ -19,7 +19,7 @@ import org.springframework.util.ObjectUtils;
 
 
 /**
- * @author ydf Created by 2022/4/28 15:06
+ * @author DT辰白 Created by 2022/4/28 15:06
  */
 @Service
 public class SysOauthClientServiceImpl extends ServiceImpl<SysOauthClientMapper, SysOauthClientEntity> implements SysOauthClientService {

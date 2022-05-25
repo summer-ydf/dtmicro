@@ -12,7 +12,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
  * Redis序列化规则配置类
- * @author DT
+ * @author DT辰白
  * @date 2021/6/8 21:53
  */
 @Configuration

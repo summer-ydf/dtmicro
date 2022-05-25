@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration;
 import java.util.Date;
 
 /**
- * @author ydf Created by 2022/1/25 15:02
+ * @author DT辰白 Created by 2022/1/25 15:02
  */
 @Configuration
 public class RabbitCallbackConfig {

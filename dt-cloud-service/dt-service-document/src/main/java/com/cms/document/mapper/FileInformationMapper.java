@@ -7,7 +7,7 @@ import com.cms.common.core.domain.SysSearchPage;
 import com.cms.document.entity.FileInformationEntity;
 
 /**
- * @author ydf Created by 2022/4/7 10:29
+ * @author DT辰白 Created by 2022/4/7 10:29
  */
 public interface FileInformationMapper extends BaseMapper<FileInformationEntity> {
 

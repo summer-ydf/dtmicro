@@ -16,7 +16,7 @@ import java.net.URL;
 import java.util.Objects;
 
 /**
- * @author ydf Created by 2022/4/7 10:28
+ * @author DT辰白 Created by 2022/4/7 10:28
  */
 @Service
 public class FileInformationServiceImpl extends ServiceImpl<FileInformationMapper, FileInformationEntity> implements FileInformationService {

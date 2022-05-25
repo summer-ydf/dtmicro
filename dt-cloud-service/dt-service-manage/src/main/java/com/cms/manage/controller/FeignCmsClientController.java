@@ -25,7 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import static com.cms.common.tool.enums.AuthenticationIdentityEnum.*;
 
 /**
- * @author ydf Created by 2022/1/7 16:20
+ * @author DT辰白 Created by 2022/1/7 16:20
  */
 @Api(tags = "远程调用接口API")
 @RestController

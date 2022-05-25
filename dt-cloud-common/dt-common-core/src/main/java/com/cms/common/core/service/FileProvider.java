@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * @author ydf Created by 2022/4/6 15:45
+ * @author DT辰白 Created by 2022/4/6 15:45
  */
 public interface FileProvider {
 

@@ -1,7 +1,7 @@
 package com.cms.oauth.service;
 
 /**
- * @author ydf Created by 2022/5/12 17:52
+ * @author DT辰白 Created by 2022/5/12 17:52
  */
 public interface TencentSmsService {
 

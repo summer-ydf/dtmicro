@@ -18,7 +18,7 @@ import java.util.Map;
 
 /**
  * 微信授权者
- * @author ydf Created by 2022/4/27 9:40
+ * @author DT辰白 Created by 2022/4/27 9:40
  */
 public class WechatTokenGranter extends AbstractTokenGranter {
 

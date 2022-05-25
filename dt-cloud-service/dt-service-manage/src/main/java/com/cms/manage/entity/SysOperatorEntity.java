@@ -18,7 +18,7 @@ import java.util.Objects;
 
 /**
  * 系统：操作员实体
- * @author DT
+ * @author DT辰白
  * @date 2021/6/2 21:17
  */
 @Data

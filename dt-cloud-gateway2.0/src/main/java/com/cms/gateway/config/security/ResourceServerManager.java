@@ -14,7 +14,7 @@ import reactor.core.publisher.Mono;
 
 /**
  * 鉴权管理器配置类
- * @author DT
+ * @author DT辰白
  * @date 2022/4/25 20:50
  */
 @Slf4j

@@ -12,7 +12,7 @@ import java.util.Date;
 
 /**
  * 公共基础实体父类
- * @author DT
+ * @author DT辰白
  * @date 2021/6/10 20:50
  */
 @Data

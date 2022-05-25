@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
- * @author ydf Created by 2022/5/17 16:53
+ * @author DT辰白 Created by 2022/5/17 16:53
  */
 @SpringBootApplication
 @EnableDubbo // 开启dubbo

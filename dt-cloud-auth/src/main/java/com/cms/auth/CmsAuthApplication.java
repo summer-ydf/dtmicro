@@ -13,7 +13,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * OAuth2授权服务启动器
- * @author ydf Created by 2021/11/25 11:45
+ * @author DT辰白 Created by 2021/11/25 11:45
  */
 @SpringBootApplication
 @EnableAuthorizationServer

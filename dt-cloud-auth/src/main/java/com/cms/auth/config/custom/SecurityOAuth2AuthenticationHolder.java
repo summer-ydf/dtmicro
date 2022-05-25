@@ -4,7 +4,7 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.util.Assert;
 
 /**
- * @author ydf Created by 2022/1/7 14:08
+ * @author DT辰白 Created by 2022/1/7 14:08
  */
 public class SecurityOAuth2AuthenticationHolder {
 

@@ -10,7 +10,7 @@ import javax.annotation.PostConstruct;
 
 /**
  * 雪花算法主键生成策略配置
- * @author ydf Created by 2022/1/21 10:09
+ * @author DT辰白 Created by 2022/1/21 10:09
  */
 @Configuration
 public class IdGeneratorConfig implements IdentifierGenerator {

@@ -2,7 +2,7 @@ package com.cms.common.tool.result;
 
 /**
  * 统一返回状态码
- * @author ydf Created by 2021/11/25 11:12
+ * @author DT辰白 Created by 2021/11/25 11:12
  */
 public enum ResultEnum {
 

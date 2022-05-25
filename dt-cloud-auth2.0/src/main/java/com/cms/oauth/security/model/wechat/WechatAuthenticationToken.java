@@ -8,7 +8,7 @@ import org.springframework.util.Assert;
 import java.util.Collection;
 
 /**
- * @author ydf Created by 2022/4/27 9:43
+ * @author DT辰白 Created by 2022/4/27 9:43
  */
 public class WechatAuthenticationToken extends AbstractAuthenticationToken {
 

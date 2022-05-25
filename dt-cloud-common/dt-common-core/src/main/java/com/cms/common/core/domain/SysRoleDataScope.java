@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 /**
  * 角色数据权限
- * @author ydf Created by 2022/3/22 17:48
+ * @author DT辰白 Created by 2022/3/22 17:48
  */
 @Data
 @Builder

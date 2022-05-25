@@ -7,7 +7,7 @@ import com.cms.common.core.domain.SysSearchPage;
 import com.cms.job.entity.JobInformationEntity;
 
 /**
- * @author DT
+ * @author DT辰白
  * @date 2022/3/28 19:27
  */
 public interface JobMapper extends BaseMapper<JobInformationEntity> {

@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * 角色权限接收对象
- * @author DT
+ * @author DT辰白
  * @date 2022/3/20 17:51
  */
 @Data

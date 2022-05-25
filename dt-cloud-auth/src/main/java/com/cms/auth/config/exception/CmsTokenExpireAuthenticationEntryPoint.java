@@ -16,7 +16,7 @@ import java.io.IOException;
 
 /**
  * 资源服务token失效处理器
- * @author DT
+ * @author DT辰白
  * @date 2022/1/6 21:50
  */
 @Component

@@ -8,7 +8,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * @author ydf Created by 2021/12/1 11:28
+ * @author DT辰白 Created by 2021/12/1 11:28
  */
 @Data
 @TableName("t_flow_instance")

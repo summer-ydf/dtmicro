@@ -15,7 +15,7 @@ import static com.api.common.ApiConstants.APPLICATION_MANAGE_API_AFFIX;
 import static com.api.common.ApiConstants.APPLICATION_NAME_MANAGE;
 
 /**
- * @author ydf Created by 2022/2/11 17:39
+ * @author DT辰白 Created by 2022/2/11 17:39
  */
 @Service
 @FeignClient(value = APPLICATION_NAME_MANAGE, fallbackFactory = LogFeignClientFallback.class)

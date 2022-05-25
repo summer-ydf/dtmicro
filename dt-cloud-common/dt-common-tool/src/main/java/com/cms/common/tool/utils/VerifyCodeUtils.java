@@ -6,7 +6,7 @@ import java.util.Random;
 
 /**
  * 验证码工具类
- * @author DT
+ * @author DT辰白
  * @date 2021/6/8 22:17
  */
 public class VerifyCodeUtils {

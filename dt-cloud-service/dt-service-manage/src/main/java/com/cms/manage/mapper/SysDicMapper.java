@@ -7,7 +7,7 @@ import com.cms.common.core.domain.SysSearchPage;
 import com.cms.manage.entity.SysDicEntity;
 
 /**
- * @author ydf Created by 2022/3/30 11:20
+ * @author DT辰白 Created by 2022/3/30 11:20
  */
 public interface SysDicMapper extends BaseMapper<SysDicEntity> {
 

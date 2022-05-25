@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * 熔断工厂
- * @author ydf Created by 2021/11/23 16:05
+ * @author DT辰白 Created by 2021/11/23 16:05
  */
 @Component
 public class ItemFeignClientFallback implements FeignFailFallback, FallbackFactory<ItemFeignService> {

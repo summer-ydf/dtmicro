@@ -3,7 +3,7 @@ package com.cms.item.canal.service;
 import com.alibaba.fastjson.JSONObject;
 
 /**
- * @author ydf Created by 2021/10/11 14:04
+ * @author DT辰白 Created by 2021/10/11 14:04
  */
 public interface MessageProcess {
 

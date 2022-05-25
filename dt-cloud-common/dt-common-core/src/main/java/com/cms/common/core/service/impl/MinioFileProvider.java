@@ -22,7 +22,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
- * @author ydf Created by 2022/4/6 15:44
+ * @author DT辰白 Created by 2022/4/6 15:44
  */
 @CommonsLog
 public class MinioFileProvider implements FileProvider {

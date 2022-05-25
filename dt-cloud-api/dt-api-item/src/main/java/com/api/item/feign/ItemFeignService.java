@@ -12,7 +12,7 @@ import static com.api.common.ApiConstants.APPLICATION_NAME_ITEM;
 /**
  * // 分布式事务调用的接口，不能使用fallbackFactory = ItemFeignClientFallback.class 处理，否则事务会失效
  * // sh nacos-config.sh -h localhost -p 8848 -g SEATA_GROUP -t seata_namespace_id -u nacos -w nacos
- * @author ydf Created by 2021/11/23 15:46
+ * @author DT辰白 Created by 2021/11/23 15:46
  */
 @Service
 @FeignClient(value = APPLICATION_NAME_ITEM)

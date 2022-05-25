@@ -4,7 +4,7 @@ import lombok.Getter;
 
 /**
  * 客户端登录身份标识
- * @author ydf Created by 2022/4/29 13:04
+ * @author DT辰白 Created by 2022/4/29 13:04
  */
 public enum AuthenticationIdentityEnum implements IBaseEnum<String> {
 

@@ -14,7 +14,7 @@ import java.util.UUID;
 
 /**
  * https://mp.weixin.qq.com/debug/cgi-bin/sandboxinfo?action=showinfo&t=sandbox/index
- * @author ydf Created by 2022/4/13 10:24
+ * @author DT辰白 Created by 2022/4/13 10:24
  */
 public class WxJsUtils {
 

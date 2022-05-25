@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * @author ydf Created by 2022/1/6 14:05
+ * @author DT辰白 Created by 2022/1/6 14:05
  */
 public abstract class CmsAbstractBasicAuthenticationFilter extends OncePerRequestFilter {
 

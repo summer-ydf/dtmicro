@@ -20,7 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * Security安全拦截配置
- * @author ydf Created by 2022/4/25 18:58
+ * @author DT辰白 Created by 2022/4/25 18:58
  */
 @Configuration
 @EnableWebSecurity

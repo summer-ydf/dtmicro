@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import java.net.SocketTimeoutException;
 
 /**
- * @author ydf Created by 2021/12/16 10:44
+ * @author DT辰白 Created by 2021/12/16 10:44
  */
 public interface FeignFailFallback {
 

@@ -29,7 +29,7 @@ import static com.cms.common.tool.enums.AuthenticationIdentityEnum.*;
 
 /**
  * 刷新Token令牌，重新认证授权
- * @author ydf Created by 2022/4/28 17:11
+ * @author DT辰白 Created by 2022/4/28 17:11
  */
 @Slf4j
 @NoArgsConstructor

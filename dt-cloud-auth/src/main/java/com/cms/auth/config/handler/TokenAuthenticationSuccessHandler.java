@@ -13,7 +13,7 @@ import java.io.IOException;
 
 /**
  * 登录成功处理器
- * @author ydf Created by 2022/1/7 14:07
+ * @author DT辰白 Created by 2022/1/7 14:07
  */
 public class TokenAuthenticationSuccessHandler implements OAuth2AuthenticationSuccessHandler {
 

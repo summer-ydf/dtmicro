@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 /**
- * @author ydf Created by 2022/1/25 14:53
+ * @author DT辰白 Created by 2022/1/25 14:53
  */
 @Component
 public class LogReceiverListener {

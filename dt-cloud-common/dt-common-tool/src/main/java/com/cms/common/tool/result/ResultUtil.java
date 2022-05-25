@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 /**
  * 提返回值封装
- * @author ydf Created by 2021/11/25 11:09
+ * @author DT辰白 Created by 2021/11/25 11:09
  */
 @Data
 public class ResultUtil<T> implements Serializable {

@@ -32,7 +32,7 @@ import java.util.Map;
 
 /**
  * 日志切面配置类
- * @author DT
+ * @author DT辰白
  * @date 2021/11/20 15:15
  */
 @Aspect

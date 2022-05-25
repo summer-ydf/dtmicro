@@ -7,7 +7,7 @@ import org.springframework.util.Assert;
 import java.util.Collection;
 
 /**
- * @author ydf Created by 2022/4/28 13:04
+ * @author DT辰白 Created by 2022/4/28 13:04
  */
 public class SmsCodeAuthenticationToken extends AbstractAuthenticationToken {
 

@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 /**
  * 流程定义实例对象
- * @author ydf Created by 2022/3/25 10:40
+ * @author DT辰白 Created by 2022/3/25 10:40
  */
 @Data
 public class FlowProcessEntity implements Serializable {

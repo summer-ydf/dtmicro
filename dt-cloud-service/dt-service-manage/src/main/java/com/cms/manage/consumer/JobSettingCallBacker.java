@@ -3,7 +3,7 @@ package com.cms.manage.consumer;
 import com.cms.common.core.builder.SettingModelDataCallBacker;
 
 /**
- * @author ydf Created by 2022/4/19 15:50
+ * @author DT辰白 Created by 2022/4/19 15:50
  */
 public class JobSettingCallBacker implements SettingModelDataCallBacker {
 

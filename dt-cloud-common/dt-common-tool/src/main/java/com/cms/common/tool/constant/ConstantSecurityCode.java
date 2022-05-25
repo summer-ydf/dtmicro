@@ -1,7 +1,7 @@
 package com.cms.common.tool.constant;
 
 /**
- * @author ydf Created by 2022/4/29 10:20
+ * @author DT辰白 Created by 2022/4/29 10:20
  */
 public interface ConstantSecurityCode {
 

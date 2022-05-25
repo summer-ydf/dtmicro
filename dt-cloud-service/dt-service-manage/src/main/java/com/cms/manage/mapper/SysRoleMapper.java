@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  * 系统角色数据接口
- * @author DT
+ * @author DT辰白
  * @date 2021/6/2 22:24
  */
 public interface SysRoleMapper extends BaseMapper<SysRoleEntity> {

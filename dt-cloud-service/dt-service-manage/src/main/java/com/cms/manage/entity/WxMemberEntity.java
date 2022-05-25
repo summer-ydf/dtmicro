@@ -15,7 +15,7 @@ import java.io.Serializable;
 
 /**
  * 微信用户实体对象
- * @author ydf Created by 2022/4/27 10:13
+ * @author DT辰白 Created by 2022/4/27 10:13
  */
 @Data
 @AllArgsConstructor

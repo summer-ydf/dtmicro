@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 /**
  * 获取客户端信息【MySQL中】
- * @author ydf Created by 2022/4/25 18:59
+ * @author DT辰白 Created by 2022/4/25 18:59
  */
 @Service
 public class ClientDetailsServiceImpl implements ClientDetailsService {

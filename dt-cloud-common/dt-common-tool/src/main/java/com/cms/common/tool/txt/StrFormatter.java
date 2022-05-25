@@ -4,7 +4,7 @@ import com.cms.common.tool.utils.StringUtils;
 
 /**
  * 字符串格式化
- * @author DT
+ * @author DT辰白
  * @date 2022/3/18 22:34
  */
 public class StrFormatter {

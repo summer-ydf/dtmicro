@@ -10,7 +10,7 @@ import com.cms.manage.vo.WxMessageRequest;
 import java.util.List;
 
 /**
- * @author ydf Created by 2022/4/14 16:25
+ * @author DT辰白 Created by 2022/4/14 16:25
  */
 public interface MessageService {
 

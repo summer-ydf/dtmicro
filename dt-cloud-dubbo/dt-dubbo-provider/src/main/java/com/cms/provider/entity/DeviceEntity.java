@@ -14,7 +14,7 @@ import java.io.Serializable;
 
 /**
  * 设备实体类
- * @author ydf Created by 2022/5/17 17:04
+ * @author DT辰白 Created by 2022/5/17 17:04
  */
 @Data
 @AllArgsConstructor

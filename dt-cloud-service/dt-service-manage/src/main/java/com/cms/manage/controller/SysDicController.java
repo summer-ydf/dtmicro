@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @author ydf Created by 2022/3/30 11:35
+ * @author DT辰白 Created by 2022/3/30 11:35
  */
 @Api(tags = "字典管理API")
 @RestController

@@ -11,7 +11,7 @@ import java.util.Date;
 
 /**
  * 系统-部门分页查询参数接收类
- * @author DT
+ * @author DT辰白
  * @date 2021/6/13 14:00
  */
 @Data

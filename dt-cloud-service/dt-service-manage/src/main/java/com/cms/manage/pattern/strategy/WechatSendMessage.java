@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 import static com.cms.common.tool.constant.ConstantCode.*;
 
 /**
- * @author DT
+ * @author DT辰白
  * @date 2022/5/22 19:11
  */
 @Service("wechatSendMessage")

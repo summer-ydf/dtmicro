@@ -31,7 +31,7 @@ import java.util.List;
 import static com.cms.common.tool.enums.AuthenticationIdentityEnum.*;
 
 /**
- * @author ydf Created by 2022/1/7 17:22
+ * @author DT辰白 Created by 2022/1/7 17:22
  */
 @Service
 public class SysOperatorServiceImpl extends ServiceImpl<SysOperatorMapper, SysOperatorEntity> implements SysOperatorService {

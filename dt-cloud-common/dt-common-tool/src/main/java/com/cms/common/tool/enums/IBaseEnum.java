@@ -6,7 +6,7 @@ import java.util.EnumSet;
 import java.util.Objects;
 
 /**
- * @author ydf Created by 2022/4/29 13:11
+ * @author DT辰白 Created by 2022/4/29 13:11
  */
 public interface IBaseEnum<T> {
 

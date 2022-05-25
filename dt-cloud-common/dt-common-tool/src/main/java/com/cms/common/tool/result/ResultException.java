@@ -1,7 +1,7 @@
 package com.cms.common.tool.result;
 
 /**
- * @author ydf Created by 2022/1/22 15:16
+ * @author DT辰白 Created by 2022/1/22 15:16
  */
 public class ResultException extends Exception {
 

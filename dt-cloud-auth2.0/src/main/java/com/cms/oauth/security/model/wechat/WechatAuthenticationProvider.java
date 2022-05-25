@@ -21,7 +21,7 @@ import java.util.HashSet;
 
 /**
  * 微信认证授权提供者
- * @author ydf Created by 2022/4/27 9:47
+ * @author DT辰白 Created by 2022/4/27 9:47
  */
 @Slf4j
 @Data

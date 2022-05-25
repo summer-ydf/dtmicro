@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 import static com.cms.common.tool.constant.ConstantCode.CACHE_LOGIN_TOKEN;
 
 /**
- * @author ydf Created by 2022/1/7 14:27
+ * @author DT辰白 Created by 2022/1/7 14:27
  */
 public class CmsTokenStore extends JwtTokenStore {
 

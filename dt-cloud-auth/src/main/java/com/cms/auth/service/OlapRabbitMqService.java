@@ -6,7 +6,7 @@ import com.cms.common.tool.domain.SecurityClaimsUserEntity;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @author ydf Created by 2022/1/25 13:58
+ * @author DT辰白 Created by 2022/1/25 13:58
  */
 public interface OlapRabbitMqService {
 

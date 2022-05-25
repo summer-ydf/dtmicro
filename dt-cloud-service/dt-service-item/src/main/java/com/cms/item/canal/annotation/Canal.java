@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
  * Canal同步表注解自定义
  * ElementType.TYPE:用于描述类、接口(包括注解类型) 或enum声明
  * ElementType.METHOD:用于描述方法
- * @author DT
+ * @author DT辰白
  * @date 2021/11/20 15:18
  */
 @Retention(RetentionPolicy.RUNTIME)

@@ -11,7 +11,7 @@ import java.util.Date;
 
 /**
  * 任务实现类
- * @author ydf Created by 2021/12/10 16:27
+ * @author DT辰白 Created by 2021/12/10 16:27
  */
 public class CronLoginLogJob extends PoolLockJob {
 

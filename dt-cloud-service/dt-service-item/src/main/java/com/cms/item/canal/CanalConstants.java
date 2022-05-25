@@ -2,7 +2,7 @@ package com.cms.item.canal;
 
 /**
  * 启动常用变量
- * @author ydf Created by 2021/10/11 14:58
+ * @author DT辰白 Created by 2021/10/11 14:58
  */
 public class CanalConstants {
 

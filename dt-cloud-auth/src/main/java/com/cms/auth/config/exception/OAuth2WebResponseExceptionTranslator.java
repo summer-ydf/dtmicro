@@ -20,7 +20,7 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 
 /**
  * OAuth2请求异常处理
- * @author ydf Created by 2022/1/6 11:33
+ * @author DT辰白 Created by 2022/1/6 11:33
  */
 public class OAuth2WebResponseExceptionTranslator implements WebResponseExceptionTranslator<OAuth2Exception>  {
 

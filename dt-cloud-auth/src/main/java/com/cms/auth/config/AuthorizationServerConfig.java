@@ -54,7 +54,7 @@ import java.util.*;
 
 /**
  * OAuth2认证服务器配置
- * @author ydf Created by 2021/12/14 14:46
+ * @author DT辰白 Created by 2021/12/14 14:46
  */
 @Configuration
 @EnableAuthorizationServer

@@ -12,7 +12,7 @@ import static com.cms.common.tool.constant.ConstantCode.RABBITMQ_LOG_TOPIC_QUEUE
 import static com.cms.common.tool.constant.ConstantCode.RABBITMQ_LOG_TOPIC_ROUTING_KEY;
 
 /**
- * @author ydf Created by 2022/1/25 14:40
+ * @author DT辰白 Created by 2022/1/25 14:40
  */
 @Configuration
 public class RabbitLogTopicConfig {

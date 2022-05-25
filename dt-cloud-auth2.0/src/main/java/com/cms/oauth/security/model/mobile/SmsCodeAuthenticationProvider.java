@@ -13,7 +13,7 @@ import java.util.HashSet;
 
 /**
  * 短信验证码认证授权提供者
- * @author ydf Created by 2022/4/28 13:04
+ * @author DT辰白 Created by 2022/4/28 13:04
  */
 @Data
 public class SmsCodeAuthenticationProvider implements AuthenticationProvider {

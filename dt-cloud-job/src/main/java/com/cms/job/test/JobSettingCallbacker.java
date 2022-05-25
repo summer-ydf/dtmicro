@@ -3,7 +3,7 @@ package com.cms.job.test;
 import org.apache.commons.lang.ObjectUtils;
 
 /**
- * @author ydf Created by 2022/3/28 17:07
+ * @author DT辰白 Created by 2022/3/28 17:07
  */
 public class JobSettingCallbacker implements SettingModelDataCallbacker{
     @Override

@@ -7,7 +7,7 @@ import com.cms.common.tool.result.ResultUtil;
 import com.cms.manage.entity.SysOauthClientEntity;
 
 /**
- * @author ydf Created by 2022/4/28 15:06
+ * @author DT辰白 Created by 2022/4/28 15:06
  */
 public interface SysOauthClientService extends IService<SysOauthClientEntity> {
 

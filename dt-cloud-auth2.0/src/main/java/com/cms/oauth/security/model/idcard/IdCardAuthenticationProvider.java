@@ -12,7 +12,7 @@ import java.util.HashSet;
 
 /**
  * 身份证认证授权提供者
- * @author ydf Created by 2022/4/28 13:08
+ * @author DT辰白 Created by 2022/4/28 13:08
  */
 @Data
 public class IdCardAuthenticationProvider implements AuthenticationProvider {

@@ -3,7 +3,7 @@ package com.cms.common.core.domain;
 import lombok.Data;
 
 /**
- * @author DT
+ * @author DT辰白
  * @date 2022/4/17 18:30
  */
 @Data

@@ -26,7 +26,7 @@ import static com.cms.common.tool.constant.ConstantCode.IMG_JPG;
 import static com.cms.common.tool.constant.ConstantCode.WIDTH;
 
 /**
- * @author ydf Created by 2021/12/16 11:19
+ * @author DT辰白 Created by 2021/12/16 11:19
  */
 @RestController
 public class AuthController {

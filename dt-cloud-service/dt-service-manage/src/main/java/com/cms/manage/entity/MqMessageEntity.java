@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @author ydf Created by 2022/4/14 16:17
+ * @author DT辰白 Created by 2022/4/14 16:17
  */
 @Data
 @Document(collection = "mq_message_record")

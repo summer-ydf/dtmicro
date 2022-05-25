@@ -14,7 +14,7 @@ import java.io.Serializable;
 
 /**
  * 系统：用户关联角色实体
- * @author DT
+ * @author DT辰白
  * @date 2021/6/5 0:10
  */
 @Data

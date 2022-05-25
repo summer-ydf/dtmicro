@@ -2,7 +2,7 @@ package com.cms.common.log.enums;
 
 /**
  * 业务操作类型
- * @author ydf Created by 2022/2/11 15:37
+ * @author DT辰白 Created by 2022/2/11 15:37
  */
 public enum BusinessType {
 

@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
  * 需要修改成OKHTTP的客户端，需要在配置文件增加
  * feign.httpclient.enabled=false
  * feign.okhttp.enabled=true
- * @author ydf Created by 2022/4/21 17:44
+ * @author DT辰白 Created by 2022/4/21 17:44
  */
 @Slf4j
 @AutoConfigureBefore(FeignAutoConfiguration.class)

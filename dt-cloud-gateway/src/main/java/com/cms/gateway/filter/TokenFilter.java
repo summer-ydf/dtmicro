@@ -32,7 +32,7 @@ import java.util.Map;
 import static com.cms.common.tool.constant.ConstantCode.GATEWAY_AUTHORIZATION;
 
 /**
- * @author ydf Created by 2022/1/7 17:52
+ * @author DT辰白 Created by 2022/1/7 17:52
  */
 @Component
 public class TokenFilter implements GlobalFilter, Ordered {

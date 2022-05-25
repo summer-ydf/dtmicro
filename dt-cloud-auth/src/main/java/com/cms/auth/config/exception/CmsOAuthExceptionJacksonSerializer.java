@@ -10,7 +10,7 @@ import java.io.IOException;
 
 /**
  * 自定义异常序列化处理
- * @author ydf Created by 2022/1/6 15:01
+ * @author DT辰白 Created by 2022/1/6 15:01
  */
 public class CmsOAuthExceptionJacksonSerializer extends StdSerializer<CmsOAuth2Exception> {
 
