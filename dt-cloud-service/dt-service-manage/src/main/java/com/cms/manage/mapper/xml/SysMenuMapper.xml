@@ -12,7 +12,7 @@
             LEFT JOIN sys_menu AS m ON m.id = rm.menu_id
         WHERE u.id = #{userId}
         <if test='flag == true'>
-            AND m.type = "menu"
+            AND m.type IN("menu","link","iframe")
         </if>
         ORDER BY m.sort ASC
     </select>

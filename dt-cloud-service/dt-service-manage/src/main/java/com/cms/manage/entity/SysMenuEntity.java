@@ -65,9 +65,6 @@ public class SysMenuEntity extends BaseEntity implements Serializable {
     @ApiModelProperty(value = "菜单排序")
     private Integer sort;
 
-    @ApiModelProperty(value = "重定向地址")
-    private String redirect;
-
     @ApiModelProperty(value = "隐藏菜单")
     private Boolean hidden = false;
 
