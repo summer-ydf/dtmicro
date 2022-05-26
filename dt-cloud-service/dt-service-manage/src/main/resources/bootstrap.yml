@@ -19,4 +19,8 @@ spring:
         # 配置对应的分组
         group: DEFAULT_GROUP
         # 命名空间 常用场景之一是不同环境的配置的区分隔离，例如开发测试环境和生产环境的资源（如配置、服务）隔离等
-        namespace: public
+        namespace: 9316bebb-225c-425b-a723-8afd79669172
+        # 共享配置
+        shared-configs:
+          - data-id: cms-common-mysql-dev.yaml
+            group: DEFAULT_GROUP
