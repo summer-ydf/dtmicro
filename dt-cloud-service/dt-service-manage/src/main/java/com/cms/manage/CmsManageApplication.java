@@ -22,7 +22,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import java.util.concurrent.ThreadPoolExecutor;
 
 /**
- * 核心模块主启动
+ * 系统管理服务主启动
  * @author DT辰白 Created by 2021/11/23 14:54
  */
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
@@ -37,12 +37,10 @@ import java.util.concurrent.ThreadPoolExecutor;
 public class CmsManageApplication {
 
     public static void main(String[] args) {
-        ConfigurableApplicationContext applicationContext = SpringApplication.run(CmsManageApplication.class, args);
+        SpringApplication.run(CmsManageApplication.class, args);
         SysCmsUtils.log.info("============================================");
         SysCmsUtils.log.info("===============$管理服务已启动:===============");
         SysCmsUtils.log.info("============================================");
-        String username = applicationContext.getEnvironment().getProperty("dt.username");
-        SysCmsUtils.log.info("username>>>"+username);
     }
 
     static {
