@@ -20,5 +20,3 @@ spring:
         group: DEFAULT_GROUP
         # 命名空间 常用场景之一是不同环境的配置的区分隔离，例如开发测试环境和生产环境的资源（如配置、服务）隔离等
         namespace: public
-        # 开启动态刷新
-        refresh-enabled: true
