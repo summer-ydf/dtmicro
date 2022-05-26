@@ -12,6 +12,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -36,10 +37,12 @@ import java.util.concurrent.ThreadPoolExecutor;
 public class CmsManageApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(CmsManageApplication.class,args);
+        ConfigurableApplicationContext applicationContext = SpringApplication.run(CmsManageApplication.class, args);
         SysCmsUtils.log.info("============================================");
         SysCmsUtils.log.info("===============$管理服务已启动:===============");
         SysCmsUtils.log.info("============================================");
+        String username = applicationContext.getEnvironment().getProperty("dt.username");
+        SysCmsUtils.log.info("username>>>"+username);
     }
 
     static {

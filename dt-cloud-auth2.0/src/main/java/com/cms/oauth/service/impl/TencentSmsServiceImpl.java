@@ -11,6 +11,7 @@ import com.tencentcloudapi.sms.v20190711.models.SendStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
 
 import static com.cms.common.tool.constant.ConstantCode.PHONE_CODE_KEY;
@@ -20,6 +21,7 @@ import static com.cms.common.tool.constant.ConstantCode.PHONE_CODE_KEY;
  */
 @Slf4j
 @Service
+@RefreshScope
 public class TencentSmsServiceImpl implements TencentSmsService {
 
     private final SmsClient smsClient;

@@ -3,6 +3,7 @@ package com.cms.oauth.config;
 import com.tencentcloudapi.common.Credential;
 import com.tencentcloudapi.common.profile.ClientProfile;
 import com.tencentcloudapi.common.profile.HttpProfile;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import com.tencentcloudapi.sms.v20190711.SmsClient;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +14,7 @@ import org.springframework.context.annotation.Configuration;
  * @author DT辰白 Created by 2022/5/12 17:19
  */
 @Configuration
+@RefreshScope
 public class TencentSmsConfig {
 
     /**
