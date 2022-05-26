@@ -10,6 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>dt-common-jdbc</artifactId>
+    <description>jdbc公共模块</description>
 
     <properties>
         <yitter.version>1.0.6</yitter.version>
@@ -19,7 +20,7 @@
     </properties>
 
     <dependencies>
-        <!--服务注册-->
+        <!-- 服务注册 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
@@ -28,6 +29,11 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <!-- nacos config 配置中心 -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
         <!-- okhttp -->
         <dependency>
@@ -69,7 +75,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!--采用jedis驱动连接-->
+        <!-- 采用jedis驱动连接 -->
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
@@ -78,7 +84,7 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-pool2</artifactId>
         </dependency>
-        <!--雪花算法生成唯一ID-->
+        <!-- 雪花算法生成唯一ID -->
         <dependency>
             <groupId>com.github.yitter</groupId>
             <artifactId>yitter-idgenerator</artifactId>
@@ -106,7 +112,6 @@
             <artifactId>swagger-models</artifactId>
             <version>${swagger2.models.version}</version>
         </dependency>
-
     </dependencies>
 
 </project>

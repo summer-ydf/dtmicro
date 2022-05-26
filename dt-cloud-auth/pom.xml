@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>dt-cloud-auth</artifactId>
-    <description>服务鉴权系统</description>
+    <description>Oauth2.0服务鉴权系统</description>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -23,12 +23,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        <!--  SpringBoot 健康检查客户端 -->
+        <!--  健康检查 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-        <!--授权-->
+        <!-- Oauth2.0授权 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-security</artifactId>
@@ -37,13 +37,13 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-oauth2</artifactId>
         </dependency>
-        <!--JWT进行解码-->
+        <!-- JWT进行解码 -->
         <dependency>
             <groupId>com.nimbusds</groupId>
             <artifactId>nimbus-jose-jwt</artifactId>
             <version>${nimbusds.jwt.version}</version>
         </dependency>
-        <!--RabbitMQ消息中间件-->
+        <!-- RabbitMQ -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-amqp</artifactId>
