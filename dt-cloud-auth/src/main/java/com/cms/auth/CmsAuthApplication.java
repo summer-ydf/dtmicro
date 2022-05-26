@@ -2,7 +2,6 @@ package com.cms.auth;
 import com.cms.auth.config.handler.RestExceptionHandler;
 import com.cms.common.jdbc.config.IdGeneratorConfig;
 import com.cms.common.tool.utils.SysCmsUtils;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -20,14 +19,13 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableDiscoveryClient
 @EnableSwagger2
 @Import({RestExceptionHandler.class,IdGeneratorConfig.class})
-@MapperScan(basePackages = {"com.cms.auth.mapper"})
 @EnableFeignClients(basePackages ={"com.api.manage.feign"})
 public class CmsAuthApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(CmsAuthApplication.class,args);
         SysCmsUtils.log.info("============================================");
-        SysCmsUtils.log.info("===============$授权服务已启动:===============");
+        SysCmsUtils.log.info("===============$授权服务V1.0版本已启动:===============");
         SysCmsUtils.log.info("============================================");
     }
 }

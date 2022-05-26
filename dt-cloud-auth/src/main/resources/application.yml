@@ -40,10 +40,6 @@ feign:
 logging:
   level:
     com.api.manage.feign.OauthFeignClientService: debug
-mybatis-plus:
-  mapper-locations: classpath*:com/cms/auth/mapper/**/*.xml
-  configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 secure:
   ignored:
     urls: # 安全路径白名单
@@ -62,8 +58,6 @@ secure:
       - /security/logout/**
       - /anonymous/valid_code/**
       - /anonymous/generate_id/**
-      - /rsa/publicKey
-      - /hello
       - /login.html
       - /favicon.ico
 

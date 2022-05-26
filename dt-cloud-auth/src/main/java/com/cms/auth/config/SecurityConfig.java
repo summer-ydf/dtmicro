@@ -56,8 +56,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        // 内存的方式
-        // auth.inMemoryAuthentication().withUser("admin").password(new BCryptPasswordEncoder().encode("123456")).roles("A")
         auth.userDetailsService(rpcUserDetailsService).passwordEncoder(passwordEncoder());
     }
 }

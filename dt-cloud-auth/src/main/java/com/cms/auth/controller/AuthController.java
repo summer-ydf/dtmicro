@@ -69,10 +69,9 @@ public class AuthController {
         return ResultUtil.success(idGeneratorConfig.nextId(Object.class));
     }
 
+    @ApiOperation(value = "退出登录")
     @GetMapping("/security/logout")
     public Object test(HttpServletRequest request) {
-//        String token = request.getHeader(GATEWAY_AUTHORIZATION);
-//        SysCmsUtils.log.info("退出登录token->>>"+token);
         SecurityClaimsUserEntity securityClaimsUser = null;
         try {
             securityClaimsUser = ApiCallUtils.securityClaimsUser(request);
@@ -81,23 +80,5 @@ public class AuthController {
             e.printStackTrace();
         }
         return ResultUtil.success();
-    }
-
-    @GetMapping("/hello")
-    public String hello() {
-        System.out.println("不需要校验======================");
-        return "hello!!!!";
-    }
-
-    @GetMapping("/admin")
-    public String admin(HttpServletRequest request) {
-        System.out.println("获取资源===============");
-        try {
-            SecurityClaimsUserEntity claimsUser = ApiCallUtils.securityClaimsUser(request);
-            System.out.println("获取携带参数==============="+claimsUser);
-        } catch (ResultException e) {
-            e.printStackTrace();
-        }
-        return "admin!!!!";
     }
 }

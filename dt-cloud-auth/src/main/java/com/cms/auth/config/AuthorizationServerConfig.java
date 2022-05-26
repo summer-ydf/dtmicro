@@ -137,6 +137,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
      */
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+        // 采用内存方式
         clients.inMemory()
                 .withClient("cms-admin-web")
                 .secret(new BCryptPasswordEncoder().encode("dt$pwd123"))
