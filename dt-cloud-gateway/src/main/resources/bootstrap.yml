@@ -4,7 +4,7 @@ spring:
     active: dev
   application:
     # 服务名
-    name: cms-service-manage
+    name: cms-service-gateway
   main:
     allow-bean-definition-overriding: true
   cloud:
@@ -23,7 +23,3 @@ spring:
         # 共享配置
         shared-configs:
           - data-id: cms-common-nacos-dev.yaml
-          - data-id: cms-common-mysql-dev.yaml
-          - data-id: cms-common-redis-dev.yaml
-          - data-id: cms-common-mongodb-dev.yaml
-          - data-id: cms-common-rabbitmq-dev.yaml

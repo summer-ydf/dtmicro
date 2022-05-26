@@ -8,6 +8,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
@@ -39,6 +40,7 @@ public class CmsDocumentApplication {
     }
 
     @Bean
+    @RefreshScope
     public FileProvider fileProvider() {
         String uploadUrl = environment.getProperty("minio.client.url");
         String accessKey = environment.getProperty("minio.client.accessKey");

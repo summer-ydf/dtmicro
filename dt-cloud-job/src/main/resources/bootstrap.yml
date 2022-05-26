@@ -4,7 +4,7 @@ spring:
     active: dev
   application:
     # 服务名
-    name: cms-service-manage
+    name: cms-service-job
   main:
     allow-bean-definition-overriding: true
   cloud:
@@ -25,5 +25,4 @@ spring:
           - data-id: cms-common-nacos-dev.yaml
           - data-id: cms-common-mysql-dev.yaml
           - data-id: cms-common-redis-dev.yaml
-          - data-id: cms-common-mongodb-dev.yaml
-          - data-id: cms-common-rabbitmq-dev.yaml
+          - data-id: cms-common-quartz-dev.yaml

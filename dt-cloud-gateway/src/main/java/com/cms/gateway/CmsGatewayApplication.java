@@ -15,7 +15,7 @@ public class CmsGatewayApplication {
     public static void main(String[] args) {
         SpringApplication.run(CmsGatewayApplication.class,args);
         SysCmsUtils.log.info("============================================");
-        SysCmsUtils.log.info("===============$网关服务已启动:===============");
+        SysCmsUtils.log.info("===============$网关服务V1.0版本已启动:===============");
         SysCmsUtils.log.info("============================================");
     }
 }
