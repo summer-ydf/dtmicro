@@ -21,11 +21,8 @@
 
 # 平台简介
 
- **DT CMS**  是一套SpringCloud微服务架构打造的管理系统，追求 **快速的用户体验** 、 **二次编码** ，以及 **核心技术模块的整合** 使用。后端新技术框架的加持、前端UI的设计与美化，会持续升级，持续完善，欢迎亲友们收藏、点赞和转发。
+ **DT MICRO**  是一套SpringCloud微服务架构设计的后台管理系统，追求 **快速的用户体验** 、 **二次编码** ，以及 **核心技术模块的整合** 使用。后端新技术框架的加持、前端UI的设计与美化，会持续升级，持续完善，欢迎亲友们收藏、点赞和转发。
 
-Vue前端链接：[Client端入口](https://gitee.com/summerydf/dtcmsclient)
-
-线上体验地址：[加入CMS基础版本体验](http://47.108.191.196)，账号密码：root/root123 ，注：请大家不要乱删除数据，影响体验效果。
 
 ## 平台优势
 
@@ -33,7 +30,7 @@ Vue前端链接：[Client端入口](https://gitee.com/summerydf/dtcmsclient)
 
 ## 核心技术
 
-SpringBoot、MybatisPlus、SpringSecurity、JWT令牌使用RSA秘钥非对称加密，极大限度保证系统安全性，数据库采用MySQL、Redis，文件服务器：Minio,前端UI：Vue、ElementUI
+框架组成SpringCloud、Nacos、GateWay、Sentinel、Seata、Oauth2.0，消息队列采用RabbitMQ，数据库采用MySQL、Redis，mongodb，文件服务器：Minio，前端UI：Vue3、ElementUI
 
 ## 开发环境准备
 
