@@ -21,19 +21,19 @@ public class QyJsUtils {
     /**
      * 企业ID
      */
-    static String corpid = "ww5aad0e92512e0e74";
+    static String corpid = "xxx";
     /**
      * 应用ID
      */
-    static String agentid = "1000002";
+    static String agentid = "xxx";
     /**
      * 应用的凭证密钥
      */
-    static String corpsecret = "zK6-H0X1IPL6yAQNNdUUuoGM9fbgJ5CSatfSTmz70JE";
+    static String corpsecret = "xxx";
     /**
      * Token令牌
      */
-    static String token = "zoNBzRldopeR_xBw63t_gCfMQMl2IMoXQ6nG5lg5vyuYgPhme2GhG_lk9vocRcC5RrLZDqx53TBBYYmA2th-4yzw0AQn5hbAyWs5QpawetCwX5ehpvzwABAnTD6R9aNF-j5-MtuSirOszgMrVTPN0f6XDIu-YjaeS61U63GddL0ePYOSbRxUzgEweE0N96CFtGJz3a6jomt8E0qyFbYHkA";
+    static String token = "xxx";
 
     public QyJsUtils() {
     }
@@ -100,13 +100,6 @@ public class QyJsUtils {
         }
         log.info("手机号获取userid->>>"+postJson);
         return JSON.parseObject(postJson);
-    }
-
-
-    public static void main(String[] args) {
-//        JSONObject token = getToken(corpid, corpsecret);
-//        send_messge(token,agentid,"yandongfa","你的快递已到，请携带工卡前往邮件中心领取。\n出发前可查看<a href=\"http://work.weixin.qq.com\">邮件中心视频实况</a>，聪明避开排队。");
-        getUserId(token,"13550001448");
     }
 
 

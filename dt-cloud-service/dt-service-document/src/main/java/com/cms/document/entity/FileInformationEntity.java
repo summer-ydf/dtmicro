@@ -22,7 +22,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName("t_file_info")
-@ApiModel(value="系统字典对象")
+@ApiModel(value="文件对象")
 @EqualsAndHashCode(callSuper = true)
 public class FileInformationEntity extends BaseEntity implements Serializable {
 

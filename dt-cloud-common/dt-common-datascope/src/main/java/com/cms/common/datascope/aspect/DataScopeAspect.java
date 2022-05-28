@@ -8,6 +8,7 @@ import com.cms.common.tool.domain.SecurityClaimsUserEntity;
 import com.cms.common.tool.domain.SysDataScopeVoEntity;
 import com.cms.common.tool.result.ResultException;
 import com.cms.common.tool.utils.StringUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -24,6 +25,7 @@ import static com.cms.common.tool.constant.ConstantCode.DATA_SCOPE_SELF;
  * 角色数据权限过滤
  * @author DT辰白 Created by 2022/3/18 17:27
  */
+@Slf4j
 @Aspect
 @Component
 public class DataScopeAspect {
@@ -64,24 +66,24 @@ public class DataScopeAspect {
                 break;
             }
             else if (DATA_SCOPE_CUSTOM.equals(dataScope)) {
-                System.out.println("自定义数据权限->>>");
+                log.info("自定义数据权限->>>");
                 sqlString.append(StringUtils.format(
                         " OR {}.id IN ( SELECT dept_id FROM sys_role_dept WHERE role_id = {} ) ", deptAlias,
                         role.getRoleId()));
             }
             else if (DATA_SCOPE_DEPT.equals(dataScope)) {
-                System.out.println("部门数据权限->>>");
+                log.info("部门数据权限->>>");
                 sqlString.append(StringUtils.format(" OR {}.id = {} ", deptAlias, user.getDeptId()));
             }
             else if (DATA_SCOPE_DEPT_AND_CHILD.equals(dataScope)) {
-                System.out.println("部门及以下数据权限->>>");
+                log.info("部门及以下数据权限->>>");
                 sqlString.append(StringUtils.format(
                         " OR {}.id IN ( SELECT id FROM sys_department WHERE id = {} or find_in_set( {} , parent_id ) )",
                         deptAlias, user.getDeptId(), user.getDeptId()));
             }
             else if (DATA_SCOPE_SELF.equals(dataScope)) {
                 if (StringUtils.isNotBlank(userAlias)) {
-                    System.out.println("仅本人数据权限->>>");
+                    log.info("仅本人数据权限->>>");
                     sqlString.append(StringUtils.format(" OR {}.id = {} ", userAlias, user.getUserid()));
                 }
                 else {
@@ -93,18 +95,14 @@ public class DataScopeAspect {
         if (StringUtils.isNotBlank(sqlString.toString())) {
             // 获取查询的参数
             Object params = joinPoint.getArgs()[0];
-            System.out.println("获取查询的参数>>>>>"+params);
             if (StringUtils.isNotNull(params) && params instanceof SysSearchPage) {
                 SysSearchPage baseEntity = (SysSearchPage) params;
                 baseEntity.getParams().put(DATA_SCOPE, " AND (" + sqlString.substring(4) + ")");
-                System.out.println("sql拼接查询为："+baseEntity);
+                log.info("sql拼接查询为："+baseEntity);
             }
         }
     }
 
-    /**
-     * 拼接权限sql前先清空params.dataScope参数防止注入
-     */
     private void clearDataScope(final JoinPoint joinPoint) {
         Object params = joinPoint.getArgs()[0];
         if (StringUtils.isNotNull(params) && params instanceof SysSearchPage) {

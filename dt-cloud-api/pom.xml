@@ -14,9 +14,7 @@
     <description>聚合API接口模块</description>
     <modules>
         <module>dt-api-manage</module>
-        <module>dt-api-workflow</module>
         <module>dt-api-common</module>
-        <module>dt-api-item</module>
     </modules>
 
     <dependencies>

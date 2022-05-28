@@ -13,7 +13,6 @@ import java.util.Map;
 import java.util.UUID;
 
 /**
- * https://mp.weixin.qq.com/debug/cgi-bin/sandboxinfo?action=showinfo&t=sandbox/index
  * @author DT辰白 Created by 2022/4/13 10:24
  */
 public class WxJsUtils {
@@ -22,11 +21,11 @@ public class WxJsUtils {
 
     static private Log log = LogFactory.getLog(WxJsUtils.class);
 
-    static String appid = "wxbefb438ae3905aa5";
-    static String secret = "ec1fc97e2560b20fea0cb9bd6026785f";
-    static String openid = "oiA2r6UaqbtBW3So900VYhki7Esw";
-    static String template_id = "QW54oZkwRWDL3Z9C7oM7Bn9W8W5EHWz2GQC8eEYjAfc";
-    static String token = "55_aCe6lJ_j7YA1wpZOILXgq1ZgxJ8YFOxboSF49ItEpGqIL0VNNbq3K2C232QeZbYKyiAg2K3SyoNNPvW_Gz03n3bw3DhgNLfiaWug33x185_f1i679WJEHebFGw9ymvxviXdM-3sSPE2Jj_FWIRZeACALUC";
+    static String appid = "xxx";
+    static String secret = "xxx";
+    static String openid = "xxx";
+    static String template_id = "xxx";
+    static String token = "xxx";
 
     public WxJsUtils() {
     }
