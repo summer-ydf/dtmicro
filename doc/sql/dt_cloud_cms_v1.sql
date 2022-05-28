@@ -11,7 +11,7 @@
  Target Server Version : 80028
  File Encoding         : 65001
 
- Date: 26/05/2022 21:12:00
+ Date: 28/05/2022 10:54:54
 */
 
 SET NAMES utf8mb4;
@@ -237,35 +237,7 @@ CREATE TABLE `QRTZ_TRIGGERS`  (
 -- ----------------------------
 -- Records of QRTZ_TRIGGERS
 -- ----------------------------
-INSERT INTO `QRTZ_TRIGGERS` VALUES ('scheduler', '675674866094208', 'DEFAULT', '675674866094208', 'DEFAULT', NULL, 1653571200000, 1653570600000, 5, 'WAITING', 'CRON', 1649596841000, 0, NULL, 0, '');
-
--- ----------------------------
--- Table structure for base_config
--- ----------------------------
-DROP TABLE IF EXISTS `base_config`;
-CREATE TABLE `base_config`  (
-  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键ID',
-  `category` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '参数类型',
-  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '参数名称',
-  `k` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'key',
-  `v` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'value',
-  `enabled` tinyint(1) NULL DEFAULT 0 COMMENT '是否启用（1：是，0否）',
-  `create_time` datetime(0) NULL DEFAULT NULL COMMENT '创建时间',
-  `update_time` datetime(0) NULL DEFAULT NULL COMMENT '更新时间',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of base_config
--- ----------------------------
-INSERT INTO `base_config` VALUES ('1000000066909420', '系统主题配置', '主题七', '主题七', 'theme_seven.css', 1, '2021-11-19 23:57:38', '2021-11-20 00:35:57');
-INSERT INTO `base_config` VALUES ('1000000256170896', '系统主题配置', '主题二', '主题二', 'theme_two.css', 0, '2021-10-31 18:27:53', '2021-11-19 23:57:49');
-INSERT INTO `base_config` VALUES ('1000000332864445', '系统主题配置', '主题四', '主题四', 'theme_four.css', 0, '2021-10-31 18:27:53', '2021-11-20 00:26:02');
-INSERT INTO `base_config` VALUES ('1000000470437159', '首页链接入口', '用户管理', 'usermannage', '/system/user/UserList', 0, '2021-11-06 12:12:59', '2021-11-06 12:13:41');
-INSERT INTO `base_config` VALUES ('1000000682943458', '系统主题配置', '主题五', '主题五', 'theme_five.css', 0, '2021-10-31 18:27:53', '2021-11-20 00:26:12');
-INSERT INTO `base_config` VALUES ('1000001361614097', '系统主题配置', '主题六', '主题六', 'theme_six.css', 0, '2021-10-31 18:27:53', '2021-11-20 00:35:57');
-INSERT INTO `base_config` VALUES ('1000001698990134', '系统主题配置', '主题一', '主题一', 'theme_one.css', 0, '2021-10-31 18:27:53', '2021-11-20 00:26:25');
-INSERT INTO `base_config` VALUES ('1000001739126234', '系统主题配置', '主题三', '主题三', 'theme_three.css', 0, '2021-10-31 18:27:53', '2021-11-19 18:51:56');
+INSERT INTO `QRTZ_TRIGGERS` VALUES ('scheduler', '675674866094208', 'DEFAULT', '675674866094208', 'DEFAULT', NULL, 1653706800000, 1653706200000, 5, 'WAITING', 'CRON', 1649596841000, 0, NULL, 0, '');
 
 -- ----------------------------
 -- Table structure for oauth_client_details
@@ -296,22 +268,6 @@ INSERT INTO `oauth_client_details` VALUES ('cms-web', NULL, '$2a$10$bMNULS2JtrK.
 INSERT INTO `oauth_client_details` VALUES ('cms-wechat', NULL, '$2a$10$z5HxhG09/KoDdjliO/PZe.XH0YccopieCDH4./hqFgd5fGQs2cIO.', 'all', 'wechat,refresh_token', NULL, NULL, 3600, 7200, NULL, 'true');
 
 -- ----------------------------
--- Table structure for pms_device
--- ----------------------------
-DROP TABLE IF EXISTS `pms_device`;
-CREATE TABLE `pms_device`  (
-  `id` int NOT NULL,
-  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `create_time` datetime(0) NULL DEFAULT NULL,
-  `update_time` datetime(0) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of pms_device
--- ----------------------------
-
--- ----------------------------
 -- Table structure for sys_config
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_config`;
@@ -327,16 +283,16 @@ CREATE TABLE `sys_config`  (
 -- ----------------------------
 -- Records of sys_config
 -- ----------------------------
-INSERT INTO `sys_config` VALUES (675106132562011, 'wx_appid', '4B5F44A293B32400537407BC25FD11C70610C93709AB5CC514BF7BA4C6008722', '2022-04-17 18:45:00', '2022-05-25 21:26:23');
-INSERT INTO `sys_config` VALUES (675106132562012, 'wx_enabled', '1', '2022-04-19 15:28:44', '2022-05-25 21:26:23');
-INSERT INTO `sys_config` VALUES (675106132562013, 'ti_cron', 'C9A7C5B844911287873803059C742688', '2022-04-19 15:58:14', '2022-05-25 21:26:24');
+INSERT INTO `sys_config` VALUES (675106132562011, 'wx_appid', '4B5F44A293B32400537407BC25FD11C70610C93709AB5CC514BF7BA4C6008722', '2022-04-17 18:45:00', '2022-05-28 10:52:58');
+INSERT INTO `sys_config` VALUES (675106132562012, 'wx_enabled', '1', '2022-04-19 15:28:44', '2022-05-28 10:52:59');
+INSERT INTO `sys_config` VALUES (675106132562013, 'ti_cron', 'C9A7C5B844911287873803059C742688', '2022-04-19 15:58:14', '2022-05-28 10:52:59');
 INSERT INTO `sys_config` VALUES (676062391390336, 'ex_ttc', '4536581B0B89D8C0ACB95B1859268784', '2022-04-21 20:09:08', '2022-05-25 21:26:24');
-INSERT INTO `sys_config` VALUES (677127269904512, 'wx_secret', '6AAB2FD6A64FA09B255CA8190FB737D5713C8B68A63A944C38C3CDFE2CA326C281E966A7B4CEAEEE8EA37639435BBF39', '2022-05-21 22:19:09', '2022-05-25 21:26:23');
-INSERT INTO `sys_config` VALUES (677127269957760, 'wx_templateid', '969899FDA44C8225B868A0A2647C948E1A212F9726245865AB4CD234F3EDFE9FE042ED7E94BBA3CED941D920C41CC6BC', '2022-05-21 22:19:09', '2022-05-25 21:26:23');
-INSERT INTO `sys_config` VALUES (677129794703488, 'qy_corpid', '1F6F33765181A3087759AFD8D954419BDEF80177AF05049461A0BC0EFC7D34DE', '2022-05-22 00:01:53', '2022-05-25 21:26:23');
-INSERT INTO `sys_config` VALUES (677129794756736, 'qy_agentid', '3F2A907F73A86F20738FDD6CC5EC7775', '2022-05-22 00:01:53', '2022-05-25 21:26:23');
-INSERT INTO `sys_config` VALUES (677129794809984, 'qy_corpsecret', 'D73E338DA97EFE69C909E17A2328CAA0B80736C411EF2619416AC1A291F8F5DAC41215D03356BC8788FEC39F01702073', '2022-05-22 00:01:53', '2022-05-25 21:26:23');
-INSERT INTO `sys_config` VALUES (677129794867328, 'qy_enabled', '1', '2022-05-22 00:01:53', '2022-05-25 21:26:24');
+INSERT INTO `sys_config` VALUES (677127269904512, 'wx_secret', '6AAB2FD6A64FA09B255CA8190FB737D5713C8B68A63A944C38C3CDFE2CA326C281E966A7B4CEAEEE8EA37639435BBF39', '2022-05-21 22:19:09', '2022-05-28 10:52:58');
+INSERT INTO `sys_config` VALUES (677127269957760, 'wx_templateid', '969899FDA44C8225B868A0A2647C948E1A212F9726245865AB4CD234F3EDFE9FE042ED7E94BBA3CED941D920C41CC6BC', '2022-05-21 22:19:09', '2022-05-28 10:52:58');
+INSERT INTO `sys_config` VALUES (677129794703488, 'qy_corpid', '7D193B51328F69E40119B2F7D249BB805FD8A813FAD2903DAB413AC57046EDD2', '2022-05-22 00:01:53', '2022-05-28 10:52:59');
+INSERT INTO `sys_config` VALUES (677129794756736, 'qy_agentid', '3F2A907F73A86F20738FDD6CC5EC7775', '2022-05-22 00:01:53', '2022-05-28 10:52:59');
+INSERT INTO `sys_config` VALUES (677129794809984, 'qy_corpsecret', 'CB71A51E2252CC3F33B37C31E9A30162725F31398BAA267A339BC1206F5E5873768F2E9F921C0C052F0B261C1E0E144A', '2022-05-22 00:01:53', '2022-05-28 10:52:59');
+INSERT INTO `sys_config` VALUES (677129794867328, 'qy_enabled', '1', '2022-05-22 00:01:53', '2022-05-28 10:52:59');
 
 -- ----------------------------
 -- Table structure for sys_department
@@ -360,7 +316,7 @@ INSERT INTO `sys_department` VALUES ('1000000204663981', '1000001200689941', '�
 INSERT INTO `sys_department` VALUES ('1000000622591924', '1000001620535597', '设计部', 1, '2021-06-20 21:53:49', '2021-06-20 21:57:45');
 INSERT INTO `sys_department` VALUES ('1000000952846438', '1000001251633881', '财务部门', 1, '2021-06-17 21:29:00', '2021-10-03 16:50:39');
 INSERT INTO `sys_department` VALUES ('1000001186458564', '1000001637526739', '服务二部', 2, '2021-06-20 21:56:29', '2021-06-20 21:56:29');
-INSERT INTO `sys_department` VALUES ('1000001200689941', '1000001776185099', '技术部', 1, '2021-06-13 19:15:04', '2021-06-17 21:25:31');
+INSERT INTO `sys_department` VALUES ('1000001200689941', '1000001776185099', '技术部', 1, '2021-06-13 19:15:04', '2022-05-28 09:47:11');
 INSERT INTO `sys_department` VALUES ('1000001251633881', '1000001776185099', '财务部', 2, '2021-06-13 14:35:36', '2021-06-17 21:29:25');
 INSERT INTO `sys_department` VALUES ('1000001258096779', '1000001200689941', 'UI设计部门', 4, '2021-06-17 21:28:10', '2021-06-17 21:31:41');
 INSERT INTO `sys_department` VALUES ('1000001341234088', '1000001776185099', '行政部', 3, '2021-06-13 14:35:38', '2021-06-17 21:26:17');
@@ -575,6 +531,12 @@ INSERT INTO `sys_log_login` VALUES ('677268747784320', 'dt在：2022-05-25 22:15
 INSERT INTO `sys_log_login` VALUES ('677268878352512', 'dt在：2022-05-25 22:21:12 点击了登录', 'dt', '127.0.0.1', 'Chrome 10', 'Windows 10', 1, 1, '677268878315648', NULL, '2022-05-25 22:21:13', '2022-05-25 22:21:13');
 INSERT INTO `sys_log_login` VALUES ('677269030477952', 'test在：2022-05-25 22:27:23 点击了登录', 'test', '127.0.0.1', 'Chrome 10', 'Windows 10', 1, 1, '677269030289536', NULL, '2022-05-25 22:27:24', '2022-05-25 22:27:24');
 INSERT INTO `sys_log_login` VALUES ('677302421745792', 'dt在：2022-05-26 21:06:05 点击了登录', 'dt', '127.0.0.1', 'Chrome 10', 'Windows 10', 1, 1, '677302421655680', NULL, '2022-05-26 21:06:06', '2022-05-26 21:06:06');
+INSERT INTO `sys_log_login` VALUES ('677302999302272', 'dt在：2022-05-26 21:29:35 点击了登录', 'dt', '127.0.0.1', 'Chrome 10', 'Windows 10', 1, 1, '677302999167104', NULL, '2022-05-26 21:29:36', '2022-05-26 21:29:36');
+INSERT INTO `sys_log_login` VALUES ('677303151980672', 'dt在：2022-05-26 21:35:48 点击了登录', 'dt', '127.0.0.1', 'Chrome 10', 'Windows 10', 1, 1, '677303151939712', NULL, '2022-05-26 21:35:48', '2022-05-26 21:35:48');
+INSERT INTO `sys_log_login` VALUES ('677356505522304', 'dt在：2022-05-28 09:46:45 点击了登录', 'dt', '127.0.0.1', 'Chrome 10', 'Windows 10', 1, 1, '677356505436288', NULL, '2022-05-28 09:46:46', '2022-05-28 09:46:46');
+INSERT INTO `sys_log_login` VALUES ('677357119201408', 'dt在：2022-05-28 10:11:43 点击了登录', 'dt', '127.0.0.1', 'Chrome 10', 'Windows 10', 1, 1, '677357119049856', NULL, '2022-05-28 10:11:44', '2022-05-28 10:11:44');
+INSERT INTO `sys_log_login` VALUES ('677357501911168', 'dt在：2022-05-28 10:27:18 点击了登录', 'dt', '127.0.0.1', 'Chrome 10', 'Windows 10', 1, 1, '677357501759616', NULL, '2022-05-28 10:27:19', '2022-05-28 10:27:19');
+INSERT INTO `sys_log_login` VALUES ('677358116110464', 'dt在：2022-05-28 10:52:17 点击了登录', 'dt', '127.0.0.1', 'Chrome 10', 'Windows 10', 1, 1, '677358115958912', NULL, '2022-05-28 10:52:18', '2022-05-28 10:52:18');
 
 -- ----------------------------
 -- Table structure for sys_log_operator
@@ -698,6 +660,8 @@ INSERT INTO `sys_log_operator` VALUES ('677268970295424', '添加角色菜单权
 INSERT INTO `sys_log_operator` VALUES ('677268976763008', '添加角色菜单权限日志记录', 'INSERT', 'com.cms.manage.controller.SysRoleController.saveRoleMenu()', 'POST', 'dt', '/role/saveRoleMenu', '127.0.0.1', '{\"roleId\":677268959117440,\"menuIds\":[\"114\",\"115\",\"116\",\"675073235689600\",\"675073256198272\",\"675181831987328\",\"675181998772352\",\"675073263906944\",\"675181843529856\",\"675182006534272\",\"675672524464256\",\"675672564641920\",\"677268006871168\",\"677268028162176\",\"677268523430016\"]}', '{\"code\":2000,\"data\":null,\"message\":\"操作成功!\",\"success\":true,\"timestamp\":1653488712701}', 1, NULL, '2022-05-25 22:25:13', '2022-05-25 22:25:13');
 INSERT INTO `sys_log_operator` VALUES ('677268984385664', '编辑操作员日志记录', 'UPDATE', 'com.cms.manage.controller.SysOperatorController.save()', 'POST', 'dt', '/operator/save', '127.0.0.1', '{\"deptName\":\"后端部门\",\"openid\":\"\",\"credentialsNonExpired\":true,\"deptId\":1000001779686042,\"mobile\":\"1355001446\",\"admin\":false,\"updateTime\":1653488731161,\"avatar\":\"\",\"idno\":\"52020199602299316\",\"enabled\":true,\"password\":null,\"roleIds\":[677268959117440],\"createTime\":1648122387000,\"name\":\"测试号\",\"accountNonExpired\":true,\"id\":675070929846400,\"roleNames\":[\"WEB\"],\"strRoleIds\":null,\"accountNonLocked\":true,\"username\":\"test\"}', '{\"code\":2000,\"data\":null,\"message\":\"操作成功!\",\"success\":true,\"timestamp\":1653488731251}', 1, NULL, '2022-05-25 22:25:31', '2022-05-25 22:25:31');
 INSERT INTO `sys_log_operator` VALUES ('677302423834752', '更新个人信息日志记录', 'UPDATE', 'com.cms.manage.controller.SysOperatorController.updateMyInfo()', 'POST', 'dt', '/operator/updateMyInfo', '127.0.0.1', '{\"deptName\":null,\"openid\":\"oprIA5YF-0cn_Nb_zEK8bvJsExcv\",\"credentialsNonExpired\":true,\"deptId\":0,\"mobile\":\"15186257311\",\"admin\":false,\"updateTime\":1653570370162,\"avatar\":\"http://42.192.121.230:9000/default-bucket/20220406/af39ceaf3fe9464c8ead6d72da270ac1.jpg?Content-Disposition=attachment%3B%20filename%3D%2220220406%2Faf39ceaf3fe9464c8ead6d72da270ac1.jpg%22&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=admin%2F20220406%2F%2Fs3%2Faws4_request&X-Amz-Date=20220406T120530Z&X-Amz-Expires=432000&X-Amz-SignedHeaders=host&X-Amz-Signature=2aec1bc7308ff4394e5dfed2870a02af42da84dff2748cd703e4597287e0901e\",\"idno\":\"52020199\",\"enabled\":true,\"password\":\"$2a$10$U6s5CKezRAhOcNMsfHhg8OsLxtA4bcZr3DLVVFPjq98C0a2xTLK0q\",\"roleIds\":null,\"createTime\":1647939936000,\"name\":\"yandongfa\",\"accountNonExpired\":true,\"id\":674996197965952,\"roleNames\":null,\"strRoleIds\":null,\"accountNonLocked\":true,\"username\":\"dt\"}', '{\"code\":2000,\"data\":null,\"message\":\"操作成功!\",\"success\":true,\"timestamp\":1653570370256}', 1, NULL, '2022-05-26 21:06:11', '2022-05-26 21:06:11');
+INSERT INTO `sys_log_operator` VALUES ('677356509421696', '更新个人信息日志记录', 'UPDATE', 'com.cms.manage.controller.SysOperatorController.updateMyInfo()', 'POST', 'dt', '/operator/updateMyInfo', '127.0.0.1', '{\"deptName\":null,\"openid\":\"oprIA5YF-0cn_Nb_zEK8bvJsExcv\",\"credentialsNonExpired\":true,\"deptId\":0,\"mobile\":\"15186257311\",\"admin\":false,\"updateTime\":1653702414881,\"avatar\":\"http://42.192.121.230:9000/default-bucket/20220406/af39ceaf3fe9464c8ead6d72da270ac1.jpg?Content-Disposition=attachment%3B%20filename%3D%2220220406%2Faf39ceaf3fe9464c8ead6d72da270ac1.jpg%22&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=admin%2F20220406%2F%2Fs3%2Faws4_request&X-Amz-Date=20220406T120530Z&X-Amz-Expires=432000&X-Amz-SignedHeaders=host&X-Amz-Signature=2aec1bc7308ff4394e5dfed2870a02af42da84dff2748cd703e4597287e0901e\",\"idno\":\"52020199\",\"enabled\":true,\"password\":\"$2a$10$U6s5CKezRAhOcNMsfHhg8OsLxtA4bcZr3DLVVFPjq98C0a2xTLK0q\",\"roleIds\":null,\"createTime\":1647939936000,\"name\":\"yandongfa\",\"accountNonExpired\":true,\"id\":674996197965952,\"roleNames\":null,\"strRoleIds\":null,\"accountNonLocked\":true,\"username\":\"dt\"}', '{\"code\":2000,\"data\":null,\"message\":\"操作成功!\",\"success\":true,\"timestamp\":1653702414977}', 1, NULL, '2022-05-28 09:46:56', '2022-05-28 09:46:56');
+INSERT INTO `sys_log_operator` VALUES ('677356518178944', '编辑系统角色日志记录', 'UPDATE', 'com.cms.manage.controller.SysRoleController.save()', 'POST', 'dt', '/role/save', '127.0.0.1', '{\"children\":null,\"createTime\":null,\"name\":\"TEST\",\"alias\":\"测试角色\",\"remark\":\"测试\",\"startTime\":null,\"updateTime\":1653702436768,\"deptIds\":null,\"endTime\":null,\"id\":677268959117440,\"dataScope\":null}', '{\"code\":2000,\"data\":null,\"message\":\"操作成功!\",\"success\":true,\"timestamp\":1653702436853}', 1, NULL, '2022-05-28 09:47:17', '2022-05-28 09:47:17');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -800,7 +764,7 @@ CREATE TABLE `sys_operator`  (
 -- ----------------------------
 INSERT INTO `sys_operator` VALUES (248204704247877, 'admin', 'admin', '123456789', '123456789', NULL, '', 'web', '1000001779686042', 0, 1, 1, 1, 1, 'img/avatar.jpg', '2022-01-21 10:47:34', '2022-05-21 11:08:58');
 INSERT INTO `sys_operator` VALUES (248204704247878, 'root', '测试2', '123123', '123123', 'oiA2r6T1npcDdXsiByNIlzkGPlWE', '', 'app', '1000000204663981', 0, 1, 1, 1, 1, 'img/avatar.jpg', '2022-02-28 16:47:03', '2022-05-21 23:35:59');
-INSERT INTO `sys_operator` VALUES (674996197965952, 'dt', 'yandongfa', '15186257311', '52020199', 'oprIA5YF-0cn_Nb_zEK8bvJsExcv', '$2a$10$U6s5CKezRAhOcNMsfHhg8OsLxtA4bcZr3DLVVFPjq98C0a2xTLK0q', 'web', '0', 0, 1, 1, 1, 1, 'http://42.192.121.230:9000/default-bucket/20220406/af39ceaf3fe9464c8ead6d72da270ac1.jpg?Content-Disposition=attachment%3B%20filename%3D%2220220406%2Faf39ceaf3fe9464c8ead6d72da270ac1.jpg%22&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=admin%2F20220406%2F%2Fs3%2Faws4_request&X-Amz-Date=20220406T120530Z&X-Amz-Expires=432000&X-Amz-SignedHeaders=host&X-Amz-Signature=2aec1bc7308ff4394e5dfed2870a02af42da84dff2748cd703e4597287e0901e', '2022-03-22 17:05:36', '2022-05-26 21:06:10');
+INSERT INTO `sys_operator` VALUES (674996197965952, 'dt', 'yandongfa', '15186257311', '52020199', 'oprIA5YF-0cn_Nb_zEK8bvJsExcv', '$2a$10$U6s5CKezRAhOcNMsfHhg8OsLxtA4bcZr3DLVVFPjq98C0a2xTLK0q', 'web', '0', 0, 1, 1, 1, 1, 'http://42.192.121.230:9000/default-bucket/20220406/af39ceaf3fe9464c8ead6d72da270ac1.jpg?Content-Disposition=attachment%3B%20filename%3D%2220220406%2Faf39ceaf3fe9464c8ead6d72da270ac1.jpg%22&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=admin%2F20220406%2F%2Fs3%2Faws4_request&X-Amz-Date=20220406T120530Z&X-Amz-Expires=432000&X-Amz-SignedHeaders=host&X-Amz-Signature=2aec1bc7308ff4394e5dfed2870a02af42da84dff2748cd703e4597287e0901e', '2022-03-22 17:05:36', '2022-05-28 09:46:55');
 INSERT INTO `sys_operator` VALUES (675069938479232, 'admin1', '测试1', '123456', '12345', 'oiA2r6Q4Gw_HqOl_j9izx-hpu9Lw', '$2a$10$mm.FLgSonOC6aDvjwE.HuOgJeJQlmnGV.Fm2MWzUNN6ndOY4De736', 'web', '1000001779686042', 0, 1, 1, 1, 1, '', '2022-03-24 19:06:07', '2022-05-21 23:43:09');
 INSERT INTO `sys_operator` VALUES (675070929846400, 'test', '测试号', '1355001446', '52020199602299316', '', '$2a$10$U6s5CKezRAhOcNMsfHhg8OsLxtA4bcZr3DLVVFPjq98C0a2xTLK0q', 'web', '1000001779686042', 0, 1, 1, 1, 1, '', '2022-03-24 19:46:27', '2022-05-25 22:25:31');
 INSERT INTO `sys_operator` VALUES (677110973296768, 'test1', '测试3', '12311', '12311', 'oiA2r6UaqbtBW3So900VYhki7Esw', '$2a$10$K52iqtV/P3EXuBusihYyRuhaYafcIVpmnCjYc1Em24hJcHZN5v6Fm', NULL, '1000001258096779', 0, 1, 1, 1, 1, '', '2022-05-21 11:16:02', '2022-05-21 23:43:28');
@@ -862,23 +826,7 @@ CREATE TABLE `sys_operator_setting`  (
 -- Records of sys_operator_setting
 -- ----------------------------
 INSERT INTO `sys_operator_setting` VALUES (675142950023296, 248204704247877, 'dashboard', '2022-03-26 20:36:58', '2022-03-26 20:45:03');
-INSERT INTO `sys_operator_setting` VALUES (675143177953408, 674996197965952, 'user,settingDept,dispatch,setting,file', '2022-03-26 20:46:14', '2022-04-30 21:43:18');
-
--- ----------------------------
--- Table structure for sys_order
--- ----------------------------
-DROP TABLE IF EXISTS `sys_order`;
-CREATE TABLE `sys_order`  (
-  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
-  `a` int NULL DEFAULT NULL,
-  `b` int NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 31 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of sys_order
--- ----------------------------
-INSERT INTO `sys_order` VALUES (31, 666, 666);
+INSERT INTO `sys_operator_setting` VALUES (675143177953408, 674996197965952, 'user,settingDept,dispatch,setting,wechart', '2022-03-26 20:46:14', '2022-05-26 21:36:05');
 
 -- ----------------------------
 -- Table structure for sys_permission
@@ -900,7 +848,7 @@ CREATE TABLE `sys_permission`  (
   `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
   `parent_name` varchar(36) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT '' COMMENT '父级菜单名称',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 119 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '权限表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 120 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '权限表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_permission
@@ -945,22 +893,6 @@ INSERT INTO `sys_permission` VALUES (118, 101, '删除', 'sys:operatorLog:del', 
 INSERT INTO `sys_permission` VALUES (119, 117, '删除', 'sys:loginLog:del', '', '', '', 1, '2', '', NULL, '2021-11-20 22:57:33', '2021-11-20 22:57:33', '登录日志');
 
 -- ----------------------------
--- Table structure for sys_product
--- ----------------------------
-DROP TABLE IF EXISTS `sys_product`;
-CREATE TABLE `sys_product`  (
-  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
-  `c` int NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 26 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of sys_product
--- ----------------------------
-INSERT INTO `sys_product` VALUES (21, 666);
-INSERT INTO `sys_product` VALUES (26, 666);
-
--- ----------------------------
 -- Table structure for sys_role
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_role`;
@@ -973,7 +905,7 @@ CREATE TABLE `sys_role`  (
   `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
   `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 674996182413441 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 677268959117441 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_role
@@ -981,7 +913,7 @@ CREATE TABLE `sys_role`  (
 INSERT INTO `sys_role` VALUES (248204504629317, 'ADMIN', 3, '管理员A', '超级管理员', '2022-01-21 10:46:45', '2022-03-26 21:13:09');
 INSERT INTO `sys_role` VALUES (256693602365509, 'ROOT', 4, '管理员B', '超级管理员', '2022-02-14 10:28:59', '2022-03-26 21:13:06');
 INSERT INTO `sys_role` VALUES (674996182413440, 'WEB', 1, '超级管理员', '超级管理员', '2022-03-22 17:04:58', '2022-05-21 23:42:21');
-INSERT INTO `sys_role` VALUES (677268959117440, 'TEST', NULL, '测试角色', '测试', '2022-05-25 22:24:30', '2022-05-25 22:24:30');
+INSERT INTO `sys_role` VALUES (677268959117440, 'TEST', NULL, '测试角色', '测试', '2022-05-25 22:24:30', '2022-05-28 09:47:17');
 
 -- ----------------------------
 -- Table structure for sys_role_dept
@@ -1093,7 +1025,7 @@ CREATE TABLE `sys_role_permission`  (
   `role_id` bigint NOT NULL COMMENT '角色 ID',
   `permission_id` bigint NOT NULL COMMENT '权限 ID',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1560 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色权限表' ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1561 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色权限表' ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_role_permission
@@ -1186,6 +1118,7 @@ INSERT INTO `t_file_info` VALUES (1513111583147433986, '白小白 - 我爱你不
 INSERT INTO `t_file_info` VALUES (1518434257725333505, '728da9773912b31b686ade638d18367adab4e172.jpg', 'http://42.192.121.230:9000/default/20220425/8a9cf0ac7ac84eebbe74ee143edb258a.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=admin%2F20220425%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20220425T033832Z&X-Amz-Expires=7200&X-Amz-SignedHeaders=host&X-Amz-Signature=156bcf378c62a3379bc4f711e8ee51399ca51b96dbe2da114670412910e06e5b', 'jpg', 35739, NULL, '20220425/8a9cf0ac7ac84eebbe74ee143edb258a.jpg', '2022-04-25 11:38:33', '2022-04-25 11:38:33');
 INSERT INTO `t_file_info` VALUES (1518434452030660609, '测试.jpg', 'http://42.192.121.230:9000/default/20220425/7d6ec5668b6f4a7ebc919bf2d8d051e8.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=admin%2F20220425%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20220425T033919Z&X-Amz-Expires=7200&X-Amz-SignedHeaders=host&X-Amz-Signature=1bb6332235f0da8cccfe484de416814fbbce8e0df4547bb4bb19f07432830c2a', 'jpg', 65903, NULL, '20220425/7d6ec5668b6f4a7ebc919bf2d8d051e8.jpg', '2022-04-25 11:39:19', '2022-04-25 11:39:19');
 INSERT INTO `t_file_info` VALUES (1529811480206733313, '是七叔呢 - 客子光阴.flac', 'http://42.192.121.230:9000/default/20220526/40d6131707db4e97b7fd1c90ad0c3f0a.flac?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=admin%2F20220526%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20220526T130734Z&X-Amz-Expires=7200&X-Amz-SignedHeaders=host&X-Amz-Signature=08cf2ef53ff47da107e0fb2f79c22a4c9c4d79aa722e8dab7ef1ebe586e54494', 'flac', 18844084, 'default', '20220526/40d6131707db4e97b7fd1c90ad0c3f0a.flac', '2022-05-26 21:07:34', '2022-05-26 21:07:34');
+INSERT INTO `t_file_info` VALUES (1530365650437468162, 'BZ - 35.jpg', 'http://42.192.121.230:9000/default/20220528/db8afbbb64f749619af31f6b85b1406d.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=admin%2F20220528%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20220528T014938Z&X-Amz-Expires=7200&X-Amz-SignedHeaders=host&X-Amz-Signature=96d40751817f61f53343540761c25477270e3b829c195f0111da6e703359197f', 'jpg', 1114159, 'default', '20220528/db8afbbb64f749619af31f6b85b1406d.jpg', '2022-05-28 09:49:39', '2022-05-28 09:49:39');
 
 -- ----------------------------
 -- Table structure for t_job_information
@@ -1209,53 +1142,5 @@ CREATE TABLE `t_job_information`  (
 -- Records of t_job_information
 -- ----------------------------
 INSERT INTO `t_job_information` VALUES (675674866266240, '675674866094208', '定时删除系统日志', 'default', 'com.cms.job.task.bean.CronLoginLogJob', '0 0/10 * * * ? ', 1, '', '2022-04-10 21:20:41', '2022-04-10 21:20:41');
-
--- ----------------------------
--- Table structure for undo_log
--- ----------------------------
-DROP TABLE IF EXISTS `undo_log`;
-CREATE TABLE `undo_log`  (
-  `id` bigint NOT NULL AUTO_INCREMENT,
-  `branch_id` bigint NOT NULL,
-  `xid` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `context` varchar(128) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `rollback_info` longblob NOT NULL,
-  `log_status` int NOT NULL,
-  `log_created` datetime(0) NOT NULL,
-  `log_modified` datetime(0) NOT NULL,
-  `ext` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE,
-  UNIQUE INDEX `ux_undo_log`(`xid`, `branch_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of undo_log
--- ----------------------------
-
--- ----------------------------
--- Table structure for wx_member_user
--- ----------------------------
-DROP TABLE IF EXISTS `wx_member_user`;
-CREATE TABLE `wx_member_user`  (
-  `id` bigint NOT NULL,
-  `gender` int NULL DEFAULT NULL,
-  `nick_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `mobile` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `avatar_url` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
-  `openid` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `session_key` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `city` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `country` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `language` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `province` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `status` int NULL DEFAULT NULL,
-  `create_time` datetime(0) NULL DEFAULT NULL,
-  `update_time` datetime(0) NULL DEFAULT NULL,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of wx_member_user
--- ----------------------------
 
 SET FOREIGN_KEY_CHECKS = 1;
