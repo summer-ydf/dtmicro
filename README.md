@@ -32,28 +32,42 @@
 
 框架组成SpringCloud、Nacos、GateWay、Sentinel、Seata、Oauth2.0，消息队列采用RabbitMQ，数据库采用MySQL、Redis，mongodb，文件服务器：Minio，前端UI：Vue3、ElementUI
 
-## 开发环境准备
-
-### 1. Minio文件服务器安装
-
-- Windows下载[ https://dl.minio.io/server/minio/release/windows-amd64/minio.exe]( https://dl.minio.io/server/minio/release/windows-amd64/minio.exe)
-
-安装启动，进入minio.exe安装目录下，启动cmd窗口，输入如下命令：
+## 界面效果
 
 
-```
-.\minio.exe server D:\data
-```
+<table>
+    <tr>
+        <td><img src="https://img-blog.csdnimg.cn/7c41daa58feb4f93a81ed2d9620836be.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARFTovrDnmb0=,size_20,color_FFFFFF,t_70,g_se,x_16"></img></td>
+        <td><img src="https://img-blog.csdnimg.cn/7166a98fc6ea452a8e424f5e65794222.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARFTovrDnmb0=,size_20,color_FFFFFF,t_70,g_se,x_16"></img></td>
+    </tr>
 
-D:\data 为当前服务器存储资源路径，可自行指定。
+<tr>
+        <td><img src="https://img-blog.csdnimg.cn/c410e36ef6d14d598b1e215a635d5feb.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARFTovrDnmb0=,size_20,color_FFFFFF,t_70,g_se,x_16"></img></td>
+        <td><img src="https://img-blog.csdnimg.cn/69f3a145396e4c3693c5adfb76273cd7.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARFTovrDnmb0=,size_20,color_FFFFFF,t_70,g_se,x_16"></img></td>
+    </tr>
 
-- Linux安装教程 [全网最细Docker安装Minio，填满最新版大坑（强烈推荐收藏）](https://blog.csdn.net/qq_41107231/article/details/119042855)
+<tr>
+        <td><img src="https://img-blog.csdnimg.cn/af292547630d4bcdb30cdf262e9dc8bc.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARFTovrDnmb0=,size_20,color_FFFFFF,t_70,g_se,x_16"></img></td>
+        <td><img src="https://img-blog.csdnimg.cn/b19412eee62f4abcb3c691e5e8fc68ba.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARFTovrDnmb0=,size_20,color_FFFFFF,t_70,g_se,x_16"></img></td>
+    </tr>
+  
+</table>
 
-### 2. MySQL数据库安装
+## 多种模式切换
+<table>
+    <tr>
+        <td><img src="https://img-blog.csdnimg.cn/02e208dad47a4824bd910ded55fd7a7b.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARFTovrDnmb0=,size_20,color_FFFFFF,t_70,g_se,x_16"></img></td>
+        <td><img src="https://img-blog.csdnimg.cn/bb3fa71512a74d489b82fa454a018ed9.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARFTovrDnmb0=,size_20,color_FFFFFF,t_70,g_se,x_16"></img></td>
+    </tr>
 
-- Linux安装教程 [全网最细Linux之Centos8安装MySQL8.0以上版本，您值得收藏！](https://blog.csdn.net/qq_41107231/article/details/119064936)
+<tr>
+        <td><img src="https://img-blog.csdnimg.cn/25209d60088b461a8fb14f7afa2a0944.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARFTovrDnmb0=,size_20,color_FFFFFF,t_70,g_se,x_16"></img></td>
+        <td><img src="https://img-blog.csdnimg.cn/4d782a4f0d9947278679649627207dd6.png?x-oss-process=image/watermark,type_ZHJvaWRzYW5zZmFsbGJhY2s,shadow_50,text_Q1NETiBARFTovrDnmb0=,size_20,color_FFFFFF,t_70,g_se,x_16"></img></td>
+    </tr>
+  
+</table>
 
-### 3. Redis数据库安装
+## 联系微信加群
 
-- Linux安装教程 [最全Linux安装Redis最新版](https://blog.csdn.net/qq_41107231/article/details/111656160)
+13550001448
 
