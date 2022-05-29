@@ -14,8 +14,6 @@
     <description>聚合核心服务模块</description>
     <modules>
         <module>dt-service-manage</module>
-        <module>dt-service-workflow</module>
-        <module>dt-service-item</module>
         <module>dt-service-document</module>
     </modules>
 
