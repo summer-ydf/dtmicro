@@ -32,6 +32,8 @@
 
 框架组成SpringCloud、Nacos、GateWay、Sentinel、Seata、Oauth2.0，消息队列采用RabbitMQ，数据库采用MySQL、Redis，mongodb，文件服务器：Minio，前端UI：Vue3、ElementUI
 
+前端UI：[点我获取](https://gitee.com/summerydf/dtmicroclient)
+
 ## 界面效果
 
 
